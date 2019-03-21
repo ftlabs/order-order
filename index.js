@@ -15,6 +15,8 @@ if (!PORT) {
   throw new Error("ERROR: PORT not specified in env");
 }
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("*", (req, res) => {
+  const data = require("dummyData/test.json");
+});
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
