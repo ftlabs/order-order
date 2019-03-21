@@ -3,12 +3,14 @@ const dotenv = require("dotenv").config({
 });
 
 const express = require("express");
+var exphbs = require("express-handlebars");
 const path = require("path");
 const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "hbs");
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 const PORT = process.env.PORT;
 if (!PORT) {
@@ -16,10 +18,10 @@ if (!PORT) {
 }
 
 app.get("/:type/:name", (req, res) => {
-  const data = require(`./${type}/${name}.json`);
-  console.log(data);
+  const { name, type } = req.params;
+  const data = require(`./dummyData/${type}/${name}.json`);
+  const moduleType = require(`./modules/${type}`);
+  moduleType.render(req, res, data);
 });
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
-
-function apply(req, res) {}
