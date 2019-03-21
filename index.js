@@ -8,9 +8,17 @@ const path = require("path");
 const app = express();
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+var hbs = require("express-hbs");
+
+// Use `.hbs` for extensions and find partials in `views/partials`.
+app.engine(
+  "hbs",
+  hbs.express4({
+    partialsDir: __dirname + "/views/partials"
+  })
+);
+app.set("view engine", "hbs");
+app.set("views", __dirname + "/views");
 
 const PORT = process.env.PORT;
 if (!PORT) {
