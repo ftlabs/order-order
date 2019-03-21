@@ -1,1 +1,105 @@
-{ "type": "hats" }
+{
+  "keySchema": {
+    "order": 0,
+    "seriesId": 0
+  },
+  "type": "hats",
+  "permitted": {
+    "commenters": [0, 1, 2],
+    "replies": [0, 1, 2],
+    "voters": [0, 1, 2]
+  },
+  "restricted": {
+    "commenters": [0, 1, 2],
+    "replies": [0, 1, 2],
+    "voters": [0, 1, 2]
+  },
+  "starter": {
+    "title": "Hats debate",
+    "description": "Hats debate on the secon referendum"
+  },
+  "comments": [
+    {
+      "id": 1,
+      "userId": "Marcronimer",
+      "content": "This could be a simple comment 1",
+      "audio": "",
+      "video": "",
+      "tags": ["red"],
+      "ratings": [],
+      "replyto": 0,
+      "createdOn": "datetimestamp",
+      "updatedOn": "datetimestamp"
+    },
+    {
+      "id": 2,
+      "userId": "Jerima",
+      "content": "This could be a simple comment 2",
+      "audio": "",
+      "video": "",
+      "tags": ["green"],
+      "ratings": [],
+      "replyto": 0,
+      "createdOn": "datetimestamp",
+      "updatedOn": "datetimestamp"
+    },
+    {
+      "id": 3,
+      "userId": "Nerstaiy",
+      "content": "This could be a simple comment 3",
+      "audio": "",
+      "video": "",
+      "tags": ["blue"],
+      "ratings": [],
+      "replyto": 0,
+      "createdOn": "datetimestamp",
+      "updatedOn": "datetimestamp"
+    },
+    {
+      "id": 4,
+      "userId": "Nerstaiy",
+      "content": "This could be a simple reply 1",
+      "audio": "",
+      "video": "",
+      "tags": ["blue"],
+      "ratings": [],
+      "replyto": 1,
+      "createdOn": "datetimestamp",
+      "updatedOn": "datetimestamp"
+    }
+  ],
+  "specialUsers": [
+    {
+      "userId": 0,
+      "type": "teamA | moderator | teamACaptain etc"
+    }
+  ],
+  "state": {
+    "open": 0,
+    "votable": 0
+  },
+  "teams": [
+    {
+      "teamName": "teamnameA",
+      "scores": [
+        {
+          "userId": 0,
+          "score": 0
+        }
+      ],
+      "members": [
+        {
+          "userId": 0
+        }
+      ]
+    }
+  ],
+  "votes": [
+    {
+      "userId": 0,
+      "score": 0
+    }
+  ],
+  "createdOn": "datetimestamp",
+  "updatedOn": "datetimestamp"
+}
