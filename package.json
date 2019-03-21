@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ftlabs/order-order/issues"
   },
-  "homepage": "https://github.com/ftlabs/order-order#readme"
+  "homepage": "https://github.com/ftlabs/order-order#readme",
+  "dependencies": {
+    "dotenv": "^7.0.0"
+  }
 }
