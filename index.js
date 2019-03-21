@@ -3,7 +3,6 @@ const dotenv = require("dotenv").config({
 });
 
 const express = require("express");
-var exphbs = require("express-handlebars");
 const path = require("path");
 const app = express();
 
