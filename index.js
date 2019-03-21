@@ -27,14 +27,19 @@ if (!PORT) {
 }
 
 app.get("/", (req, res) => {
-  res.render('index');
+  res.render("index");
 });
 
 app.get("/:type/:name", (req, res) => {
-  const { name, type } = req.params;
-  const data = require(`./dummyData/${type}/${name}.json`);
-  const moduleType = require(`./modules/${type}`);
-  moduleType.render(req, res, data);
+  try {
+    const { name, type } = req.params;
+    const data = require(`./dummyData/${type}/${name}.json`);
+    const moduleType = require(`./modules/${type}`);
+    moduleType.render(req, res, data);
+  } catch (err) {
+    console.error(err);
+    res.status(404).send("Sorry can't find that!");
+  }
 });
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
