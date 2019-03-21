@@ -15,11 +15,8 @@ if (!PORT) {
   throw new Error("ERROR: PORT not specified in env");
 }
 
-app.get("/:seriesId/:order", (req, res) => {
-  console.log(req.query);
-  console.log(req.params);
-
-  const data = require(`./dummyData/test.json`);
+app.get("/:type/:name", (req, res) => {
+  const data = require(`./${type}/${name}.json`);
   console.log(data);
 });
 
