@@ -20,6 +20,8 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
 
+app.use("/static", express.static(path.resolve(__dirname + "/static")));
+
 const PORT = process.env.PORT;
 if (!PORT) {
   throw new Error("ERROR: PORT not specified in env");
