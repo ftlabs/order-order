@@ -19,6 +19,15 @@ main {
 .comment_new form {
   padding: 20px;
 }
+.comment {
+  position: relative;
+}
+.reply_new {
+  position: absolute;
+  right: 18px;
+  top: 5px;
+}
+
 /*
     Hat colour styles
 */

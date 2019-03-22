@@ -11,19 +11,8 @@
         <h2>
             Comments:
         </h2>
-        <ul class="comments_list">
-            {{#each comments}}
-            <li class="{{this.tags}}">
-                <fieldset>
-                    <legend>{{this.userId}}</legend>
-                    <p>
-                        {{this.content}}
-                    </p>
-                </fieldset>
-            </li>
-            {{/each}}
-        </ul>
-        <div class="comment_new">
+        {{> hats/comments class='comments_list' comments=commentsStructured }}
+        <div id="main_comment" class="comment_new">
             <form>
                 <label>New comment</label>
                 <br />
