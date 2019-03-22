@@ -18,9 +18,11 @@ function newCommentOrigin(e) {
   const newCommentText = originCommentText.value;
   const newCommentOption = originCommentOpt.value.toLowerCase();
 
-  newComment.class = newCommentOption;
-  newComment.innerHTML = `<li class="${newCommentOption}"><fieldset><legend>CurrentUser</legend><p>${newCommentText}</p></fieldset>`;
-  commentsList.appendChild(newComment);
+  if (newCommentText && newCommentText !== "") {
+    newComment.class = newCommentOption;
+    newComment.innerHTML = `<li class="${newCommentOption}"><fieldset><legend>CurrentUser</legend><p>${newCommentText}</p></fieldset>`;
+    commentsList.appendChild(newComment);
+  }
 }
 
 function newCommentReply() {}
