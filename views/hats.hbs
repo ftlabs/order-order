@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-{{#> head title='Hats debate' subtitle='Hats debate' type='hats' }}
-{{/head}}
+{{> head title='Hats debate' subtitle='Hats debate' type='hats' }}
 
 <body>
-    HELLO WORLD - hats
+    <main>
+        <h1>{{ starter.title }}</h1>
+        <p>
+            {{ starter.description }}
+        </p>
+        <h2>
+            Comments:
+        </h2>
+        {{> hats/comments class='comments_list' comments=commentsStructured }}
+        <div id="main_comment" class="comment_new">
+            <form>
+                <label>New comment</label>
+                <br />
+                <textarea rows="5" cols="100" id="comment-new-text" name="comment-new-text"
+                    placeholder="Add new comment here..." required=""></textarea>
+                <br />
+                <label>Hat type</label>
+                <select id="comment-new-hat-opt" name="comment-new-hat-opt" required>
+                    <option selected>White</option>
+                    <option>Yellow</option>
+                    <option>Black</option>
+                    <option>Red</option>
+                    <option>Green</option>
+                    <option>Blue</option>
+                </select>
+                <br />
+                <button id="comment-new-submit">Add new comment</button>
+            </form>
+        </div>
+    </main>
+    {{> footer type='hats'}}
 </body>
-{{> footer}}
 
 </html>
