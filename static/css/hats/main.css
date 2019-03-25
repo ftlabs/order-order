@@ -1,2 +1,56 @@
+html,
 body {
+}
+main {
+  margin: 20px;
+}
+.comments_list {
+  list-style: none;
+  padding: 0;
+}
+.comments_list li {
+  padding: 6px 0 5px;
+}
+.comment_new {
+  height: 20%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-top: 2px solid grey;
+}
+.comment_new form {
+  padding: 20px;
+}
+.comment {
+  position: relative;
+}
+.reply_new {
+  position: absolute;
+  right: 18px;
+  top: 5px;
+}
+
+/*
+    Hat colour styles
+*/
+
+.white {
+  background-color: white;
+  color: #222222;
+}
+.yellow {
+  background-color: #ffc107;
+}
+.black {
+  background-color: #222222;
+  color: white;
+}
+.red {
+  background-color: #dc3545;
+}
+.green {
+  background-color: #28a745;
+  color: white;
+}
+.blue {
+  background-color: #007bff;
+  color: white;
 }

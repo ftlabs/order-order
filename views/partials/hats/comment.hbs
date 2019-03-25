@@ -1,0 +1,12 @@
+<li class="comment {{class}}">
+	<fieldset>
+		<legend>{{comment.userId}}</legend>
+		<p>
+			{{comment.content}}
+		</p>
+		<div class="reply_new">
+			<button>Reply</button>
+		</div>
+		{{> hats/comments class="replies" comments=this.replies }}
+	</fieldset>
+</li>
