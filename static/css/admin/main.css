@@ -17,6 +17,12 @@ nav {
 }
 
 nav a {
+  padding-right: 20px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 
 main {
