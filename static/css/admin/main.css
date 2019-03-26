@@ -9,6 +9,10 @@ h1 {
   margin: 0 0 15px 0;
 }
 
+h2 {
+  font-size: 32px;
+}
+
 nav {
   background-color: white;
   position: relative;
@@ -25,10 +29,47 @@ nav a:hover {
   text-decoration: underline;
 }
 
+nav div a {
+  display: inline-block;
+}
+
 main {
   padding: 15px;
 }
 
-.nav_links {
-  display: inline-block;
+form {
+  display: grid;
+  grid-column: auto auto;
+  max-width: 500px;
+}
+
+button,
+input,
+select {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 15px;
+}
+
+.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #721c24;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.status {
+  color: #155724;
+  background-color: #d4edda;
+  border-top: 1px solid #155724;
+  border-bottom: 1px solid #155724;
+  padding: 15px;
+}
+
+.hide {
+  display: none;
 }
