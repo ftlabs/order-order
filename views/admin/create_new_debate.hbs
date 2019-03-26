@@ -11,30 +11,30 @@
 	<form id="form_new_debate">
 		<div id="msg_error" class="error hide"></div>
 		<label for="type">Debate type</label>
-		<select name="type">
+		<select name="type" required>
 			<option selected>Structured debate</option>
 			<option>Hats</option>
 			<option>Interview</option>
 		</select>
 		<label for="name">Name</label>
-		<input type="text" name="name" placeholder="Name" />
+		<input type="text" name="name" placeholder="Name" required />
 		<label for="title">Title</label>
-		<input type="text" name="title" placeholder="Title" />
-		<label for="description">Description</label>
-		<input type="text" name="description" placeholder="Description" />
+		<input type="text" name="title" placeholder="Title" required />
+		<label for="debateDescription">Description</label>
+		<input type="text" name="debateDescription" placeholder="Description" required />
 		<label for="series_order">Series Order</label>
-		<select name="series_order">
+		<select name="series_order" required>
 			<option selected>1</option>
 			<option>2</option>
 			<option>3</option>
 		</select>
 		<label for="state_open">Open?</label>
-		<select name="state_open">
+		<select name="state_open" required>
 			<option selected>Open</option>
 			<option>Closed</option>
 		</select>
 		<label for="state_votable">Votable?</label>
-		<select name="state_votable">
+		<select name="state_votable" required>
 			<option selected>True</option>
 			<option>False</option>
 		</select>
