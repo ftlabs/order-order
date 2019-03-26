@@ -16,6 +16,7 @@ app.engine(
     partialsDir: __dirname + "/views/partials"
   })
 );
+
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
 
@@ -30,11 +31,11 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/:type/:name", (req, res) => {
+app.get("/:debateType/:debateName", (req, res) => {
   try {
-    const { name, type } = req.params;
-    const data = require(`./dummyData/${type}/${name}.json`);
-    const moduleType = require(`./modules/${type}`);
+    const { debateName, debateType } = req.params;
+    const data = require(`./dummyData/${debateType}/${debateName}.json`);
+    const moduleType = require(`./modules/${debateType}`);
     moduleType.render(req, res, data);
   } catch (err) {
     console.error(err);
