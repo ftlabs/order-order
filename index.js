@@ -5,6 +5,7 @@ const dotenv = require("dotenv").config({
 const express = require("express");
 const path = require("path");
 const app = express();
+const admin = require("./routes/admin");
 
 // view engine setup
 var hbs = require("express-hbs");
@@ -26,6 +27,8 @@ const PORT = process.env.PORT;
 if (!PORT) {
   throw new Error("ERROR: PORT not specified in env");
 }
+
+app.use("/admin/", admin);
 
 app.get("/", (req, res) => {
   res.render("index");
