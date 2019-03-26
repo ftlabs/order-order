@@ -1,0 +1,28 @@
+html,
+body {
+  background-color: wheat;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0 0 15px 0;
+}
+
+nav {
+  background-color: white;
+  position: relative;
+  padding: 15px;
+  width: 100%;
+}
+
+nav a {
+}
+
+main {
+  padding: 15px;
+}
+
+.nav_links {
+  display: inline-block;
+}
