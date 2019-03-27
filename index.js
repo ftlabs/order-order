@@ -43,7 +43,7 @@ let requestLogger = function(req, res, next) {
 
 app.use(requestLogger);
 app.use("/static", express.static(path.resolve(__dirname + "/static")));
-//app.use(s3o);
+app.use(s3o);
 app.use("/debate/", debate);
 app.use("/admin/", admin);
 
