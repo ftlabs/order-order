@@ -1,3 +1,4 @@
+const originCommentUsername = document.getElementById("comment-new-username");
 const originCommentText = document.getElementById("comment-new-text");
 const originCommentOpt = document.getElementById("comment-new-hat-opt");
 const originCommentSubmit = document.getElementById("comment-new-submit");
@@ -15,12 +16,13 @@ function newCommentOrigin(e) {
   e.preventDefault();
 
   const newComment = document.createElement("div");
+  const newCommentUsername = originCommentUsername.value;
   const newCommentText = originCommentText.value;
   const newCommentOption = originCommentOpt.value.toLowerCase();
 
   if (newCommentText && newCommentText !== "") {
     newComment.class = newCommentOption;
-    newComment.innerHTML = `<li class="${newCommentOption}"><fieldset><legend>CurrentUser</legend><p>${newCommentText}</p></fieldset>`;
+    newComment.innerHTML = `<li class="${newCommentOption}"><fieldset><legend>${newCommentUsername}</legend><p>${newCommentText}</p></fieldset>`;
     commentsList.appendChild(newComment);
   }
 }
