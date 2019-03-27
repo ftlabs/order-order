@@ -4,15 +4,18 @@
   "description": "A swiss army knife of various forms of structured comments.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ftlabs/order-order.git"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "ftlabs"
+  ],
+  "author": "ftlabs",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ftlabs/order-order/issues"
   },
@@ -28,5 +31,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
+  },
+  "engines": {
+    "node": "8.9.x"
   }
 }
