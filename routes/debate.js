@@ -12,6 +12,10 @@ router.get("/:debateType/:debateName", (req, res) => {
       __basedir + `/modules/${debateType}`
     ));
 
+    data.user = {
+      username: req.cookies.s3o_username
+    };
+
     moduleType.render(req, res, data);
   } catch (err) {
     console.error(err);
