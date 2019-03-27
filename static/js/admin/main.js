@@ -4,7 +4,9 @@ const msgError = document.getElementById("msg_error");
 const msgStatus = document.getElementById("msg_status");
 
 function init() {
-  addListeners();
+  if (btnSubmit) {
+    addListeners();
+  }
 }
 
 function addListeners() {
