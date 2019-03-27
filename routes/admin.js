@@ -13,4 +13,8 @@ router.get("/moderation", (req, res) => {
   res.render("admin/moderation");
 });
 
+router.get("/users", (req, res) => {
+  res.render("admin/users");
+});
+
 module.exports = router;
