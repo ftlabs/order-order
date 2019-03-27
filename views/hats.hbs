@@ -3,6 +3,9 @@
 {{> head title='Hats debate' subtitle='Hats debate' type='hats' }}
 
 <body>
+    <header>
+        Logged in as: {{ user.username }}
+    </header>
     <main>
         <h1>{{ starter.title }}</h1>
         <p>
@@ -14,6 +17,8 @@
         {{> hats/comments class='comments_list' comments=commentsStructured }}
         <div id="main_comment" class="comment_new">
             <form>
+                <input type="hidden" id="comment-new-username" name="comment-new-username"
+                    value="{{ user.username }}" />
                 <label>New comment</label>
                 <br />
                 <textarea rows="5" cols="100" id="comment-new-text" name="comment-new-text"
