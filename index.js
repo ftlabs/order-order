@@ -4,6 +4,7 @@ const dotenv = require("dotenv").config({
 
 global.__basedir = __dirname;
 
+const PORT = process.env.PORT || 2019;
 const package = require("./package.json");
 const debug = require("debug")(`${package.name}:index`);
 const s3o = require("@financial-times/s3o-middleware");
@@ -44,8 +45,8 @@ let requestLogger = function(req, res, next) {
 app.use(requestLogger);
 app.use("/static", express.static(path.resolve(__dirname + "/static")));
 app.use(s3o);
-app.use("/debate/", debate);
-app.use("/admin/", admin);
+app.use("/debate", debate);
+app.use("/admin", admin);
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -56,7 +57,6 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-const PORT = process.env.PORT;
 if (!PORT) {
   throw new Error("ERROR: PORT not specified in env");
 }
