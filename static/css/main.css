@@ -1,3 +1,23 @@
 body {
   background-color: pink;
 }
+header {
+  background: white;
+  height: 20px;
+  margin: -8px;
+  padding: 8px;
+  text-align: right;
+}
+
+/*
+  Misc
+*/
+.hide {
+  display: none;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}

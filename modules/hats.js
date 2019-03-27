@@ -6,12 +6,6 @@ function render(req, res, data) {
   };
   data.commentsStructured = comments.getNestedComments(params).data;
 
-  const user = {
-    username: req.cookies.s3o_username
-  };
-
-  data.user = user;
-
   res.render(data.type, data);
 }
 

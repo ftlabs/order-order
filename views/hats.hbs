@@ -3,9 +3,7 @@
 {{> head title='Hats debate' subtitle='Hats debate' type='hats' }}
 
 <body>
-    <header>
-        Logged in as: {{ user.username }}
-    </header>
+    {{> user/header username=user.username }}
     <main>
         <h1>{{ starter.title }}</h1>
         <p>

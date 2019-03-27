@@ -4,12 +4,6 @@ body {
 main {
   margin: 20px;
 }
-header {
-  background: white;
-  margin: -8px;
-  padding: 8px;
-  text-align: right;
-}
 .comments_list {
   list-style: none;
   padding: 0;
@@ -37,7 +31,6 @@ header {
 /*
     Hat colour styles
 */
-
 .white {
   background-color: white;
   color: #222222;
