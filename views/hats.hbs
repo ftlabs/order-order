@@ -9,8 +9,13 @@
         <p>
             {{ starter.description }}
         </p>
+        <form id="request_access">
+            <input type='hidden' id="request_access_username" value="{{ user.username }}" />
+            <input type='hidden' id="request_access_debate_id" value="{{ keySchema.order }}_{{ keySchema.seriesId }}" />
+            <button id="btn_request_access">Request access to this debate</button>
+        </form>
         <h2>
-            Comments:
+            Comments
         </h2>
         {{> hats/comments class='comments_list' comments=commentsStructured }}
         <div id="main_comment" class="comment_new">
