@@ -17,4 +17,8 @@ router.get("/users", (req, res) => {
   res.render("admin/users");
 });
 
+router.get("/messages", (req, res) => {
+  res.render("admin/messages");
+});
+
 module.exports = router;
