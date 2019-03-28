@@ -19,4 +19,6 @@ router.post("/create_new_debate", (req, res) => {
   }
 });
 
+// TODO: add any other required api calls
+
 module.exports = router;
