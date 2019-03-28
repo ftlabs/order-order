@@ -4,7 +4,7 @@ const dotenv = require("dotenv").config({
 
 global.__basedir = __dirname;
 
-const PORT = process.env.PORT || 2019;
+const PORT = process.env.PORT || 9090;
 const package = require("./package.json");
 const debug = require("debug")(`${package.name}:index`);
 const s3o = require("@financial-times/s3o-middleware");
@@ -15,8 +15,9 @@ const hbs = require("express-hbs");
 const helmet = require("helmet");
 const express_enforces_ssl = require("express-enforces-ssl");
 const bodyParser = require("body-parser");
-const admin = require("./routes/admin");
-const debate = require("./routes/debate");
+const admin_routes = require("./routes/admin");
+const debate_routes = require("./routes/debate");
+const api_routes = require("./routes/api");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -45,8 +46,9 @@ let requestLogger = function(req, res, next) {
 app.use(requestLogger);
 app.use("/static", express.static(path.resolve(__dirname + "/static")));
 app.use(s3o);
-app.use("/debate", debate);
-app.use("/admin", admin);
+app.use("/api", api_routes);
+app.use("/debate", debate_routes);
+app.use("/admin", admin_routes);
 
 app.get("/", (req, res) => {
   res.render("index");

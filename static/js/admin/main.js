@@ -25,6 +25,8 @@ async function submitForm(e) {
   const state_open = document.getElementsByName("state_open")[0];
   const state_votable = document.getElementsByName("state_votable")[0];
 
+  //TODO: add additional validation
+
   const data = {
     type: type.value,
     name: name.value,
@@ -107,17 +109,13 @@ function reportStatus(msg) {
 }
 
 function clearForm() {
-  const type = document.getElementsByName("type")[0];
-  const name = document.getElementsByName("name")[0];
-  const title = document.getElementsByName("title")[0];
-  const description = document.getElementsByName("description")[0];
-  const series_order = document.getElementsByName("series_order")[0];
-  const state_open = document.getElementsByName("state_open")[0];
-  const state_votable = document.getElementsByName("state_votable")[0];
-
-  name.value = "";
-  title.value = "";
-  description.value = "";
+  document.getElementsByName("name")[0].value = "";
+  document.getElementsByName("title")[0].value = "";
+  document.getElementsByName("debateDescription")[0].value = "";
+  document.getElementsByName("type")[0].children[0].selected = true;
+  document.getElementsByName("series_order")[0].children[0].selected = true;
+  document.getElementsByName("state_open")[0].children[0].selected = true;
+  document.getElementsByName("state_votable")[0].children[0].selected = true;
 }
 
 init();
