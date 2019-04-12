@@ -13,7 +13,7 @@ function addListeners() {
   btnSubmit.addEventListener("click", submitForm);
 }
 
-async function submitForm(e) {
+function submitForm(e) {
   e.preventDefault();
 
   var errors = [];
@@ -51,13 +51,17 @@ async function submitForm(e) {
     );
   } else {
     try {
-      var response = await submitData("/api/create_new_debate", data);
-      if (response.status === "error") {
-        reportError(`Issue with fetch: ${response.data}`);
-      } else if (response.status === "ok") {
-        reportStatus("New debate added");
-        clearForm();
-      }
+      var promise = new Promise(function(resolve, reject) {
+        resolve(submitData("/api/create_new_debate", data));
+      });
+      promise.then(function(response) {
+        if (response.status === "error") {
+          reportError(`Issue with fetch: ${response.data}`);
+        } else if (response.status === "ok") {
+          reportStatus("New debate added");
+          clearForm();
+        }
+      });
     } catch (error) {
       reportError(`Issue with form submission: ${error}`);
     }
