@@ -10,7 +10,8 @@ function render(req, res, data) {
     title: data.starter.title,
     description: data.starter.description,
     commentsFor,
-    commentsAgainst
+    commentsAgainst,
+    user: data.user
   });
 }
 

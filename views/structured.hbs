@@ -4,6 +4,7 @@
 {{/head}}
 
 <body>
+    {{> user/header username=user.username }}
     <h1>{{title}}</h1>
     <p> {{description}}</p>
     <div>
@@ -19,6 +20,6 @@
         {{/each}}
     </div>
 </body>
-{{> footer}}
+{{> footer type='structured' }}
 
 </html>
