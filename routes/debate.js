@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-const fs = require("fs");
-const { lstatSync, readdirSync } = require("fs");
-const { join } = require("path");
+const listing = require("../helpers/listings.js");
 
 // List of all debates
 router.get("/", (req, res) => {
@@ -12,7 +10,7 @@ router.get("/", (req, res) => {
       pageTitle: "Debates: All",
       pageSubtitle: "List of all debates",
       pageType: "home",
-      debateList: getDebateListings(),
+      debateList: listing.getDebateListings("dummyData"),
       user: {
         username: req.cookies.s3o_username
       }
@@ -32,7 +30,7 @@ router.get("/:debateType", (req, res) => {
       pageTitle: `Debates: ${debateType}`,
       pageSubtitle: `List of all ${debateType} type debates`,
       pageType: "home",
-      debateList: getDebateListings(debateType),
+      debateList: listing.getDebateListings("dummyData", debateType),
       user: {
         username: req.cookies.s3o_username
       }
@@ -48,10 +46,10 @@ router.get("/:debateType/:debateName", (req, res) => {
   try {
     const { debateName, debateType } = req.params;
     const data = require(path.resolve(
-      `${getRootDir()}/dummyData/${debateType}/${debateName}.json`
+      `${listing.getRootDir()}/dummyData/${debateType}/${debateName}.json`
     ));
     const moduleType = require(path.resolve(
-      `${getRootDir()}/modules/${debateType}`
+      `${listing.getRootDir()}/modules/${debateType}`
     ));
 
     data.user = {
@@ -64,41 +62,5 @@ router.get("/:debateType/:debateName", (req, res) => {
     res.status(404).send("Sorry can't find that!");
   }
 });
-
-function getRootDir() {
-  return path.dirname(require.main.filename || process.mainModule.filename);
-}
-
-const isDirectory = source => lstatSync(source).isDirectory();
-const getDirectories = source =>
-  readdirSync(source)
-    .map(name => join(source, name))
-    .filter(isDirectory)
-    .map(path => {
-      let arr = path.split("/");
-      return {
-        type: arr[arr.length - 1],
-        path: path
-      };
-    });
-
-function getDebateListings(searchedType = "") {
-  const directoryList = getDirectories(`${getRootDir()}/dummyData/`);
-  directoryList.forEach(debateType => {
-    if (debateType.type === searchedType || searchedType === "") {
-      debateType.debateTypeName = debateType.type;
-      debateType.debates = [];
-
-      const files = fs.readdirSync(debateType.path);
-      files.forEach(file => {
-        if (file.endsWith(".json")) {
-          debateType.debates.push(file.replace(".json", ""));
-        }
-      });
-    }
-  });
-
-  return directoryList;
-}
 
 module.exports = router;
