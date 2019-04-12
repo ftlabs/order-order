@@ -48,10 +48,10 @@ router.get("/:debateType/:debateName", (req, res) => {
   try {
     const { debateName, debateType } = req.params;
     const data = require(path.resolve(
-      __basedir + `/dummyData/${debateType}/${debateName}.json`
+      `${getRootDir()}/dummyData/${debateType}/${debateName}.json`
     ));
     const moduleType = require(path.resolve(
-      __basedir + `/modules/${debateType}`
+      `${getRootDir()}/modules/${debateType}`
     ));
 
     data.user = {
@@ -64,6 +64,10 @@ router.get("/:debateType/:debateName", (req, res) => {
     res.status(404).send("Sorry can't find that!");
   }
 });
+
+function getRootDir() {
+  return path.dirname(require.main.filename || process.mainModule.filename);
+}
 
 const isDirectory = source => lstatSync(source).isDirectory();
 const getDirectories = source =>
@@ -79,7 +83,7 @@ const getDirectories = source =>
     });
 
 function getDebateListings(searchedType = "") {
-  const directoryList = getDirectories(__basedir + `/dummyData/`);
+  const directoryList = getDirectories(`${getRootDir()}/dummyData/`);
   directoryList.forEach(debateType => {
     if (debateType.type === searchedType || searchedType === "") {
       debateType.debateTypeName = debateType.type;
