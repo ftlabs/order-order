@@ -20,11 +20,11 @@ function submitForm(e) {
   var state_open = document.getElementsByName("state_open")[0].value;
   var state_votable = document.getElementsByName("state_votable")[0].value;
 
-  if (alphaNumericCharacterCheck(title)) {
+  if (isAlphaNumericWithCharacters(title)) {
     errors.push("Title must be alphanumeric or allowed chars (,_\"-') ");
   }
 
-  if (alphaNumericCharacterCheck(description)) {
+  if (isAlphaNumericWithCharacters(description)) {
     errors.push("Description must be alphanumeric or allowed chars (,_\"-') ");
   }
 
@@ -116,15 +116,15 @@ function clearForm() {
   formNewDebate.reset();
 }
 
-function alphaNumericCheck(str) {
-  return regexChk(/^[a-z0-9]+$/gim, str);
+function isAlphaNumeric(str) {
+  return regexCheck(/^[a-z0-9]+$/gim, str);
 }
 
-function alphaNumericCharacterCheck(str) {
-  return regexChk(/^[a-z0-9'",-_ ]+$/gim, str);
+function isAlphaNumericWithCharacters(str) {
+  return regexCheck(/^[a-z0-9'",-_ ]+$/gim, str);
 }
 
-function regexChk(regex, str) {
+function regexCheck(regex, str) {
   var result = regex.exec(str);
   if (result === null) {
     return true;
