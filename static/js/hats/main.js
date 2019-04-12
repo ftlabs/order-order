@@ -8,10 +8,6 @@ var formRequestAccess = document.getElementById("request_access");
 var btnRequestAccess = document.getElementById("btn_request_access");
 
 function init() {
-  addListeners();
-}
-
-function addListeners() {
   originCommentSubmit.addEventListener("click", newCommentOrigin);
   btnRequestAccess.addEventListener("click", requestAccess);
 }
