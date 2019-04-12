@@ -17,14 +17,14 @@ const admin_routes = require("./routes/admin");
 const debate_routes = require("./routes/debate");
 const api_routes = require("./routes/api");
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 if (process.env.NODE_ENV === "production") {
   app.use(helmet());
   app.enable("trust proxy");
   app.use(express_enforces_ssl());
 }
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.engine(
   "hbs",
