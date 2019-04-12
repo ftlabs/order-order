@@ -1,7 +1,7 @@
-const form = document.getElementById("form_new_debate");
-const btnSubmit = document.getElementById("submit_new_debate");
-const msgError = document.getElementById("msg_error");
-const msgStatus = document.getElementById("msg_status");
+var form = document.getElementById("form_new_debate");
+var btnSubmit = document.getElementById("submit_new_debate");
+var msgError = document.getElementById("msg_error");
+var msgStatus = document.getElementById("msg_status");
 
 function init() {
   if (btnSubmit) {
@@ -16,18 +16,18 @@ function addListeners() {
 async function submitForm(e) {
   e.preventDefault();
 
-  const errors = [];
-  const type = document.getElementsByName("type")[0];
-  const name = document.getElementsByName("name")[0];
-  const title = document.getElementsByName("title")[0];
-  const description = document.getElementsByName("debateDescription")[0];
-  const series_order = document.getElementsByName("series_order")[0];
-  const state_open = document.getElementsByName("state_open")[0];
-  const state_votable = document.getElementsByName("state_votable")[0];
+  var errors = [];
+  var type = document.getElementsByName("type")[0];
+  var name = document.getElementsByName("name")[0];
+  var title = document.getElementsByName("title")[0];
+  var description = document.getElementsByName("debateDescription")[0];
+  var series_order = document.getElementsByName("series_order")[0];
+  var state_open = document.getElementsByName("state_open")[0];
+  var state_votable = document.getElementsByName("state_votable")[0];
 
   //TODO: add additional validation
 
-  const data = {
+  var data = {
     type: type.value,
     name: name.value,
     title: title.value,
@@ -51,7 +51,7 @@ async function submitForm(e) {
     );
   } else {
     try {
-      const response = await submitData("/api/create_new_debate", data);
+      var response = await submitData("/api/create_new_debate", data);
       if (response.status === "error") {
         reportError(`Issue with fetch: ${response.data}`);
       } else if (response.status === "ok") {
