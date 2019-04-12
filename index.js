@@ -43,13 +43,6 @@ let requestLogger = function(req, res, next) {
   next();
 };
 
-hbs.registerHelper("greaterThan", function(value1, value2) {
-  if (value1 > value2) {
-    return true;
-  }
-  return false;
-});
-
 app.use(requestLogger);
 app.use("/static", express.static(path.resolve(__dirname + "/static")));
 app.use(s3o);
