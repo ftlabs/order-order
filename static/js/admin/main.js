@@ -12,26 +12,33 @@ function submitForm(e) {
   e.preventDefault();
 
   var errors = [];
-  var type = document.getElementsByName("type")[0];
-  var name = document.getElementsByName("name")[0];
-  var title = document.getElementsByName("title")[0];
-  var description = document.getElementsByName("debateDescription")[0];
-  var series_order = document.getElementsByName("series_order")[0];
-  var state_open = document.getElementsByName("state_open")[0];
-  var state_votable = document.getElementsByName("state_votable")[0];
+  var type = document.getElementsByName("type")[0].value;
+  var name = document.getElementsByName("name")[0].value;
+  var title = document.getElementsByName("title")[0].value;
+  var description = document.getElementsByName("debateDescription")[0].value;
+  var series_order = document.getElementsByName("series_order")[0].value;
+  var state_open = document.getElementsByName("state_open")[0].value;
+  var state_votable = document.getElementsByName("state_votable")[0].value;
 
-  //TODO: add additional validation
+  if (alphaNumericCharacterCheck(title)) {
+    errors.push("Title must be alphanumeric or allowed chars (,_\"-') ");
+  }
+
+  if (alphaNumericCharacterCheck(description)) {
+    errors.push("Description must be alphanumeric or allowed chars (,_\"-') ");
+  }
 
   var data = {
-    type: type.value,
-    name: name.value,
-    title: title.value,
-    description: description.value,
-    series_order: series_order.value,
-    state_open: state_open.value,
-    state_votable: state_votable.value
+    type,
+    name,
+    title,
+    description,
+    series_order,
+    state_open,
+    state_votable
   };
 
+  // Checking fields have at least some value
   for (var k in data) {
     if (data.hasOwnProperty(k)) {
       if (data[k] === undefined || data[k] === "") {
@@ -46,10 +53,10 @@ function submitForm(e) {
     );
   } else {
     try {
-      var promise = new Promise(function(resolve, reject) {
+      var promise = new Promise((resolve, reject) => {
         resolve(submitData("/api/create_new_debate", data));
       });
-      promise.then(function(response) {
+      promise.then(response => {
         if (response.status === "error") {
           reportError(`Issue with fetch: ${response.data}`);
         } else if (response.status === "ok") {
@@ -72,11 +79,11 @@ function submitData(url, data) {
     },
     body: JSON.stringify(data)
   })
-    .then(function(response) {
+    .then(response => {
       if (response.status >= 200 && response.status < 300) {
         return {
           status: "ok",
-          data: data
+          data
         };
       } else {
         var error = new Error(response.statusText || response.status);
@@ -87,12 +94,10 @@ function submitData(url, data) {
         };
       }
     })
-    .catch(function(error) {
-      return {
-        status: "error",
-        data: error
-      };
-    });
+    .catch(error => ({
+      status: "error",
+      data: error
+    }));
 }
 
 function reportError(msg) {
@@ -109,6 +114,22 @@ function reportStatus(msg) {
 
 function clearForm() {
   formNewDebate.reset();
+}
+
+function alphaNumericCheck(str) {
+  return regexChk(/^[a-z0-9]+$/gim, str);
+}
+
+function alphaNumericCharacterCheck(str) {
+  return regexChk(/^[a-z0-9'",-_ ]+$/gim, str);
+}
+
+function regexChk(regex, str) {
+  var result = regex.exec(str);
+  if (result === null) {
+    return true;
+  }
+  return false;
 }
 
 init();
