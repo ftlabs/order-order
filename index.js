@@ -2,8 +2,6 @@ const dotenv = require("dotenv").config({
   silent: process.env.NODE_ENVIRONMENT === "production"
 });
 
-global.__basedir = __dirname;
-
 const PORT = process.env.PORT || 9090;
 const package = require("./package.json");
 const debug = require("debug")(`${package.name}:index`);
