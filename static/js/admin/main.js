@@ -1,16 +1,11 @@
-var form = document.getElementById("form_new_debate");
-var btnSubmit = document.getElementById("submit_new_debate");
+var formNewDebate = document.getElementById("form_new_debate");
 var msgError = document.getElementById("msg_error");
 var msgStatus = document.getElementById("msg_status");
 
 function init() {
-  if (btnSubmit) {
-    addListeners();
+  if (formNewDebate) {
+    formNewDebate.addEventListener("submit", submitForm);
   }
-}
-
-function addListeners() {
-  btnSubmit.addEventListener("click", submitForm);
 }
 
 function submitForm(e) {
@@ -113,13 +108,7 @@ function reportStatus(msg) {
 }
 
 function clearForm() {
-  document.getElementsByName("name")[0].value = "";
-  document.getElementsByName("title")[0].value = "";
-  document.getElementsByName("debateDescription")[0].value = "";
-  document.getElementsByName("type")[0].children[0].selected = true;
-  document.getElementsByName("series_order")[0].children[0].selected = true;
-  document.getElementsByName("state_open")[0].children[0].selected = true;
-  document.getElementsByName("state_votable")[0].children[0].selected = true;
+  formNewDebate.reset();
 }
 
 init();
