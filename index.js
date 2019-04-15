@@ -22,9 +22,6 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: "eu-west-1"
 });
 
-// view engine setup
-var hbs = require("express-hbs");
-
 if (process.env.NODE_ENV === "production") {
   app.use(helmet());
   app.enable("trust proxy");
@@ -128,7 +125,7 @@ app.get("/:debateType/:debateName", (req, res) => {
     res.status(404).send("Sorry can't find that!");
   }
 });
-        
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
