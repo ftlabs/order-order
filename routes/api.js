@@ -21,6 +21,8 @@ router.post("/debate/create_new", (req, res) => {
         status: "error",
         msg: "Missing all required POST vars"
       });
+      res.end();
+      return;
     }
 
     fetch(`${req.protocol}://${req.get("host")}/api/debate`, {
