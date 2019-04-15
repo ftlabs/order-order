@@ -1,7 +1,7 @@
 {
   "keySchema": {
-    "order": 0,
-    "seriesId": 0
+    "order": 1,
+    "seriesId": "bny89t3yu2jfh89f2"
   },
   "type": "hats",
   "permitted": {
