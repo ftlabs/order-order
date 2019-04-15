@@ -16,7 +16,7 @@ function submitForm(e) {
   var name = document.getElementsByName("name")[0].value;
   var title = document.getElementsByName("title")[0].value;
   var description = document.getElementsByName("debateDescription")[0].value;
-  var series_order = document.getElementsByName("series_order")[0].value;
+  var seriesId = document.getElementsByName("seriesId")[0].value;
   var state_open = document.getElementsByName("state_open")[0].value;
   var state_votable = document.getElementsByName("state_votable")[0].value;
 
@@ -33,7 +33,7 @@ function submitForm(e) {
     name,
     title,
     description,
-    series_order,
+    seriesId,
     state_open,
     state_votable
   };
@@ -54,7 +54,7 @@ function submitForm(e) {
   } else {
     try {
       var promise = new Promise((resolve, reject) => {
-        resolve(submitData("/api/create_new_debate", data));
+        resolve(submitData("/api/debate/create_new", data));
       });
       promise.then(response => {
         if (response.status === "error") {
