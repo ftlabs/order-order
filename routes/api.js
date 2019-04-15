@@ -10,6 +10,19 @@ router.post("/debate/create_new", (req, res) => {
   try {
     const data = req.body;
 
+    if (
+      !data.name ||
+      !data.seriesId ||
+      !data.type ||
+      !data.title ||
+      !data.description
+    ) {
+      res.json({
+        status: "error",
+        msg: "Missing all required POST vars"
+      });
+    }
+
     fetch(`${req.protocol}://${req.get("host")}/api/debate`, {
       method: "POST",
       mode: "cors",
