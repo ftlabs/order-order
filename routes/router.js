@@ -7,8 +7,8 @@ const admin_routes = require("../routes/admin");
 const listing = require("../helpers/listings.js");
 
 router.use("/api", api_routes);
-
 router.use(s3o);
+router.use("/admin", admin_routes);
 
 router.get("/", (req, res) => {
   const username =
@@ -68,7 +68,5 @@ router.get("/:debateType/:debateName", (req, res) => {
     res.status(404).send("Sorry can't find that!");
   }
 });
-
-router.use("/admin", admin_routes);
 
 module.exports = router;

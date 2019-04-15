@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const path = require("path");
 const AWS = require("aws-sdk");
-const listing = require("../helpers/listings.js");
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: "eu-west-1"
@@ -11,18 +9,32 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient({
 router.post("/debate/create_new", (req, res) => {
   try {
     const data = req.body;
-    const user = req.cookies.s3o_username;
 
-    console.log(data);
-    console.log(user);
-
-    // TODO: add submission to data storage
-
-    res.json({
-      status: "ok"
-    });
+    fetch(`${req.protocol}://${req.get("host")}/api/debate`, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      redirect: "follow",
+      referrer: "no-referrer",
+      body: JSON.stringify(data)
+    })
+      .then(response => {
+        res.json({
+          status: "ok"
+        });
+      })
+      .catch(err => {
+        res.json({
+          status: "error",
+          msg: err
+        });
+      });
   } catch (err) {
-    res.status(404).send("Sorry can't find that!");
+    res.status(404).send(`Error: ${err}`);
   }
 });
 
