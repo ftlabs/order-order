@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 const AWS = require("aws-sdk");
+const listing = require("../helpers/listings.js");
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: "eu-west-1"
 });
 
-router.post("/create_new_debate", (req, res) => {
+router.post("/debate/create_new", (req, res) => {
   try {
     const data = req.body;
     const user = req.cookies.s3o_username;

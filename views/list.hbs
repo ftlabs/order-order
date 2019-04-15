@@ -9,12 +9,12 @@
 		{{ pageSubtitle }}
 	</p>
 	{{#each debateList}}
-	<h2><a href="/debates/{{ debateTypeName }}">{{ debateTypeName }}
+	<h2><a href="/type/{{ debateTypeName }}">{{ debateTypeName }}
 		</a></h2>
 	<ul>
 		{{#each debates}}
 		<li>
-			<a href="/debates/{{ ../debateTypeName }}/{{ this }}">{{ this }}</a>
+			<a href="/{{ ../debateTypeName }}/{{ this }}">{{ this }}</a>
 		</li>
 		{{/each}}
 	</ul>
