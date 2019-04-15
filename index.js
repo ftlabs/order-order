@@ -5,7 +5,6 @@ const dotenv = require("dotenv").config({
 const PORT = process.env.PORT || 9090;
 const package = require("./package.json");
 const debug = require("debug")(`${package.name}:index`);
-const s3o = require("@financial-times/s3o-middleware");
 const express = require("express");
 const path = require("path");
 const app = express();
@@ -47,7 +46,6 @@ app.use(express.json());
 
 app.use(requestLogger);
 app.use("/static", express.static(path.resolve(__dirname + "/static")));
-app.use(s3o);
 app.use("/", core_routes);
 
 app.use((err, req, res, next) => {
