@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const listing = require("../helpers/listings.js");
 const dynamo_db = require("../models/dynamo_db");
 
 router.get("/", async (req, res) => {

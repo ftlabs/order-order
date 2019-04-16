@@ -25,9 +25,14 @@ async function getAll() {
 }
 
 async function getById(name, seriesId) {
-  let queryStatement = await query("get", {
-    Key: { name, seriesId }
-  });
+  const params = {
+    Key: {
+      name: name,
+      seriesId: String(seriesId)
+    }
+  };
+
+  let queryStatement = await query("get", params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -58,6 +63,39 @@ async function getAllTypes() {
 
 async function getAllDebateLists() {
   let queryStatement = await query("scan", {});
+
+  if (queryStatement.result) {
+    let debates = {};
+
+    queryStatement.result["Items"].map(item => {
+      if (!debates.hasOwnProperty(item.debateType)) {
+        debates[item.debateType] = {
+          debateTypeName: item.debateType,
+          debates: []
+        };
+      }
+
+      debates[item.debateType].debates.push(item.name);
+    });
+
+    return debates;
+  }
+
+  return { error: queryStatement.result };
+}
+
+async function getDebateList(type) {
+  const params = {
+    FilterExpression: "#ty is :type_str",
+    ExpressionAttributeNames: {
+      "#ty": "debateType"
+    },
+    ExpressionAttributeValues: {
+      ":type_str": type
+    }
+  };
+
+  let queryStatement = await query("scan", params);
 
   if (queryStatement.result) {
     let debates = {};
@@ -112,5 +150,6 @@ module.exports = {
   getAll,
   getById,
   getAllTypes,
+  getDebateList,
   getAllDebateLists
 };

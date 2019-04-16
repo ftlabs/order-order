@@ -4,21 +4,23 @@ const s3o = require("@financial-times/s3o-middleware");
 const path = require("path");
 const api_routes = require("../routes/api");
 const admin_routes = require("../routes/admin");
-const listing = require("../helpers/listings.js");
+const listing = require("../helpers/listings");
+const dynamo_db = require("../models/dynamo_db");
 
 router.use("/api", api_routes);
 router.use(s3o);
 router.use("/admin", admin_routes);
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const username =
     req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
   try {
+    let debateList = await dynamo_db.getAllDebateLists();
     res.render("list", {
       pageTitle: "Debates: All",
       pageSubtitle: "List of all debates",
       pageType: "home",
-      debateList: listing.getDebateListings("dummyData"),
+      debateList: debateList,
       user: {
         username: username
       }
@@ -29,15 +31,15 @@ router.get("/", (req, res) => {
   }
 });
 
-router.get("/type/:debateType", (req, res) => {
+router.get("/type/:debateType", async (req, res) => {
   try {
     const { debateType } = req.params;
-
+    let debateList = await dynamo_db.getDebateList(debateType);
     res.render("list", {
       pageTitle: `Debates: ${debateType}`,
       pageSubtitle: `List of all ${debateType} type debates`,
       pageType: "home",
-      debateList: listing.getDebateListings("dummyData", debateType),
+      debateList: debateList,
       user: {
         username: req.cookies.s3o_username
       }
@@ -48,19 +50,29 @@ router.get("/type/:debateType", (req, res) => {
   }
 });
 
-router.get("/:debateType/:debateName", (req, res) => {
+router.get("/:debateType/:debateName/:seriesId?", async (req, res) => {
   try {
-    const { debateName, debateType } = req.params;
-    const data = require(path.resolve(
-      `${listing.getRootDir()}/dummyData/${debateType}/${debateName}.json`
-    ));
-    const moduleType = require(path.resolve(
-      `${listing.getRootDir()}/modules/${debateType}`
-    ));
+    const { debateName } = req.params;
+    const seriesId = req.params.seriesId ? req.params.seriesId : 1;
 
-    data.user = {
-      username: req.cookies.s3o_username
+    const result = await dynamo_db.getById(debateName, seriesId);
+    const starterTemp = result["Item"].starter;
+    result["Item"].starter = [];
+
+    starterTemp.forEach(starter => {
+      result["Item"].starter[starter.type] = starter.text;
+    });
+
+    const data = {
+      debate: result["Item"],
+      user: {
+        username: req.cookies.s3o_username
+      }
     };
+
+    const moduleType = require(path.resolve(
+      `${listing.getRootDir()}/modules/${data.debate.debateType}`
+    ));
 
     moduleType.render(req, res, data);
   } catch (err) {
