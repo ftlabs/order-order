@@ -15,7 +15,7 @@ async function addDebate(params) {
 }
 
 async function getAll() {
-  let queryStatement = await query("get", {});
+  let queryStatement = await query("scan", {});
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -57,11 +57,26 @@ async function getAllTypes() {
 }
 
 async function getAllDebateLists() {
-  // get all records
-  // sort into types with array of debates
-  // return
+  let queryStatement = await query("scan", {});
 
-  return [];
+  if (queryStatement.result) {
+    let debates = {};
+
+    queryStatement.result["Items"].map(item => {
+      if (!debates.hasOwnProperty(item.debateType)) {
+        debates[item.debateType] = {
+          debateTypeName: item.debateType,
+          debates: []
+        };
+      }
+
+      debates[item.debateType].debates.push(item.name);
+    });
+
+    return debates;
+  }
+
+  return { error: queryStatement.result };
 }
 
 async function query(type, params) {
