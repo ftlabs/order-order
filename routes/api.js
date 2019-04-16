@@ -6,7 +6,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: "eu-west-1"
 });
 
-router.post("/debate/create_new", (req, res) => {
+router.post("/debate/create", (req, res) => {
   try {
     const data = req.body;
 

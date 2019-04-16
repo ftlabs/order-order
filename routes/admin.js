@@ -15,8 +15,8 @@ router.get("/", (req, res) => {
   }
 });
 
-router.get("/create_new_debate", (req, res) => {
-  res.render("admin/create_new_debate");
+router.get("/create_debate", (req, res) => {
+  res.render("admin/create_debate");
 });
 
 router.get("/moderation", (req, res) => {
