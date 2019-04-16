@@ -86,7 +86,7 @@ async function getAllDebateLists() {
 
 async function getDebateList(type) {
   const params = {
-    FilterExpression: "#ty is :type_str",
+    FilterExpression: "#ty = :type_str",
     ExpressionAttributeNames: {
       "#ty": "debateType"
     },
