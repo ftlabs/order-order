@@ -4,6 +4,16 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: "eu-west-1"
 });
 
+async function addDebate(params) {
+  let queryStatement = await query("put", params);
+
+  if (queryStatement.result) {
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement.result };
+}
+
 async function getAll() {
   let queryStatement = await query("get", {});
 
@@ -75,6 +85,7 @@ async function query(type, params) {
 }
 
 module.exports = {
+  addDebate,
   getAll,
   getById,
   getAllTypes
