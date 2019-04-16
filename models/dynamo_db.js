@@ -56,6 +56,14 @@ async function getAllTypes() {
   return { error: queryStatement.result };
 }
 
+async function getAllDebateLists() {
+  // get all records
+  // sort into types with array of debates
+  // return
+
+  return [];
+}
+
 async function query(type, params) {
   try {
     let result;
@@ -88,5 +96,6 @@ module.exports = {
   addDebate,
   getAll,
   getById,
-  getAllTypes
+  getAllTypes,
+  getAllDebateLists
 };
