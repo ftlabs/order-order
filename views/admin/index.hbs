@@ -4,9 +4,17 @@
 	<h2>
 		Dashboard
 	</h2>
-	<p>
-		List of active/closed debates goes here...
-	</p>
+	{#each debateList}}
+	<h3><a href="/type/{{ debateTypeName }}">{{ debateTypeName }}
+		</a></h3>
+	<ul>
+		{{#each debates}}
+		<li>
+			<a href="/{{ ../debateTypeName }}/{{ this }}">{{ this }}</a>
+		</li>
+		{{/each}}
+	</ul>
+	{{/each}}
 </main>
 
 {{> admin/footer}}
