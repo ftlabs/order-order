@@ -104,14 +104,24 @@ router.get("/debate", async (req, res) => {
   }
 });
 
-router.get("/debate/all/type", async (req, res) => {
+router.get("/debate/types", async (req, res) => {
   try {
+    const types = [];
     const params = {
       TableName: process.env.DEBATE_TABLE,
       ProjectionExpression: "debateType"
     };
     const result = await dynamoDb.scan(params).promise();
-    res.send(JSON.stringify(result));
+
+    if (result.hasOwnProperty("Items")) {
+      result["Items"].forEach(result => {
+        if (!types.includes(result.debateType)) {
+          types.push(result.debateType);
+        }
+      });
+    }
+
+    res.send(JSON.stringify(types));
   } catch (err) {
     console.error(err);
     res.status(404).send("Sorry can't find that!");
