@@ -1,10 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const AWS = require("aws-sdk");
-
-const dynamoDb = new AWS.DynamoDB.DocumentClient({
-  region: "eu-west-1"
-});
+const dynamo_db = require("../models/dynamo_db");
 
 router.post("/debate/create", (req, res) => {
   try {
@@ -86,18 +82,11 @@ router.post("/debate", async (req, res) => {
   }
 });
 
-router.get("/debate", async (req, res) => {
-  console.log(req.query);
+router.get("/debate/:name/:seriesId", async (req, res) => {
   try {
-    const params = {
-      TableName: process.env.DEBATE_TABLE,
-      Key: {
-        name: req.query.name,
-        seriesId: req.query.seriesId
-      }
-    };
-    const result = await dynamoDb.get(params).promise();
-    res.send(JSON.stringify(result));
+    const { name, seriesId } = req.params;
+    const debate = await dynamo_db.getById(name, seriesId);
+    res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
     res.status(404).send("Sorry can't find that!");
@@ -106,22 +95,8 @@ router.get("/debate", async (req, res) => {
 
 router.get("/debate/types", async (req, res) => {
   try {
-    const types = [];
-    const params = {
-      TableName: process.env.DEBATE_TABLE,
-      ProjectionExpression: "debateType"
-    };
-    const result = await dynamoDb.scan(params).promise();
-
-    if (result.hasOwnProperty("Items")) {
-      result["Items"].forEach(result => {
-        if (!types.includes(result.debateType)) {
-          types.push(result.debateType);
-        }
-      });
-    }
-
-    res.send(JSON.stringify(types));
+    const allDebateTypes = await dynamo_db.getAllTypes();
+    res.send(JSON.stringify(allDebateTypes));
   } catch (err) {
     console.error(err);
     res.status(404).send("Sorry can't find that!");
