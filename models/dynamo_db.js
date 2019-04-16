@@ -59,9 +59,11 @@ async function query(type, params) {
       result = await dynamoDb.get(allParams).promise();
     } else if (type === "scan") {
       result = await dynamoDb.scan(allParams).promise();
+    } else if (type === "put") {
+      result = await dynamoDb.put(allParams).promise();
     }
 
-    if (result.hasOwnProperty("Items")) {
+    if (result.hasOwnProperty("Items") || result.hasOwnProperty("Item")) {
       return { result };
     } else {
       return { result: [] };
