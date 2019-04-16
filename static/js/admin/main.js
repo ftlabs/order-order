@@ -54,7 +54,7 @@ function submitForm(e) {
   } else {
     try {
       var promise = new Promise((resolve, reject) => {
-        resolve(submitData("/api/debate/create_new", data));
+        resolve(submitData("/api/debate/create", data));
       });
       promise.then(response => {
         if (response.status === "error") {
