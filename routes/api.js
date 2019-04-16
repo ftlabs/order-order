@@ -43,11 +43,12 @@ router.post("/debate/create", async (req, res) => {
       }
     };
     const debate = await dynamo_db.addDebate(params);
-    console.log(debate);
     res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that! Issue with POST /debate");
+    res
+      .status(404)
+      .send("Sorry can't find that! Issue with POST /debate/create");
   }
 });
 
@@ -60,7 +61,9 @@ router.get("/debate/:name/:seriesId", async (req, res) => {
     console.error(err);
     res
       .status(404)
-      .send("Sorry can't find that! Issue with GET /debate/:name/:seriesId");
+      .send(
+        `Sorry can't find that! Issue with GET /debate/${name}/${seriesId}`
+      );
   }
 });
 

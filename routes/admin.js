@@ -3,13 +3,14 @@ const router = express.Router();
 const listing = require("../helpers/listings.js");
 const dynamo_db = require("../models/dynamo_db");
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const username =
     req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
   try {
+    let debateList = await dynamo_db.getAllDebateLists();
     res.render("admin/index", {
       username: username,
-      debateList: dynamo_db.getAllDebateLists()
+      debateList: debateList
     });
   } catch (err) {
     console.error(err);
