@@ -61,7 +61,7 @@ router.post("/debate", async (req, res) => {
       Item: {
         name: req.body.name,
         seriesId: req.body.seriesId,
-        type: req.body.type,
+        debateType: req.body.type,
         permitted: [],
         restricted: [],
         specialUsers: [],
@@ -101,6 +101,21 @@ router.get("/debate", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(404).send("Sorry can't find that!");
+  }
+});
+
+router.get("/debate/all/type", async (req, res) => {
+  try {
+    const params = {
+      TableName: process.env.DEBATE_TABLE,
+      ProjectionExpression: "debateType"
+    };
+    const result = await dynamoDb.scan(params).promise();
+    res.send(JSON.stringify(result));
+  } catch (err) {
+    console.error(err);
+    res.status(404).send(err);
+    //res.status(404).send("Sorry can't find that!");
   }
 });
 
