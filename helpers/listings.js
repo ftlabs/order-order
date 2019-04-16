@@ -46,19 +46,6 @@ function getDebateListings(folder, searchedType = "") {
 }
 
 async function getDynamoDebateListings() {
-  /*
-  try {
-    const params = {
-      TableName: process.env.DEBATE_TABLE
-    };
-    const result = await dynamoDb.get(params).promise();
-    res.send(JSON.stringify(result));
-  } catch (err) {
-    console.error(err);
-    res.status(404).send("Sorry can't find that!");
-  }
-  */
-
   return [];
 }
 
