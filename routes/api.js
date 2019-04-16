@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const dynamo_db = require("../models/dynamo_db");
 
-router.post("/debate/create", (req, res) => {
+router.post("/debate/create", async (req, res) => {
   try {
     const data = req.body;
 
@@ -21,50 +21,19 @@ router.post("/debate/create", (req, res) => {
       return;
     }
 
-    fetch(`${req.protocol}://${req.get("host")}/api/debate`, {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      redirect: "follow",
-      referrer: "no-referrer",
-      body: JSON.stringify(data)
-    })
-      .then(response => {
-        res.json({
-          status: "ok"
-        });
-      })
-      .catch(err => {
-        res.json({
-          status: "error",
-          msg: err
-        });
-      });
-  } catch (err) {
-    res.status(404).send(`Error: ${err}`);
-  }
-});
-
-router.post("/debate", async (req, res) => {
-  try {
     const timestamp = new Date().getTime();
     const params = {
-      TableName: process.env.DEBATE_TABLE,
       Item: {
-        name: req.body.name,
-        seriesId: req.body.seriesId,
-        debateType: req.body.type,
+        name: data.name,
+        seriesId: data.seriesId,
+        debateType: data.type,
         permitted: [],
         restricted: [],
         specialUsers: [],
         comments: [],
         starter: [
-          { type: "title", text: req.body.title },
-          { type: "description", text: req.body.description }
+          { type: "title", text: data.title },
+          { type: "description", text: data.description }
         ],
         state: [],
         teams: [],
@@ -73,12 +42,12 @@ router.post("/debate", async (req, res) => {
         updatedAt: timestamp
       }
     };
-    const result = await dynamoDb.put(params).promise();
-    console.log(result);
-    res.send(JSON.stringify(result));
+    const debate = await dynamo_db.addDebate(params);
+    console.log(debate);
+    res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that!");
+    res.status(404).send("Sorry can't find that! Issue with POST /debate");
   }
 });
 
@@ -89,7 +58,9 @@ router.get("/debate/:name/:seriesId", async (req, res) => {
     res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that!");
+    res
+      .status(404)
+      .send("Sorry can't find that! Issue with GET /debate/:name/:seriesId");
   }
 });
 
@@ -99,7 +70,7 @@ router.get("/debate/types", async (req, res) => {
     res.send(JSON.stringify(allDebateTypes));
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that!");
+    res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
   }
 });
 
