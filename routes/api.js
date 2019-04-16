@@ -114,8 +114,7 @@ router.get("/debate/all/type", async (req, res) => {
     res.send(JSON.stringify(result));
   } catch (err) {
     console.error(err);
-    res.status(404).send(err);
-    //res.status(404).send("Sorry can't find that!");
+    res.status(404).send("Sorry can't find that!");
   }
 });
 
