@@ -1,14 +1,20 @@
 function render(req, res, data) {
-  const commentsFor = data.comments.filter(comment =>
-    comment.tags.includes("for")
-  );
-  const commentsAgainst = data.comments.filter(comment =>
-    comment.tags.includes("against")
-  );
+  let commentsFor = [];
+  let commentsAgainst = [];
+  const debate = data.debate;
 
-  res.render(data.type, {
-    title: data.starter.title,
-    description: data.starter.description,
+  if (debate.comments) {
+    commentsFor = debate.comments.filter(comment =>
+      comment.tags.includes("for")
+    );
+    commentsAgainst = debate.comments.filter(comment =>
+      comment.tags.includes("against")
+    );
+  }
+
+  res.render(debate.debateType, {
+    title: debate.starter.title,
+    description: debate.starter.description,
     commentsFor,
     commentsAgainst,
     user: data.user
