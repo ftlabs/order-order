@@ -6,15 +6,15 @@
 
 <main>
 	<h2>
-		Create New Debate
+		Edit Debate
 	</h2>
 	<form id="form_new_debate">
 		<div id="msg_error" class="error hide"></div>
 		<label for="type">Debate type</label>
 		<select name="type" required>
-			<option selected>Structured debate</option>
-			<option>Hats</option>
-			<option>Interview</option>
+			<option selected value="structured">Structured debate</option>
+			<option value="hats">Hats</option>
+			<option value="interview">Interview</option>
 		</select>
 		<label for="name">Name</label>
 		<input type="text" name="name" placeholder="Name" required />
@@ -25,9 +25,9 @@
 			<label for="debateDescription">Description</label>
 			<input type="text" name="debateDescription" placeholder="Description" required />
 		</fieldset>
-		<label for="series_order">Series Order</label>
+		<label for="seriesId">Series Order</label>
 		<div class="additional-info">If this debate is part of a series, select the order it should appear in</div>
-		<select name="series_order" required>
+		<select name="seriesId" required>
 			<option selected>1</option>
 			<option>2</option>
 			<option>3</option>
@@ -42,7 +42,7 @@
 			<option selected>True</option>
 			<option>False</option>
 		</select>
-		<button id="submit_new_debate">Create new debate</button>
+		<button id="submit_new_debate">Update debate</button>
 	</form>
 </main>
 

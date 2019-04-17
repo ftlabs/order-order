@@ -2,6 +2,11 @@
 
 const { lstatSync, readdirSync } = require("fs");
 const { dirname, join } = require("path");
+const AWS = require("aws-sdk");
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient({
+  region: "eu-west-1"
+});
 
 function getRootDir() {
   return dirname(require.main.filename || process.mainModule.filename);
@@ -40,7 +45,12 @@ function getDebateListings(folder, searchedType = "") {
   return directoryList;
 }
 
+async function getDynamoDebateListings() {
+  return [];
+}
+
 module.exports = {
   getRootDir,
-  getDebateListings
+  getDebateListings,
+  getDynamoDebateListings
 };

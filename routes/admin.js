@@ -1,12 +1,43 @@
 const express = require("express");
 const router = express.Router();
+const dynamo_db = require("../models/dynamo_db");
 
-router.get("/", (req, res) => {
-  res.render("admin/index");
+router.get("/", async (req, res) => {
+  const username =
+    req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
+  try {
+    let debateList = await dynamo_db.getAllDebateLists();
+    res.render("admin/index", {
+      username: username,
+      debateList: debateList
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(404).send("Sorry can't find that!");
+  }
 });
 
-router.get("/create_new_debate", (req, res) => {
-  res.render("admin/create_new_debate");
+router.get("/create_debate", (req, res) => {
+  const username =
+    req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
+  res.render("admin/create_debate", {
+    username: username
+  });
+});
+
+router.get("/edit_debate", async (req, res) => {
+  const username =
+    req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
+  try {
+    let debateList = await dynamo_db.getAllDebateLists();
+    res.render("admin/edit_debate", {
+      username: username,
+      debateList: debateList
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(404).send("Sorry can't find that!");
+  }
 });
 
 router.get("/moderation", (req, res) => {
