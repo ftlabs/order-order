@@ -1,12 +1,16 @@
 const comments = require("../helpers/comments");
 
-function render(req, res, data) {
-  const params = {
-    commentsData: data.comments
-  };
-  data.commentsStructured = comments.getNestedComments(params).data;
+function display(req, res, data) {
+  const debate = data.debate;
 
-  res.render(data.type, data);
+  if (debate.comments) {
+    const params = {
+      commentsData: debate.comments
+    };
+    debate.commentsStructured = comments.getNestedComments(params).data;
+  }
+
+  res.render(debate.debateType, data);
 }
 
-module.exports = { render };
+module.exports = { display };

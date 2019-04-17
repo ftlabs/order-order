@@ -1,6 +1,6 @@
 const comments = require("../helpers/comments");
 
-function render(req, res, data) {
+function display(req, res, data) {
   const params = {
     commentsData: data.comments
   };
@@ -8,4 +8,4 @@ function render(req, res, data) {
   res.render(data.type, data);
 }
 
-module.exports = { render };
+module.exports = { display };
