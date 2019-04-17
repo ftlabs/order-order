@@ -74,7 +74,7 @@ router.get("/:debateType/:debateName/:seriesId?", async (req, res) => {
       `${listing.getRootDir()}/modules/${data.debate.debateType}`
     ));
 
-    moduleType.render(req, res, data);
+    moduleType.display(req, res, data);
   } catch (err) {
     console.error(err);
     res.status(404).send("Sorry can't find that!");
