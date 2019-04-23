@@ -25,22 +25,15 @@
 			<label for="debateDescription">Description</label>
 			<input type="text" name="debateDescription" placeholder="Description" required />
 		</fieldset>
-		<label for="seriesId">Series Order</label>
-		<div class="additional-info">If this debate is part of a series, select the order it should appear in</div>
-		<select name="seriesId" required>
-			<option selected>1</option>
-			<option>2</option>
-			<option>3</option>
-		</select>
-		<label for="state_open">Open?</label>
-		<select name="state_open" required>
+		<label for="status">Status</label>
+		<select name="status" required>
 			<option selected>Open</option>
 			<option>Closed</option>
 		</select>
-		<label for="state_votable">Votable?</label>
-		<select name="state_votable" required>
-			<option selected>True</option>
-			<option>False</option>
+		<label for="voting_status">Voting status</label>
+		<select name="voting_status" required>
+			<option selected>Open</option>
+			<option>Closed</option>
 		</select>
 		<button id="submit_new_debate">Create new debate</button>
 	</form>
