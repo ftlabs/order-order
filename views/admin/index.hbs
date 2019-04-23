@@ -7,15 +7,23 @@
 	{{#if debateList}}
 	{{#each debateList}}
 	<h3>{{ debateTypeName }}</h3>
-	<ul>
+	<table class="list-debates">
 		{{#if debates}}
 		{{#each debates}}
-		<li>
-			<a href="/{{ ../debateTypeName }}/{{ this }}">{{ this }}</a>
-		</li>
+		<tr>
+			<td>
+				<a href="/{{ ../debateTypeName }}/{{ this }}">{{ this }}</a>
+			</td>
+			<td>
+				<a href="/{{ ../debateTypeName }}/{{ this }}">view</a>
+			</td>
+			<td>
+				<a href="/admin/edit_debate/{{ this }}">edit</a>
+			</td>
+		</tr>
 		{{/each}}
 		{{/if}}
-	</ul>
+	</table>
 	{{/each}}
 	{{/if}}
 </main>
