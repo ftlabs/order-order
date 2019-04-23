@@ -50,6 +50,10 @@ select {
   margin-bottom: 15px;
 }
 
+input {
+  width: 100%;
+}
+
 button {
   padding: 15px;
 }

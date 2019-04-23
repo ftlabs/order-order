@@ -13,27 +13,20 @@
 		<label for="type">Debate type</label>
 		<select name="type" required disabled>
 			<option selected value="structured">Structured debate</option>
-			<option value="hats">Hats</option>
-			<option value="interview">Interview</option>
 		</select>
-		<label for="name">Name</label>
-		<input type="text" name="name" placeholder="Name" required />
-		<fieldset>
-			<legend>Information that is publicly visible on the page</legend>
-			<label for="title">Title</label>
-			<input type="text" name="title" placeholder="Title" required />
-			<label for="debateDescription">Description</label>
-			<input type="text" name="debateDescription" placeholder="Description" required />
-		</fieldset>
+		<label for="title">Title</label>
+		<input type="text" name="title" placeholder="Title" required />
+		<label for="debateDescription">Description</label>
+		<input type="text" name="debateDescription" placeholder="Description" required />
 		<label for="status">Status</label>
 		<select name="status" required>
-			<option selected>Open</option>
-			<option>Closed</option>
+			<option value="open" selected>Open</option>
+			<option value="closed">Closed</option>
 		</select>
 		<label for="voting_status">Voting status</label>
 		<select name="voting_status" required>
-			<option selected>Open</option>
-			<option>Closed</option>
+			<option value="open" selected>Open</option>
+			<option value="closed">Closed</option>
 		</select>
 		<button id="submit_new_debate">Create new debate</button>
 	</form>
