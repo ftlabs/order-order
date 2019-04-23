@@ -18,7 +18,11 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/create_debate", (req, res) => {
-  res.render("admin/create_debate");
+  const username =
+    req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
+  res.render("admin/create_debate", {
+    username: username
+  });
 });
 
 router.get("/edit_debate", async (req, res) => {

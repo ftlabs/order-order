@@ -1,4 +1,4 @@
-function render(req, res, data) {
+function display(req, res, data) {
   let commentsFor = [];
   let commentsAgainst = [];
   const debate = data.debate;
@@ -21,4 +21,4 @@ function render(req, res, data) {
   });
 }
 
-module.exports = { render };
+module.exports = { display };

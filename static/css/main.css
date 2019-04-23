@@ -8,16 +8,3 @@ header {
   padding: 8px;
   text-align: right;
 }
-
-/*
-  Misc
-*/
-.hide {
-  display: none;
-}
-.float-left {
-  float: left;
-}
-.float-right {
-  float: right;
-}
