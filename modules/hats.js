@@ -1,6 +1,6 @@
 const comments = require("../helpers/comments");
 
-function render(req, res, data) {
+function display(req, res, data) {
   const debate = data.debate;
 
   if (debate.comments) {
@@ -13,4 +13,4 @@ function render(req, res, data) {
   res.render(debate.debateType, data);
 }
 
-module.exports = { render };
+module.exports = { display };

@@ -1,4 +1,4 @@
-function render(req, res, data) {
+function display(req, res, data) {
   const debate = data.debate;
 
   console.log(debate);
@@ -10,4 +10,4 @@ function render(req, res, data) {
   });
 }
 
-module.exports = { render };
+module.exports = { display };
