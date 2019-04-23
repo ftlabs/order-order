@@ -25,14 +25,14 @@ router.get("/create_debate", (req, res) => {
   });
 });
 
-router.get("/edit_debate", async (req, res) => {
+router.get("/edit_debate/:debate_uuid", async (req, res) => {
   const username =
     req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
   try {
-    let debateList = await dynamo_db.getAllDebateLists();
+    const debate = await dynamo_db.getById(req.params.debate_uuid);
     res.render("admin/edit_debate", {
       username: username,
-      debateList: debateList
+      debate: debate
     });
   } catch (err) {
     console.error(err);

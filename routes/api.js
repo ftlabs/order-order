@@ -7,11 +7,11 @@ router.post("/debate/create", async (req, res) => {
     const data = req.body;
 
     if (
-      !data.name ||
-      !data.seriesId ||
       !data.type ||
       !data.title ||
-      !data.description
+      !data.description ||
+      !data.status ||
+      !data.voting_status
     ) {
       res.json({
         status: "error",
@@ -24,20 +24,12 @@ router.post("/debate/create", async (req, res) => {
     const timestamp = new Date().getTime();
     const params = {
       Item: {
-        name: data.name,
-        seriesId: data.seriesId,
+        title: data.title,
+        description: data.description,
         debateType: data.type,
-        permitted: [],
-        restricted: [],
-        specialUsers: [],
         comments: [],
-        starter: [
-          { type: "title", text: data.title },
-          { type: "description", text: data.description }
-        ],
-        state: [],
-        teams: [],
-        votes: [],
+        status: [],
+        voting_status: [],
         createdAt: timestamp,
         updatedAt: timestamp
       }

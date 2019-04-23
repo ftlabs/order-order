@@ -8,41 +8,27 @@
 	<h2>
 		Edit Debate
 	</h2>
-	<form id="form_new_debate">
+	<form id="form_edit_debate">
 		<div id="msg_error" class="error hide"></div>
 		<label for="type">Debate type</label>
-		<select name="type" required>
+		<select name="type" required disabled>
 			<option selected value="structured">Structured debate</option>
-			<option value="hats">Hats</option>
-			<option value="interview">Interview</option>
 		</select>
-		<label for="name">Name</label>
-		<input type="text" name="name" placeholder="Name" required />
-		<fieldset>
-			<legend>Information that is publicly visible on the page</legend>
-			<label for="title">Title</label>
-			<input type="text" name="title" placeholder="Title" required />
-			<label for="debateDescription">Description</label>
-			<input type="text" name="debateDescription" placeholder="Description" required />
-		</fieldset>
-		<label for="seriesId">Series Order</label>
-		<div class="additional-info">If this debate is part of a series, select the order it should appear in</div>
-		<select name="seriesId" required>
-			<option selected>1</option>
-			<option>2</option>
-			<option>3</option>
+		<label for="title">Title</label>
+		<input type="text" name="title" placeholder="Title" value="{{debate.title}}" required />
+		<label for="debateDescription">Description</label>
+		<input type="text" name="debateDescription" placeholder="Description" value="{{debate.description}}" required />
+		<label for="status">Status</label>
+		<select name="status" required>
+			<option value="open" {{#if debate.status == 'open'}} selected {{/if}}>Open</option>
+			<option value="closed" {{#if debate.status == 'closed'}} selected {{/if}}>Closed</option>
 		</select>
-		<label for="state_open">Open?</label>
-		<select name="state_open" required>
-			<option selected>Open</option>
-			<option>Closed</option>
+		<label for="voting_status">Voting status</label>
+		<select name="voting_status" required>
+			<option value="open" {{#if debate.status == 'open'}} selected {{/if}}>Open</option>
+			<option value="closed" {{#if debate.status == 'closed'}} selected {{/if}}>Closed</option>
 		</select>
-		<label for="state_votable">Votable?</label>
-		<select name="state_votable" required>
-			<option selected>True</option>
-			<option>False</option>
-		</select>
-		<button id="submit_new_debate">Update debate</button>
+		<button id="submit_edit_debate">Update debate</button>
 	</form>
 </main>
 
