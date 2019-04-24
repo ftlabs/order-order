@@ -4,8 +4,8 @@ function display(req, res, data) {
   console.log(debate);
 
   res.render(debate.debateType, {
-    title: debate.starter.title,
-    description: debate.starter.description,
+    title: debate.title,
+    description: debate.description,
     user: data.user
   });
 }

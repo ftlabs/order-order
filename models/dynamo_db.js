@@ -108,8 +108,10 @@ async function getDebateList(type) {
         };
       }
 
-      debates[item.debateType].debates.push(item.name);
+      debates[item.debateType].debates.push(item);
     });
+
+    console.log(debates);
 
     return debates;
   }
