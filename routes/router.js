@@ -50,12 +50,11 @@ router.get("/type/:debateType", async (req, res) => {
   }
 });
 
-router.get("/:debateType/:debateName/:seriesId?", async (req, res) => {
+router.get("/:debateType/:debateId", async (req, res) => {
   try {
-    const { debateName } = req.params;
-    const seriesId = req.params.seriesId ? req.params.seriesId : 1;
+    const { debateType, debateId } = req.params;
 
-    const result = await dynamo_db.getById(debateName, seriesId);
+    const result = await dynamo_db.getById(debateId);
     const starterTemp = result["Item"].starter;
     result["Item"].starter = [];
 

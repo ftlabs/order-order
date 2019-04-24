@@ -24,13 +24,14 @@ async function getAll() {
   return { error: queryStatement.result };
 }
 
-async function getById(name, seriesId) {
+async function getById(debateId) {
   const params = {
     Key: {
-      name: name,
-      seriesId: String(seriesId)
+      id: debateId
     }
   };
+
+  console.log(params);
 
   let queryStatement = await query("get", params);
 
@@ -75,7 +76,7 @@ async function getAllDebateLists() {
         };
       }
 
-      debates[item.debateType].debates.push(item.name);
+      debates[item.debateType].debates.push(item);
     });
 
     return debates;
