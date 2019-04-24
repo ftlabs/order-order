@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node index.js",
+    "dev": "obt b --sass='./sass/main.scss' --build-folder='./static/css/' --build-css='main.css' --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
