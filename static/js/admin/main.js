@@ -13,12 +13,10 @@ function submitForm(e) {
 
   var errors = [];
   var type = document.getElementsByName("type")[0].value;
-  var name = document.getElementsByName("name")[0].value;
   var title = document.getElementsByName("title")[0].value;
   var description = document.getElementsByName("debateDescription")[0].value;
-  var seriesId = document.getElementsByName("seriesId")[0].value;
-  var state_open = document.getElementsByName("state_open")[0].value;
-  var state_votable = document.getElementsByName("state_votable")[0].value;
+  var status = document.getElementsByName("status")[0].value;
+  var voting_status = document.getElementsByName("voting_status")[0].value;
 
   if (isAlphaNumericWithCharacters(title)) {
     errors.push("Title must be alphanumeric or allowed chars (,_\"-') ");
@@ -30,12 +28,10 @@ function submitForm(e) {
 
   var data = {
     type,
-    name,
     title,
     description,
-    seriesId,
-    state_open,
-    state_votable
+    status,
+    voting_status
   };
 
   // Checking fields have at least some value
