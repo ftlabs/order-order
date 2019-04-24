@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const uuidv1 = require("uuid/v1");
 const dynamo_db = require("../models/dynamo_db");
 
 router.post("/debate/create", async (req, res) => {
@@ -21,9 +22,11 @@ router.post("/debate/create", async (req, res) => {
       return;
     }
 
+    const uuid = uuidv1();
     const timestamp = new Date().getTime();
     const params = {
       Item: {
+        id: uuid,
         title: data.title,
         description: data.description,
         debateType: data.type,

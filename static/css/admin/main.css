@@ -16,8 +16,11 @@ h2 {
 nav {
   background-color: white;
   position: relative;
-  padding: 15px;
   width: 100%;
+}
+
+.nav-contents {
+  padding: 15px;
 }
 
 nav a {
@@ -95,8 +98,12 @@ fieldset {
   border: 1px solid grey;
 }
 
-.list-debates tr:nth-child(odd) {
+table tr:nth-child(odd) {
   background: white;
+}
+
+table tr:nth-child(even) {
+  background: lightgray;
 }
 
 .list-debates td {
@@ -105,4 +112,8 @@ fieldset {
 
 .list-debates td:first-of-type {
   width: 220px;
+}
+
+thead {
+  text-align: left;
 }
