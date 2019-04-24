@@ -5,9 +5,9 @@
 <body>
     {{> user/header username=user.username }}
     <main>
-        <h1>{{ starter.title }}</h1>
+        <h1>{{ title }}</h1>
         <p>
-            {{ starter.description }}
+            {{ description }}
         </p>
         <form id="request_access">
             <input type='hidden' id="request_access_username" value="{{ user.username }}" />

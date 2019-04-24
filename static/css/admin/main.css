@@ -16,8 +16,11 @@ h2 {
 nav {
   background-color: white;
   position: relative;
-  padding: 15px;
   width: 100%;
+}
+
+.nav-contents {
+  padding: 15px;
 }
 
 nav a {
@@ -48,6 +51,10 @@ input,
 select {
   font-size: 14px;
   margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
 }
 
 button {
@@ -85,4 +92,28 @@ fieldset {
   line-height: 16px;
   color: #66605c;
   display: block;
+}
+
+.list-debates {
+  border: 1px solid grey;
+}
+
+table tr:nth-child(odd) {
+  background: white;
+}
+
+table tr:nth-child(even) {
+  background: lightgray;
+}
+
+.list-debates td {
+  width: 60px;
+}
+
+.list-debates td:first-of-type {
+  width: 220px;
+}
+
+thead {
+  text-align: left;
 }

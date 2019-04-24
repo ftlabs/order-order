@@ -13,8 +13,8 @@ function display(req, res, data) {
   }
 
   res.render(debate.debateType, {
-    title: debate.starter.title,
-    description: debate.starter.description,
+    title: debate.title,
+    description: debate.description,
     commentsFor,
     commentsAgainst,
     user: data.user
