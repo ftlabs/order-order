@@ -26,14 +26,13 @@ async function getAll() {
 
 async function getById(debateId) {
   const params = {
-    Key: {
-      id: debateId
+    KeyConditionExpression: "id = :debateId",
+    ExpressionAttributeValues: {
+      ":debateId": debateId
     }
   };
 
-  console.log(params);
-
-  let queryStatement = await query("get", params);
+  let queryStatement = await query("query", params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -148,6 +147,8 @@ async function query(type, params) {
       result = await dynamoDb.scan(allParams).promise();
     } else if (type === "put") {
       result = await dynamoDb.put(allParams).promise();
+    } else if (type === "query") {
+      result = await dynamoDb.query(allParams).promise();
     }
 
     if (result.hasOwnProperty("Items") || result.hasOwnProperty("Item")) {

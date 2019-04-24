@@ -8,6 +8,7 @@
 	<h2>
 		Edit Debate
 	</h2>
+	{{#if debate}}
 	<form id="form_edit_debate">
 		<div id="msg_error" class="error hide"></div>
 		<label for="type">Debate type</label>
@@ -20,16 +21,17 @@
 		<input type="text" name="debateDescription" placeholder="Description" value="{{debate.description}}" required />
 		<label for="status">Status</label>
 		<select name="status" required>
-			<option value="open" {{#if debate.status == 'open'}} selected {{/if}}>Open</option>
-			<option value="closed" {{#if debate.status == 'closed'}} selected {{/if}}>Closed</option>
+			<option value="open" selected}>Open</option>
+			<option value="closed">Closed</option>
 		</select>
 		<label for="voting_status">Voting status</label>
 		<select name="voting_status" required>
-			<option value="open" {{#if debate.status == 'open'}} selected {{/if}}>Open</option>
-			<option value="closed" {{#if debate.status == 'closed'}} selected {{/if}}>Closed</option>
+			<option value="open" selected>Open</option>
+			<option value="closed">Closed</option>
 		</select>
 		<button id="submit_edit_debate">Update debate</button>
 	</form>
+	{{/if}}
 </main>
 
 {{> admin/footer}}
