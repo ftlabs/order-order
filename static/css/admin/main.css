@@ -23,6 +23,7 @@ nav {
   padding: 15px;
 }
 
+nav span,
 nav a {
   padding-right: 20px;
   text-decoration: none;
