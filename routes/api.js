@@ -6,6 +6,7 @@ const dynamo_db = require("../models/dynamo_db");
 router.post("/debate/create", async (req, res) => {
   try {
     const data = req.body;
+    const timestamp = new Date().getTime();
 
     if (
       !data.debate_type ||
@@ -22,22 +23,12 @@ router.post("/debate/create", async (req, res) => {
       return;
     }
 
-    const uuid = uuidv1();
-    const timestamp = new Date().getTime();
-    const params = {
-      Item: {
-        id: uuid,
-        title: data.title,
-        description: data.description,
-        debateType: data.debate_type,
-        comments: [],
-        status: data.debate_status,
-        voting_status: data.voting_status,
-        createdAt: timestamp,
-        updatedAt: timestamp
-      }
-    };
-    const debate = await dynamo_db.addDebate(params);
+    data.id = uuidv1();
+    data.timestamp = new Date().getTime();
+    data.createdAt = timestamp;
+    data.updatedAt = timestamp;
+
+    const debate = await dynamo_db.addDebate(data);
     res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
@@ -65,24 +56,9 @@ router.post("/debate/edit", async (req, res) => {
       res.end();
     }
 
-    const timestamp = new Date().getTime();
-    const params = {
-      Key: {
-        id: data.id
-      },
-      UpdateExpression:
-        "set title=:t, description=:d, debate_status=:s, voting_status=:vs, updatedAt=:u",
-      ExpressionAttributeValues: {
-        ":t": data.title,
-        ":d": data.description,
-        ":s": data.debate_status,
-        ":vs": data.voting_status,
-        ":u": timestamp
-      },
-      ReturnValues: "UPDATED_NEW"
-    };
+    data.timestamp = new Date().getTime();
 
-    const debate = await dynamo_db.editDebate(params);
+    const debate = await dynamo_db.editDebate(data);
     res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
