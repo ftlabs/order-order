@@ -11,6 +11,7 @@
 	{{#if debate}}
 	<form id="form_edit_debate">
 		<div id="msg_error" class="error hide"></div>
+		<input type="text" name="id" value="{{debate.id}}" disabled required />
 		<label for="type">Debate type</label>
 		<select name="type" required disabled>
 			<option selected value="structured">Structured debate</option>
