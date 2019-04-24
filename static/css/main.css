@@ -69,20 +69,44 @@ fieldset {
   display: block; }
 
 .list-debates {
-  border: 1px solid grey; }
+  border-bottom: 1px solid grey; }
   .list-debates td {
     width: 60px; }
     .list-debates td:first-of-type {
       width: 220px; }
 
-table tr:nth-child(odd) {
-  background: white; }
-
-table tr:nth-child(even) {
-  background: lightgray; }
-
-table thead {
-  text-align: left; }
+body {
+  font-family: MetricWeb, sans-serif; }
 
 .hide {
   display: none; }
+
+.profile {
+  width: 30px;
+  height: 30px;
+  background: #0D7680;
+  border-radius: 50%;
+  overflow: hidden;
+  font-size: 0;
+  display: inline-block;
+  vertical-align: middle;
+  border-color: transparent;
+  border: 1px solid #0D7680; }
+  .profile:before {
+    content: '';
+    display: block;
+    width: 13px;
+    height: 13px;
+    margin: 5px auto;
+    background: #F2DFCE;
+    border-radius: 50%;
+    overflow: hidden; }
+  .profile:after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: -2px 0;
+    background: #F2DFCE;
+    border-radius: 50%;
+    overflow: hidden; }

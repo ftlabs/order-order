@@ -3,6 +3,45 @@
 
 @import "admin/main";
 
+body {
+	font-family: MetricWeb, sans-serif;
+}
+
 .hide {
   display: none;
+}
+
+.profile {
+	width: 30px;
+    height: 30px;
+    background: $o-color-teal;
+    border-radius: 50%;
+    overflow: hidden;
+    font-size: 0;
+    display: inline-block;
+    vertical-align: middle;
+    border-color:transparent;
+    border: 1px solid $o-color-teal;
+
+    &:before {
+    	content:'';
+    	display: block;
+    	width: 13px;
+		height: 13px;
+		margin: 5px auto;
+		background: $o-color-wheat;
+		border-radius: 50%;
+		overflow: hidden;
+    }
+
+    &:after {
+    	content: '';
+	    display: block;
+	    width: 30px;
+	    height: 30px;
+	    margin: -2px 0;
+	    background: $o-color-wheat;
+	    border-radius: 50%;
+	    overflow: hidden;
+    }
 }

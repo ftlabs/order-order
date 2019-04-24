@@ -7,42 +7,40 @@
 	{{#if debateList}}
 	{{#each debateList}}
 	<h3>{{ debateTypeName }}</h3>
-	<table class="list-debates">
+	<table class="list-debates o-table  o-table--row-stripes" data-o-component="o-table">
 		<thead>
-			<th>
-				Name
-			</th>
-			<th>
-				Status
-			</th>
-			<th>
-				Voting
-			</th>
+			<tr>
+				<th scope="col" role="columnheader"> Name </th>
+				<th scope="col" role="columnheader"> Status </th>
+				<th scope="col" role="columnheader"> Voting </th>
+			</tr>
 		</thead>
 		{{#if debates}}
-		{{#each debates}}
-		<tr>
-			<td>
-				{{ this.title }}
-			</td>
-			<td>
-				{{this.debateStatus}}
-			</td>
-			<td>
-				{{this.votingStatus}}
-			</td>
-			<td>
-				<a href="/{{ ../debateTypeName }}/{{ this.id }}">view</a>
-			</td>
-			<td>
-				<a href="/admin/edit_debate/{{ this.id }}">edit</a>
-			</td>
-		</tr>
-		{{/each}}
+		<tbody>
+			{{#each debates}}
+			<tr>
+				<td>
+					{{ this.title }}
+				</td>
+				<td>
+					{{this.debateStatus}}
+				</td>
+				<td>
+					{{this.votingStatus}}
+				</td>
+				<td>
+					<a href="/{{ ../debateTypeName }}/{{ this.id }}">view</a>
+				</td>
+				<td>
+					<a href="/admin/edit_debate/{{ this.id }}">edit</a>
+				</td>
+			</tr>
+			{{/each}}
+		</tbody>
 		{{/if}}
 	</table>
 	{{/each}}
 	{{/if}}
 </main>
 
-{{> admin/footer}}
+{{> footer type="admin"}}
