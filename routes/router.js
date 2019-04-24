@@ -35,6 +35,7 @@ router.get("/type/:debateType", async (req, res) => {
   try {
     const { debateType } = req.params;
     let debateList = await dynamo_db.getDebateList(debateType);
+
     res.render("list", {
       pageTitle: `Debates: ${debateType}`,
       pageSubtitle: `List of all ${debateType} type debates`,
@@ -50,28 +51,20 @@ router.get("/type/:debateType", async (req, res) => {
   }
 });
 
-router.get("/:debateType/:debateName/:seriesId?", async (req, res) => {
+router.get("/:debateType/:debateId", async (req, res) => {
   try {
-    const { debateName } = req.params;
-    const seriesId = req.params.seriesId ? req.params.seriesId : 1;
-
-    const result = await dynamo_db.getById(debateName, seriesId);
-    const starterTemp = result["Item"].starter;
-    result["Item"].starter = [];
-
-    starterTemp.forEach(starter => {
-      result["Item"].starter[starter.type] = starter.text;
-    });
+    const { debateType, debateId } = req.params;
+    const result = await dynamo_db.getById(debateId);
 
     const data = {
-      debate: result["Item"],
+      debate: result.Items[0],
       user: {
         username: req.cookies.s3o_username
       }
     };
 
     const moduleType = require(path.resolve(
-      `${listing.getRootDir()}/modules/${data.debate.debateType}`
+      `${listing.getRootDir()}/modules/${debateType}`
     ));
 
     moduleType.display(req, res, data);

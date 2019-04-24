@@ -15,7 +15,7 @@
 	<ul>
 		{{#each debates}}
 		<li>
-			<a href="/{{ ../debateTypeName }}/{{ this }}">{{ this }}</a>
+			<a href="/{{ ../debateTypeName }}/{{ this.id }}">{{ this.title }}</a>
 		</li>
 		{{/each}}
 	</ul>
