@@ -14,6 +14,17 @@ async function addDebate(params) {
   return { error: queryStatement.result };
 }
 
+async function editDebate(params) {
+  let queryStatement = await query("update", params);
+
+  if (queryStatement.result) {
+    console.log(queryStatement.result);
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement.result };
+}
+
 async function getAll() {
   let queryStatement = await query("scan", {});
 
@@ -141,14 +152,22 @@ async function query(type, params) {
 
     const allParams = Object.assign(baseParams, params);
 
-    if (type === "get") {
-      result = await dynamoDb.get(allParams).promise();
-    } else if (type === "scan") {
-      result = await dynamoDb.scan(allParams).promise();
-    } else if (type === "put") {
-      result = await dynamoDb.put(allParams).promise();
-    } else if (type === "query") {
-      result = await dynamoDb.query(allParams).promise();
+    switch (type) {
+      case "get":
+        result = await dynamoDb.get(allParams).promise();
+        break;
+      case "scan":
+        result = await dynamoDb.scan(allParams).promise();
+        break;
+      case "put":
+        result = await dynamoDb.put(allParams).promise();
+        break;
+      case "query":
+        result = await dynamoDb.query(allParams).promise();
+        break;
+      case "update":
+        result = await dynamoDb.update(allParams).promise();
+        break;
     }
 
     if (result.hasOwnProperty("Items") || result.hasOwnProperty("Item")) {
@@ -164,6 +183,7 @@ async function query(type, params) {
 
 module.exports = {
   addDebate,
+  editDebate,
   getAll,
   getById,
   getAllTypes,

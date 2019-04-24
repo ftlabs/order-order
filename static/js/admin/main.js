@@ -1,4 +1,5 @@
 var formNewDebate = document.getElementById("form_new_debate");
+var formEditDebate = document.getElementById("form_edit_debate");
 var msgError = document.getElementById("msg_error");
 var msgStatus = document.getElementById("msg_status");
 
@@ -6,16 +7,26 @@ function init() {
   if (formNewDebate) {
     formNewDebate.addEventListener("submit", submitForm);
   }
+
+  if (formEditDebate) {
+    formEditDebate.addEventListener("submit", submitForm);
+  }
 }
 
 function submitForm(e) {
   e.preventDefault();
 
+  var url = "create";
+
+  if (formEditDebate && e.target.id === formEditDebate.id) {
+    url = "edit";
+  }
+
   var errors = [];
-  var type = document.getElementsByName("type")[0].value;
+  var debate_type = document.getElementsByName("type")[0].value;
   var title = document.getElementsByName("title")[0].value;
   var description = document.getElementsByName("debateDescription")[0].value;
-  var status = document.getElementsByName("status")[0].value;
+  var debate_status = document.getElementsByName("status")[0].value;
   var voting_status = document.getElementsByName("voting_status")[0].value;
 
   if (isAlphaNumericWithCharacters(title)) {
@@ -27,10 +38,10 @@ function submitForm(e) {
   }
 
   var data = {
-    type,
+    debate_type,
     title,
     description,
-    status,
+    debate_status,
     voting_status
   };
 
@@ -50,14 +61,21 @@ function submitForm(e) {
   } else {
     try {
       var promise = new Promise((resolve, reject) => {
-        resolve(submitData("/api/debate/create", data));
+        resolve(submitData(`/api/debate/${url}`, data));
       });
       promise.then(response => {
         if (response.status === "error") {
           reportError(`Issue with fetch: ${response.data}`);
         } else if (response.status === "ok") {
           reportStatus("New debate added");
-          clearForm();
+
+          if (url === "edit") {
+            reportStatus("Debate edited");
+            location.reload();
+          } else {
+            reportStatus("New debate added");
+            clearForm();
+          }
         }
       });
     } catch (error) {

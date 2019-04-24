@@ -8,10 +8,10 @@ router.post("/debate/create", async (req, res) => {
     const data = req.body;
 
     if (
-      !data.type ||
+      !data.debate_type ||
       !data.title ||
       !data.description ||
-      !data.status ||
+      !data.debate_status ||
       !data.voting_status
     ) {
       res.json({
@@ -29,15 +29,60 @@ router.post("/debate/create", async (req, res) => {
         id: uuid,
         title: data.title,
         description: data.description,
-        debateType: data.type,
+        debateType: data.debate_type,
         comments: [],
-        status: data.status,
+        status: data.debate_status,
         voting_status: data.voting_status,
         createdAt: timestamp,
         updatedAt: timestamp
       }
     };
     const debate = await dynamo_db.addDebate(params);
+    res.send(JSON.stringify(debate));
+  } catch (err) {
+    console.error(err);
+    res
+      .status(404)
+      .send("Sorry can't find that! Issue with POST /debate/create");
+  }
+});
+
+router.post("/debate/edit", async (req, res) => {
+  try {
+    const data = req.body;
+
+    if (
+      !data.id ||
+      !data.title ||
+      !data.description ||
+      !data.debate_status ||
+      !data.voting_status
+    ) {
+      res.json({
+        status: "error",
+        msg: "Missing all required POST vars"
+      });
+      res.end();
+    }
+
+    const timestamp = new Date().getTime();
+    const params = {
+      Key: {
+        id: data.id
+      },
+      UpdateExpression:
+        "set title=:t, description=:d, debate_status=:s, voting_status=:vs, updatedAt=:u",
+      ExpressionAttributeValues: {
+        ":t": data.title,
+        ":d": data.description,
+        ":s": data.debate_status,
+        ":vs": data.voting_status,
+        ":u": timestamp
+      },
+      ReturnValues: "UPDATED_NEW"
+    };
+
+    const debate = await dynamo_db.editDebate(params);
     res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
