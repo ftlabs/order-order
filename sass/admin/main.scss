@@ -87,7 +87,6 @@ fieldset {
 }
 
 .list-debates {
-    border: 1px solid grey;
     td {
         width: 60px;
 
@@ -95,20 +94,6 @@ fieldset {
             width: 220px;
         }
     }
-}
 
-table {
-    tr {
-        &:nth-child(odd) {
-            background: white;
-        }
-
-        &:nth-child(even) {
-            background: lightgray;
-        }
-    }
-
-    thead {
-        text-align: left;
-    }
+    border-bottom: 1px solid grey;
 }
