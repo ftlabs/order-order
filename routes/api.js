@@ -1,9 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const uuidv1 = require("uuid/v1");
-const dynamo_db = require("../models/dynamo_db");
+const uuidv1 = require('uuid/v1');
+const dynamo_db = require('../models/dynamo_db');
 
-router.post("/debate/create", async (req, res) => {
+router.post('/debate/create', async (req, res) => {
   try {
     const data = req.body;
 
@@ -15,8 +15,8 @@ router.post("/debate/create", async (req, res) => {
       !data.voting_status
     ) {
       res.json({
-        status: "error",
-        msg: "Missing all required POST vars"
+        status: 'error',
+        msg: 'Missing all required POST vars',
       });
       res.end();
       return;
@@ -34,8 +34,8 @@ router.post("/debate/create", async (req, res) => {
         status: data.status,
         voting_status: data.voting_status,
         createdAt: timestamp,
-        updatedAt: timestamp
-      }
+        updatedAt: timestamp,
+      },
     };
     const debate = await dynamo_db.addDebate(params);
     res.send(JSON.stringify(debate));
@@ -47,22 +47,32 @@ router.post("/debate/create", async (req, res) => {
   }
 });
 
-router.get("/debate/:name/:seriesId", async (req, res) => {
+router.get('/debate/:uuid', async (req, res) => {
+  const { uuid } = req.params;
   try {
-    const { name, seriesId } = req.params;
-    const debate = await dynamo_db.getById(name, seriesId);
+    const debate = await dynamo_db.getById(uuid);
     res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
     res
       .status(404)
-      .send(
-        `Sorry can't find that! Issue with GET /debate/${name}/${seriesId}`
-      );
+      .send(`Sorry can't find that! Issue with GET /debate/${uuid}`);
   }
 });
 
-router.get("/debate/types", async (req, res) => {
+router.put('/debate/:uuid', async (req, res) => {
+  const { uuid } = req.params;
+  const data = req.body;
+  try {
+    const result = await dynamo_db.updateDebate(uuid, data);
+    res.send(JSON.stringify(result));
+  } catch (err) {
+    console.error(err);
+    res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
+  }
+});
+
+router.get('/debate/types', async (req, res) => {
   try {
     const allDebateTypes = await dynamo_db.getAllTypes();
     res.send(JSON.stringify(allDebateTypes));
