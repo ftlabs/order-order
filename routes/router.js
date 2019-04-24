@@ -36,7 +36,6 @@ router.get("/type/:debateType", async (req, res) => {
     const { debateType } = req.params;
     let debateList = await dynamo_db.getDebateList(debateType);
 
-    console.log(debateList);
     res.render("list", {
       pageTitle: `Debates: ${debateType}`,
       pageSubtitle: `List of all ${debateType} type debates`,
