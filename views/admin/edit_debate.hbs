@@ -1,4 +1,4 @@
-{{> admin/header title='Admin create new debate' subtitle='Admin section' }}
+{{> admin/header title='Admin edit new debate' subtitle='Admin section' }}
 
 <div id="msg_status" class="status hide">
 	Messages go here
@@ -19,10 +19,10 @@
 		<input type="text" name="title" placeholder="Title" value="{{debate.title}}" required />
 		<label for="debateDescription">Description</label>
 		<input type="text" name="debateDescription" placeholder="Description" value="{{debate.description}}" required />
-		<label for="status">Status</label>
+		<label for="status">Status</label>{{debate.status}}
 		<select name="status" required>
-			<option value="open" selected}>Open</option>
-			<option value="closed">Closed</option>
+			<option value="open" {{#ifEquals debate.status "open"}}selected{{/ifEquals}}>Open</option>
+			<option value="closed" {{#ifEquals debate.status "closed"}}selected{{/ifEquals}}>Closed</option>
 		</select>
 		<label for="voting_status">Voting status</label>
 		<select name="voting_status" required>
