@@ -173,7 +173,7 @@ async function getAllReports() {
   return { error: queryStatement.result };
 }
 
-async function query(type, params) {
+async function query(type = "query", params) {
   try {
     let baseParams = {
       TableName: process.env.DEBATE_TABLE
