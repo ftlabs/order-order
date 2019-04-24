@@ -26,7 +26,7 @@ function submitForm(e) {
   var debate_type = document.getElementsByName("type")[0].value;
   var title = document.getElementsByName("title")[0].value;
   var description = document.getElementsByName("debateDescription")[0].value;
-  var debate_status = document.getElementsByName("status")[0].value;
+  var debate_status = document.getElementsByName("debate_status")[0].value;
   var voting_status = document.getElementsByName("voting_status")[0].value;
 
   if (isAlphaNumericWithCharacters(title)) {
@@ -44,6 +44,11 @@ function submitForm(e) {
     debate_status,
     voting_status
   };
+
+  if (formEditDebate && e.target.id === formEditDebate.id) {
+    var debate_id = document.getElementsByName("id")[0].value;
+    data.id = debate_id;
+  }
 
   // Checking fields have at least some value
   for (var k in data) {
@@ -67,11 +72,8 @@ function submitForm(e) {
         if (response.status === "error") {
           reportError(`Issue with fetch: ${response.data}`);
         } else if (response.status === "ok") {
-          reportStatus("New debate added");
-
           if (url === "edit") {
             reportStatus("Debate edited");
-            location.reload();
           } else {
             reportStatus("New debate added");
             clearForm();

@@ -44,6 +44,7 @@ router.post("/debate/edit", async (req, res) => {
 
     if (
       !data.id ||
+      !data.debate_type ||
       !data.title ||
       !data.description ||
       !data.debate_status ||
@@ -54,12 +55,14 @@ router.post("/debate/edit", async (req, res) => {
         msg: "Missing all required POST vars"
       });
       res.end();
+      return;
     }
 
     data.timestamp = new Date().getTime();
 
     const debate = await dynamo_db.editDebate(data);
-    res.send(JSON.stringify(debate));
+
+    res.json({ status: "ok" });
   } catch (err) {
     console.error(err);
     res
