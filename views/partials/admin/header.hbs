@@ -14,9 +14,23 @@
 		<div class="nav-contents">
 			<h1>FT Debate admin</h1>
 			<div>
+				{{#ifEquals page "dashboard"}}
+				<span>Dashboard</span>
+				{{else}}
 				<a href="/admin">Dashboard</a>
+				{{/ifEquals}}
+
+				{{#ifEquals page "create"}}
+				<span>Create debate</span>
+				{{else}}
 				<a href="/admin/create_debate">Create debate</a>
+				{{/ifEquals}}
+
+				{{#ifEquals page "moderation"}}
+				<span>Moderation</span>
+				{{else}}
 				<a href="/admin/moderation">Moderation</a>
+				{{/ifEquals}}
 			</div>
 		</div>
 	</nav>
