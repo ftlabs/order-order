@@ -3,16 +3,18 @@ const dotenv = require('dotenv').config({
 });
 
 const PORT = process.env.PORT || 9090;
-const package = require('./package.json');
-const debug = require('debug')(`${package.name}:index`);
-const express = require('express');
-const path = require('path');
+
+const package = require("./package.json");
+const debug = require("debug")(`${package.name}:index`);
+const express = require("express");
+const hbs = require("express-hbs");
+const path = require("path");
 const app = express();
-const hbs = require('express-hbs');
-const helmet = require('helmet');
-const express_enforces_ssl = require('express-enforces-ssl');
-const bodyParser = require('body-parser');
-const core_routes = require('./routes/router');
+const helmet = require("helmet");
+const express_enforces_ssl = require("express-enforces-ssl");
+const bodyParser = require("body-parser");
+const core_routes = require("./routes/router");
+const hbs_helpers = require("./utils/hbs-helpers");
 
 if (!PORT) {
   throw new Error('ERROR: PORT not specified in env');
@@ -34,8 +36,10 @@ app.engine(
   }),
 );
 
-app.set('view engine', 'hbs');
-app.set('views', __dirname + '/views');
+hbs_helpers.registerHelpers(hbs);
+
+app.set("view engine", "hbs");
+app.set("views", __dirname + "/views");
 
 let requestLogger = function(req, res, next) {
   debug('RECEIVED REQUEST:', req.method, req.url);
