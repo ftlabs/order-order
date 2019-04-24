@@ -24,15 +24,15 @@ async function getAll() {
   return { error: queryStatement.result };
 }
 
-async function getById(name, seriesId) {
+async function getById(debateId) {
   const params = {
-    Key: {
-      name: name,
-      seriesId: String(seriesId)
+    KeyConditionExpression: "id = :debateId",
+    ExpressionAttributeValues: {
+      ":debateId": debateId
     }
   };
 
-  let queryStatement = await query("get", params);
+  let queryStatement = await query("query", params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -75,7 +75,7 @@ async function getAllDebateLists() {
         };
       }
 
-      debates[item.debateType].debates.push(item.name);
+      debates[item.debateType].debates.push(item);
     });
 
     return debates;
@@ -108,10 +108,25 @@ async function getDebateList(type) {
         };
       }
 
-      debates[item.debateType].debates.push(item.name);
+      debates[item.debateType].debates.push(item);
     });
 
     return debates;
+  }
+
+  return { error: queryStatement.result };
+}
+
+async function getAllReports() {
+  const params = {
+    //TODO
+  };
+
+  let queryStatement = await query("scan", params);
+  const types = [];
+
+  if (queryStatement.result) {
+    // TODO: list all content with reports
   }
 
   return { error: queryStatement.result };
@@ -132,6 +147,8 @@ async function query(type, params) {
       result = await dynamoDb.scan(allParams).promise();
     } else if (type === "put") {
       result = await dynamoDb.put(allParams).promise();
+    } else if (type === "query") {
+      result = await dynamoDb.query(allParams).promise();
     }
 
     if (result.hasOwnProperty("Items") || result.hasOwnProperty("Item")) {
@@ -151,5 +168,6 @@ module.exports = {
   getById,
   getAllTypes,
   getDebateList,
-  getAllDebateLists
+  getAllDebateLists,
+  getAllReports
 };
