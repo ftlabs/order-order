@@ -10,10 +10,10 @@ async function addDebate(data) {
       id: data.id,
       title: data.title,
       description: data.description,
-      debateType: data.debate_type,
+      debateType: data.debateType,
       comments: [],
-      debate_status: data.debate_status,
-      voting_status: data.voting_status,
+      debateStatus: data.debateStatus,
+      votingStatus: data.votingStatus,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt
     }
@@ -25,7 +25,9 @@ async function addDebate(data) {
     return queryStatement.result;
   }
 
-  return { error: queryStatement.result };
+  console.log("queryStatement");
+
+  return { error: queryStatement };
 }
 
 async function editDebate(data) {
@@ -34,12 +36,12 @@ async function editDebate(data) {
       id: String(data.id)
     },
     UpdateExpression:
-      "set title=:t, description=:d, debate_status=:s, voting_status=:vs, updatedAt=:u",
+      "set title=:t, description=:d, debateStatus=:s, votingStatus=:vs, updatedAt=:u",
     ExpressionAttributeValues: {
       ":t": data.title,
       ":d": data.description,
-      ":s": data.debate_status,
-      ":vs": data.voting_status,
+      ":s": data.debateStatus,
+      ":vs": data.votingStatus,
       ":u": data.timestamp
     },
     ReturnValues: "UPDATED_NEW"
@@ -51,7 +53,7 @@ async function editDebate(data) {
     return queryStatement.result;
   }
 
-  return { error: queryStatement.result };
+  return { error: queryStatement };
 }
 
 async function getAll() {
@@ -61,7 +63,7 @@ async function getAll() {
     return queryStatement.result;
   }
 
-  return { error: queryStatement.result };
+  return { error: queryStatement };
 }
 
 async function getById(debateId) {
@@ -81,6 +83,23 @@ async function getById(debateId) {
   return { error: queryStatement.result };
 }
 
+async function getBy(attribute, value) {
+  const params = {
+    FilterExpression: `${attribute} = :v`,
+    ExpressionAttributeValues: {
+      ":v": value
+    }
+  };
+
+  let queryStatement = await query("scan", params);
+
+  if (queryStatement.result) {
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement };
+}
+
 async function getAllTypes() {
   const params = {
     ProjectionExpression: "debateType"
@@ -98,7 +117,7 @@ async function getAllTypes() {
     return types;
   }
 
-  return { error: queryStatement.result };
+  return { error: queryStatement };
 }
 
 async function getAllDebateLists() {
@@ -121,7 +140,7 @@ async function getAllDebateLists() {
     return debates;
   }
 
-  return { error: queryStatement.result };
+  return { error: queryStatement };
 }
 
 async function getDebateList(type) {
@@ -154,7 +173,7 @@ async function getDebateList(type) {
     return debates;
   }
 
-  return { error: queryStatement.result };
+  return { error: queryStatement };
 }
 
 async function getAllReports() {
@@ -169,7 +188,7 @@ async function getAllReports() {
     // TODO: list all content with reports
   }
 
-  return { error: queryStatement.result };
+  return { error: queryStatement };
 }
 
 async function query(type = "query", params) {
@@ -187,7 +206,6 @@ async function query(type = "query", params) {
       return { result: [] };
     }
   } catch (err) {
-    console.error(err);
     return `Error with request ${err}`;
   }
 }
@@ -197,6 +215,7 @@ module.exports = {
   editDebate,
   getAll,
   getById,
+  getBy,
   getAllTypes,
   getDebateList,
   getAllDebateLists,

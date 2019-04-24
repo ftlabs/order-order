@@ -20,15 +20,15 @@
 		<input type="text" name="title" placeholder="Title" value="{{debate.title}}" required />
 		<label for="debateDescription">Description</label>
 		<input type="text" name="debateDescription" placeholder="Description" value="{{debate.description}}" required />
-		<label for="debate_status">Status</label>
-		<select name="debate_status" required>
-			<option value="open" {{#ifEquals debate.debate_status "open"}}selected{{/ifEquals}}>Open</option>
-			<option value="closed" {{#ifEquals debate.debate_status "closed"}}selected{{/ifEquals}}>Closed</option>
+		<label for="debateStatus">Status</label>
+		<select name="debateStatus" required>
+			<option value="open" {{#ifEquals debate.debateStatus "open"}}selected{{/ifEquals}}>Open</option>
+			<option value="closed" {{#ifEquals debate.debateStatus "closed"}}selected{{/ifEquals}}>Closed</option>
 		</select>
-		<label for="voting_status">Voting status</label>
-		<select name="voting_status" required>
-			<option value="open" {{#ifEquals debate.voting_status "open"}}selected{{/ifEquals}}>Open</option>
-			<option value="closed" {{#ifEquals debate.voting_status "closed"}}selected{{/ifEquals}}>Closed</option>
+		<label for="votingStatus">Voting status</label>
+		<select name="votingStatus" required>
+			<option value="open" {{#ifEquals debate.votingStatus "open"}}selected{{/ifEquals}}>Open</option>
+			<option value="closed" {{#ifEquals debate.votingStatus "closed"}}selected{{/ifEquals}}>Closed</option>
 		</select>
 		<button id="submit_edit_debate">Update debate</button>
 	</form>

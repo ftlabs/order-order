@@ -9,11 +9,11 @@ router.post("/debate/create", async (req, res) => {
     const timestamp = new Date().getTime();
 
     if (
-      !data.debate_type ||
+      !data.debateType ||
       !data.title ||
       !data.description ||
-      !data.debate_status ||
-      !data.voting_status
+      !data.debateStatus ||
+      !data.votingStatus
     ) {
       res.json({
         status: "error",
@@ -23,12 +23,45 @@ router.post("/debate/create", async (req, res) => {
       return;
     }
 
+    // Check if debate of this name exists already
+    const checkDebateName = await dynamo_db.getBy("title", data.title);
+
+    if (checkDebateName.hasOwnProperty("error")) {
+      res.json({
+        status: "error",
+        msg: checkDebateName.error
+      });
+      res.end();
+      return;
+    }
+
+    if (checkDebateName.Items.length > 0) {
+      res.json({
+        status: "error",
+        msg: "A debate with this name exists already"
+      });
+      res.end();
+      return;
+    }
+
+    // Validation complete - create new debate
     data.id = uuidv1();
     data.timestamp = new Date().getTime();
     data.createdAt = timestamp;
     data.updatedAt = timestamp;
 
     const debate = await dynamo_db.addDebate(data);
+
+    if (debate.hasOwnProperty("error")) {
+      console.log("debate.hasOwnProperty");
+      res.json({
+        status: "error",
+        msg: debate.error
+      });
+      res.end();
+      return;
+    }
+
     res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
@@ -44,11 +77,11 @@ router.post("/debate/edit", async (req, res) => {
 
     if (
       !data.id ||
-      !data.debate_type ||
+      !data.debateType ||
       !data.title ||
       !data.description ||
-      !data.debate_status ||
-      !data.voting_status
+      !data.debateStatus ||
+      !data.votingStatus
     ) {
       res.json({
         status: "error",
@@ -68,21 +101,6 @@ router.post("/debate/edit", async (req, res) => {
     res
       .status(404)
       .send("Sorry can't find that! Issue with POST /debate/create");
-  }
-});
-
-router.get("/debate/:name/:seriesId", async (req, res) => {
-  try {
-    const { name, seriesId } = req.params;
-    const debate = await dynamo_db.getById(name, seriesId);
-    res.send(JSON.stringify(debate));
-  } catch (err) {
-    console.error(err);
-    res
-      .status(404)
-      .send(
-        `Sorry can't find that! Issue with GET /debate/${name}/${seriesId}`
-      );
   }
 });
 

@@ -23,11 +23,11 @@ function submitForm(e) {
   }
 
   var errors = [];
-  var debate_type = document.getElementsByName("type")[0].value;
+  var debateType = document.getElementsByName("debateType")[0].value;
   var title = document.getElementsByName("title")[0].value;
   var description = document.getElementsByName("debateDescription")[0].value;
-  var debate_status = document.getElementsByName("debate_status")[0].value;
-  var voting_status = document.getElementsByName("voting_status")[0].value;
+  var debateStatus = document.getElementsByName("debateStatus")[0].value;
+  var votingStatus = document.getElementsByName("votingStatus")[0].value;
 
   if (isAlphaNumericWithCharacters(title)) {
     errors.push("Title must be alphanumeric or allowed chars (,_\"-') ");
@@ -38,11 +38,11 @@ function submitForm(e) {
   }
 
   var data = {
-    debate_type,
+    debateType,
     title,
     description,
-    debate_status,
-    voting_status
+    debateStatus,
+    votingStatus
   };
 
   if (formEditDebate && e.target.id === formEditDebate.id) {
@@ -97,16 +97,27 @@ function submitData(url, data) {
   })
     .then(response => {
       if (response.status >= 200 && response.status < 300) {
-        return {
-          status: "ok",
-          data
-        };
+        return response.json();
       } else {
         var error = new Error(response.statusText || response.status);
         error.response = response;
         return {
           status: "error",
           data: error
+        };
+      }
+    })
+    .then(json => {
+      console.log(json);
+      if (json.status === "error") {
+        return {
+          status: "error",
+          data: json.msg
+        };
+      } else {
+        return {
+          status: "ok",
+          json
         };
       }
     })
