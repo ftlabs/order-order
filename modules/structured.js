@@ -3,8 +3,6 @@ function display(req, res, data) {
   let commentsAgainst = [];
   const debate = data.debate;
 
-  console.log(debate);
-
   if (debate.comments) {
     commentsFor = debate.comments.filter(comment =>
       comment.tags.includes("for")
