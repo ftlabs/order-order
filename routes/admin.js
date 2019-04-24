@@ -37,7 +37,7 @@ router.get("/edit_debate/:debate_uuid", async (req, res) => {
 
     res.render("admin/edit_debate", {
       username: username,
-      debate: debate
+      debate: debate.Items[0]
     });
   } catch (err) {
     console.error(err);
