@@ -4,9 +4,40 @@
 	<h2>
 		Moderation
 	</h2>
-	<p>
-		Moderation tools for the debates go here...
-	</p>
+	<table cellspacing=0 cellpadding=10>
+		<thead>
+			<th>
+				Content
+			</th>
+			<th>
+				Reported by
+			</th>
+			<th colspan="3">
+				Tools
+			</th>
+		</thead>
+		{{#if reports}}
+		{{#each reports}}
+		<tr>
+			<td>
+				content
+			</td>
+			<td>
+				user report
+			</td>
+			<td>
+				<a href="/{{ ../debateTypeName }}/{{ this }}">ignore</a>
+			</td>
+			<td>
+				<a href="/admin/edit_debate/{{ this }}">hide/delete</a>
+			</td>
+			<td>
+				<a href="/admin/edit_debate/{{ this }}">view context</a>
+			</td>
+		</tr>
+		{{/each}}
+		{{/if}}
+	</table>
 </main>
 
 {{> admin/footer}}

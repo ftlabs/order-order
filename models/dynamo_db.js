@@ -117,6 +117,21 @@ async function getDebateList(type) {
   return { error: queryStatement.result };
 }
 
+async function getAllReports() {
+  const params = {
+    //TODO
+  };
+
+  let queryStatement = await query("scan", params);
+  const types = [];
+
+  if (queryStatement.result) {
+    // TODO: list all content with reports
+  }
+
+  return { error: queryStatement.result };
+}
+
 async function query(type, params) {
   try {
     let result;
@@ -151,5 +166,6 @@ module.exports = {
   getById,
   getAllTypes,
   getDebateList,
-  getAllDebateLists
+  getAllDebateLists,
+  getAllReports
 };
