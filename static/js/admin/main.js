@@ -108,7 +108,6 @@ function submitData(url, data) {
       }
     })
     .then(json => {
-      console.log(json);
       if (json.status === "error") {
         return {
           status: "error",

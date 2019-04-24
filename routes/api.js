@@ -53,7 +53,6 @@ router.post("/debate/create", async (req, res) => {
     const debate = await dynamo_db.addDebate(data);
 
     if (debate.hasOwnProperty("error")) {
-      console.log("debate.hasOwnProperty");
       res.json({
         status: "error",
         msg: debate.error

@@ -25,8 +25,6 @@ async function addDebate(data) {
     return queryStatement.result;
   }
 
-  console.log("queryStatement");
-
   return { error: queryStatement };
 }
 
