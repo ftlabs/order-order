@@ -4,7 +4,21 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: "eu-west-1"
 });
 
-async function addDebate(params) {
+async function addDebate(data) {
+  const params = {
+    Item: {
+      id: data.id,
+      title: data.title,
+      description: data.description,
+      debateType: data.debate_type,
+      comments: [],
+      status: data.debate_status,
+      voting_status: data.voting_status,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt
+    }
+  };
+
   let queryStatement = await query("put", params);
 
   if (queryStatement.result) {
@@ -14,7 +28,23 @@ async function addDebate(params) {
   return { error: queryStatement.result };
 }
 
-async function editDebate(params) {
+async function editDebate(data) {
+  const params = {
+    Key: {
+      id: data.id
+    },
+    UpdateExpression:
+      "set title=:t, description=:d, debate_status=:s, voting_status=:vs, updatedAt=:u",
+    ExpressionAttributeValues: {
+      ":t": data.title,
+      ":d": data.description,
+      ":s": data.debate_status,
+      ":vs": data.voting_status,
+      ":u": data.timestamp
+    },
+    ReturnValues: "UPDATED_NEW"
+  };
+
   let queryStatement = await query("update", params);
 
   if (queryStatement.result) {
