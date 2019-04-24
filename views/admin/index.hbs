@@ -8,11 +8,28 @@
 	{{#each debateList}}
 	<h3>{{ debateTypeName }}</h3>
 	<table class="list-debates">
+		<thead>
+			<th>
+				Name
+			</th>
+			<th>
+				Status
+			</th>
+			<th>
+				Voting
+			</th>
+		</thead>
 		{{#if debates}}
 		{{#each debates}}
 		<tr>
 			<td>
 				{{ this.title }}
+			</td>
+			<td>
+				{{this.debate_status}}
+			</td>
+			<td>
+				{{this.voting_status}}
 			</td>
 			<td>
 				<a href="/{{ ../debateTypeName }}/{{ this.id }}">view</a>

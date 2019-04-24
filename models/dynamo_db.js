@@ -31,8 +31,7 @@ async function addDebate(data) {
 async function editDebate(data) {
   const params = {
     Key: {
-      id: String(data.id),
-      debateType: String(data.debate_type)
+      id: String(data.id)
     },
     UpdateExpression:
       "set title=:t, description=:d, debate_status=:s, voting_status=:vs, updatedAt=:u",
