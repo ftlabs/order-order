@@ -116,7 +116,7 @@ function submitData(url, data) {
       } else {
         return {
           status: "ok",
-          json
+          data: json
         };
       }
     })
