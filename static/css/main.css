@@ -75,13 +75,13 @@ fieldset {
     .list-debates td:first-of-type {
       width: 220px; }
 
-table tr tr:nth-child(odd) {
+table tr:nth-child(odd) {
   background: white; }
 
-table tr tr:nth-child(even) {
+table tr:nth-child(even) {
   background: lightgray; }
 
-table tr thead {
+table thead {
   text-align: left; }
 
 .hide {
