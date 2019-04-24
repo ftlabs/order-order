@@ -33,8 +33,9 @@ router.get("/edit_debate/:debate_uuid", async (req, res) => {
   try {
     const debate = await dynamo_db.getById(req.params.debate_uuid);
 
-    if (!debate) {
+    if (!debate.Items || debate.Items.length === 0) {
       res.status(404).send("Sorry no debate with that id");
+      return;
     }
 
     res.render("admin/edit_debate", {

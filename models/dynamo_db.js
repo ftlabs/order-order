@@ -198,11 +198,7 @@ async function query(type = "query", params) {
     const allParams = Object.assign(baseParams, params);
     const result = await dynamoDb[type](allParams).promise();
 
-    if (result.hasOwnProperty("Items") || result.hasOwnProperty("Item")) {
-      return { result };
-    } else {
-      return { result: [] };
-    }
+    return { result };
   } catch (err) {
     return `Error with request ${err}`;
   }
