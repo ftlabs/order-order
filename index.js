@@ -6,9 +6,9 @@ const PORT = process.env.PORT || 9090;
 const package = require("./package.json");
 const debug = require("debug")(`${package.name}:index`);
 const express = require("express");
+const hbs = require("express-hbs");
 const path = require("path");
 const app = express();
-const hbs = require("express-hbs");
 const helmet = require("helmet");
 const express_enforces_ssl = require("express-enforces-ssl");
 const bodyParser = require("body-parser");
@@ -33,6 +33,10 @@ app.engine(
     partialsDir: __dirname + "/views/partials"
   })
 );
+
+hbs.registerHelper("ifEquals", function(arg1, arg2, options) {
+  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+});
 
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
