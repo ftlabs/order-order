@@ -13,6 +13,7 @@ const helmet = require("helmet");
 const express_enforces_ssl = require("express-enforces-ssl");
 const bodyParser = require("body-parser");
 const core_routes = require("./routes/router");
+const hbs_helpers = require("./utils/hbs-helpers");
 
 if (!PORT) {
   throw new Error("ERROR: PORT not specified in env");
@@ -34,9 +35,7 @@ app.engine(
   })
 );
 
-hbs.registerHelper("ifEquals", function(arg1, arg2, options) {
-  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-});
+hbs_helpers.registerHelpers(hbs);
 
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
