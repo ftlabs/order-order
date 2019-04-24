@@ -175,30 +175,12 @@ async function getAllReports() {
 
 async function query(type, params) {
   try {
-    let result;
     let baseParams = {
       TableName: process.env.DEBATE_TABLE
     };
 
     const allParams = Object.assign(baseParams, params);
-
-    switch (type) {
-      case "get":
-        result = await dynamoDb.get(allParams).promise();
-        break;
-      case "scan":
-        result = await dynamoDb.scan(allParams).promise();
-        break;
-      case "put":
-        result = await dynamoDb.put(allParams).promise();
-        break;
-      case "query":
-        result = await dynamoDb.query(allParams).promise();
-        break;
-      case "update":
-        result = await dynamoDb.update(allParams).promise();
-        break;
-    }
+    const result = await dynamoDb[type](allParams).promise();
 
     if (result.hasOwnProperty("Items") || result.hasOwnProperty("Item")) {
       return { result };
