@@ -1,8 +1,6 @@
 function display(req, res, data) {
   const debate = data.debate;
 
-  console.log(debate);
-
   res.render(debate.debateType, {
     title: debate.title,
     description: debate.description,
