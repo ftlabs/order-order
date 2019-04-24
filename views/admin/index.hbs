@@ -12,13 +12,13 @@
 		{{#each debates}}
 		<tr>
 			<td>
-				<a href="/{{ ../debateTypeName }}/{{ this }}">{{ this }}</a>
+				{{ this.title }}
 			</td>
 			<td>
-				<a href="/{{ ../debateTypeName }}/{{ this }}">view</a>
+				<a href="/{{ ../debateTypeName }}/{{ this.id }}">view</a>
 			</td>
 			<td>
-				<a href="/admin/edit_debate/{{ this }}">edit</a>
+				<a href="/admin/edit_debate/{{ this.id }}">edit</a>
 			</td>
 		</tr>
 		{{/each}}
