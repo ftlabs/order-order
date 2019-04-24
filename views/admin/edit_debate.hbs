@@ -20,10 +20,10 @@
 		<input type="text" name="title" placeholder="Title" value="{{debate.title}}" required />
 		<label for="debateDescription">Description</label>
 		<input type="text" name="debateDescription" placeholder="Description" value="{{debate.description}}" required />
-		<label for="status">Status</label>{{debate.status}}
-		<select name="status" required>
-			<option value="open" {{#ifEquals debate.status "open"}}selected{{/ifEquals}}>Open</option>
-			<option value="closed" {{#ifEquals debate.status "closed"}}selected{{/ifEquals}}>Closed</option>
+		<label for="debate_status">Status</label>
+		<select name="debate_status" required>
+			<option value="open" {{#ifEquals debate.debate_status "open"}}selected{{/ifEquals}}>Open</option>
+			<option value="closed" {{#ifEquals debate.debate_status "closed"}}selected{{/ifEquals}}>Closed</option>
 		</select>
 		<label for="voting_status">Voting status</label>
 		<select name="voting_status" required>

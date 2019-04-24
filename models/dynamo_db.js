@@ -31,7 +31,8 @@ async function addDebate(data) {
 async function editDebate(data) {
   const params = {
     Key: {
-      id: data.id
+      id: String(data.id),
+      debateType: String(data.debate_type)
     },
     UpdateExpression:
       "set title=:t, description=:d, debate_status=:s, voting_status=:vs, updatedAt=:u",
@@ -48,7 +49,6 @@ async function editDebate(data) {
   let queryStatement = await query("update", params);
 
   if (queryStatement.result) {
-    console.log(queryStatement.result);
     return queryStatement.result;
   }
 
