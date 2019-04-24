@@ -1,2 +1,88 @@
-body {
-  background: #fff1e5; }
+/*Colours*/
+html, body {
+  background-color: #fff1e5; }
+
+h1 {
+  margin: 0 0 15px 0; }
+
+h2 {
+  font-size: 32px; }
+
+.nav-contents {
+  padding: 15px; }
+
+nav {
+  background-color: white;
+  position: relative;
+  width: 100%; }
+  nav a {
+    padding-right: 20px;
+    text-decoration: none; }
+    nav a:hover {
+      text-decoration: underline; }
+  nav div a {
+    display: inline-block; }
+
+main {
+  padding: 15px; }
+
+form {
+  display: grid;
+  grid-column: auto auto;
+  max-width: 500px; }
+
+button,
+input,
+select {
+  font-size: 14px;
+  margin-bottom: 15px; }
+
+input {
+  width: 100%; }
+
+button {
+  padding: 15px; }
+
+fieldset {
+  display: grid;
+  margin-bottom: 15px; }
+
+.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #721c24;
+  padding: 15px;
+  margin-bottom: 20px; }
+
+.status {
+  color: #155724;
+  background-color: #d4edda;
+  border-top: 1px solid #155724;
+  border-bottom: 1px solid #155724;
+  padding: 15px; }
+
+.additional-info {
+  font-family: MetricWeb, sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  color: #66605c;
+  display: block; }
+
+.list-debates {
+  border: 1px solid grey; }
+  .list-debates td {
+    width: 60px; }
+    .list-debates td:first-of-type {
+      width: 220px; }
+
+table tr tr:nth-child(odd) {
+  background: white; }
+
+table tr tr:nth-child(even) {
+  background: lightgray; }
+
+table tr thead {
+  text-align: left; }
+
+.hide {
+  display: none; }
