@@ -12,7 +12,7 @@ async function addDebate(data) {
       description: data.description,
       debateType: data.debate_type,
       comments: [],
-      status: data.debate_status,
+      debate_status: data.debate_status,
       voting_status: data.voting_status,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt
