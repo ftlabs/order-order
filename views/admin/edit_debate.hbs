@@ -1,4 +1,4 @@
-{{> admin/header title='Admin create new debate' subtitle='Admin section' }}
+{{> admin/header title='Admin edit new debate' subtitle='Admin section' }}
 
 <div id="msg_status" class="status hide">
 	Messages go here
@@ -11,23 +11,24 @@
 	{{#if debate}}
 	<form id="form_edit_debate">
 		<div id="msg_error" class="error hide"></div>
-		<label for="type">Debate type</label>
-		<select name="type" required disabled>
+		<input type="text" name="id" value="{{debate.id}}" disabled required />
+		<label for="debateType">Debate type</label>
+		<select name="debateType" required disabled>
 			<option selected value="structured">Structured debate</option>
 		</select>
 		<label for="title">Title</label>
 		<input type="text" name="title" placeholder="Title" value="{{debate.title}}" required />
 		<label for="debateDescription">Description</label>
 		<input type="text" name="debateDescription" placeholder="Description" value="{{debate.description}}" required />
-		<label for="status">Status</label>
-		<select name="status" required>
-			<option value="open" selected}>Open</option>
-			<option value="closed">Closed</option>
+		<label for="debateStatus">Deabte status</label>
+		<select name="debateStatus" required>
+			<option value="open" {{#ifEquals debate.debateStatus "open"}}selected{{/ifEquals}}>Open</option>
+			<option value="closed" {{#ifEquals debate.debateStatus "closed"}}selected{{/ifEquals}}>Closed</option>
 		</select>
-		<label for="voting_status">Voting status</label>
-		<select name="voting_status" required>
-			<option value="open" selected>Open</option>
-			<option value="closed">Closed</option>
+		<label for="votingStatus">Voting status</label>
+		<select name="votingStatus" required>
+			<option value="open" {{#ifEquals debate.votingStatus "open"}}selected{{/ifEquals}}>Open</option>
+			<option value="closed" {{#ifEquals debate.votingStatus "closed"}}selected{{/ifEquals}}>Closed</option>
 		</select>
 		<button id="submit_edit_debate">Update debate</button>
 	</form>
