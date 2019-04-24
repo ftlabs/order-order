@@ -31,8 +31,8 @@ router.post("/debate/create", async (req, res) => {
         description: data.description,
         debateType: data.type,
         comments: [],
-        status: [],
-        voting_status: [],
+        status: data.status,
+        voting_status: data.voting_status,
         createdAt: timestamp,
         updatedAt: timestamp
       }
