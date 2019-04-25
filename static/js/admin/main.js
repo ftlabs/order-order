@@ -109,10 +109,11 @@ function submitForm(e) {
   }
 
   // Checking fields have at least some value
-  for (const k in data) {
-    if (data.hasOwnProperty(k)) {
-      if (data[k] === undefined || data[k] === '') {
-        errors.push(`${k}`);
+  const keysData = Object.keys(data);
+  for (let i = 0; i < keysData.length; i += 1) {
+    if (Object.prototype.hasOwnProperty.call(data, keysData)) {
+      if (data[keysData] === undefined || data[keysData] === '') {
+        errors.push(`${keysData}`);
       }
     }
   }

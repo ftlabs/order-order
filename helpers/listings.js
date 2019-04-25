@@ -7,8 +7,8 @@ function getRootDir() {
 
 const isDirectory = source => lstatSync(source).isDirectory();
 
-const getDirectories = source =>
-  readdirSync(source)
+function getDirectories(source) {
+  return readdirSync(source)
     .map(name => join(source, name))
     .filter(isDirectory)
     .map(path => {
@@ -18,24 +18,29 @@ const getDirectories = source =>
         path,
       };
     });
+}
 
 function getDebateListings(folder, searchedType = '') {
   const directoryList = getDirectories(`${getRootDir()}/${folder}/`);
-  directoryList.forEach(collection => {
-    if (collection.type === searchedType || searchedType === '') {
-      collection.debateTypeName = collection.type;
-      collection.debates = [];
+  const newDirectoryList = [];
 
-      const files = readdirSync(collection.path);
+  directoryList.forEach(collection => {
+    const newCollection = collection;
+    if (newCollection.type === searchedType || searchedType === '') {
+      newCollection.debateTypeName = newCollection.type;
+      newCollection.debates = [];
+
+      const files = readdirSync(newCollection.path);
       files.forEach(file => {
         if (file.endsWith('.json')) {
-          collection.debates.push(file.replace('.json', ''));
+          newCollection.debates.push(file.replace('.json', ''));
         }
       });
     }
+    newDirectoryList.push(newCollection);
   });
 
-  return directoryList;
+  return newDirectoryList;
 }
 
 async function getDynamoDebateListings() {
