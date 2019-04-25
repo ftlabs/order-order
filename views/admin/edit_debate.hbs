@@ -6,33 +6,37 @@
 	Messages go here
 </div>
 
-<main>
-	<h1> Edit Debate </h1>
-	{{#if debate}}
-	<form id="form_edit_debate">
-		<div id="msg_error" class="error hide"></div>
-		<input type="text" name="id" value="{{debate.id}}" disabled required />
-		<label for="debateType">Debate type</label>
-		<select name="debateType" required disabled>
-			<option selected value="structured">Structured debate</option>
-		</select>
-		<label for="title">Title</label>
-		<input type="text" name="title" placeholder="Title" value="{{debate.title}}" required />
-		<label for="debateDescription">Description</label>
-		<input type="text" name="debateDescription" placeholder="Description" value="{{debate.description}}" required />
-		<label for="debateStatus">Deabte status</label>
-		<select name="debateStatus" required>
-			<option value="open" {{#ifEquals debate.debateStatus "open"}}selected{{/ifEquals}}>Open</option>
-			<option value="closed" {{#ifEquals debate.debateStatus "closed"}}selected{{/ifEquals}}>Closed</option>
-		</select>
-		<label for="votingStatus">Voting status</label>
-		<select name="votingStatus" required>
-			<option value="open" {{#ifEquals debate.votingStatus "open"}}selected{{/ifEquals}}>Open</option>
-			<option value="closed" {{#ifEquals debate.votingStatus "closed"}}selected{{/ifEquals}}>Closed</option>
-		</select>
-		<button id="submit_edit_debate">Update debate</button>
-	</form>
-	{{/if}}
+<main class="o-grid-container">
+	<h1 class="admin-section">Edit debate</h1>
+	<div class="o-grid-row">
+		{{#if debate}}
+		<section class="admin-content">
+			<form id="form_edit_debate">
+				<div id="msg_error" class="error hide"></div>
+				<input type="text" name="id" value="{{debate.id}}" disabled required />
+				<label for="debateType">Debate type</label>
+				<select name="debateType" required disabled>
+					<option selected value="structured">Structured debate</option>
+				</select>
+				<label for="title">Title</label>
+				<input type="text" name="title" placeholder="Title" value="{{debate.title}}" required />
+				<label for="debateDescription">Description</label>
+				<input type="text" name="debateDescription" placeholder="Description" value="{{debate.description}}" required />
+				<label for="debateStatus">Deabte status</label>
+				<select name="debateStatus" required>
+					<option value="open" {{#ifEquals debate.debateStatus "open"}}selected{{/ifEquals}}>Open</option>
+					<option value="closed" {{#ifEquals debate.debateStatus "closed"}}selected{{/ifEquals}}>Closed</option>
+				</select>
+				<label for="votingStatus">Voting status</label>
+				<select name="votingStatus" required>
+					<option value="open" {{#ifEquals debate.votingStatus "open"}}selected{{/ifEquals}}>Open</option>
+					<option value="closed" {{#ifEquals debate.votingStatus "closed"}}selected{{/ifEquals}}>Closed</option>
+				</select>
+				<button id="submit_edit_debate">Update debate</button>
+			</form>
+		</section>
+		{{/if}}
+	</div>
 </main>
 
 {{> admin/footer}}

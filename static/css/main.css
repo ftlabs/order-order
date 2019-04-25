@@ -35,19 +35,20 @@ h2.debate-type {
   line-height: 24px;
   margin: 0 0 20px; }
 
-.admin-debates-list {
+.admin-content {
   width: 100%;
   background: #FFFFFF;
   padding: 30px;
-  margin: 20px 0;
-  border-bottom: 1px solid rgba(179, 169, 160, 0.2);
-  box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2); }
-  .admin-debates-list .o-table--row-stripes {
+  margin: 20px 0; }
+  .admin-content .o-table--row-stripes {
     background-color: #FFFFFF; }
-    .admin-debates-list .o-table--row-stripes tbody tr:nth-child(even) {
+    .admin-content .o-table--row-stripes tbody tr:nth-child(even) {
       background-color: #e6e6e6; }
-    .admin-debates-list .o-table--row-stripes tbody a {
+    .admin-content .o-table--row-stripes tbody a {
       color: #0D7680; }
+  .admin-content.admin-debates-list {
+    border-bottom: 1px solid rgba(179, 169, 160, 0.2);
+    box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2); }
 
 form {
   display: grid;
