@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 function replyToComment(commentId) {
   const replyTo = document.querySelector('.comment-reply-to');
   const commentReplyNotification = document.querySelector(
