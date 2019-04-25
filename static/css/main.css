@@ -1,9 +1,9 @@
 /*Colours*/
 html, body {
-  background-color: #fff1e5; }
-
-h1 {
-  margin: 0 0 15px 0; }
+  background-color: #FFF1E5;
+  font-family: MetricWeb, sans-serif;
+  margin: 0;
+  padding: 0; }
 
 h2 {
   font-size: 32px; }
@@ -70,18 +70,22 @@ fieldset {
 
 .list-debates {
   border-bottom: 1px solid grey; }
-  .list-debates td {
-    width: 60px; }
-    .list-debates td:first-of-type {
-      width: 220px; }
-
-body {
-  font-family: MetricWeb, sans-serif; }
 
 .hide {
   display: none; }
 
-.profile {
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table; }
+
+.o-header-services__related-content {
+  /*TODO: temporary, remove important when breakpoints come in*/ }
+  .o-header-services__related-content li a {
+    padding: 5px 12px !important; }
+
+.profile-container .profile {
+  display: block;
   width: 30px;
   height: 30px;
   background: #0D7680;
@@ -91,8 +95,9 @@ body {
   display: inline-block;
   vertical-align: middle;
   border-color: transparent;
-  border: 1px solid #0D7680; }
-  .profile:before {
+  border: 1px solid #0D7680;
+  margin-right: 5px; }
+  .profile-container .profile:before {
     content: '';
     display: block;
     width: 13px;
@@ -101,12 +106,15 @@ body {
     background: #F2DFCE;
     border-radius: 50%;
     overflow: hidden; }
-  .profile:after {
+  .profile-container .profile:after {
     content: '';
     display: block;
     width: 30px;
     height: 30px;
-    margin: -2px 0;
+    margin: -22px 0;
     background: #F2DFCE;
     border-radius: 50%;
     overflow: hidden; }
+
+.profile-container .user-name {
+  text-transform: capitalize; }

@@ -3,45 +3,67 @@
 
 @import "admin/main";
 
-body {
-	font-family: MetricWeb, sans-serif;
-}
-
 .hide {
   display: none;
 }
 
-.profile {
-	width: 30px;
-    height: 30px;
-    background: $o-color-teal;
-    border-radius: 50%;
-    overflow: hidden;
-    font-size: 0;
-    display: inline-block;
-    vertical-align: middle;
-    border-color:transparent;
-    border: 1px solid $o-color-teal;
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
 
-    &:before {
-    	content:'';
-    	display: block;
-    	width: 13px;
-		height: 13px;
-		margin: 5px auto;
-		background: $o-color-wheat;
-		border-radius: 50%;
-		overflow: hidden;
-    }
+.o-header-services__related-content {
+	/*TODO: temporary, remove important when breakpoints come in*/
+	li {
+		a {
+			padding: 5px 12px!important;
+		}
+	}
+}
 
-    &:after {
-    	content: '';
-	    display: block;
-	    width: 30px;
+.profile-container {
+	// float: right;
+	// vertical-align: top;
+
+	.profile {
+		display: block;
+		width: 30px;
 	    height: 30px;
-	    margin: -2px 0;
-	    background: $o-color-wheat;
+	    background: $o-color-teal;
 	    border-radius: 50%;
 	    overflow: hidden;
-    }
+	    font-size: 0;
+	    display: inline-block;
+	    vertical-align: middle;
+	    border-color:transparent;
+	    border: 1px solid $o-color-teal;
+	    margin-right: 5px;
+
+	    &:before {
+	    	content:'';
+	    	display: block;
+	    	width: 13px;
+			height: 13px;
+			margin: 5px auto;
+			background: $o-color-wheat;
+			border-radius: 50%;
+			overflow: hidden;
+	    }
+
+	    &:after {
+	    	content: '';
+		    display: block;
+		    width: 30px;
+		    height: 30px;
+		    margin: -22px 0;
+		    background: $o-color-wheat;
+		    border-radius: 50%;
+		    overflow: hidden;
+	    }
+	}
+
+	.user-name {
+		text-transform: capitalize;
+	}
 }
