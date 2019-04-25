@@ -16,11 +16,11 @@ async function addDebate(data) {
       debateStatus: data.debateStatus,
       votingStatus: data.votingStatus,
       createdAt: data.createdAt,
-      updatedAt: data.updatedAt
-    }
+      updatedAt: data.updatedAt,
+    },
   };
 
-  let queryStatement = await query("put", params);
+  let queryStatement = await query('put', params);
   if (queryStatement.result) {
     return queryStatement.result;
   }
@@ -31,21 +31,21 @@ async function addDebate(data) {
 async function editDebate(data) {
   const params = {
     Key: {
-      id: String(data.id)
+      id: String(data.id),
     },
     UpdateExpression:
-      "set title=:t, description=:d, debateStatus=:s, votingStatus=:vs, updatedAt=:u",
+      'set title=:t, description=:d, debateStatus=:s, votingStatus=:vs, updatedAt=:u',
     ExpressionAttributeValues: {
-      ":t": data.title,
-      ":d": data.description,
-      ":s": data.debateStatus,
-      ":vs": data.votingStatus,
-      ":u": data.timestamp
+      ':t': data.title,
+      ':d': data.description,
+      ':s': data.debateStatus,
+      ':vs': data.votingStatus,
+      ':u': data.timestamp,
     },
-    ReturnValues: "UPDATED_NEW"
+    ReturnValues: 'UPDATED_NEW',
   };
 
-  let queryStatement = await query("update", params);
+  let queryStatement = await query('update', params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -85,11 +85,11 @@ async function getBy(attribute, value) {
   const params = {
     FilterExpression: `${attribute} = :v`,
     ExpressionAttributeValues: {
-      ":v": value
-    }
+      ':v': value,
+    },
   };
 
-  let queryStatement = await query("scan", params);
+  let queryStatement = await query('scan', params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -199,7 +199,6 @@ async function updateDebate(uuid, data) {
       ...updateExpressionConstruct(data),
     };
     const result = await query('update', params);
-    console.log(result);
     return result.result;
   } catch (err) {
     console.error(err);
@@ -218,13 +217,12 @@ function updateExpressionConstruct(data) {
       [`:${key}`]: data[key],
     };
     if (LIST_TYPES.includes(key)) {
-      updateExpression =
-        updateExpression + ` ${key}=list_append(${key}, :${key})`;
+      updateExpression += ` ${key}=list_append(${key}, :${key})`;
     } else {
-      updateExpression = updateExpression + ` ${key}=:${key}`;
+      updateExpression += ` ${key}=:${key}`;
     }
     if (fields.length !== index + 1) {
-      updateExpression = updateExpression + ',';
+      updateExpression += ',';
     }
   });
   return {
@@ -233,10 +231,10 @@ function updateExpressionConstruct(data) {
   };
 }
 
-async function query(type = "query", params) {
+async function query(type = 'query', params) {
   try {
     let baseParams = {
-      TableName: process.env.DEBATE_TABLE
+      TableName: process.env.DEBATE_TABLE,
     };
 
     const allParams = Object.assign(baseParams, params);
