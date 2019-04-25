@@ -1,9 +1,25 @@
 const AWS = require('aws-sdk');
+
 const LIST_TYPES = ['comments'];
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: 'eu-west-1',
 });
+
+async function query(type = 'query', params) {
+  try {
+    const baseParams = {
+      TableName: process.env.DEBATE_TABLE,
+    };
+
+    const allParams = Object.assign(baseParams, params);
+    const result = await dynamoDb[type](allParams).promise();
+
+    return { result };
+  } catch (err) {
+    return `Error with request ${err}`;
+  }
+}
 
 async function addDebate(data) {
   const params = {
@@ -20,7 +36,7 @@ async function addDebate(data) {
     },
   };
 
-  let queryStatement = await query('put', params);
+  const queryStatement = await query('put', params);
   if (queryStatement.result) {
     return queryStatement.result;
   }
@@ -45,7 +61,7 @@ async function editDebate(data) {
     ReturnValues: 'UPDATED_NEW',
   };
 
-  let queryStatement = await query('update', params);
+  const queryStatement = await query('update', params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -72,7 +88,7 @@ async function getById(debateId) {
     },
   };
 
-  let queryStatement = await query('query', params);
+  const queryStatement = await query('query', params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -89,7 +105,7 @@ async function getBy(attribute, value) {
     },
   };
 
-  let queryStatement = await query('scan', params);
+  const queryStatement = await query('scan', params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -103,11 +119,11 @@ async function getAllTypes() {
     ProjectionExpression: 'debateType',
   };
 
-  let queryStatement = await query('scan', params);
+  const queryStatement = await query('scan', params);
   const types = [];
 
   if (queryStatement.result) {
-    queryStatement.result['Items'].forEach(result => {
+    queryStatement.result.Items.forEach((result) => {
       if (!types.includes(result.debateType)) {
         types.push(result.debateType);
       }
@@ -119,13 +135,13 @@ async function getAllTypes() {
 }
 
 async function getAllDebateLists() {
-  let queryStatement = await query('scan', {});
+  const queryStatement = await query('scan', {});
 
   if (queryStatement.result) {
-    let debates = {};
+    const debates = {};
 
-    queryStatement.result['Items'].map(item => {
-      if (!debates.hasOwnProperty(item.debateType)) {
+    queryStatement.result.Items.map((item) => {
+      if (!Object.prototype.hasOwnProperty.call(debates, item.debateType)) {
         debates[item.debateType] = {
           debateTypeName: item.debateType,
           debates: [],
@@ -133,6 +149,7 @@ async function getAllDebateLists() {
       }
 
       debates[item.debateType].debates.push(item);
+      return true;
     });
 
     return debates;
@@ -152,13 +169,13 @@ async function getDebateList(type) {
     },
   };
 
-  let queryStatement = await query('scan', params);
+  const queryStatement = await query('scan', params);
 
   if (queryStatement.result) {
-    let debates = {};
+    const debates = {};
 
-    queryStatement.result['Items'].map(item => {
-      if (!debates.hasOwnProperty(item.debateType)) {
+    queryStatement.result.Items.map((item) => {
+      if (!Object.prototype.hasOwnProperty.call(debates, item.debateType)) {
         debates[item.debateType] = {
           debateTypeName: item.debateType,
           debates: [],
@@ -166,6 +183,7 @@ async function getDebateList(type) {
       }
 
       debates[item.debateType].debates.push(item);
+      return true;
     });
 
     return debates;
@@ -176,11 +194,10 @@ async function getDebateList(type) {
 
 async function getAllReports() {
   const params = {
-    //TODO
+    // TODO
   };
 
-  let queryStatement = await query('scan', params);
-  const types = [];
+  const queryStatement = await query('scan', params);
 
   if (queryStatement.result) {
     // TODO: list all content with reports
@@ -189,32 +206,15 @@ async function getAllReports() {
   return { error: queryStatement };
 }
 
-async function updateDebate(uuid, data) {
-  try {
-    const params = {
-      Key: {
-        id: uuid,
-      },
-      ReturnValues: 'ALL_NEW',
-      ...updateExpressionConstruct(data),
-    };
-    const result = await query('update', params);
-    return result.result;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
-
 function updateExpressionConstruct(data) {
-  data = { ...data, updatedAt: new Date().getTime() };
+  const newData = { ...data, updatedAt: new Date().getTime() };
   let expressionAttributeValues = {};
   let updateExpression = 'SET';
-  const fields = Object.keys(data);
+  const fields = Object.keys(newData);
   fields.forEach((key, index) => {
     expressionAttributeValues = {
       ...expressionAttributeValues,
-      [`:${key}`]: data[key],
+      [`:${key}`]: newData[key],
     };
     if (LIST_TYPES.includes(key)) {
       updateExpression += ` ${key}=list_append(${key}, :${key})`;
@@ -231,18 +231,19 @@ function updateExpressionConstruct(data) {
   };
 }
 
-async function query(type = 'query', params) {
+async function updateDebate(uuid, data) {
   try {
-    let baseParams = {
-      TableName: process.env.DEBATE_TABLE,
+    const params = {
+      Key: {
+        id: uuid,
+      },
+      ReturnValues: 'ALL_NEW',
+      ...updateExpressionConstruct(data),
     };
-
-    const allParams = Object.assign(baseParams, params);
-    const result = await dynamoDb[type](allParams).promise();
-
-    return { result };
+    const result = await query('update', params);
+    return result.result;
   } catch (err) {
-    return `Error with request ${err}`;
+    throw err;
   }
 }
 
