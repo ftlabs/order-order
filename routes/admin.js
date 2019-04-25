@@ -1,35 +1,36 @@
 const express = require('express');
+
 const router = express.Router();
 const dynamoDb = require('../models/dynamoDb');
+const { getUsername } = require('../helpers/cookies');
 
 router.get('/', async (req, res) => {
-  const username =
-    req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
+  const username = getUsername(req.cookies);
+
   try {
-    let debateList = await dynamoDb.getAllDebateLists();
+    const debateList = await dynamoDb.getAllDebateLists();
     res.render('admin/index', {
-      username: username,
-      debateList: debateList,
+      username,
+      debateList,
       page: 'dashboard',
     });
   } catch (err) {
-    console.error(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
 
 router.get('/create_debate', (req, res) => {
-  const username =
-    req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
+  const username = getUsername(req.cookies);
+
   res.render('admin/create_debate', {
-    username: username,
+    username,
     page: 'create',
   });
 });
 
 router.get('/edit_debate/:debate_uuid', async (req, res) => {
-  const username =
-    req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
+  const username = getUsername(req.cookies);
+
   try {
     const debate = await dynamoDb.getById(req.params.debate_uuid);
 
@@ -39,29 +40,27 @@ router.get('/edit_debate/:debate_uuid', async (req, res) => {
     }
 
     res.render('admin/edit_debate', {
-      username: username,
+      username,
       debate: debate.Items[0],
       page: 'edit',
     });
   } catch (err) {
-    console.error(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
 
 router.get('/moderation', async (req, res) => {
-  const username =
-    req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
+  const username = getUsername(req.cookies);
+
   try {
     const reports = await dynamoDb.getAllReports();
 
     res.render('admin/moderation', {
-      username: username,
-      reports: reports,
+      username,
+      reports,
       page: 'moderation',
     });
   } catch (err) {
-    console.error(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
