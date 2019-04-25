@@ -24,8 +24,12 @@
     </div>
     {{/if}}
     {{#if debateOpen}}
-    <form action="/api/debate/{{id}}" method="put">
-        <textarea rows="4" cols="50"></textarea>
+    <form action="/{{id}}?" method="POST" encrypt="multipart/form-data">
+        <textarea name="comment" rows=" 4" cols="50"></textarea>
+        <input type="radio" id="against" name="tags[]" value="against" checked>
+        <label for="against">against</label>
+        <input type="radio" id="for" name="tags[]" value="for">
+        <label for="for">for</label>
         <input type="submit" value="Submit" />
     </form>
     {{/if}}

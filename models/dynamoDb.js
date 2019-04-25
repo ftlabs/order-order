@@ -1,4 +1,6 @@
 const AWS = require('aws-sdk');
+const uuidv1 = require('uuid/v1');
+
 const LIST_TYPES = ['comments'];
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
@@ -246,6 +248,25 @@ async function query(type = 'query', params) {
   }
 }
 
+function constructCommentObject({
+  user,
+  content,
+  tags = [],
+  replyTo = null,
+  displayStatus = 'show',
+}) {
+  return {
+    id: uuidv1(),
+    user,
+    content,
+    ratings: [],
+    tags,
+    replyTo,
+    displayStatus,
+    reports: [],
+  };
+}
+
 module.exports = {
   addDebate,
   editDebate,
@@ -257,4 +278,5 @@ module.exports = {
   getAllDebateLists,
   getAllReports,
   updateDebate,
+  constructCommentObject,
 };

@@ -7,7 +7,7 @@ function display(req, res, data) {
     description,
     debateType,
     debateStatus,
-    id
+    id,
   } = data.debate;
 
   if (comments) {
@@ -25,7 +25,7 @@ function display(req, res, data) {
     debateOpen,
     commentsFor,
     commentsAgainst,
-    id
+    id,
     user: data.user,
   });
 }
