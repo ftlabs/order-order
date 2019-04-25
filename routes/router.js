@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require */
+
 const express = require('express');
 
 const router = express.Router();
@@ -66,9 +68,13 @@ router.get('/:debateId', async (req, res) => {
       },
     };
 
+    /* eslint-disable global-require */
+
     const moduleType = require(path.resolve(
-      `${listing.getRootDir()}/modules/${data.debate.debateType}`,
+      `${listing.getRootDir()}/modules/${debateType}`,
     ));
+
+    /* eslint-disable global-require */
 
     moduleType.display(req, res, data);
   } catch (err) {
