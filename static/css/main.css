@@ -8,20 +8,8 @@ html, body {
 h2 {
   font-size: 32px; }
 
-.nav-contents {
-  padding: 15px; }
-
-nav {
-  background-color: white;
-  position: relative;
-  width: 100%; }
-  nav a {
-    padding-right: 20px;
-    text-decoration: none; }
-    nav a:hover {
-      text-decoration: underline; }
-  nav div a {
-    display: inline-block; }
+.o-header-services__secondary-nav-list--ancestors li a {
+  pointer-events: none; }
 
 main {
   padding: 15px; }
