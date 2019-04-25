@@ -1,26 +1,24 @@
 <body>
-	{{> user/header username=username }}
-	<nav>
-		<div class="nav-contents">
-			<h1>Admin</h1>
-			<div>
-				{{#ifEquals page "dashboard"}}
-				<span>Dashboard</span>
-				{{else}}
-				<a href="/admin">Dashboard</a>
-				{{/ifEquals}}
+	{{> user/header username=username admin="admin"}}
+		<nav class="o-header-services__secondary-nav" aria-label="secondary" data-o-header-services-nav="">
+			<div class="o-header-services__secondary-nav-content" data-o-header-services-nav-list="">
+				<ol class="o-header-services__secondary-nav-list o-header-services__secondary-nav-list--ancestors" aria-label="Ancestor sections">
+					<li>
+						<a href="">Admin</a>
+					</li>
+				</ol>
 
-				{{#ifEquals page "create"}}
-				<span>Create debate</span>
-				{{else}}
-				<a href="/admin/create_debate">Create debate</a>
-				{{/ifEquals}}
-
-				{{#ifEquals page "moderation"}}
-				<span>Moderation</span>
-				{{else}}
-				<a href="/admin/moderation">Moderation</a>
-				{{/ifEquals}}
+				<ul class="o-header-services__secondary-nav-list o-header-services__secondary-nav-list--children" aria-label="Child sections">
+					<li>
+						<a {{#ifEquals page "dashboard"}} aria-current="true" {{/ifEquals}} href="/admin">Dashboard</a>
+					</li>
+					<li>
+						<a {{#ifEquals page "create"}} aria-current="true" {{/ifEquals}} href="/admin/create_debate">Create debate</a>
+					</li>
+					<li>
+						<a {{#ifEquals page "moderation"}} aria-current="true" {{/ifEquals}} href="/admin/moderation">Moderation</a>
+					</li>
+				</ul>
 			</div>
-		</div>
-	</nav>
+		</nav>
+	</header>
