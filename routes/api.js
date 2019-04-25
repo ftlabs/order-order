@@ -109,7 +109,9 @@ router.put('/debate/:uuid', async (req, res) => {
     res.send(JSON.stringify(result));
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
+    res
+      .status(404)
+      .send(`Sorry can't find that! Issue with PUT /debate/${uuid}`);
   }
 });
 
@@ -119,7 +121,7 @@ router.get('/debate/types', async (req, res) => {
     res.send(JSON.stringify(allDebateTypes));
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
+    res.status(404).send("Sorry can't find that! Issue with PUT /debate/types");
   }
 });
 
