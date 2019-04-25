@@ -104,6 +104,7 @@ router.post('/debate/edit', async (req, res) => {
 router.put('/debate/:uuid', async (req, res) => {
   const { uuid } = req.params;
   const data = req.body;
+  console.log('body', req);
   try {
     const result = await dynamoDb.updateDebate(uuid, data);
     res.send(JSON.stringify(result));

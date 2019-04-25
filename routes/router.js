@@ -74,4 +74,33 @@ router.get('/:debateId', async (req, res) => {
   }
 });
 
+router.post('/:debateId', async (req, res) => {
+  const backURL = req.header('Referer') || '/';
+  try {
+    const { debateId } = req.params;
+    const formData = req.body;
+    let data = {};
+    if (formData.comment) {
+      const { comment, tags, replyTo, displayStatus } = formData;
+      data = {
+        comments: [
+          dynamoDb.constructCommentObject({
+            content: comment,
+            username: req.cookies.s3o_username,
+            tags,
+            replyTo,
+            displayStatus,
+          }),
+        ],
+        ...data,
+      };
+    }
+    await dynamoDb.updateDebate(debateId, data);
+    res.redirect(backURL);
+  } catch (err) {
+    console.error(err);
+    res.status(404).send("Sorry can't find that!");
+  }
+});
+
 module.exports = router;
