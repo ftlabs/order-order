@@ -1,15 +1,17 @@
 function display(req, res, data) {
   let commentsFor = [];
   let commentsAgainst = [];
-  const debate = data.debate;
+  const { debate } = data;
 
   if (debate.comments) {
-    commentsFor = debate.comments.filter(comment =>
-      comment.tags.includes("for")
-    );
-    commentsAgainst = debate.comments.filter(comment =>
-      comment.tags.includes("against")
-    );
+    commentsFor = debate.comments.filter((comment) => {
+      comment.tags.includes('for');
+      return comment;
+    });
+    commentsAgainst = debate.comments.filter((comment) => {
+      comment.tags.includes('against');
+      return comment;
+    });
   }
 
   res.render(debate.debateType, {
@@ -17,7 +19,7 @@ function display(req, res, data) {
     description: debate.description,
     commentsFor,
     commentsAgainst,
-    user: data.user
+    user: data.user,
   });
 }
 
