@@ -1,7 +1,8 @@
-const AWS = require("aws-sdk");
+const AWS = require('aws-sdk');
+const LIST_TYPES = ['comments'];
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
-  region: "eu-west-1"
+  region: 'eu-west-1',
 });
 
 async function addDebate(data) {
@@ -15,12 +16,11 @@ async function addDebate(data) {
       debateStatus: data.debateStatus,
       votingStatus: data.votingStatus,
       createdAt: data.createdAt,
-      updatedAt: data.updatedAt
-    }
+      updatedAt: data.updatedAt,
+    },
   };
 
-  let queryStatement = await query("put", params);
-
+  let queryStatement = await query('put', params);
   if (queryStatement.result) {
     return queryStatement.result;
   }
@@ -31,21 +31,21 @@ async function addDebate(data) {
 async function editDebate(data) {
   const params = {
     Key: {
-      id: String(data.id)
+      id: String(data.id),
     },
     UpdateExpression:
-      "set title=:t, description=:d, debateStatus=:s, votingStatus=:vs, updatedAt=:u",
+      'set title=:t, description=:d, debateStatus=:s, votingStatus=:vs, updatedAt=:u',
     ExpressionAttributeValues: {
-      ":t": data.title,
-      ":d": data.description,
-      ":s": data.debateStatus,
-      ":vs": data.votingStatus,
-      ":u": data.timestamp
+      ':t': data.title,
+      ':d': data.description,
+      ':s': data.debateStatus,
+      ':vs': data.votingStatus,
+      ':u': data.timestamp,
     },
-    ReturnValues: "UPDATED_NEW"
+    ReturnValues: 'UPDATED_NEW',
   };
 
-  let queryStatement = await query("update", params);
+  let queryStatement = await query('update', params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -55,7 +55,7 @@ async function editDebate(data) {
 }
 
 async function getAll() {
-  let queryStatement = await query("scan", {});
+  const queryStatement = await query('scan', {});
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -66,13 +66,13 @@ async function getAll() {
 
 async function getById(debateId) {
   const params = {
-    KeyConditionExpression: "id = :debateId",
+    KeyConditionExpression: 'id = :debateId',
     ExpressionAttributeValues: {
-      ":debateId": debateId
-    }
+      ':debateId': debateId,
+    },
   };
 
-  let queryStatement = await query("query", params);
+  let queryStatement = await query('query', params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -85,11 +85,11 @@ async function getBy(attribute, value) {
   const params = {
     FilterExpression: `${attribute} = :v`,
     ExpressionAttributeValues: {
-      ":v": value
-    }
+      ':v': value,
+    },
   };
 
-  let queryStatement = await query("scan", params);
+  let queryStatement = await query('scan', params);
 
   if (queryStatement.result) {
     return queryStatement.result;
@@ -100,14 +100,14 @@ async function getBy(attribute, value) {
 
 async function getAllTypes() {
   const params = {
-    ProjectionExpression: "debateType"
+    ProjectionExpression: 'debateType',
   };
 
-  let queryStatement = await query("scan", params);
+  let queryStatement = await query('scan', params);
   const types = [];
 
   if (queryStatement.result) {
-    queryStatement.result["Items"].forEach(result => {
+    queryStatement.result['Items'].forEach(result => {
       if (!types.includes(result.debateType)) {
         types.push(result.debateType);
       }
@@ -119,16 +119,16 @@ async function getAllTypes() {
 }
 
 async function getAllDebateLists() {
-  let queryStatement = await query("scan", {});
+  let queryStatement = await query('scan', {});
 
   if (queryStatement.result) {
     let debates = {};
 
-    queryStatement.result["Items"].map(item => {
+    queryStatement.result['Items'].map(item => {
       if (!debates.hasOwnProperty(item.debateType)) {
         debates[item.debateType] = {
           debateTypeName: item.debateType,
-          debates: []
+          debates: [],
         };
       }
 
@@ -143,25 +143,25 @@ async function getAllDebateLists() {
 
 async function getDebateList(type) {
   const params = {
-    FilterExpression: "#ty = :type_str",
+    FilterExpression: '#ty = :type_str',
     ExpressionAttributeNames: {
-      "#ty": "debateType"
+      '#ty': 'debateType',
     },
     ExpressionAttributeValues: {
-      ":type_str": type
-    }
+      ':type_str': type,
+    },
   };
 
-  let queryStatement = await query("scan", params);
+  let queryStatement = await query('scan', params);
 
   if (queryStatement.result) {
     let debates = {};
 
-    queryStatement.result["Items"].map(item => {
+    queryStatement.result['Items'].map(item => {
       if (!debates.hasOwnProperty(item.debateType)) {
         debates[item.debateType] = {
           debateTypeName: item.debateType,
-          debates: []
+          debates: [],
         };
       }
 
@@ -179,7 +179,7 @@ async function getAllReports() {
     //TODO
   };
 
-  let queryStatement = await query("scan", params);
+  let queryStatement = await query('scan', params);
   const types = [];
 
   if (queryStatement.result) {
@@ -189,10 +189,52 @@ async function getAllReports() {
   return { error: queryStatement };
 }
 
-async function query(type = "query", params) {
+async function updateDebate(uuid, data) {
+  try {
+    const params = {
+      Key: {
+        id: uuid,
+      },
+      ReturnValues: 'ALL_NEW',
+      ...updateExpressionConstruct(data),
+    };
+    const result = await query('update', params);
+    return result.result;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+function updateExpressionConstruct(data) {
+  data = { ...data, updatedAt: new Date().getTime() };
+  let expressionAttributeValues = {};
+  let updateExpression = 'SET';
+  const fields = Object.keys(data);
+  fields.forEach((key, index) => {
+    expressionAttributeValues = {
+      ...expressionAttributeValues,
+      [`:${key}`]: data[key],
+    };
+    if (LIST_TYPES.includes(key)) {
+      updateExpression += ` ${key}=list_append(${key}, :${key})`;
+    } else {
+      updateExpression += ` ${key}=:${key}`;
+    }
+    if (fields.length !== index + 1) {
+      updateExpression += ',';
+    }
+  });
+  return {
+    ExpressionAttributeValues: expressionAttributeValues,
+    UpdateExpression: updateExpression,
+  };
+}
+
+async function query(type = 'query', params) {
   try {
     let baseParams = {
-      TableName: process.env.DEBATE_TABLE
+      TableName: process.env.DEBATE_TABLE,
     };
 
     const allParams = Object.assign(baseParams, params);
@@ -213,5 +255,6 @@ module.exports = {
   getAllTypes,
   getDebateList,
   getAllDebateLists,
-  getAllReports
+  getAllReports,
+  updateDebate,
 };
