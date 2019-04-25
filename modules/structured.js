@@ -1,23 +1,32 @@
 function display(req, res, data) {
   let commentsFor = [];
   let commentsAgainst = [];
-  const debate = data.debate;
+  const {
+    comments,
+    title,
+    description,
+    debateType,
+    debateStatus,
+    id
+  } = data.debate;
 
-  if (debate.comments) {
-    commentsFor = debate.comments.filter(comment =>
-      comment.tags.includes("for")
-    );
-    commentsAgainst = debate.comments.filter(comment =>
-      comment.tags.includes("against")
+  if (comments) {
+    commentsFor = comments.filter(comment => comment.tags.includes('for'));
+    commentsAgainst = comments.filter(comment =>
+      comment.tags.includes('against'),
     );
   }
 
-  res.render(debate.debateType, {
-    title: debate.title,
-    description: debate.description,
+  const debateOpen = debateStatus === 'open';
+
+  res.render(debateType, {
+    title,
+    description,
+    debateOpen,
     commentsFor,
     commentsAgainst,
-    user: data.user
+    id
+    user: data.user,
   });
 }
 

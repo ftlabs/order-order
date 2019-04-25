@@ -23,6 +23,12 @@
         {{/each}}
     </div>
     {{/if}}
+    {{#if debateOpen}}
+    <form action="/api/debate/{{id}}" method="put">
+        <textarea rows="4" cols="50"></textarea>
+        <input type="submit" value="Submit" />
+    </form>
+    {{/if}}
 </body>
 {{> footer type='structured' }}
 
