@@ -9,17 +9,22 @@
     <p>{{description}}</p>
     {{#if commentsAgainst}}
     <div>
-        <p>Against</p>
+        <h1>Against</h1>
         {{#each commentsAgainst}}
-        {{content}}
+        <div>
+            {{content}}
+        </div>
         {{/each}}
     </div>
     {{/if}}
     {{#if commentsFor}}
     <div>
-        <p>For</p>
+        <h1>For</h1>
         {{#each commentsFor}}
-        {{content}}
+        <div>
+            <h4>{{userId}}</h4>
+            <p>{{content}}</p>
+        </div>
         {{/each}}
     </div>
     {{/if}}
