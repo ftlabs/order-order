@@ -1,44 +1,47 @@
 {{> head title='Admin dashboard' subtitle='Admin section' }}
 {{> admin/header }}
-<main>
-	<h2>
-		Dashboard
-	</h2>
+<main class="o-grid-container">
+	<h1 class="admin-section">Dashboard</h1>
 	{{#if debateList}}
 	{{#each debateList}}
-	<h3>{{ debateTypeName }}</h3>
-	<table class="list-debates o-table  o-table--row-stripes" data-o-component="o-table">
-		<thead>
-			<tr>
-				<th scope="col" role="columnheader"> Name </th>
-				<th scope="col" role="columnheader"> Status </th>
-				<th scope="col" role="columnheader"> Voting </th>
-			</tr>
-		</thead>
-		{{#if debates}}
-		<tbody>
-			{{#each debates}}
-			<tr>
-				<td>
-					{{ this.title }}
-				</td>
-				<td>
-					{{this.debateStatus}}
-				</td>
-				<td>
-					{{this.votingStatus}}
-				</td>
-				<td>
-					<a href="/{{ ../debateTypeName }}/{{ this.id }}">view</a>
-				</td>
-				<td>
-					<a href="/admin/edit_debate/{{ this.id }}">edit</a>
-				</td>
-			</tr>
-			{{/each}}
-		</tbody>
-		{{/if}}
-	</table>
+	<div class="o-grid-row">
+		<section class="admin-debates-list">
+			<span class="debate-type-tag">Debate type</span>
+			<h2 class="debate-type">{{ debateTypeName }}</h2>
+			<table class="list-debates o-table  o-table--row-stripes" data-o-component="o-table">
+				<thead>
+					<tr>
+						<th scope="col" role="columnheader"> Name </th>
+						<th scope="col" role="columnheader"> Status </th>
+						<th scope="col" role="columnheader"> Voting </th>
+					</tr>
+				</thead>
+				{{#if debates}}
+				<tbody>
+					{{#each debates}}
+					<tr>
+						<td>
+							{{ this.title }}
+						</td>
+						<td>
+							{{this.debateStatus}}
+						</td>
+						<td>
+							{{this.votingStatus}}
+						</td>
+						<td>
+							<a href="/{{ ../debateTypeName }}/{{ this.id }}">view</a>
+						</td>
+						<td>
+							<a href="/admin/edit_debate/{{ this.id }}">edit</a>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+				{{/if}}
+			</table>
+		</section>
+	</div>
 	{{/each}}
 	{{/if}}
 </main>
