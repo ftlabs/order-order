@@ -86,7 +86,7 @@ router.post('/:debateId', async (req, res) => {
         comments: [
           dynamoDb.constructCommentObject({
             content: comment,
-            username: req.cookies.s3o_username,
+            user: req.cookies.s3o_username,
             tags,
             replyTo,
             displayStatus,
