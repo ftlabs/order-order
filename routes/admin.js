@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const dynamo_db = require("../models/dynamo_db");
+const dynamoDb = require('../models/dynamoDb');
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   const username =
     req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
   try {
-    let debateList = await dynamo_db.getAllDebateLists();
-    res.render("admin/index", {
+    let debateList = await dynamoDb.getAllDebateLists();
+    res.render('admin/index', {
       username: username,
       debateList: debateList,
-      page: "dashboard"
+      page: 'dashboard',
     });
   } catch (err) {
     console.error(err);
@@ -18,30 +18,30 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/create_debate", (req, res) => {
+router.get('/create_debate', (req, res) => {
   const username =
     req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
-  res.render("admin/create_debate", {
+  res.render('admin/create_debate', {
     username: username,
-    page: "create"
+    page: 'create',
   });
 });
 
-router.get("/edit_debate/:debate_uuid", async (req, res) => {
+router.get('/edit_debate/:debate_uuid', async (req, res) => {
   const username =
     req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
   try {
-    const debate = await dynamo_db.getById(req.params.debate_uuid);
+    const debate = await dynamoDb.getById(req.params.debate_uuid);
 
     if (!debate.Items || debate.Items.length === 0) {
-      res.status(404).send("Sorry no debate with that id");
+      res.status(404).send('Sorry no debate with that id');
       return;
     }
 
-    res.render("admin/edit_debate", {
+    res.render('admin/edit_debate', {
       username: username,
       debate: debate.Items[0],
-      page: "edit"
+      page: 'edit',
     });
   } catch (err) {
     console.error(err);
@@ -49,16 +49,16 @@ router.get("/edit_debate/:debate_uuid", async (req, res) => {
   }
 });
 
-router.get("/moderation", async (req, res) => {
+router.get('/moderation', async (req, res) => {
   const username =
     req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
   try {
-    const reports = await dynamo_db.getAllReports();
+    const reports = await dynamoDb.getAllReports();
 
-    res.render("admin/moderation", {
+    res.render('admin/moderation', {
       username: username,
       reports: reports,
-      page: "moderation"
+      page: 'moderation',
     });
   } catch (err) {
     console.error(err);
