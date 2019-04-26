@@ -15,33 +15,30 @@ router.post("/debate/create", async (req, res) => {
       !data.debateStatus ||
       !data.votingStatus
     ) {
-      res.json({
+      return res.json({
         status: "error",
-        msg: "Missing all required POST vars"
+        msg: "Missing all required POST vars",
+        field: 'global'
       });
-      res.end();
-      return;
     }
 
     // Check if debate of this name exists already
     const checkDebateName = await dynamo_db.getBy("title", data.title);
 
     if (checkDebateName.hasOwnProperty("error")) {
-      res.json({
+      return res.json({
         status: "error",
-        msg: checkDebateName.error
+        msg: checkDebateName.error,
+        field: 'title'
       });
-      res.end();
-      return;
     }
 
     if (checkDebateName.Items.length > 0) {
-      res.json({
+      return res.json({
         status: "error",
-        msg: "A debate with this name exists already"
+        msg: "A debate with this name exists already",
+        field: 'title'
       });
-      res.end();
-      return;
     }
 
     // Validation complete - create new debate
@@ -53,18 +50,17 @@ router.post("/debate/create", async (req, res) => {
     const debate = await dynamo_db.addDebate(data);
 
     if (debate.hasOwnProperty("error")) {
-      res.json({
+      return res.json({
         status: "error",
-        msg: debate.error
+        msg: debate.error,
+        field: 'global'
       });
-      res.end();
-      return;
     }
 
-    res.send(JSON.stringify(debate));
+    return res.send(JSON.stringify(debate));
   } catch (err) {
     console.error(err);
-    res
+    return res
       .status(404)
       .send("Sorry can't find that! Issue with POST /debate/create");
   }
@@ -82,19 +78,18 @@ router.post("/debate/edit", async (req, res) => {
       !data.debateStatus ||
       !data.votingStatus
     ) {
-      res.json({
+      return res.json({
         status: "error",
-        msg: "Missing all required POST vars"
+        msg: "Missing all required POST vars",
+        field: 'global'
       });
-      res.end();
-      return;
     }
 
     data.timestamp = new Date().getTime();
 
     const debate = await dynamo_db.editDebate(data);
 
-    res.json({ status: "ok" });
+    return res.json({ status: "ok" });
   } catch (err) {
     console.error(err);
     res
@@ -106,10 +101,10 @@ router.post("/debate/edit", async (req, res) => {
 router.get("/debate/types", async (req, res) => {
   try {
     const allDebateTypes = await dynamo_db.getAllTypes();
-    res.send(JSON.stringify(allDebateTypes));
+    return res.send(JSON.stringify(allDebateTypes));
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
+    return res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
   }
 });
 
