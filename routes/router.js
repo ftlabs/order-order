@@ -81,9 +81,7 @@ router.post('/:debateId', async (req, res) => {
     const formData = req.body;
     let data = {};
     if (formData.comment) {
-      const { comment, tags, displayStatus } = formData;
-      const { replyTo } = req.query;
-      console.log('replyTo', replyTo);
+      const { comment, tags, displayStatus, replyTo } = formData;
       data = {
         comments: [
           dynamoDb.constructCommentObject({
