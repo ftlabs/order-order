@@ -265,8 +265,8 @@ function constructCommentObject({
     replyTo,
     displayStatus,
     reports: [],
-    updatedAt: date
-    createdAt: date
+    updatedAt: date,
+    createdAt: date,
   };
 }
 
