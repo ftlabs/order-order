@@ -56,7 +56,7 @@ function submitForm(e) {
     for (var k in data) {
         if (data.hasOwnProperty(k)) {
             if (data[k] === undefined || data[k] === "") {
-                errors[data[k]] = `${k} is required`;
+                errors[data[k]] = k + ' is required';
             }
         }
     }
@@ -65,11 +65,11 @@ function submitForm(e) {
         reportError(errors, 'field');
     } else {
         try {
-            var promise = new Promise((resolve, reject) => {
-                resolve(submitData(`/api/debate/${url}`, data));
+            var promise = new Promise(function(resolve, reject) {
+                resolve(submitData('/api/debate/' + url, data));
             });
 
-            promise.then(response => {
+            promise.then(function(response) {
                 if (response.status === "error") {
                     reportError(response.msg, response.field);
                 } else if (response.status === "ok") {
@@ -82,7 +82,7 @@ function submitForm(e) {
                 }
             });
         } catch (error) {
-            reportError(`Issue with form submission: ${error}`, 'global');
+            reportError('Issue with form submission: ' + error, 'global');
         }
     }
 }
@@ -96,7 +96,7 @@ function submitData(url, data) {
         },
         body: JSON.stringify(data)
     })
-    .then(response => {
+    .then(function(response) {
         if (response.status >= 200 && response.status < 300) {
             return response.json();
         } else {
@@ -108,7 +108,7 @@ function submitData(url, data) {
             };
         }
     })
-    .then(json => {
+    .then(function(json) {
         if (json.status === "error") {
             return json;
         } else {
@@ -118,10 +118,12 @@ function submitData(url, data) {
             };
         }
     })
-    .catch(error => ({
-        status: "error",
-        msg: error
-    }));
+    .catch(function(error) {
+        return {
+            status: "error",
+            msg: error
+        };
+    });
 }
 
 function reportError(msg, type) {
