@@ -39,7 +39,11 @@
         <input type="radio" id="for" name="tags[]" value="for">
         <label for="for">for</label>
         <input type="submit" value="Submit" />
-        <div class="comment-reply-notification hidden"></div>
+        <div class="comment-reply-notification hidden">
+            <div class="comment-reply-message"></div>
+            <a class="comment-reply-remove" href="#">Remove</a>
+        </div>
+        <input class="comment-reply-to" type="hidden" name="replyTo" />
     </form>
     {{/if}}
 </body>

@@ -1,25 +1,39 @@
 function replyToComment(commentId) {
-  const commentForm = document.querySelector('.comment-form');
+  const replyTo = document.querySelector('.comment-reply-to');
   const commentReplyNotification = document.querySelector(
     '.comment-reply-notification',
   );
+  const commentReplyMessage = document.querySelector('.comment-reply-message');
 
-  const queryString =
-    commentForm.getAttribute('action') + 'replyTo=' + commentId;
-  commentForm.setAttribute('action', queryString);
+  replyTo.setAttribute('value', commentId);
   commentReplyNotification.classList.remove('hidden');
-  commentReplyNotification.innerHTML = 'Replying to comment ' + commentId;
+  commentReplyMessage.innerHTML = 'Replying to comment ' + commentId;
 }
 
-function removeReplyToComment() {}
+function removeReplyToComment() {
+  const replyTo = document.querySelector('.comment-reply-to');
+  const commentReplyNotification = document.querySelector(
+    '.comment-reply-notification',
+  );
+  commentReplyNotification.classList.add('hidden');
+  replyTo.removeAttribute('value');
+}
 
-function init() {
+function addReplyEventListeners() {
   const replyLinks = document.querySelectorAll('.reply');
+  const commentReplyRemove = document.querySelector('.comment-reply-remove');
+
   Array.from(replyLinks).forEach(element =>
     element.addEventListener('click', () =>
       replyToComment(element.getAttribute('data-comment-id')),
     ),
   );
+
+  commentReplyRemove.addEventListener('click', removeReplyToComment);
+}
+
+function init() {
+  addReplyEventListeners();
 }
 
 document.addEventListener('DOMContentLoaded', init);
