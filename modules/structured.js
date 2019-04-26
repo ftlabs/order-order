@@ -11,7 +11,6 @@ function display(req, res, data) {
   } = data.debate;
 
   if (comments) {
-    console.log(comments);
     commentsFor = comments.filter(comment => comment.tags.includes('for'));
     commentsAgainst = comments.filter(comment =>
       comment.tags.includes('against'),
