@@ -12,7 +12,9 @@
         <h1>Against</h1>
         {{#each commentsAgainst}}
         <div>
-            {{content}}
+            <h4>{{user}}</h4>
+            <p>{{content}}</p>
+            <a data-comment-id="{{id}}" class="reply" href="#">Reply</a>
         </div>
         {{/each}}
     </div>
@@ -22,20 +24,22 @@
         <h1>For</h1>
         {{#each commentsFor}}
         <div>
-            <h4>{{userId}}</h4>
+            <h4>{{user}}</h4>
             <p>{{content}}</p>
+            <a data-comment-id="{{id}}" class="reply" href="#">Reply</a>
         </div>
         {{/each}}
     </div>
     {{/if}}
     {{#if debateOpen}}
-    <form action="/{{id}}?" method="POST" encrypt="multipart/form-data">
+    <form action="/{{id}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
         <textarea name="comment" rows=" 4" cols="50"></textarea>
         <input type="radio" id="against" name="tags[]" value="against" checked>
         <label for="against">against</label>
         <input type="radio" id="for" name="tags[]" value="for">
         <label for="for">for</label>
         <input type="submit" value="Submit" />
+        <div class="comment-reply-notification hidden"></div>
     </form>
     {{/if}}
 </body>

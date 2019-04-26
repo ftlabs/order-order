@@ -8,3 +8,7 @@ header {
   padding: 8px;
   text-align: right;
 }
+
+.hidden {
+  display: none;
+}
