@@ -1,161 +1,207 @@
 var formNewDebate = document.getElementById("form_new_debate");
 var formEditDebate = document.getElementById("form_edit_debate");
-var msgError = document.getElementById("msg_error");
-var msgStatus = document.getElementById("msg_status");
+var msgStatus = document.querySelector('.o-message--alert');
+
+//TODO: get rid of arrow notation for browser compatibility
 
 function init() {
-  if (formNewDebate) {
-    formNewDebate.addEventListener("submit", submitForm);
-  }
+    if (formNewDebate) {
+        formNewDebate.addEventListener("submit", submitForm);
+    }
 
-  if (formEditDebate) {
-    formEditDebate.addEventListener("submit", submitForm);
-  }
+    if (formEditDebate) {
+        formEditDebate.addEventListener("submit", submitForm);
+    }
 }
 
 function submitForm(e) {
-  e.preventDefault();
+    e.preventDefault();
+    clearErrors();
 
-  var url = "create";
+    var url = "create";
 
-  if (formEditDebate && e.target.id === formEditDebate.id) {
-    url = "edit";
-  }
-
-  var errors = [];
-  var debateType = document.getElementsByName("debateType")[0].value;
-  var title = document.getElementsByName("title")[0].value;
-  var description = document.getElementsByName("debateDescription")[0].value;
-  var debateStatus = document.getElementsByName("debateStatus")[0].value;
-  var votingStatus = document.getElementsByName("votingStatus")[0].value;
-
-  if (isAlphaNumericWithCharacters(title)) {
-    errors.push("Title must be alphanumeric or allowed chars (,_\"-') ");
-  }
-
-  if (isAlphaNumericWithCharacters(description)) {
-    errors.push("Description must be alphanumeric or allowed chars (,_\"-') ");
-  }
-
-  var data = {
-    debateType,
-    title,
-    description,
-    debateStatus,
-    votingStatus
-  };
-
-  if (formEditDebate && e.target.id === formEditDebate.id) {
-    var debate_id = document.getElementsByName("id")[0].value;
-    data.id = debate_id;
-  }
-
-  // Checking fields have at least some value
-  for (var k in data) {
-    if (data.hasOwnProperty(k)) {
-      if (data[k] === undefined || data[k] === "") {
-        errors.push(`${k}`);
-      }
+    if (formEditDebate && e.target.id === formEditDebate.id) {
+        url = "edit";
     }
-  }
 
-  if (errors.length > 0) {
-    reportError(
-      `Fill in all fields please.<br />${errors.join(", ")} are missing`
-    );
-  } else {
-    try {
-      var promise = new Promise((resolve, reject) => {
-        resolve(submitData(`/api/debate/${url}`, data));
-      });
-      promise.then(response => {
-        if (response.status === "error") {
-          reportError(`Issue with fetch: ${response.data}`);
-        } else if (response.status === "ok") {
-          if (url === "edit") {
-            reportStatus("Debate edited");
-          } else {
-            reportStatus("New debate added");
-            clearForm();
-          }
+    var errors = {};
+    var debateType = document.getElementsByName("debateType")[0].value;
+    var title = document.getElementsByName("title")[0].value;
+    var description = document.getElementsByName("debateDescription")[0].value;
+    var debateStatus = document.getElementsByName("debateStatus")[0].value;
+    var votingStatus = document.getElementsByName("votingStatus")[0].value;
+
+    if (isAlphaNumericWithCharacters(title)) {
+        errors.title = "Title must be alphanumeric or allowed chars (,_\"-')";
+    }
+
+    if (isAlphaNumericWithCharacters(description)) {
+        errors.description = "Description must be alphanumeric or allowed chars (,_\"-')";
+    }
+
+    var data = {
+        debateType,
+        title,
+        description,
+        debateStatus,
+        votingStatus
+    };
+
+    if (formEditDebate && e.target.id === formEditDebate.id) {
+        var debate_id = document.getElementsByName("id")[0].value;
+        data.id = debate_id;
+    }
+
+    // Checking fields have at least some value
+    for (var k in data) {
+        if (data.hasOwnProperty(k)) {
+            if (data[k] === undefined || data[k] === "") {
+                errors[data[k]] = `${k} is required`;
+            }
         }
-      });
-    } catch (error) {
-      reportError(`Issue with form submission: ${error}`);
     }
-  }
+
+    if (!isEmpty(errors)) {
+        reportError(errors, 'field');
+    } else {
+        try {
+            var promise = new Promise((resolve, reject) => {
+                resolve(submitData(`/api/debate/${url}`, data));
+            });
+
+            promise.then(response => {
+                if (response.status === "error") {
+                    reportError(response.msg, response.field);
+                } else if (response.status === "ok") {
+                    if (url === "edit") {
+                        reportStatus("Debate edited");
+                    } else {
+                        reportStatus("New debate added");
+                        clearForm();
+                    }
+                }
+            });
+        } catch (error) {
+            reportError(`Issue with form submission: ${error}`, 'global');
+        }
+    }
 }
 
 function submitData(url, data) {
-  return fetch(url, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
+    return fetch(url, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
     .then(response => {
-      if (response.status >= 200 && response.status < 300) {
-        return response.json();
-      } else {
-        var error = new Error(response.statusText || response.status);
-        error.response = response;
-        return {
-          status: "error",
-          data: error
-        };
-      }
+        if (response.status >= 200 && response.status < 300) {
+            return response.json();
+        } else {
+            var error = new Error(response.statusText || response.status);
+            error.response = response;
+            return {
+                status: "error",
+                msg: error
+            };
+        }
     })
     .then(json => {
-      if (json.status === "error") {
-        return {
-          status: "error",
-          data: json.msg
-        };
-      } else {
-        return {
-          status: "ok",
-          data: json
-        };
-      }
+        if (json.status === "error") {
+            return json;
+        } else {
+            return {
+                status: "ok",
+                data: json
+            };
+        }
     })
     .catch(error => ({
-      status: "error",
-      data: error
+        status: "error",
+        msg: error
     }));
 }
 
-function reportError(msg) {
-  msgError.innerHTML = msg;
-  msgError.classList.remove("hide");
-  msgStatus.classList.add("hide");
+function reportError(msg, type) {
+    hide(msgStatus);
+    if(type === 'global') {
+        msgStatus.querySelector('.o-message__content-main').textContent = msg;
+        show(msgStatus);
+        msgStatus.classList.remove('o-message--success');
+        msgStatus.classList.add('o-message--error');
+    } else if (type === 'field') {
+        for (var field in msg) {
+            if (msg.hasOwnProperty(field)) {
+                var errorDisplay = document.querySelector('.o-forms__errortext[data-validation='+ field +']');
+                errorDisplay.textContent = msg[field];
+                errorDisplay.parentElement.classList.add('o-forms--error');
+                show(errorDisplay);
+            }
+        }
+    } else {
+        var errorDisplay = document.querySelector('.o-forms__errortext[data-validation='+ type +']');
+        errorDisplay.textContent = msg;
+        errorDisplay.parentElement.classList.add('o-forms--error');
+        show(errorDisplay);
+    }
 }
 
 function reportStatus(msg) {
-  msgStatus.innerHTML = msg;
-  msgStatus.classList.remove("hide");
-  msgError.classList.add("hide");
+    msgStatus.querySelector('.o-message__content-main').textContent = msg;
+    show(msgStatus);
+    msgStatus.classList.add('o-message--success');
+    msgStatus.classList.remove('o-message--error');
 }
 
 function clearForm() {
-  formNewDebate.reset();
+    formNewDebate.reset();
+    clearErrors();
+}
+
+function clearErrors() {
+    var errorDisplays = document.querySelectorAll('.o-forms__errortext');
+    Array.from(errorDisplays).forEach(function(item) {
+        item.textContent = '';
+        item.parentElement.classList.remove('o-forms--error');
+        hide(item);
+    });
 }
 
 function isAlphaNumeric(str) {
-  return regexCheck(/^[a-z0-9]+$/gim, str);
+    return regexCheck(/^[a-z0-9]+$/gim, str);
 }
 
 function isAlphaNumericWithCharacters(str) {
-  return regexCheck(/^[a-z0-9'",-_ ]+$/gim, str);
+    return regexCheck(/^[a-z0-9'",-_ ]+$/gim, str);
 }
 
 function regexCheck(regex, str) {
-  var result = regex.exec(str);
-  if (result === null) {
+    var result = regex.exec(str);
+    if (result === null) {
+        return true;
+    }
+    return false;
+}
+
+function isEmpty(obj) {
+    for (var key in obj) {
+        if(obj.hasOwnProperty(key)) {
+            return false;
+        }
+    }
     return true;
-  }
-  return false;
+}
+
+function show(el) {
+    el.classList.remove('hide');
+    el.setAttribute('aria-hidden', false);
+}
+
+function hide(el) {
+    el.classList.add('hide');
+    el.setAttribute('aria-hidden', true);
 }
 
 init();

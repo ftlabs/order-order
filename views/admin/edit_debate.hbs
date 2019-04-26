@@ -32,11 +32,11 @@
 					<option value="open" {{#ifEquals debate.votingStatus "open"}}selected{{/ifEquals}}>Open</option>
 					<option value="closed" {{#ifEquals debate.votingStatus "closed"}}selected{{/ifEquals}}>Closed</option>
 				</select>
-				<button id="submit_edit_debate">Update debate</button>
+				<button type="submit" class="o-buttons o-buttons--primary" id="submit_edit_debate">Update debate</button>
 			</form>
 		</section>
 		{{/if}}
 	</div>
 </main>
 
-{{> admin/footer}}
+{{> footer type="admin"}}
