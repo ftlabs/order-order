@@ -252,10 +252,13 @@ function constructCommentObject({
   user,
   content,
   tags = [],
-  replyTo = null,
+  replyTo = undefined,
   displayStatus = 'show',
 }) {
   const date = new Date().getTime();
+  if (!replyTo) {
+    replyTo = undefined;
+  }
   return {
     id: uuidv1(),
     user,
