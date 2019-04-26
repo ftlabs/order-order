@@ -41,6 +41,7 @@ h2.debate-type {
 .admin-content {
     width: 100%;
     background: $o-color-white;
+    min-height: 60%;
     padding: 30px;
     margin: 20px 0;
 
@@ -60,6 +61,7 @@ h2.debate-type {
     }
 
     &.admin-debates-list {
+        min-height: 0;
         border-bottom: 1px solid rgba(179,169,160, 0.2);
         box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2);
     }
