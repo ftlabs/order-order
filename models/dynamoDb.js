@@ -255,6 +255,7 @@ function constructCommentObject({
   replyTo = null,
   displayStatus = 'show',
 }) {
+  const date = new Date().getTime();
   return {
     id: uuidv1(),
     user,
@@ -264,6 +265,8 @@ function constructCommentObject({
     replyTo,
     displayStatus,
     reports: [],
+    updatedAt: date
+    createdAt: date
   };
 }
 
