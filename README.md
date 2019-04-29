@@ -11,11 +11,7 @@ npm install
 
 ## Running
 
-```
-node index.js
-```
-
-...or `nodemon index.js` if you have nodemon installed globally
+`npm start`, and in a separat tab `npm run watch-css`, to automatically compile changes to Sass files to CSS.
 
 Go to [http://localhost:PORT](http://localhost:PORT)
 
