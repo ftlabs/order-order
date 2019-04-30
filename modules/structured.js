@@ -1,3 +1,5 @@
+const commentHelper = require('../helpers/comments');
+
 function display(req, res, data) {
   let commentsFor = [];
   let commentsAgainst = [];
@@ -19,13 +21,21 @@ function display(req, res, data) {
 
   debateOpen = debateStatus === 'open' ? true : false;
 
+  commentsForStructured = commentHelper.getNestedComments({
+    commentsData: commentsFor,
+  }).data;
+
+  commentsAgainstStructured = commentHelper.getNestedComments({
+    commentsData: commentsAgainst,
+  }).data;
+
   res.render(debateType, {
     id,
     title,
     description,
     debateOpen,
-    commentsFor,
-    commentsAgainst,
+    commentsForStructured,
+    commentsAgainstStructured,
     user,
   });
 }
