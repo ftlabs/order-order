@@ -13,7 +13,6 @@ const app = express();
 const helmet = require('helmet');
 const express_enforces_ssl = require('express-enforces-ssl');
 const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
 const core_routes = require('./routes/router');
 const hbs_helpers = require('./utils/hbs-helpers');
 
@@ -29,7 +28,6 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(methodOverride('_method'));
 
 app.engine(
   'hbs',
