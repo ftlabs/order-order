@@ -1,35 +1,52 @@
-{{> admin/header title='Admin create new debate' subtitle='Admin section' }}
+{{> head title='Admin create new debate' subtitle='Admin section' }}
+{{> admin/header }}
 
-<div id="msg_status" class="status hide">
-	Messages go here
-</div>
+{{> alert }}
+<main class="o-grid-container">
+	<h1 class="admin-section">Create debate</h1>
+	<div class="o-grid-row">
 
-<main>
-	<h2>
-		Create Debate
-	</h2>
-	<form id="form_new_debate">
-		<div id="msg_error" class="error hide"></div>
-		<label for="debateType">Debate type</label>
-		<select name="debateType" required disabled>
-			<option selected value="structured">Structured debate</option>
-		</select>
-		<label for="title">Title</label>
-		<input type="text" name="title" placeholder="Title" required />
-		<label for="debateDescription">Description</label>
-		<input type="text" name="debateDescription" placeholder="Description" required />
-		<label for="debateStatus">Debate status</label>
-		<select name="debateStatus" required>
-			<option value="open" selected>Open</option>
-			<option value="closed">Closed</option>
-		</select>
-		<label for="votingStatus">Voting status</label>
-		<select name="votingStatus" required>
-			<option value="open" selected>Open</option>
-			<option value="closed">Closed</option>
-		</select>
-		<button id="submit_new_debate">Create new debate</button>
-	</form>
+		<section class="admin-content">
+			<form id="form_new_debate">
+				<div class="o-forms">
+					<label for="debateType" class="o-forms__label">Debate type</label>
+					<select name="debateType" class="o-forms__select" required disabled>
+						<option selected value="structured">Structured debate</option>
+					</select>
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateType"></div>
+				</div>
+				<div class="o-forms">
+					<label for="title" class="o-forms__label">Title</label>
+					<input type="text" name="title" class="o-forms__text" required />
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="title"></div>
+				</div>
+				<div class="o-forms">
+					<label for="debateDescription" class="o-forms__label">Description</label>
+					<input type="text" name="debateDescription" class="o-forms__text" required />
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="description"></div>
+				</div>
+				<div class="o-forms">
+					<label for="debateStatus" class="o-forms__label">Debate status</label>
+					<select name="debateStatus" class="o-forms__select" required>
+						<option value="open" selected>Open</option>
+						<option value="closed">Closed</option>
+					</select>
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateStatus"></div>
+				</div>
+				<div class="o-forms">
+					<label for="votingStatus" class="o-forms__label">Voting status</label>
+					<select name="votingStatus" class="o-forms__select" required>
+						<option value="open" selected>Open</option>
+						<option value="closed">Closed</option>
+					</select>
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="votingStatus"></div>
+				</div>
+				<div class="o-forms">
+					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate">Create new debate</button>
+				</div>
+			</form>
+		</section>
+	</div>
 </main>
 
-{{> admin/footer}}
+{{> footer type="admin"}}

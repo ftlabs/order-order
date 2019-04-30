@@ -1,8 +1,20 @@
-<header>
-	<div class="float-left">
-		<a href="/">Home</a>
+<header class="o-header-services clearfix" data-o-component="o-header-services">
+	<div class="o-header-services__top">
+		<div class="o-header-services__logo"></div>
+		<div class="o-header-services__title">
+			<a class="o-header-services__product-name" href="/">Debate</a>
+			<span class="o-header-services__product-tagline">Order, order!</span>
+		</div>
+		<ul class="o-header-services__related-content">
+			<li class="profile-container">
+				<a href="#">
+					<span class="profile">Profile</span>
+					<span class="user-name" href="#">{{ username }}</span>
+				</a>
+			</li>
+		</ul>
 	</div>
-	<div class="float-right">
-		s3o as: {{ username }}
-	</div>
+{{#ifEquals admin "admin"}}
+{{else}}
 </header>
+{{/ifEquals}}

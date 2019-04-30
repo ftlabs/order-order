@@ -46,7 +46,7 @@ let requestLogger = function(req, res, next) {
   next();
 };
 
-app.use(express.json());
+// app.use(express.json());
 
 app.use(requestLogger);
 app.use('/static', express.static(path.resolve(__dirname + '/static')));

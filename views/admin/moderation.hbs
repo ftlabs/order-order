@@ -1,43 +1,59 @@
-{{> admin/header title='Admin' subtitle='Admin section' }}
+{{> head title='Admin' subtitle='Admin section' }}
+{{> admin/header }}
 
-<main>
-	<h2>
-		Moderation
-	</h2>
-	<table cellspacing=0 cellpadding=10>
-		<thead>
-			<th>
-				Content
-			</th>
-			<th>
-				Reported by
-			</th>
-			<th colspan="3">
-				Tools
-			</th>
-		</thead>
-		{{#if reports}}
-		{{#each reports}}
-		<tr>
-			<td>
-				content
-			</td>
-			<td>
-				user report
-			</td>
-			<td>
-				<a href="/{{ ../debateTypeName }}/{{ this }}">ignore</a>
-			</td>
-			<td>
-				<a href="/admin/edit_debate/{{ this }}">hide/delete</a>
-			</td>
-			<td>
-				<a href="/admin/edit_debate/{{ this }}">view context</a>
-			</td>
-		</tr>
-		{{/each}}
-		{{/if}}
-	</table>
+<main class="o-grid-container">
+	<h1 class="admin-section">Moderation</h1>
+	<div class="o-grid-row">
+		<section class="admin-content">
+			<table class="o-table o-table--row-stripes" data-o-component="o-table">
+				<thead>
+					<tr>
+						<th scope="col" role="columnheader">Content</th>
+						<th scope="col" role="columnheader">Reported by</th>
+						<th scope="col" role="columnheader">Tools</th>
+					</tr>
+				</thead>
+				{{#if reports}}
+				{{#each reports}}
+				<tr>
+					<td>
+						content
+					</td>
+					<td>
+						user report
+					</td>
+					<td>
+						<a href="/{{ ../debateTypeName }}/{{ this }}">ignore</a>
+					</td>
+					<td>
+						<a href="/admin/edit_debate/{{ this }}">hide/delete</a>
+					</td>
+					<td>
+						<a href="/admin/edit_debate/{{ this }}">view context</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						content
+					</td>
+					<td>
+						user report
+					</td>
+					<td>
+						<a href="/{{ ../debateTypeName }}/{{ this }}">ignore</a>
+					</td>
+					<td>
+						<a href="/admin/edit_debate/{{ this }}">hide/delete</a>
+					</td>
+					<td>
+						<a href="/admin/edit_debate/{{ this }}">view context</a>
+					</td>
+				</tr>
+				{{/each}}
+				{{/if}}
+			</table>
+		</section>
+	</div>
 </main>
 
-{{> admin/footer}}
+{{> footer type="admin"}}
