@@ -1,29 +1,10 @@
-function display(req, res, data) {
-  let commentsFor = [];
-  let commentsAgainst = [];
-  const {
-    comments,
-    title,
-    description,
-    debateType,
-    debateStatus,
-    id,
-    user,
-  } = data.debate;
+const commentHelper = require('../helpers/comments');
 
-  if (comments) {
-    const commentsWithIndex = comments.map((comment, index) => ({
-      ...comment,
-      index,
-    }));
-    commentsFor = commentsWithIndex.filter(comment =>
-      comment.tags.includes('for'),
-    );
-    commentsAgainst = commentsWithIndex.filter(comment =>
-      comment.tags.includes('against'),
-    );
-  }
-  const debateOpen = debateStatus === 'open';
+function display(req, res, data) {
+  const { debate, user } = data;
+  const { id, title, description, debateStatus, debateType, comments } = debate;
+  const { commentsFor, commentsAgainst } = getAndNestComments(comments);
+  const debateOpen = debateStatus === 'open' ? true : false;
 
   res.render(debateType, {
     title,
@@ -34,6 +15,42 @@ function display(req, res, data) {
     debateId: id,
     user,
   });
+}
+
+function getAndNestComments(comments) {
+  let commentsFor = [];
+  let commentsAgainst = [];
+
+  if (comments) {
+    const commentsWithIndex = comments.map((comment, index) => ({
+      ...comment,
+      index,
+    }));
+    commentsFor = commentsWithIndex.filter(comment => {
+      if (comment.tags.includes('for')) {
+        return comment;
+      }
+    });
+    commentsAgainst = commentsWithIndex.filter(comment => {
+      if (comment.tags.includes('against')) {
+        return comment;
+      }
+    });
+
+    // adds nesting structure
+    commentsFor = commentHelper.getNestedComments({
+      commentsData: commentsFor,
+    });
+
+    commentsAgainst = commentHelper.getNestedComments({
+      commentsData: commentsAgainst,
+    });
+  }
+
+  return {
+    commentsFor,
+    commentsAgainst,
+  };
 }
 
 module.exports = { display };
