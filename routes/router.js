@@ -4,11 +4,15 @@ const s3o = require('@financial-times/s3o-middleware');
 const path = require('path');
 const api_routes = require('../routes/api');
 const admin_routes = require('../routes/admin');
+const commentRoutes = require('../routes/comment');
+const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
 const dynamoDb = require('../models/dynamoDb');
 
 router.use('/api', api_routes);
 router.use(s3o);
+router.use('/comment', commentRoutes);
+router.use('/rating', ratingRoutes);
 router.use('/admin', admin_routes);
 
 router.get('/', async (req, res) => {
@@ -95,6 +99,7 @@ router.post('/:debateId', async (req, res) => {
         ...data,
       };
     }
+
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
   } catch (err) {

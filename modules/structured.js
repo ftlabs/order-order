@@ -8,15 +8,21 @@ function display(req, res, data) {
     debateType,
     debateStatus,
     id,
+    user,
   } = data.debate;
 
   if (comments) {
-    commentsFor = comments.filter(comment => comment.tags.includes('for'));
-    commentsAgainst = comments.filter(comment =>
+    const commentsWithIndex = comments.map((comment, index) => ({
+      ...comment,
+      index,
+    }));
+    commentsFor = commentsWithIndex.filter(comment =>
+      comment.tags.includes('for'),
+    );
+    commentsAgainst = commentsWithIndex.filter(comment =>
       comment.tags.includes('against'),
     );
   }
-
   const debateOpen = debateStatus === 'open';
 
   res.render(debateType, {
@@ -25,8 +31,8 @@ function display(req, res, data) {
     debateOpen,
     commentsFor,
     commentsAgainst,
-    id,
-    user: data.user,
+    debateId: id,
+    user,
   });
 }
 

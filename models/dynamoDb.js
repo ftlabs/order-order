@@ -2,6 +2,7 @@ const AWS = require('aws-sdk');
 const uuidv1 = require('uuid/v1');
 
 const LIST_TYPES = ['comments'];
+const NESTED_LIST_TYPES = ['ratings'];
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: 'eu-west-1',
@@ -220,6 +221,10 @@ function updateExpressionConstruct(data) {
     };
     if (LIST_TYPES.includes(key)) {
       updateExpression += ` ${key}=list_append(${key}, :${key})`;
+    } else if (NESTED_LIST_TYPES.includes(key)) {
+      updateExpression += ` comments[${
+        data[key][0].index
+      }].${key}=list_append(comments[${data[key][0].index}].${key}, :${key})`;
     } else {
       updateExpression += ` ${key}=:${key}`;
     }
@@ -241,7 +246,6 @@ async function query(type = 'query', params) {
 
     const allParams = Object.assign(baseParams, params);
     const result = await dynamoDb[type](allParams).promise();
-
     return { result };
   } catch (err) {
     return `Error with request ${err}`;
@@ -256,9 +260,7 @@ function constructCommentObject({
   displayStatus = 'show',
 }) {
   const date = new Date().getTime();
-  if (!replyTo) {
-    replyTo = undefined;
-  }
+  replyTo = !replyTo ? undefined : replyTo;
   return {
     id: uuidv1(),
     user,
@@ -270,6 +272,17 @@ function constructCommentObject({
     reports: [],
     updatedAt: date,
     createdAt: date,
+  };
+}
+
+function constructRatingObject({ rating, user, index }) {
+  const createdAt = new Date().getTime();
+  return {
+    id: uuidv1(),
+    user,
+    rating,
+    createdAt,
+    index,
   };
 }
 
@@ -285,4 +298,5 @@ module.exports = {
   getAllReports,
   updateDebate,
   constructCommentObject,
+  constructRatingObject,
 };
