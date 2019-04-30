@@ -6,12 +6,14 @@ function display(req, res, data) {
 
   if (debate.comments) {
     commentsFor = debate.comments.filter(comment => {
-      comment.tags.includes('for');
-      return comment;
+      if (comment.tags.includes('for')) {
+        return comment;
+      }
     });
     commentsAgainst = debate.comments.filter(comment => {
-      comment.tags.includes('against');
-      return comment;
+      if (comment.tags.includes('against')) {
+        return comment;
+      }
     });
   }
 
