@@ -1,8 +1,8 @@
 function getProperty(cookie, name) {
   if (Object.prototype.hasOwnProperty.call(cookie, name)) {
-    const username = cookie[name];
-    if (username) {
-      return username;
+    const propertyName = cookie[name];
+    if (propertyName) {
+      return propertyName;
     }
   }
   return null;
