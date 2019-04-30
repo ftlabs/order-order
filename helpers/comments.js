@@ -2,7 +2,7 @@ function getCommentReplies(comment, commentsReplies) {
   const replies = [];
 
   commentsReplies.map(c => {
-    if (c.replyto === comment.id) {
+    if (c.replyTo === comment.id) {
       const newComment = c;
       newComment.replies = getCommentReplies(newComment, commentsReplies);
       replies.push(newComment);
@@ -27,7 +27,7 @@ function getNestedComments(originParams) {
   const commentsReplies = [];
 
   params.commentsData.forEach(comment => {
-    if (comment.replyto === 0) {
+    if (!Object.prototype.hasOwnProperty.call(comment, 'replyTo')) {
       commentsOrigin.push(comment);
     } else {
       commentsReplies.push(comment);
@@ -52,10 +52,7 @@ function getNestedComments(originParams) {
     // filter results
   }
 
-  return {
-    status: 'ok',
-    data: commentsNested,
-  };
+  return commentsNested;
 }
 
 module.exports = {
