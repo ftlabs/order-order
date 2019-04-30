@@ -7,7 +7,6 @@ router.post('/:debateId', async (req, res) => {
     const backURL = req.header('Referer') || '/';
     const { debateId } = req.params;
     const { comment, tags, displayStatus, replyTo } = req.body;
-    console.log(req.cookies);
     const data = {
       comments: [
         dynamoDb.constructCommentObject({
