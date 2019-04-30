@@ -8,6 +8,10 @@ function getProperty(cookie, name) {
   return null;
 }
 
+function getS3oUsername(cookie) {
+  return getProperty(cookie, 's3o_username');
+}
+
 module.exports = {
-  getProperty,
+  getS3oUsername,
 };

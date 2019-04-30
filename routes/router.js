@@ -9,14 +9,14 @@ const apiRoutes = require('../routes/api');
 const adminRoutes = require('../routes/admin');
 const listing = require('../helpers/listings');
 const dynamoDb = require('../models/dynamoDb');
-const { getProperty } = require('../helpers/cookies');
+const { getS3oUsername } = require('../helpers/cookies');
 
 router.use('/api', apiRoutes);
 router.use(s3o);
 router.use('/admin', adminRoutes);
 
 router.get('/', async (req, res) => {
-  const username = getProperty(req.cookies, 'username');
+  const username = getS3oUsername(req.cookies);
 
   try {
     const debateList = await dynamoDb.getAllDebateLists();
@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/type/:debateType', async (req, res) => {
-  const username = getProperty(req.cookies, 'username');
+  const username = getS3oUsername(req.cookies);
 
   try {
     const { debateType } = req.params;
@@ -59,7 +59,7 @@ router.get('/:debateId', async (req, res) => {
   try {
     const { debateId } = req.params;
     const result = await dynamoDb.getById(debateId);
-    const username = getProperty(req.cookies, 'username');
+    const username = getS3oUsername(req.cookies);
     const debate = result.Items[0];
 
     const data = {
