@@ -1,0 +1,13 @@
+<li class="comment {{class}}">
+	<div>
+		<h4>{{comment.user}}</h4>
+		<p>{{comment.content}}</p>
+		<a data-comment-id="{{comment.id}}" class="reply" href="#">Reply</a>
+		{{> structured/comments class="replies" comments=this.replies debateId=debateId }}
+		<form action="rating/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="rating-form">
+			<input type="hidden" name="index" value="{{index}}" />
+			<input type="hidden" name="rating" value="upvote" />
+			<input type="submit" value="up vote" />
+		</form>
+	</div>
+</li>

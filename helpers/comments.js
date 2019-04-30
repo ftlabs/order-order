@@ -1,4 +1,17 @@
-"use strict";
+function getCommentReplies(comment, commentsReplies) {
+  const replies = [];
+
+  commentsReplies.map(c => {
+    if (c.replyTo === comment.id) {
+      const newComment = c;
+      newComment.replies = getCommentReplies(newComment, commentsReplies);
+      replies.push(newComment);
+    }
+    return true;
+  });
+
+  return replies;
+}
 
 function getNestedComments(originParams) {
   const defaultParams = {
@@ -6,24 +19,25 @@ function getNestedComments(originParams) {
     paginationStart: null,
     paginationEnd: null,
     paginationRange: null,
-    filterTag: null
+    filterTag: null,
   };
   const params = Object.assign(defaultParams, originParams);
-  const commentsNested = [],
-    commentsOrigin = [],
-    commentsReplies = [];
+  const commentsNested = [];
+  const commentsOrigin = [];
+  const commentsReplies = [];
 
-  params.commentsData.map(comment => {
-    if (comment.replyto === 0) {
+  params.commentsData.forEach(comment => {
+    if (!Object.prototype.hasOwnProperty.call(comment, 'replyTo')) {
       commentsOrigin.push(comment);
     } else {
       commentsReplies.push(comment);
     }
   });
 
-  commentsOrigin.map(comment => {
-    comment.replies = getCommentReplies(comment, commentsReplies);
-    commentsNested.push(comment);
+  commentsOrigin.forEach(comment => {
+    const newComment = comment;
+    newComment.replies = getCommentReplies(newComment, commentsReplies);
+    commentsNested.push(newComment);
   });
 
   if (
@@ -31,32 +45,16 @@ function getNestedComments(originParams) {
     params.paginationEnd !== null ||
     params.paginationRange !== null
   ) {
-    //paginate results
+    // paginate results
   }
 
   if (params.filterTag !== null) {
-    //filter results
+    // filter results
   }
 
-  return {
-    status: "ok",
-    data: commentsNested
-  };
-}
-
-function getCommentReplies(comment, commentsReplies) {
-  let replies = [];
-
-  commentsReplies.map(c => {
-    if (c.replyto === comment.id) {
-      c.replies = getCommentReplies(c, commentsReplies);
-      replies.push(c);
-    }
-  });
-
-  return replies;
+  return commentsNested;
 }
 
 module.exports = {
-  getNestedComments
+  getNestedComments,
 };
