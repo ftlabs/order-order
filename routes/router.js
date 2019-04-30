@@ -51,9 +51,9 @@ router.get('/type/:debateType', async (req, res) => {
   }
 });
 
-router.get('/:debateType/:debateId', async (req, res) => {
+router.get('/:debateId', async (req, res) => {
   try {
-    const { debateType, debateId } = req.params;
+    const { debateId } = req.params;
     const result = await dynamoDb.getById(debateId);
 
     const data = {
@@ -64,10 +64,39 @@ router.get('/:debateType/:debateId', async (req, res) => {
     };
 
     const moduleType = require(path.resolve(
-      `${listing.getRootDir()}/modules/${debateType}`,
+      `${listing.getRootDir()}/modules/${data.debate.debateType}`,
     ));
 
     moduleType.display(req, res, data);
+  } catch (err) {
+    console.error(err);
+    res.status(404).send("Sorry can't find that!");
+  }
+});
+
+router.post('/:debateId', async (req, res) => {
+  const backURL = req.header('Referer') || '/';
+  try {
+    const { debateId } = req.params;
+    const formData = req.body;
+    let data = {};
+    if (formData.comment) {
+      const { comment, tags, displayStatus, replyTo } = formData;
+      data = {
+        comments: [
+          dynamoDb.constructCommentObject({
+            content: comment,
+            user: req.cookies.s3o_username,
+            tags,
+            replyTo,
+            displayStatus,
+          }),
+        ],
+        ...data,
+      };
+    }
+    await dynamoDb.updateDebate(debateId, data);
+    res.redirect(backURL);
   } catch (err) {
     console.error(err);
     res.status(404).send("Sorry can't find that!");
