@@ -1,12 +1,5 @@
-"use strict";
-
-const { lstatSync, readdirSync } = require("fs");
-const { dirname, join } = require("path");
-const AWS = require("aws-sdk");
-
-const dynamoDb = new AWS.DynamoDB.DocumentClient({
-  region: "eu-west-1"
-});
+const { lstatSync, readdirSync } = require('fs');
+const { dirname, join } = require('path');
 
 function getRootDir() {
   return dirname(require.main.filename || process.mainModule.filename);
@@ -14,35 +7,40 @@ function getRootDir() {
 
 const isDirectory = source => lstatSync(source).isDirectory();
 
-const getDirectories = source =>
-  readdirSync(source)
+function getDirectories(source) {
+  return readdirSync(source)
     .map(name => join(source, name))
     .filter(isDirectory)
     .map(path => {
-      let arr = path.split("/");
+      const arr = path.split('/');
       return {
         type: arr[arr.length - 1],
-        path: path
+        path,
       };
     });
+}
 
-function getDebateListings(folder, searchedType = "") {
+function getDebateListings(folder, searchedType = '') {
   const directoryList = getDirectories(`${getRootDir()}/${folder}/`);
-  directoryList.forEach(collection => {
-    if (collection.type === searchedType || searchedType === "") {
-      collection.debateTypeName = collection.type;
-      collection.debates = [];
+  const newDirectoryList = [];
 
-      const files = readdirSync(collection.path);
+  directoryList.forEach(collection => {
+    const newCollection = collection;
+    if (newCollection.type === searchedType || searchedType === '') {
+      newCollection.debateTypeName = newCollection.type;
+      newCollection.debates = [];
+
+      const files = readdirSync(newCollection.path);
       files.forEach(file => {
-        if (file.endsWith(".json")) {
-          collection.debates.push(file.replace(".json", ""));
+        if (file.endsWith('.json')) {
+          newCollection.debates.push(file.replace('.json', ''));
         }
       });
     }
+    newDirectoryList.push(newCollection);
   });
 
-  return directoryList;
+  return newDirectoryList;
 }
 
 async function getDynamoDebateListings() {
@@ -52,5 +50,5 @@ async function getDynamoDebateListings() {
 module.exports = {
   getRootDir,
   getDebateListings,
-  getDynamoDebateListings
+  getDynamoDebateListings,
 };

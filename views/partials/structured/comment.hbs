@@ -1,0 +1,8 @@
+<li class="comment {{class}}">
+	<div>
+		<h4>{{comment.user}}</h4>
+		<p>{{comment.content}}</p>
+		<a data-comment-id="{{comment.id}}" class="reply" href="#">Reply</a>
+		{{> structured/comments class="replies" comments=this.replies }}
+	</div>
+</li>
