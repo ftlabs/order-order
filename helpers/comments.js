@@ -52,10 +52,7 @@ function getNestedComments(originParams) {
     // filter results
   }
 
-  return {
-    status: 'ok',
-    data: commentsNested,
-  };
+  return commentsNested;
 }
 
 module.exports = {
