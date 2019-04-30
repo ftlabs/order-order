@@ -7,16 +7,16 @@
     {{> user/header username=user.username }}
     <h1>{{title}}</h1>
     <p>{{description}}</p>
-    {{#if commentsAgainstStructured}}
+    {{#if commentsAgainst}}
     <div>
         <h1>Against</h1>
-        {{> structured/comments class='comments_list' comments=commentsAgainstStructured }}
+        {{> structured/comments class='comments_list' comments=commentsAgainst }}
     </div>
     {{/if}}
-    {{#if commentsForStructured}}
+    {{#if commentsFor}}
     <div>
         <h1>For</h1>
-        {{> structured/comments class='comments_list' comments=commentsForStructured }}
+        {{> structured/comments class='comments_list' comments=commentsFor }}
     </div>
     {{/if}}
     {{#if debateOpen}}
