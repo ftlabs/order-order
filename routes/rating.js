@@ -17,7 +17,7 @@ router.post('/:debateId', async (req, res) => {
       ],
     };
     if (await invalidPost(debateId, req.cookies.s3o_username, index)) {
-      throw new Error('You have already rated this comment');
+      throw new Error('Something went wrong with the rating');
     }
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
