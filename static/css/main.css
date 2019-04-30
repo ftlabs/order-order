@@ -92,6 +92,81 @@ h2.debate-type {
     border-bottom: 1px solid rgba(179, 169, 160, 0.2);
     box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2); }
 
+.home-header {
+  background: #FFFFFF;
+  margin: 40px 0;
+  border-bottom: 1px solid #F2DFCE; }
+
+.home-heading {
+  text-align: center;
+  font-family: 'FinancierDisplayWeb', serif;
+  font-size: 60px;
+  line-height: 60px;
+  font-weight: 400;
+  width: 100%;
+  margin: 0;
+  padding: 20px; }
+  .home-heading:after {
+    content: '';
+    display: block;
+    background: #000000;
+    height: 4px;
+    width: 40%;
+    margin: 20px auto 0; }
+
+.home-intro {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #666666;
+  width: 100%; }
+
+.debates-home {
+  padding: 20px;
+  align-items: baseline;
+  background: #F2DFCE; }
+
+.debate-card {
+  flex-basis: 33%;
+  align-self: stretch;
+  padding: 10px; }
+  .debate-card .o-teaser__heading {
+    text-transform: capitalise; }
+    .debate-card .o-teaser__heading a, .debate-card .o-teaser__heading a:visited {
+      color: #000000; }
+  .debate-card .o-teaser__content {
+    height: 100%;
+    position: relative;
+    background-color: #FFFFFF; }
+  .debate-card .debate-type-tag {
+    text-transform: capitalize; }
+  .debate-card .o-teaser__timestamp {
+    margin-bottom: 40px; }
+  .debate-card .debate-status {
+    display: table;
+    width: 100%;
+    border-top: 1px solid #CCCCCC;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #666666;
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+    .debate-card .debate-status .debate-state {
+      display: table-cell;
+      text-align: center; }
+      .debate-card .debate-status .debate-state:first-child {
+        border-right: 1px solid #CCCCCC; }
+      .debate-card .debate-status .debate-state .state-indicator {
+        font-weight: 600; }
+        .debate-card .debate-status .debate-state .state-indicator.debate-open {
+          color: #00572C; }
+        .debate-card .debate-status .debate-state .state-indicator.debate-closed {
+          color: #B30000; }
+
 .hide {
   display: none; }
 
