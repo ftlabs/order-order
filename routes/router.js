@@ -24,15 +24,15 @@ router.get('/', async (req, res) => {
   const username = getS3oUsername(req.cookies);
 
   try {
-    const debateList = await dynamoDb.getAllDebateLists();
+    const debateList = await dynamoDb.getAllDebateLists('flat');
     res.render('list', {
-      pageTitle: 'Debates: All',
-      pageSubtitle: 'List of all debates',
+      pageTitle: 'FT Debates',
+      pageSubtitle: 'Welcome to FT debates, here\'s a list of all available debates and a bit more blurb on how to take part',
       pageType: 'home',
       debateList,
       user: {
         username,
-      },
+      }
     });
   } catch (err) {
     res.status(404).send("Sorry can't find that!");

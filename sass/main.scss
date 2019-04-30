@@ -1,0 +1,16 @@
+@import "main/vars";
+@import "main/site";
+
+@import "admin/main";
+
+@import "home/cards";
+
+.hide {
+  display: none;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}

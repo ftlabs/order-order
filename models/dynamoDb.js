@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const uuidv1 = require('uuid/v1');
+const Utils = require('../helpers/utils');
 
 const LIST_TYPES = ['comments'];
 const NESTED_LIST_TYPES = ['ratings'];
@@ -136,23 +137,33 @@ async function getAllTypes() {
   return { error: queryStatement };
 }
 
-async function getAllDebateLists() {
+async function getAllDebateLists(type = "nested") {
   const queryStatement = await query('scan', {});
 
   if (queryStatement.result) {
-    const debates = {};
+    let debates;
 
-    queryStatement.result.Items.map(item => {
-      if (!Object.prototype.hasOwnProperty.call(debates, item.debateType)) {
-        debates[item.debateType] = {
-          debateTypeName: item.debateType,
-          debates: [],
-        };
-      }
+    if(type === "flat") {
+      debates = [];
+      queryStatement.result["Items"].forEach(item => {
+        item.formatDate = Utils.formatDate(item.createdAt);
+        debates.push(item);
+      });
+      
+      Utils.sortByDate(debates, 'createdAt');
 
-      debates[item.debateType].debates.push(item);
-      return true;
-    });
+    } else {
+      debates = {};
+      queryStatement.result["Items"].map(item => {
+        if (!debates.hasOwnProperty(item.debateType)) {
+          debates[item.debateType] = {
+            debateTypeName: item.debateType,
+            debates: []
+          };
+        }
+        debates[item.debateType].debates.push(item);
+      });
+    }
 
     return debates;
   }

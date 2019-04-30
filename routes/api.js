@@ -16,32 +16,30 @@ router.post('/debate/create', async (req, res) => {
       !data.debateStatus ||
       !data.votingStatus
     ) {
-      res.json({
+
+      return res.json({
         status: 'error',
         msg: 'Missing all required POST vars',
+        field: 'global'
       });
-      res.end();
-      return;
     }
     // Check if debate of this name exists already
     const checkDebateName = await dynamoDb.getBy('title', data.title);
 
     if (Object.prototype.hasOwnProperty.call(checkDebateName, 'error')) {
-      res.json({
+      return res.json({
         status: 'error',
         msg: checkDebateName.error,
+        field: 'title'
       });
-      res.end();
-      return;
     }
 
     if (checkDebateName.Items.length > 0) {
-      res.json({
+      return res.json({
         status: 'error',
         msg: 'A debate with this name exists already',
+        field: 'title'
       });
-      res.end();
-      return;
     }
 
     // Validation complete - create new debate
@@ -53,16 +51,16 @@ router.post('/debate/create', async (req, res) => {
     const debate = await dynamoDb.addDebate(data);
 
     if (Object.prototype.hasOwnProperty.call(debate, 'error')) {
-      res.json({
+      return res.json({
         status: 'error',
         msg: debate.error,
+        field: 'global'
       });
-      res.end();
-      return;
     }
-    res.send(JSON.stringify(debate));
+
+    return res.send(JSON.stringify(debate));
   } catch (err) {
-    res
+    return res
       .status(404)
       .send("Sorry can't find that! Issue with POST /debate/create");
   }
@@ -80,21 +78,20 @@ router.post('/debate/edit', async (req, res) => {
       !data.debateStatus ||
       !data.votingStatus
     ) {
-      res.json({
+      return res.json({
         status: 'error',
         msg: 'Missing all required POST vars',
+        field: 'global'
       });
-      res.end();
-      return;
     }
 
     data.timestamp = new Date().getTime();
 
     const debate = await dynamoDb.editDebate(data);
+    return res.json({ status: 'ok', data: debate });
 
-    res.json({ status: 'ok', data: debate });
   } catch (err) {
-    res
+    return res
       .status(404)
       .send("Sorry can't find that! Issue with POST /debate/create");
   }
@@ -115,10 +112,10 @@ router.put('/debate/:uuid', async (req, res) => {
 
 router.get('/debate/types', async (req, res) => {
   try {
-    const allDebateTypes = await dynamoDb.getAllTypes();
-    res.send(JSON.stringify(allDebateTypes));
+    const allDebateTypes = await dynamo_db.getAllTypes();
+    return res.send(JSON.stringify(allDebateTypes));
   } catch (err) {
-    res.status(404).send("Sorry can't find that! Issue with PUT /debate/types");
+    return res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
   }
 });
 
