@@ -10,25 +10,13 @@
     {{#if commentsAgainst}}
     <div>
         <h1>Against</h1>
-        {{#each commentsAgainst}}
-        <div>
-            <h4>{{user}}</h4>
-            <p>{{content}}</p>
-            <a data-comment-id="{{id}}" class="reply" href="#">Reply</a>
-        </div>
-        {{/each}}
+        {{> structured/comments class='comments_list' comments=commentsAgainst }}
     </div>
     {{/if}}
     {{#if commentsFor}}
     <div>
         <h1>For</h1>
-        {{#each commentsFor}}
-        <div>
-            <h4>{{user}}</h4>
-            <p>{{content}}</p>
-            <a data-comment-id="{{id}}" class="reply" href="#">Reply</a>
-        </div>
-        {{/each}}
+        {{> structured/comments class='comments_list' comments=commentsFor }}
     </div>
     {{/if}}
     {{#if debateOpen}}
