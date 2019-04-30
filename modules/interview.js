@@ -1,10 +1,10 @@
 function display(req, res, data) {
-  const debate = data.debate;
+  const { debate } = data;
 
   res.render(debate.debateType, {
     title: debate.title,
     description: debate.description,
-    user: data.user
+    user: data.user,
   });
 }
 

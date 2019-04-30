@@ -1,11 +1,11 @@
-const comments = require("../helpers/comments");
+const comments = require('../helpers/comments');
 
 function display(req, res, data) {
-  const debate = data.debate;
+  const { debate } = data;
 
   if (debate.comments) {
     const params = {
-      commentsData: debate.comments
+      commentsData: debate.comments,
     };
     debate.commentsStructured = comments.getNestedComments(params).data;
   }
