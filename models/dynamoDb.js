@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const uuidv1 = require('uuid/v1');
 
 const LIST_TYPES = ['comments'];
 
