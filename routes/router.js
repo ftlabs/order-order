@@ -7,13 +7,18 @@ const s3o = require('@financial-times/s3o-middleware');
 const path = require('path');
 const apiRoutes = require('../routes/api');
 const adminRoutes = require('../routes/admin');
+const commentRoutes = require('../routes/comment');
+const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
 const dynamoDb = require('../models/dynamoDb');
 const { getS3oUsername } = require('../helpers/cookies');
 
 router.use('/api', apiRoutes);
 router.use(s3o);
+router.use('/comment', commentRoutes);
+router.use('/rating', ratingRoutes);
 router.use('/admin', adminRoutes);
+
 
 router.get('/', async (req, res) => {
   const username = getS3oUsername(req.cookies);
@@ -107,6 +112,7 @@ router.post('/:debateId', async (req, res) => {
         ...data,
       };
     }
+
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
   } catch (err) {
