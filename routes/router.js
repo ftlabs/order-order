@@ -60,9 +60,10 @@ router.get('/:debateId', async (req, res) => {
     const { debateId } = req.params;
     const result = await dynamoDb.getById(debateId);
     const username = getProperty(req.cookies, 'username');
+    const debate = result.Items[0];
 
     const data = {
-      debate: result.Items[0],
+      debate: debate,
       user: {
         username,
       },
@@ -70,13 +71,15 @@ router.get('/:debateId', async (req, res) => {
 
     /* eslint-disable global-require */
 
-    const moduleType = require(path.resolve(
-      `${listing.getRootDir()}/modules/${debateType}`,
-    ));
+    const modulePath = path.resolve(
+      `${listing.getRootDir()}/modules/${debate.debateType}`,
+    );
+    const moduleType = require(modulePath);
 
     /* eslint-disable global-require */
 
     moduleType.display(req, res, data);
+    return;
   } catch (err) {
     res.status(404).send("Sorry can't find that!");
   }
