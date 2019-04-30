@@ -2,10 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 const dynamoDb = require('../models/dynamoDb');
-const { getProperty } = require('../helpers/cookies');
+const { getS3oUsername } = require('../helpers/cookies');
 
 router.get('/', async (req, res) => {
-  const username = getProperty(req.cookies, 'username');
+  const username = getS3oUsername(req.cookies);
 
   try {
     const debateList = await dynamoDb.getAllDebateLists();
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/create_debate', (req, res) => {
-  const username = getProperty(req.cookies, 'username');
+  const username = getS3oUsername(req.cookies);
 
   res.render('admin/create_debate', {
     username,
@@ -29,7 +29,7 @@ router.get('/create_debate', (req, res) => {
 });
 
 router.get('/edit_debate/:debate_uuid', async (req, res) => {
-  const username = getProperty(req.cookies, 'username');
+  const username = getS3oUsername(req.cookies);
 
   try {
     const debate = await dynamoDb.getById(req.params.debate_uuid);
@@ -50,7 +50,7 @@ router.get('/edit_debate/:debate_uuid', async (req, res) => {
 });
 
 router.get('/moderation', async (req, res) => {
-  const username = getProperty(req.cookies, 'username');
+  const username = getS3oUsername(req.cookies);
 
   try {
     const reports = await dynamoDb.getAllReports();

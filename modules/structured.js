@@ -2,7 +2,7 @@ function display(req, res, data) {
   let commentsFor = [];
   let commentsAgainst = [];
   const { debate, user } = data;
-  const { title, description, debateStatus, debateType } = debate;
+  const { id, title, description, debateStatus, debateType } = debate;
 
   if (debate.comments) {
     commentsFor = debate.comments.filter(comment => {
@@ -18,6 +18,7 @@ function display(req, res, data) {
   debateOpen = debateStatus === 'open' ? true : false;
 
   res.render(debateType, {
+    id,
     title,
     description,
     debateOpen,
