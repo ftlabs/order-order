@@ -10,17 +10,17 @@
     {{#if commentsAgainst}}
     <div>
         <h1>Against</h1>
-        {{> structured/comments class='comments_list' comments=commentsAgainst }}
+        {{> structured/comments class='comments_list' comments=commentsAgainst debateId=debateId }}
     </div>
     {{/if}}
     {{#if commentsFor}}
     <div>
         <h1>For</h1>
-        {{> structured/comments class='comments_list' comments=commentsFor }}
+        {{> structured/comments class='comments_list' comments=commentsFor debateId=debateId }}
     </div>
     {{/if}}
     {{#if debateOpen}}
-    <form action="/{{id}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
+    <form action="comment/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
         <textarea name="comment" rows=" 4" cols="50"></textarea>
         <input type="radio" id="against" name="tags[]" value="against" checked>
         <label for="against">against</label>
