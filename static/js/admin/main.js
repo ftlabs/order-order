@@ -1,42 +1,31 @@
+/* eslint-env browser */
 var formNewDebate = document.getElementById("form_new_debate");
 var formEditDebate = document.getElementById("form_edit_debate");
 var msgStatus = document.querySelector('.o-message--alert');
-
-//TODO: get rid of arrow notation for browser compatibility
-
-function init() {
-    if (formNewDebate) {
-        formNewDebate.addEventListener("submit", submitForm);
-    }
-
-    if (formEditDebate) {
-        formEditDebate.addEventListener("submit", submitForm);
-    }
-}
 
 function submitForm(e) {
     e.preventDefault();
     clearErrors();
 
-    var url = "create";
+    var url = 'create';
 
     if (formEditDebate && e.target.id === formEditDebate.id) {
-        url = "edit";
+        url = 'edit';
     }
 
     var errors = {};
-    var debateType = document.getElementsByName("debateType")[0].value;
-    var title = document.getElementsByName("title")[0].value;
-    var description = document.getElementsByName("debateDescription")[0].value;
-    var debateStatus = document.getElementsByName("debateStatus")[0].value;
-    var votingStatus = document.getElementsByName("votingStatus")[0].value;
+    var debateType = document.getElementsByName('debateType')[0].value;
+    var title = document.getElementsByName('title')[0].value;
+    var description = document.getElementsByName('debateDescription')[0].value;
+    var debateStatus = document.getElementsByName('debateStatus')[0].value;
+    var votingStatus = document.getElementsByName('votingStatus')[0].value;
 
     if (isAlphaNumericWithCharacters(title)) {
-        errors.title = "Title must be alphanumeric or allowed chars (,_\"-')";
+        errors.title = 'Title must be alphanumeric or allowed chars (,_\"-\')';
     }
 
     if (isAlphaNumericWithCharacters(description)) {
-        errors.description = "Description must be alphanumeric or allowed chars (,_\"-')";
+        errors.description = 'Description must be alphanumeric or allowed chars (,_\"-\')';
     }
 
     var data = {
@@ -48,14 +37,14 @@ function submitForm(e) {
     };
 
     if (formEditDebate && e.target.id === formEditDebate.id) {
-        var debate_id = document.getElementsByName("id")[0].value;
+        var debate_id = document.getElementsByName('id')[0].value;
         data.id = debate_id;
     }
 
     // Checking fields have at least some value
     for (var k in data) {
         if (data.hasOwnProperty(k)) {
-            if (data[k] === undefined || data[k] === "") {
+            if (data[k] === undefined || data[k] === '') {
                 errors[data[k]] = k + ' is required';
             }
         }
@@ -70,13 +59,13 @@ function submitForm(e) {
             });
 
             promise.then(function(response) {
-                if (response.status === "error") {
+                if (response.status === 'error') {
                     reportError(response.msg, response.field);
-                } else if (response.status === "ok") {
-                    if (url === "edit") {
-                        reportStatus("Debate edited");
+                } else if (response.status === 'ok') {
+                    if (url === 'edit') {
+                        reportStatus('Debate edited');
                     } else {
-                        reportStatus("New debate added");
+                        reportStatus('New debate added');
                         clearForm();
                     }
                 }
@@ -88,11 +77,12 @@ function submitForm(e) {
 }
 
 function submitData(url, data) {
+    //TODO: fetch compatibility??
     return fetch(url, {
-        method: "POST",
+        method: 'POST',
         headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
@@ -103,24 +93,24 @@ function submitData(url, data) {
             var error = new Error(response.statusText || response.status);
             error.response = response;
             return {
-                status: "error",
+                status: 'error',
                 msg: error
             };
         }
     })
     .then(function(json) {
-        if (json.status === "error") {
+        if (json.status === 'error') {
             return json;
         } else {
             return {
-                status: "ok",
+                status: 'ok',
                 data: json
             };
         }
     })
     .catch(function(error) {
         return {
-            status: "error",
+            status: 'error',
             msg: error
         };
     });
@@ -204,6 +194,16 @@ function show(el) {
 function hide(el) {
     el.classList.add('hide');
     el.setAttribute('aria-hidden', true);
+}
+
+function init() {
+    if (formNewDebate) {
+        formNewDebate.addEventListener('submit', submitForm);
+    }
+
+    if (formEditDebate) {
+        formEditDebate.addEventListener('submit', submitForm);
+    }
 }
 
 init();
