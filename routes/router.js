@@ -15,10 +15,10 @@ router.get("/", async (req, res) => {
   const username =
     req.cookies.s3o_username !== undefined ? req.cookies.s3o_username : null;
   try {
-    let debateList = await dynamo_db.getAllDebateLists();
+    let debateList = await dynamo_db.getAllDebateLists("flat");
     res.render("list", {
-      pageTitle: "Debates: All",
-      pageSubtitle: "List of all debates",
+      pageTitle: "FT Debates",
+      pageSubtitle: "Welcome to FT debates, here's a list of all available debates and a bit more blurb on how to take part",
       pageType: "home",
       debateList: debateList,
       user: {

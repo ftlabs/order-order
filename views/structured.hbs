@@ -5,22 +5,25 @@
 
 <body>
     {{> user/header username=user.username }}
-    <h1>{{title}}</h1>
-    <p>{{description}}</p>
-    {{#if commentsAgainst}}
-    <div>
-        <p>Against</p>
-        {{#each commentsAgainst}}
-        {{content}}
-        {{/each}}
-    </div>
-    {{/if}}
-    {{#if commentsFor}}
-    <div>
-        <p>For</p>
-        {{#each commentsFor}}
-        {{content}}
-        {{/each}}
-    </div>
-    {{/if}}
+
+    <main class="o-grid-container">
+        <h1>{{title}}</h1>
+        <p>{{description}}</p>
+        {{#if commentsAgainst}}
+        <div>
+            <p>Against</p>
+            {{#each commentsAgainst}}
+            {{content}}
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if commentsFor}}
+        <div>
+            <p>For</p>
+            {{#each commentsFor}}
+            {{content}}
+            {{/each}}
+        </div>
+        {{/if}}
+    </main>
 {{> footer type='structured' }}

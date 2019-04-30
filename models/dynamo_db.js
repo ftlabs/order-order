@@ -1,4 +1,5 @@
 const AWS = require("aws-sdk");
+const Utils = require('../helpers/utils');
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: "eu-west-1"
@@ -118,22 +119,34 @@ async function getAllTypes() {
   return { error: queryStatement };
 }
 
-async function getAllDebateLists() {
+async function getAllDebateLists(type = "nested") {
   let queryStatement = await query("scan", {});
 
   if (queryStatement.result) {
-    let debates = {};
+    let debates;
 
-    queryStatement.result["Items"].map(item => {
-      if (!debates.hasOwnProperty(item.debateType)) {
-        debates[item.debateType] = {
-          debateTypeName: item.debateType,
-          debates: []
-        };
-      }
+    if(type === "flat") {
+      debates = [];
+      queryStatement.result["Items"].forEach(item => {
+        item.formatDate = Utils.formatDate(item.createdAt);
+        debates.push(item);
+      });
+      
+      Utils.sortByDate(debates, 'createdAt');
 
-      debates[item.debateType].debates.push(item);
-    });
+    } else {
+      debates = {};
+      queryStatement.result["Items"].map(item => {
+        if (!debates.hasOwnProperty(item.debateType)) {
+          debates[item.debateType] = {
+            debateTypeName: item.debateType,
+            debates: []
+          };
+        }
+        debates[item.debateType].debates.push(item);
+
+      });
+    }
 
     return debates;
   }
