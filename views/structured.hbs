@@ -15,6 +15,11 @@
             <h4>{{user}}</h4>
             <p>{{content}}</p>
             <a data-comment-id="{{id}}" class="reply" href="#">Reply</a>
+            <form action="rating/{{../debateId}}?" method="POST" encrypt="multipart/form-data" class="rating-form">
+                <input type="hidden" name="index" value="{{index}}" />
+                <input type="hidden" name="rating" value="upvote" />
+                <input type="submit" value="up vote" />
+            </form>
         </div>
         {{/each}}
     </div>
@@ -32,7 +37,7 @@
     </div>
     {{/if}}
     {{#if debateOpen}}
-    <form action="/{{id}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
+    <form action="comment/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
         <textarea name="comment" rows=" 4" cols="50"></textarea>
         <input type="radio" id="against" name="tags[]" value="against" checked>
         <label for="against">against</label>
