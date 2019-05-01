@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 const dynamoDb = require('../models/dynamoDb');
 
-router.post('/:debateId', async (req, res) => {
+router.post('/:debateType/:debateId', async (req, res) => {
   try {
     const backURL = req.header('Referer') || '/';
-    const { debateId } = req.params;
+    const { debateId, debateType } = req.params;
     const { rating, index } = req.body;
     const data = {
       ratings: [
@@ -16,8 +17,14 @@ router.post('/:debateId', async (req, res) => {
         }),
       ],
     };
-    if (await invalidPost(debateId, req.cookies.s3o_username, index)) {
-      throw new Error('Something went wrong with the rating');
+    const helperFilePath = `${__dirname}/helpers/routeHelpers/${debateType}/rating`;
+    if (fs.existsSync(helperFilePath)) {
+      const debateTypeHelper = require(helperFilePath);
+      debateTypeHelper.post({
+        debateId,
+        index,
+        username: req.cookies.s3o_username,
+      });
     }
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
