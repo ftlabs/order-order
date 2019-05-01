@@ -18,17 +18,13 @@ router.post('/:debateType/:debateId', async (req, res) => {
         }),
       ],
     };
-    const helperFilePath = path.resolve(
-      `./helpers/routeHelpers/${debateType}/rating.js`,
-    );
-    if (fs.existsSync(helperFilePath)) {
-      const debateTypeHelper = require(helperFilePath);
-      await debateTypeHelper.post({
-        debateId,
-        index,
-        username: req.cookies.s3o_username,
-      });
-    }
+    await customLogic({
+      functionName: 'post',
+      username: req.cookies.s3o_username,
+      debateId,
+      index,
+      debateType,
+    });
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
   } catch (err) {
@@ -37,17 +33,23 @@ router.post('/:debateType/:debateId', async (req, res) => {
   }
 });
 
-async function invalidPost(debateId, username, index) {
-  try {
-    const debateData = await dynamoDb.getById(debateId);
-    const commentData = debateData.Items[0].comments[index];
-    if (commentData.ratings.find(rating => rating.user === username)) {
-      return true;
-    }
-    return false;
-  } catch (err) {
-    console.error(err);
-    return true;
+async function customLogic({
+  functionName,
+  debateId,
+  index,
+  debateType,
+  username,
+}) {
+  const helperFilePath = path.resolve(
+    `./helpers/routeHelpers/${debateType}/rating.js`,
+  );
+  if (fs.existsSync(helperFilePath)) {
+    const debateTypeHelper = require(helperFilePath);
+    await debateTypeHelper[functionName]({
+      debateId,
+      index,
+      username,
+    });
   }
 }
 
