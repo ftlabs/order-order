@@ -5,10 +5,13 @@
 
 <body>
     {{> user/header username=user.username }}
-    
+
     <main class="o-grid-container">
-        <h1>{{title}}</h1>
-        <p>{{description}}</p>
+        <div class="topper">
+            <h1>{{title}}</h1>
+            <p>{{description}}</p>
+        </div>
+
         {{#if commentsAgainst}}
         <div>
             <p>Against</p>
@@ -38,4 +41,4 @@
         </form>
         {{/if}}
     </main>
-{{> footer type='structured' }}
+    {{> footer type='structured' }}
