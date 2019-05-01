@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
 
 router.post('/:debateType/:debateId', async (req, res) => {
@@ -17,10 +18,12 @@ router.post('/:debateType/:debateId', async (req, res) => {
         }),
       ],
     };
-    const helperFilePath = `${__dirname}/helpers/routeHelpers/${debateType}/rating`;
+    const helperFilePath = path.resolve(
+      `./helpers/routeHelpers/${debateType}/rating.js`,
+    );
     if (fs.existsSync(helperFilePath)) {
       const debateTypeHelper = require(helperFilePath);
-      debateTypeHelper.post({
+      await debateTypeHelper.post({
         debateId,
         index,
         username: req.cookies.s3o_username,
