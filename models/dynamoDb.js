@@ -194,7 +194,8 @@ async function getDebateList(type) {
           debates: [],
         };
       }
-
+      
+      item.formatDate = Utils.formatDate(item.createdAt);
       debates[item.debateType].debates.push(item);
       return true;
     });
