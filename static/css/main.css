@@ -93,6 +93,9 @@ h2.debate-type {
     border-bottom: 1px solid rgba(179, 169, 160, 0.2);
     box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2); }
 
+.debate-structured h2 {
+  text-align: center; }
+
 .debate-structured .debate-topper-container {
   background-color: #990f3d; }
   .debate-structured .debate-topper-container .debate-topper {
@@ -118,6 +121,49 @@ h2.debate-type {
       font-size: 20px;
       line-height: 24px;
       opacity: 0.8; }
+
+.debate-structured .o-teaser__content .o-teaser__user {
+  font-weight: bold;
+  margin: 0; }
+
+.debate-structured .o-teaser__content .o-teaser__content {
+  border: 0;
+  padding: 0 0 15px 0; }
+
+.debate-structured .o-teaser__content .comment-status {
+  display: table;
+  width: 100%;
+  border-top: 1px solid #cccccc;
+  padding: 10px 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #666666;
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+  .debate-structured .o-teaser__content .comment-status div {
+    display: table-cell;
+    text-align: center;
+    border-right: 1px solid #cccccc; }
+  .debate-structured .o-teaser__content .comment-status div:last-child {
+    border-right: none; }
+
+.o-replies {
+  max-width: 100%;
+  margin: -30px 0 0 25px; }
+
+.comments-for .o-replies {
+  margin: -30px 25px 0 0; }
+
+.form-comment-container {
+  position: fixed;
+  border-top: 1px solid #cccccc;
+  bottom: 0;
+  width: 100%;
+  background: #fff1e5;
+  padding: 10px; }
+  .form-comment-container .o-forms {
+    max-width: none; }
 
 @media only screen and (max-width: 740px) {
   .debate-structured .debate-topper-container .debate-topper {
