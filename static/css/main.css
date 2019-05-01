@@ -105,7 +105,8 @@ h2.debate-type {
   font-weight: 400;
   width: 100%;
   margin: 0;
-  padding: 20px; }
+  padding: 20px;
+  text-transform: capitalize; }
   .home-heading:after {
     content: '';
     display: block;

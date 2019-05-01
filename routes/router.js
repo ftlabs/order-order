@@ -25,6 +25,7 @@ router.get('/', async (req, res) => {
 
   try {
     const debateList = await dynamoDb.getAllDebateLists('flat');
+
     res.render('list', {
       pageTitle: 'FT Debates',
       pageSubtitle: 'Welcome to FT debates, here\'s a list of all available debates and a bit more blurb on how to take part',
@@ -45,12 +46,13 @@ router.get('/type/:debateType', async (req, res) => {
   try {
     const { debateType } = req.params;
     const debateList = await dynamoDb.getDebateList(debateType);
+    const debateListByType = debateList[`${debateType}`].debates;
 
     res.render('list', {
-      pageTitle: `Debates: ${debateType}`,
-      pageSubtitle: `List of all ${debateType} type debates`,
+      pageTitle: `${debateType}`,
+      pageSubtitle: `List of all ${debateType} debates + a description about what a structured debate is`,
       pageType: 'home',
-      debateList,
+      debateList: debateListByType,
       user: {
         username,
       },
