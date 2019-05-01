@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
 
-router.post('/:debateId', async (req, res) => {
+router.post('/:debateType/:debateId', async (req, res) => {
   try {
     const backURL = req.header('Referer') || '/';
-    const { debateId } = req.params;
+    const { debateId, debateType } = req.params;
     const { comment, tags, displayStatus, replyTo } = req.body;
     const data = {
       comments: [
@@ -18,6 +20,7 @@ router.post('/:debateId', async (req, res) => {
         }),
       ],
     };
+    await customLogic({ functionName: 'post', debateType });
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
   } catch (err) {
@@ -25,5 +28,15 @@ router.post('/:debateId', async (req, res) => {
     res.status(404).send("Sorry can't find that!");
   }
 });
+
+async function customLogic({ functionName, debateType }) {
+  const helperFilePath = path.resolve(
+    `./helpers/routeHelpers/${debateType}/comment.js`,
+  );
+  if (fs.existsSync(helperFilePath)) {
+    const debateTypeHelper = require(helperFilePath);
+    await debateTypeHelper[functionName]({});
+  }
+}
 
 module.exports = router;
