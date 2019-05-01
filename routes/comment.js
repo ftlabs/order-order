@@ -3,6 +3,9 @@ const router = express.Router();
 const dynamoDb = require('../models/dynamoDb');
 
 router.post('/:debateId', async (req, res) => {
+  console.log('hi');
+  console.log(req.body);
+
   try {
     const backURL = req.header('Referer') || '/';
     const { debateId } = req.params;
