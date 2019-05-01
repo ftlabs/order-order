@@ -137,28 +137,27 @@ async function getAllTypes() {
   return { error: queryStatement };
 }
 
-async function getAllDebateLists(type = "nested") {
+async function getAllDebateLists(type = 'nested') {
   const queryStatement = await query('scan', {});
 
   if (queryStatement.result) {
     let debates;
 
-    if(type === "flat") {
+    if (type === 'flat') {
       debates = [];
-      queryStatement.result["Items"].forEach(item => {
+      queryStatement.result['Items'].forEach(item => {
         item.formatDate = Utils.formatDate(item.createdAt);
         debates.push(item);
       });
-      
-      Utils.sortByDate(debates, 'createdAt');
 
+      Utils.sortByDate(debates, 'createdAt');
     } else {
       debates = {};
-      queryStatement.result["Items"].map(item => {
+      queryStatement.result['Items'].map(item => {
         if (!debates.hasOwnProperty(item.debateType)) {
           debates[item.debateType] = {
             debateTypeName: item.debateType,
-            debates: []
+            debates: [],
           };
         }
         debates[item.debateType].debates.push(item);
@@ -182,7 +181,7 @@ async function getDebateList(type) {
     },
   };
 
-  const queryStatement = await query('scan', params);
+  const queryStatement = await query('query', params);
 
   if (queryStatement.result) {
     const debates = {};
