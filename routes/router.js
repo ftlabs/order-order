@@ -25,7 +25,6 @@ router.get('/', async (req, res) => {
 
   try {
     const debateList = await dynamoDb.getAllDebateLists('flat');
-    console.log(debateList);
 
     res.render('list', {
       pageTitle: 'FT Debates',
