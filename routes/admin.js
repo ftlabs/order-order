@@ -19,10 +19,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/create_debate', (req, res) => {
+router.get('/createDebate', (req, res) => {
   const username = getS3oUsername(req.cookies);
 
-  res.render('admin/create_debate', {
+  res.render('admin/createDebate', {
     username,
     page: 'create',
   });
