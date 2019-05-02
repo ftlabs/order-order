@@ -1,3 +1,5 @@
+const Utils = require('../helpers/utils');
+
 function getCommentReplies(comment, commentsReplies) {
   const replies = [];
 
@@ -36,6 +38,7 @@ function getNestedComments(originParams) {
 
   commentsOrigin.forEach(comment => {
     const newComment = comment;
+    newComment.formatDate = Utils.formatDate(comment.createdAt);
     newComment.replies = getCommentReplies(newComment, commentsReplies);
     commentsNested.push(newComment);
   });

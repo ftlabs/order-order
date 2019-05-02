@@ -1,7 +1,31 @@
-<li class="comment {{class}}">
-	<div>
-		<h4>{{comment.user}}</h4>
-		<p>{{comment.content}}</p>
-		{{> forAgainst/comments class="replies" comments=this.replies debateId=debateId }}
+<article class="debate-card o-teaser o-teaser--large {{class}}">
+	<div class="o-teaser__content">
+		<p class="o-teaser__user">{{comment.user}}</p>
+		<p class="o-teaser__content">{{comment.content}}</p>
+		<div class="o-teaser__timestamp"><time datetime="{{this.formatDate.datetime}}"
+				class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time></div>
+
+		<!--
+		<div class="comment-status-container">
+			<div class="comment-status">
+				<div class="comment-status__left">
+					<a data-comment-id="{{comment.id}}" class="reply" href="#">Reply</a>
+				</div>
+				<div class="comment-status__right">
+					<form action="rating/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="rating-form">
+						<input type="hidden" name="index" value="{{index}}" />
+						<input type="hidden" name="rating" value="upvote" />
+						<input type="submit" value="up vote" />
+					</form>
+				</div>
+			</div>
+		</div>
+		-->
 	</div>
-</li>
+</article>
+
+{{#if this.replies}}
+<div class="o-replies">
+	{{> forAgainst/comments class="replies" comments=this.replies debateId=debateId }}
+</div>
+{{/if}}
