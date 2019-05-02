@@ -1,16 +1,18 @@
-@import "main/vars";
-@import "main/site";
+@import 'main/vars';
+@import 'main/site';
 
-@import "admin/main";
+@import 'admin/main';
 
-@import "home/cards";
+@import 'home/cards';
+
+@import 'debates/foragainst';
 
 .hide {
   display: none;
 }
 
 .clearfix::after {
-  content: "";
+  content: '';
   clear: both;
   display: table;
 }
