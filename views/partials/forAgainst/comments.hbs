@@ -1,0 +1,5 @@
+<ul class="{{class}}">
+	{{#each comments}}
+	{{> forAgainst/comment class=this.tags comment=this debateId=../debateId }}
+	{{/each}}
+</ul>
