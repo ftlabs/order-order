@@ -97,7 +97,7 @@ router.get('/:debateId', async (req, res) => {
     moduleType.display(req, res, data);
     return;
   } catch (err) {
-    //console.log(err);
+    console.log(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
