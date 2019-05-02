@@ -274,38 +274,37 @@ h2.debate-type {
       line-height: 24px;
       opacity: 0.8; }
 
-.debate-forAgainst .o-teaser__content .o-teaser__user {
-  font-weight: bold;
+.debate-forAgainst .o-teaser {
   margin: 0; }
-
-.debate-forAgainst .o-teaser__content .o-teaser__content {
-  border: 0;
-  padding: 0 0 15px 0; }
-
-.debate-forAgainst .o-teaser__content .o-teaser__timestamp {
-  position: absolute;
-  text-align: right;
-  right: 10px;
-  top: 5px;
-  width: 50%; }
-
-.debate-forAgainst .o-teaser__content .comment-status {
-  display: table;
-  width: 100%;
-  border-top: 1px solid #cccccc;
-  padding: 10px 0;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: #666666;
-  position: absolute;
-  bottom: 0;
-  left: 0; }
-  .debate-forAgainst .o-teaser__content .comment-status div {
-    display: table-cell;
-    text-align: center;
-    border-right: 1px solid #cccccc; }
-  .debate-forAgainst .o-teaser__content .comment-status div:last-child {
-    border-right: none; }
+  .debate-forAgainst .o-teaser .o-teaser__content .o-teaser__user {
+    font-weight: bold;
+    margin: 0; }
+  .debate-forAgainst .o-teaser .o-teaser__content .o-teaser__content {
+    border: 0;
+    padding: 0 0 15px 0; }
+  .debate-forAgainst .o-teaser .o-teaser__content .o-teaser__timestamp {
+    position: absolute;
+    text-align: right;
+    right: 10px;
+    top: 5px;
+    width: 50%; }
+  .debate-forAgainst .o-teaser .o-teaser__content .comment-status {
+    display: table;
+    width: 100%;
+    border-top: 1px solid #cccccc;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #666666;
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+    .debate-forAgainst .o-teaser .o-teaser__content .comment-status div {
+      display: table-cell;
+      text-align: center;
+      border-right: 1px solid #cccccc; }
+    .debate-forAgainst .o-teaser .o-teaser__content .comment-status div:last-child {
+      border-right: none; }
 
 .o-replies {
   max-width: 100%;
