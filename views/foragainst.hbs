@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+{{#> head title='Structured debate' subtitle='Structured debate' type='structured' }}
+{{/head}}
+
+<body>
+    {{> user/header username=user.username }}
+    
+    <main class="o-grid-container">
+        <h1>{{title}}</h1>
+        <p>{{description}}</p>
+        {{#if commentsAgainst}}
+        <div>
+            <p>Against</p>
+            {{> structured/comments class='comments_list' comments=commentsAgainst debateId=debateId }}
+        </div>
+        {{/if}}
+        {{#if commentsFor}}
+        <div>
+            <p>For</p>
+            {{> structured/comments class='comments_list' comments=commentsFor debateId=debateId }}
+        </div>
+        {{/if}}
+
+        {{#if debateOpen}}
+        <form action="comment/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
+            <textarea name="comment" rows=" 4" cols="50"></textarea>
+            <input type="radio" id="against" name="tags[]" value="against" checked>
+            <label for="against">against</label>
+            <input type="radio" id="for" name="tags[]" value="for">
+            <label for="for">for</label>
+            <input type="submit" value="Submit" />
+            <div class="comment-reply-notification hidden">
+                <div class="comment-reply-message"></div>
+                <a class="comment-reply-remove" href="#">Remove</a>
+            </div>
+            <input class="comment-reply-to" type="hidden" name="replyTo" />
+        </form>
+        {{/if}}
+    </main>
+{{> footer type='structured' }}
