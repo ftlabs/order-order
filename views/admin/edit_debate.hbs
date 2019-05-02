@@ -8,7 +8,7 @@
 	<div class="o-grid-row">
 		{{#if debate}}
 		<section class="admin-content">
-			<form id="form_edit_debate">
+			<form id="form_edit_debate" data-o-grid-colspan="6">
 				<div class="o-forms">
 					<label for="id">Debate ID</label>
 					<input type="text" name="id" value="{{debate.id}}" class="o-forms__text" disabled required />
@@ -54,6 +54,15 @@
 						debate</button>
 				</div>
 			</form>
+			<div data-o-grid-colspan="6">
+				<div class="debateTypeDescription">
+					{{#if debateDescription}}
+					<p>
+						{{debateDescription}}
+					</p>
+					{{/if}}
+				</div>
+			</div>
 		</section>
 		{{/if}}
 	</div>

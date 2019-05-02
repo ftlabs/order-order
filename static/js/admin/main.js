@@ -229,9 +229,8 @@ function init() {
 
   if (selectDebateType) {
     selectDebateType.addEventListener('change', updateDescription);
+    updateDescription();
   }
-
-  updateDescription();
 }
 
 init();
