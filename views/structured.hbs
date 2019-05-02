@@ -3,39 +3,71 @@
 {{#> head title='Structured debate' subtitle='Structured debate' type='structured' }}
 {{/head}}
 
-<body>
+<body class="debate-structured">
     {{> user/header username=user.username }}
-    
-    <main class="o-grid-container">
-        <h1>{{title}}</h1>
-        <p>{{description}}</p>
-        {{#if commentsAgainst}}
-        <div>
-            <p>Against</p>
-            {{> structured/comments class='comments_list' comments=commentsAgainst debateId=debateId }}
-        </div>
-        {{/if}}
-        {{#if commentsFor}}
-        <div>
-            <p>For</p>
-            {{> structured/comments class='comments_list' comments=commentsFor debateId=debateId }}
-        </div>
-        {{/if}}
 
-        {{#if debateOpen}}
-        <form action="comment/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
-            <textarea name="comment" rows=" 4" cols="50"></textarea>
-            <input type="radio" id="against" name="tags[]" value="against" checked>
-            <label for="against">against</label>
-            <input type="radio" id="for" name="tags[]" value="for">
-            <label for="for">for</label>
-            <input type="submit" value="Submit" />
-            <div class="comment-reply-notification hidden">
-                <div class="comment-reply-message"></div>
-                <a class="comment-reply-remove" href="#">Remove</a>
+    <div class="debate-topper-container">
+        <div class="o-grid-container">
+            <div class="o-grid-row debate-topper">
+                <p class="debate-type">{{debateType}}</p>
+                <h1 class="debate-title">{{title}}</h1>
+                <p class="debate-description">{{description}}</p>
             </div>
-            <input class="comment-reply-to" type="hidden" name="replyTo" />
-        </form>
-        {{/if}}
+        </div>
+    </div>
+
+    <main class="o-grid-container">
+        <div class="o-grid-row">
+            <div class="comments-against" data-o-grid-colspan="6">
+                <h2>Against</h2>
+                {{#if commentsAgainst}}
+                {{> structured/comments class='comments_list' comments=commentsAgainst debateId=debateId }}
+                {{/if}}
+            </div>
+            <div class="comments-for" data-o-grid-colspan="6">
+                <h2>For</h2>
+                {{#if commentsFor}}
+                {{> structured/comments class='comments_list' comments=commentsFor debateId=debateId }}
+                {{/if}}
+            </div>
+        </div>
+
     </main>
-{{> footer type='structured' }}
+
+    {{#if debateOpen}}
+    <div class="form-comment-container">
+        <div class="o-forms o-grid-container">
+            <div class="o-grid-row">
+                <form action="comment/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
+                    <div data-o-grid-colspan="6">
+                        <label aria-describedby="textarea-info" for="o-forms__textarea"
+                            class="o-forms__label">Comment</label>
+                        <textarea id="o-forms__textarea" class="o-forms__textarea" name="comment" rows=" 4"
+                            cols="250"></textarea>
+                        <div class="comment-reply-notification hidden">
+                            <div class="comment-reply-message"></div>
+                            <a class="comment-reply-remove" href="#">Remove</a>
+                        </div>
+                    </div>
+                    <div data-o-grid-colspan="6">
+                        <legend aria-describedby="default-radio-info" class="o-forms__label">For/Against</legend>
+                        <div class="o-forms__group">
+                            <input type="radio" name="tags[]" value="against" class="o-forms__radio" id="against"
+                                name="tags[]" value="against" checked="checked">
+                            <label for="against" class="o-forms__label">Against</label>
+                            <input type="radio" name="tags[]" value="for" class="o-forms__radio" id="for" name="tags[]"
+                                value="for">
+                            <label for="for" class="o-forms__label">For</label>
+                        </div>
+                        <input class="comment-reply-to" type="hidden" name="replyTo" />
+                        <br />
+                        <button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate"
+                            value="Submit">Create new comment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
+    {{> footer type='structured' }}

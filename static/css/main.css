@@ -1,6 +1,7 @@
 /*Colours*/
+/*Widths*/
 html, body {
-  background-color: #FFF1E5;
+  background-color: #fff1e5;
   font-family: MetricWeb, sans-serif;
   margin: 0;
   padding: 0; }
@@ -14,14 +15,14 @@ html, body {
   display: block;
   width: 30px;
   height: 30px;
-  background: #0D7680;
+  background: #0d7680;
   border-radius: 50%;
   overflow: hidden;
   font-size: 0;
   display: inline-block;
   vertical-align: middle;
   border-color: transparent;
-  border: 1px solid #0D7680;
+  border: 1px solid #0d7680;
   margin-right: 5px; }
   .profile-container .profile:before {
     content: '';
@@ -29,7 +30,7 @@ html, body {
     width: 13px;
     height: 13px;
     margin: 5px auto;
-    background: #F2DFCE;
+    background: #f2dfce;
     border-radius: 50%;
     overflow: hidden; }
   .profile-container .profile:after {
@@ -38,7 +39,7 @@ html, body {
     width: 30px;
     height: 30px;
     margin: -22px 0;
-    background: #F2DFCE;
+    background: #f2dfce;
     border-radius: 50%;
     overflow: hidden; }
 
@@ -66,7 +67,7 @@ h1.admin-section {
   font-size: 16px;
   line-height: 20px;
   font-weight: 600;
-  color: #990F3D; }
+  color: #990f3d; }
 
 h2.debate-type {
   text-transform: uppercase;
@@ -77,25 +78,101 @@ h2.debate-type {
 
 .admin-content {
   width: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
   min-height: 60%;
   padding: 30px;
   margin: 20px 0; }
   .admin-content .o-table--row-stripes {
-    background-color: #FFFFFF; }
+    background-color: #ffffff; }
     .admin-content .o-table--row-stripes tbody tr:nth-child(even) {
       background-color: #e6e6e6; }
     .admin-content .o-table--row-stripes tbody a {
-      color: #0D7680; }
+      color: #0d7680; }
   .admin-content.admin-debates-list {
     min-height: 0;
     border-bottom: 1px solid rgba(179, 169, 160, 0.2);
     box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2); }
 
+.debate-structured h2 {
+  text-align: center; }
+
+.debate-structured .debate-topper-container {
+  background-color: #990f3d; }
+  .debate-structured .debate-topper-container .debate-topper {
+    color: white;
+    padding: 20px 20px 25px; }
+    .debate-structured .debate-topper-container .debate-topper h1,
+    .debate-structured .debate-topper-container .debate-topper p {
+      width: 100%;
+      margin: 0; }
+    .debate-structured .debate-topper-container .debate-topper .debate-type {
+      font-family: MetricWeb, sans-serif;
+      font-size: 20px;
+      line-height: 24px;
+      font-weight: 200; }
+    .debate-structured .debate-topper-container .debate-topper .debate-title {
+      font-family: FinancierDisplayWeb, serif;
+      font-size: 40px;
+      line-height: 40px;
+      font-weight: 400;
+      margin: 15px 0 5px; }
+    .debate-structured .debate-topper-container .debate-topper .debate-description {
+      font-family: MetricWeb, sans-serif;
+      font-size: 20px;
+      line-height: 24px;
+      opacity: 0.8; }
+
+.debate-structured .o-teaser__content .o-teaser__user {
+  font-weight: bold;
+  margin: 0; }
+
+.debate-structured .o-teaser__content .o-teaser__content {
+  border: 0;
+  padding: 0 0 15px 0; }
+
+.debate-structured .o-teaser__content .comment-status {
+  display: table;
+  width: 100%;
+  border-top: 1px solid #cccccc;
+  padding: 10px 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #666666;
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+  .debate-structured .o-teaser__content .comment-status div {
+    display: table-cell;
+    text-align: center;
+    border-right: 1px solid #cccccc; }
+  .debate-structured .o-teaser__content .comment-status div:last-child {
+    border-right: none; }
+
+.o-replies {
+  max-width: 100%;
+  margin: -30px 0 0 25px; }
+
+.comments-for .o-replies {
+  margin: -30px 25px 0 0; }
+
+.form-comment-container {
+  position: fixed;
+  border-top: 1px solid #cccccc;
+  bottom: 0;
+  width: 100%;
+  background: #fff1e5;
+  padding: 10px; }
+  .form-comment-container .o-forms {
+    max-width: none; }
+
+@media only screen and (max-width: 740px) {
+  .debate-structured .debate-topper-container .debate-topper {
+    padding: 20px 10px 25px; } }
+
 .home-header {
-  background: #FFFFFF;
+  background: #ffffff;
   margin: 40px 0;
-  border-bottom: 1px solid #F2DFCE; }
+  border-bottom: 1px solid #f2dfce; }
 
 .home-heading {
   text-align: center;
@@ -127,7 +204,7 @@ h2.debate-type {
 .debates-home {
   padding: 20px;
   align-items: baseline;
-  background: #F2DFCE; }
+  background: #f2dfce; }
 
 .debate-card {
   flex-basis: 33%;
@@ -140,7 +217,7 @@ h2.debate-type {
   .debate-card .o-teaser__content {
     height: 100%;
     position: relative;
-    background-color: #FFFFFF; }
+    background-color: #ffffff; }
   .debate-card .debate-type-tag {
     text-transform: capitalize; }
   .debate-card .o-teaser__timestamp {
@@ -148,7 +225,7 @@ h2.debate-type {
   .debate-card .debate-status {
     display: table;
     width: 100%;
-    border-top: 1px solid #CCCCCC;
+    border-top: 1px solid #cccccc;
     padding: 10px 0;
     text-transform: uppercase;
     font-weight: 400;
@@ -160,18 +237,18 @@ h2.debate-type {
       display: table-cell;
       text-align: center; }
       .debate-card .debate-status .debate-state:first-child {
-        border-right: 1px solid #CCCCCC; }
+        border-right: 1px solid #cccccc; }
       .debate-card .debate-status .debate-state .state-indicator {
         font-weight: 600; }
         .debate-card .debate-status .debate-state .state-indicator.debate-open {
-          color: #00572C; }
+          color: #00572c; }
         .debate-card .debate-status .debate-state .state-indicator.debate-closed {
-          color: #B30000; }
+          color: #b30000; }
 
 .hide {
   display: none; }
 
 .clearfix::after {
-  content: "";
+  content: '';
   clear: both;
   display: table; }
