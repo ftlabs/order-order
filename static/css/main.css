@@ -172,6 +172,6 @@ h2.debate-type {
   display: none; }
 
 .clearfix::after {
-  content: "";
+  content: '';
   clear: both;
   display: table; }
