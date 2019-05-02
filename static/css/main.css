@@ -124,12 +124,12 @@ h2.debate-type {
 
 .home-intro {
   text-align: center;
-  margin-bottom: 40px;
   font-size: 20px;
   line-height: 24px;
   font-weight: 400;
   color: #666666;
-  width: 100%; }
+  width: 70%;
+  margin: 0 auto 40px auto; }
 
 .debates-home {
   padding: 20px;
@@ -142,7 +142,8 @@ h2.debate-type {
   padding: 10px; }
   .debate-card .o-teaser__heading {
     text-transform: capitalise; }
-    .debate-card .o-teaser__heading a, .debate-card .o-teaser__heading a:visited {
+    .debate-card .o-teaser__heading a,
+    .debate-card .o-teaser__heading a:visited {
       color: #000000; }
   .debate-card .o-teaser__content {
     height: 100%;
