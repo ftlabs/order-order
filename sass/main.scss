@@ -3,9 +3,10 @@
 
 @import 'admin/main';
 
-@import 'debates/structured';
-
 @import 'home/cards';
+
+@import 'debates/structured';
+@import 'debates/foragainst';
 
 .hide {
   display: none;
