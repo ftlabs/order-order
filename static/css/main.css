@@ -82,6 +82,12 @@ h2.debate-type {
   min-height: 60%;
   padding: 30px;
   margin: 20px 0; }
+  .admin-content #form_new_debate {
+    padding: 0; }
+  .admin-content .debateTypeDescription {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #cccccc; }
   .admin-content .o-table--row-stripes {
     background-color: #ffffff; }
     .admin-content .o-table--row-stripes tbody tr:nth-child(even) {
