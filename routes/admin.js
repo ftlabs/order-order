@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const dynamoDb = require('../models/dynamoDb');
 const { getS3oUsername } = require('../helpers/cookies');
+const debateTypeDescriptions = require('../data/debates.json');
 
 router.get('/', async (req, res) => {
   const username = getS3oUsername(req.cookies);
@@ -24,6 +25,7 @@ router.get('/create_debate', (req, res) => {
 
   res.render('admin/create_debate', {
     username,
+    debateTypeDescriptions: debateTypeDescriptions.descriptions,
     page: 'create',
   });
 });
