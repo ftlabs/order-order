@@ -16,9 +16,8 @@
 				</div>
 				<div class="o-forms">
 					<label for="debateType" class="o-forms__label">Debate type</label>
-					<select name="debateType" class="o-forms__select" required disabled>
-						<option selected value="structured">Structured debate</option>
-					</select>
+					<input type="text" name="id" value="{{debate.debateType}}" class="o-forms__text" disabled
+						required />
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateType"></div>
 				</div>
 				<div class="o-forms">
@@ -28,14 +27,16 @@
 				</div>
 				<div class="o-forms">
 					<label for="debateDescription" class="o-forms__label">Description</label>
-					<input type="text" name="debateDescription" class="o-forms__text" value="{{debate.description}}" required />
+					<input type="text" name="debateDescription" class="o-forms__text" value="{{debate.description}}"
+						required />
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="description"></div>
 				</div>
 				<div class="o-forms">
 					<label for="debateStatus" class="o-forms__label">Debate status</label>
-					<select name="debateStatus" class="o-forms__select"required>
+					<select name="debateStatus" class="o-forms__select" required>
 						<option value="open" {{#ifEquals debate.debateStatus "open"}}selected{{/ifEquals}}>Open</option>
-						<option value="closed" {{#ifEquals debate.debateStatus "closed"}}selected{{/ifEquals}}>Closed</option>
+						<option value="closed" {{#ifEquals debate.debateStatus "closed"}}selected{{/ifEquals}}>Closed
+						</option>
 					</select>
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateStatus"></div>
 				</div>
@@ -43,12 +44,14 @@
 					<label for="votingStatus" class="o-forms__label">Voting status</label>
 					<select name="votingStatus" class="o-forms__select" required>
 						<option value="open" {{#ifEquals debate.votingStatus "open"}}selected{{/ifEquals}}>Open</option>
-						<option value="closed" {{#ifEquals debate.votingStatus "closed"}}selected{{/ifEquals}}>Closed</option>
+						<option value="closed" {{#ifEquals debate.votingStatus "closed"}}selected{{/ifEquals}}>Closed
+						</option>
 					</select>
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="votingStatus"></div>
 				</div>
 				<div class="o-forms">
-					<button type="submit" class="o-buttons o-buttons--primary" id="submit_edit_debate">Update debate</button>
+					<button type="submit" class="o-buttons o-buttons--primary" id="submit_edit_debate">Update
+						debate</button>
 				</div>
 			</form>
 		</section>
