@@ -6,23 +6,17 @@ var selectDebateType = document.querySelector('.debateType');
 var divDebateTypeDescription = document.querySelector('.debateTypeDescription');
 
 function updateDescription(e) {
-  var msg = '';
   var typeValue = e ? e.target.value : selectDebateType.value;
+  var debateDescriptions = document.getElementsByClassName('debateDescription');
 
-  switch (typeValue) {
-    case 'structured':
-      msg = 'Here is the explaination for what a structured debate is like';
-      break;
-    case 'forAgainst':
-      msg = 'Here is the explaination for what a for/against debate is like';
-      break;
-  }
+  Array.from(debateDescriptions).forEach(el => {
+    el.classList.add('hide');
+  });
 
-  if (msg !== '') {
-    divDebateTypeDescription.innerHTML = msg;
-    divDebateTypeDescription.classList.remove('hide');
-  } else {
-    divDebateTypeDescription.classList.add('hide');
+  var descriptionToShow = document.getElementById('description-' + typeValue);
+
+  if (descriptionToShow) {
+    descriptionToShow.classList.remove('hide');
   }
 }
 

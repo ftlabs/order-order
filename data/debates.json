@@ -1,0 +1,12 @@
+{
+  "descriptions": [
+    {
+      "name": "structured",
+      "description": "Here is the explaination for what a structured debate is like"
+    },
+    {
+      "name": "forAgainst",
+      "description": "Here is the explaination for what a for/against debate is like"
+    }
+  ]
+}
