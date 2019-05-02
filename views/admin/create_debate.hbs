@@ -48,8 +48,16 @@
 				</div>
 			</form>
 			<div data-o-grid-colspan="6">
-				<div class="debateTypeDescription hide">
-
+				<div class="debateTypeDescription">
+					{{#if debateTypeDescriptions}}
+					{{#each debateTypeDescriptions}}
+					<div id="description-{{this.name}}" class="debateDescription">
+						<p>
+							{{this.description}}
+						</p>
+					</div>
+					{{/each}}
+					{{/if}}
 				</div>
 			</div>
 		</section>
