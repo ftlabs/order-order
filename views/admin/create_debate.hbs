@@ -7,10 +7,10 @@
 	<div class="o-grid-row">
 
 		<section class="admin-content">
-			<form id="form_new_debate">
+			<form id="form_new_debate" data-o-grid-colspan="6">
 				<div class="o-forms">
 					<label for="debateType" class="o-forms__label">Debate type</label>
-					<select name="debateType" class="o-forms__select" required>
+					<select name="debateType" class="o-forms__select debateType" required>
 						<option selected value="structured">Structured debate</option>
 						<option selected value="forAgainst">For/Against</option>
 					</select>
@@ -47,6 +47,11 @@
 						debate</button>
 				</div>
 			</form>
+			<div data-o-grid-colspan="6">
+				<div class="debateTypeDescription hide">
+
+				</div>
+			</div>
 		</section>
 	</div>
 </main>
