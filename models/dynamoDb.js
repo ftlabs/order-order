@@ -181,7 +181,7 @@ async function getDebateList(type) {
     },
   };
 
-  const queryStatement = await query('query', params);
+  const queryStatement = await query('scan', params);
 
   if (queryStatement.result) {
     const debates = {};
@@ -193,7 +193,7 @@ async function getDebateList(type) {
           debates: [],
         };
       }
-      
+
       item.formatDate = Utils.formatDate(item.createdAt);
       debates[item.debateType].debates.push(item);
       return true;
