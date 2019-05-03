@@ -7,58 +7,59 @@ const dynamoDb = require('../models/dynamoDb');
 router.post('/debate/create', async (req, res) => {
   try {
     const data = req.body;
-    const timestamp = new Date().getTime();
+    console.log('getting here', req.body);
+    // const timestamp = new Date().getTime();
 
-    if (
-      !data.debateType ||
-      !data.title ||
-      !data.description ||
-      !data.debateStatus ||
-      !data.votingStatus
-    ) {
+    // if (
+    //   !data.debateType ||
+    //   !data.title ||
+    //   !data.description ||
+    //   !data.debateStatus ||
+    //   !data.votingStatus
+    // ) {
 
-      return res.json({
-        status: 'error',
-        msg: 'Missing all required POST vars',
-        field: 'global'
-      });
-    }
-    // Check if debate of this name exists already
-    const checkDebateName = await dynamoDb.getBy('title', data.title);
+    //   return res.json({
+    //     status: 'error',
+    //     msg: 'Missing all required POST vars',
+    //     field: 'global'
+    //   });
+    // }
+    // // Check if debate of this name exists already
+    // const checkDebateName = await dynamoDb.getBy('title', data.title);
 
-    if (Object.prototype.hasOwnProperty.call(checkDebateName, 'error')) {
-      return res.json({
-        status: 'error',
-        msg: checkDebateName.error,
-        field: 'title'
-      });
-    }
+    // if (Object.prototype.hasOwnProperty.call(checkDebateName, 'error')) {
+    //   return res.json({
+    //     status: 'error',
+    //     msg: checkDebateName.error,
+    //     field: 'title'
+    //   });
+    // }
 
-    if (checkDebateName.Items.length > 0) {
-      return res.json({
-        status: 'error',
-        msg: 'A debate with this name exists already',
-        field: 'title'
-      });
-    }
+    // if (checkDebateName.Items.length > 0) {
+    //   return res.json({
+    //     status: 'error',
+    //     msg: 'A debate with this name exists already',
+    //     field: 'title'
+    //   });
+    // }
 
-    // Validation complete - create new debate
-    data.id = uuidv1();
-    data.timestamp = new Date().getTime();
-    data.createdAt = timestamp;
-    data.updatedAt = timestamp;
+    // // Validation complete - create new debate
+    // data.id = uuidv1();
+    // data.timestamp = new Date().getTime();
+    // data.createdAt = timestamp;
+    // data.updatedAt = timestamp;
 
-    const debate = await dynamoDb.addDebate(data);
+    // const debate = await dynamoDb.addDebate(data);
 
-    if (Object.prototype.hasOwnProperty.call(debate, 'error')) {
-      return res.json({
-        status: 'error',
-        msg: debate.error,
-        field: 'global'
-      });
-    }
+    // if (Object.prototype.hasOwnProperty.call(debate, 'error')) {
+    //   return res.json({
+    //     status: 'error',
+    //     msg: debate.error,
+    //     field: 'global'
+    //   });
+    // }
 
-    return res.send(JSON.stringify(debate));
+    // return res.send(JSON.stringify(debate));
   } catch (err) {
     return res
       .status(404)
@@ -81,7 +82,7 @@ router.post('/debate/edit', async (req, res) => {
       return res.json({
         status: 'error',
         msg: 'Missing all required POST vars',
-        field: 'global'
+        field: 'global',
       });
     }
 
@@ -89,7 +90,6 @@ router.post('/debate/edit', async (req, res) => {
 
     const debate = await dynamoDb.editDebate(data);
     return res.json({ status: 'ok', data: debate });
-
   } catch (err) {
     return res
       .status(404)
@@ -115,7 +115,9 @@ router.get('/debate/types', async (req, res) => {
     const allDebateTypes = await dynamo_db.getAllTypes();
     return res.send(JSON.stringify(allDebateTypes));
   } catch (err) {
-    return res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
+    return res
+      .status(404)
+      .send("Sorry can't find that! Issue with GET /debate/types");
   }
 });
 
