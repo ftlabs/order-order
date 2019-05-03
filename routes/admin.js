@@ -77,4 +77,13 @@ router.get('/moderation', async (req, res) => {
   }
 });
 
+router.get('/createDebateType', (req, res) => {
+  const username = getS3oUsername(req.cookies);
+
+  res.render('admin/createDebateType', {
+    username,
+    page: 'create',
+  });
+});
+
 module.exports = router;
