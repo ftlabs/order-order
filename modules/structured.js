@@ -2,14 +2,24 @@ const commentHelper = require('../helpers/comments');
 
 function display(req, res, data) {
   const { debate, user } = data;
-  const { id, title, description, debateStatus, debateType, comments } = debate;
+  const {
+    id,
+    title,
+    description,
+    debateStatus,
+    votingStatus,
+    debateType,
+    comments,
+  } = debate;
   const { commentsFor, commentsAgainst } = getAndNestComments(comments);
   const debateOpen = debateStatus === 'open' ? true : false;
+  const votingOpen = votingStatus === 'open' ? true : false;
 
   res.render(debateType, {
     title,
     description,
     debateOpen,
+    votingOpen,
     debateType,
     commentsFor,
     commentsAgainst,

@@ -4,7 +4,7 @@
 		<p class="o-teaser__content">{{comment.content}}</p>
 		<div class="o-teaser__timestamp"><time datetime="{{this.formatDate.datetime}}"
 				class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time></div>
-
+		{{#if debateOpen}}
 		<div class="comment-status-container">
 			<div class="comment-status">
 				<div class="comment-status__left">
@@ -19,6 +19,7 @@
 				</div>
 			</div>
 		</div>
+		{{/if}}
 	</div>
 </article>
 
