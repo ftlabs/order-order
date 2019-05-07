@@ -56,7 +56,27 @@
 
     {{#if votingOpen}}
     <div class="form-voting-container">
-        Vote box
+        <div class="o-forms">
+            <div class="o-grid-container">
+                <div class="o-grid-row">
+                    <form action="vote/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="comment-form">
+                        <legend aria-describedby="default-radio-info" class="o-forms__label">Vote For/Against the
+                            proposition</legend>
+                        <div class="o-forms__group">
+                            <input type="radio" name="tags[]" value="for" class="o-forms__radio" id="for" name="tags[]"
+                                value="for">
+                            <label for="for" class="o-forms__label">For</label>
+                            <input type="radio" name="tags[]" value="against" class="o-forms__radio" id="against"
+                                name="tags[]" value="against">
+                            <label for="against" class="o-forms__label">Against</label>
+                        </div>
+                        <br />
+                        <button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate_vote"
+                            value="Submit">Submit vote</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     {{else}}
     <div class="form-comment-container">
