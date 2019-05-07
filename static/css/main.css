@@ -252,6 +252,16 @@ h2.debate-type {
   .form-comment-container .o-forms {
     max-width: none; }
 
+.form-voting-container {
+  position: fixed;
+  border-top: 1px solid #cccccc;
+  bottom: 0;
+  width: 100%;
+  background: #fff1e5;
+  padding: 10px; }
+  .form-voting-container .o-forms {
+    max-width: none; }
+
 @media only screen and (max-width: 740px) {
   .debate-structured .debate-topper-container .debate-topper {
     padding: 20px 10px 25px; } }
