@@ -23,12 +23,12 @@
                     {{#if debateOpen}}
                     <span>Debate is <b>Open</b></span><br />
                     {{#if votingOpen}}
-                    <span>Voting is also <b>Open</b></span>
+                    <span>Voting is <b>Open</b><br />Comments are disabled, Replies and Voting are enabled</span>
                     {{else}}
-                    <span>Voting is <b>Closed</b></span>
+                    <span>Voting is <b>Closed</b><br />Comments & Replies are enabled and Voting is disabled</span>
                     {{/if}}
                     {{else}}
-                    Debate is <b>Closed</b><br />Comments, Replies and voting are not available
+                    Debate is <b>Closed</b><br />Comments, Replies and Voting are disabled
                     {{/if}}
                 </p>
             </div>
@@ -53,6 +53,12 @@
     </main>
 
     {{#if debateOpen}}
+
+    {{#if votingOpen}}
+    <div class="form-voting-container">
+        Vote box
+    </div>
+    {{else}}
     <div class="form-comment-container">
         <div class="o-forms">
             <div class="o-grid-container">
@@ -89,6 +95,7 @@
             </div>
         </div>
     </div>
+    {{/if}}
     {{/if}}
 
     {{> footer type='structured' }}

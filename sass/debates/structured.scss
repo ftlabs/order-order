@@ -103,6 +103,19 @@
   }
 }
 
+.form-voting-container {
+  position: fixed;
+  border-top: 1px solid $o-color-black-30;
+  bottom: 0;
+  width: 100%;
+  background: $o-color-paper;
+  padding: 10px;
+
+  .o-forms {
+    max-width: none;
+  }
+}
+
 @media only screen and (max-width: $o-width-medium) {
   .debate-structured {
     .debate-topper-container {
