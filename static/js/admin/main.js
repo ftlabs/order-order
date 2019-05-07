@@ -57,6 +57,7 @@ function submitForm(e) {
   if (formEditDebate && e.target.id === formEditDebate.id) {
     var debate_id = document.getElementsByName('id')[0].value;
     data.id = debate_id;
+    data.debateType = document.getElementsByName('debateType')[0].value;
   }
 
   // Checking fields have at least some value
