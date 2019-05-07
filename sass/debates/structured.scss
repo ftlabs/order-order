@@ -3,9 +3,17 @@
     text-align: center;
   }
 
+  main {
+    margin-bottom: 200px;
+  }
+
   .status-topper-container {
     background-color: $o-color-teal;
     color: white;
+
+    .status-topper {
+      padding: 0 20px;
+    }
   }
 
   .debate-topper-container {
@@ -92,7 +100,7 @@
 
 .form-comment-container {
   position: fixed;
-  border-top: 1px solid $o-color-black-30;
+  border-top: 2px solid $o-color-black-30;
   bottom: 0;
   width: 100%;
   background: $o-color-paper;
