@@ -1,4 +1,4 @@
-.debate-structured {
+.debate-basic {
   h2 {
     text-align: center;
   }
@@ -98,7 +98,9 @@
   }
 }
 
-.form-comment-container {
+.form-comment-container,
+.form-voting-container,
+.form-results-container {
   position: fixed;
   border-top: 2px solid $o-color-black-30;
   bottom: 0;
@@ -111,21 +113,8 @@
   }
 }
 
-.form-voting-container {
-  position: fixed;
-  border-top: 1px solid $o-color-black-30;
-  bottom: 0;
-  width: 100%;
-  background: $o-color-paper;
-  padding: 10px;
-
-  .o-forms {
-    max-width: none;
-  }
-}
-
 @media only screen and (max-width: $o-width-medium) {
-  .debate-structured {
+  .debate-basic {
     .debate-topper-container {
       .debate-topper {
         padding: 20px 10px 25px;

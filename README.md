@@ -1,6 +1,6 @@
 # order-order
 
-A swiss army knife of various forms of structured comments.
+A swiss army knife of various forms of structured comments/debates.
 
 ## Setup
 
@@ -20,7 +20,7 @@ Go to [http://localhost:PORT](http://localhost:PORT)
 You can get to the skeleton admin page here:
 [http://localhost:PORT/admin](http://localhost:PORT/admin)
 
-![Alt text](./docs/admin_examle.png?raw=true "Example of how the admin currently looks")
+![Alt text](./docs/admin_examle.png?raw=true 'Example of how the admin currently looks')
 
 ## Questions
 
