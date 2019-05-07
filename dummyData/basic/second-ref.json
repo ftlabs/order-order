@@ -3,7 +3,7 @@
     "order": 0,
     "seriesId": 0
   },
-  "type": "structured",
+  "type": "basic",
   "permitted": {
     "commenters": [],
     "replies": [],

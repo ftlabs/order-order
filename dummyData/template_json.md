@@ -4,7 +4,7 @@
     "order": 0,                       // unique order for debates in a series
     "seriesId": 0                     // unique id for a series of debates
   },
-  "type": "name",                     // what kind of debate it is structured, interview, hats etc
+  "type": "name",                     // what kind of debate it is basic, interview, hats etc
   "permitted": {                      // user list of allowed user permissions
     "commenters": [0, 1, 2],          // users allowed to comment, defaults to all
     "replies": [0, 1, 2],             // users allowed to reply to comments, defaults to all

@@ -1,7 +1,7 @@
 {
   "name": "order-order",
   "version": "1.0.0",
-  "description": "A swiss army knife of various forms of structured comments.",
+  "description": "A swiss army knife of various forms of structured debates.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
