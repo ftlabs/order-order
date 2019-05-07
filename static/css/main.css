@@ -179,6 +179,10 @@ h2.debate-type {
 .debate-structured h2 {
   text-align: center; }
 
+.debate-structured .status-topper-container {
+  background-color: #0d7680;
+  color: white; }
+
 .debate-structured .debate-topper-container {
   background-color: #990f3d; }
   .debate-structured .debate-topper-container .debate-topper {

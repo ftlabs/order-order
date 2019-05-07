@@ -16,22 +16,40 @@
         </div>
     </div>
 
+    <div class="status-topper-container">
+        <div class="o-grid-container">
+            <div class="o-grid-row debate-topper">
+                <p>
+                    {{#if debateOpen}}
+                    <span>Debate is <b>Open</b></span><br />
+                    {{#if votingOpen}}
+                    <span>Voting is also <b>Open</b></span>
+                    {{else}}
+                    <span>Voting is <b>Closed</b></span>
+                    {{/if}}
+                    {{else}}
+                    Debate is <b>Closed</b><br />Comments, Replies and voting are not available
+                    {{/if}}
+                </p>
+            </div>
+        </div>
+    </div>
+
     <main class="o-grid-container">
         <div class="o-grid-row">
             <div class="comments-against" data-o-grid-colspan="6">
                 <h2>Against</h2>
                 {{#if commentsAgainst}}
-                {{> structured/comments class='comments_list' comments=commentsAgainst debateId=debateId }}
+                {{> structured/comments class='comments_list' comments=commentsAgainst debateId=debateId debateOpen=debateOpen }}
                 {{/if}}
             </div>
             <div class="comments-for" data-o-grid-colspan="6">
                 <h2>For</h2>
                 {{#if commentsFor}}
-                {{> structured/comments class='comments_list' comments=commentsFor debateId=debateId }}
+                {{> structured/comments class='comments_list' comments=commentsFor debateId=debateId debateOpen=debateOpen }}
                 {{/if}}
             </div>
         </div>
-
     </main>
 
     {{#if debateOpen}}
