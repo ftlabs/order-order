@@ -9,5 +9,9 @@
 
   .o-forms {
     max-width: none;
+
+    label {
+      text-transform: capitalize;
+    }
   }
 }
