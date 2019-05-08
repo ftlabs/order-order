@@ -10,7 +10,7 @@ function display(req, res, data) {
     debate.commentsStructured = commentHelper.getNestedComments(params).data;
   }
 
-  res.render(debate.debateType, data);
+  res.render(`debates/${debate.debateType}`, data);
 }
 
 module.exports = { display };
