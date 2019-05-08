@@ -1,6 +1,7 @@
 /*Colours*/
 /*Widths*/
-html, body {
+html,
+body {
   background-color: #fff1e5;
   font-family: MetricWeb, sans-serif;
   margin: 0;
@@ -176,53 +177,51 @@ h2.debate-type {
         .debate-card .debate-status .debate-state .state-indicator.debate-closed {
           color: #b30000; }
 
-.debate-basic h2 {
-  text-align: center; }
-
-.debate-basic main {
-  margin-bottom: 200px; }
-
-.debate-basic .status-topper-container {
-  background-color: #0d7680;
-  color: white; }
-  .debate-basic .status-topper-container .status-topper {
-    padding: 0 20px; }
-
-.debate-basic .debate-topper-container {
+.debate-topper-container {
   background-color: #990f3d; }
-  .debate-basic .debate-topper-container .debate-topper {
+  .debate-topper-container .debate-topper {
     color: white;
     padding: 20px 20px 25px; }
-    .debate-basic .debate-topper-container .debate-topper h1,
-    .debate-basic .debate-topper-container .debate-topper p {
+    .debate-topper-container .debate-topper h1,
+    .debate-topper-container .debate-topper p {
       width: 100%;
       margin: 0; }
-    .debate-basic .debate-topper-container .debate-topper .debate-type {
+    .debate-topper-container .debate-topper .debate-type {
       font-family: MetricWeb, sans-serif;
       font-size: 20px;
       line-height: 24px;
       font-weight: 200; }
-    .debate-basic .debate-topper-container .debate-topper .debate-title {
+    .debate-topper-container .debate-topper .debate-title {
       font-family: FinancierDisplayWeb, serif;
       font-size: 40px;
       line-height: 40px;
       font-weight: 400;
       margin: 15px 0 5px; }
-    .debate-basic .debate-topper-container .debate-topper .debate-description {
+    .debate-topper-container .debate-topper .debate-description {
       font-family: MetricWeb, sans-serif;
       font-size: 20px;
       line-height: 24px;
       opacity: 0.8; }
 
-.debate-basic .o-teaser__content .o-teaser__user {
+@media only screen and (max-width: 740px) {
+  .debate-basic .debate-topper-container .debate-topper {
+    padding: 20px 10px 25px; } }
+
+.status-topper-container {
+  background-color: #0d7680;
+  color: white; }
+  .status-topper-container .status-topper {
+    padding: 0 20px; }
+
+.o-teaser__content .o-teaser__user {
   font-weight: bold;
   margin: 0; }
 
-.debate-basic .o-teaser__content .o-teaser__content {
+.o-teaser__content .o-teaser__content {
   border: 0;
   padding: 0 0 15px 0; }
 
-.debate-basic .o-teaser__content .comment-status {
+.o-teaser__content .comment-status {
   display: table;
   width: 100%;
   border-top: 1px solid #cccccc;
@@ -233,98 +232,12 @@ h2.debate-type {
   position: absolute;
   bottom: 0;
   left: 0; }
-  .debate-basic .o-teaser__content .comment-status div {
+  .o-teaser__content .comment-status div {
     display: table-cell;
     text-align: center;
     border-right: 1px solid #cccccc; }
-  .debate-basic .o-teaser__content .comment-status div:last-child {
+  .o-teaser__content .comment-status div:last-child {
     border-right: none; }
-
-.o-replies {
-  max-width: 100%;
-  margin: -30px 0 0 25px; }
-
-.comments-for .o-replies {
-  margin: -30px 25px 0 0; }
-
-.form-comment-container,
-.form-voting-container,
-.form-results-container {
-  position: fixed;
-  border-top: 2px solid #cccccc;
-  bottom: 0;
-  width: 100%;
-  background: #fff1e5;
-  padding: 10px; }
-  .form-comment-container .o-forms,
-  .form-voting-container .o-forms,
-  .form-results-container .o-forms {
-    max-width: none; }
-
-@media only screen and (max-width: 740px) {
-  .debate-basic .debate-topper-container .debate-topper {
-    padding: 20px 10px 25px; } }
-
-.debate-forAgainst h2 {
-  text-align: center; }
-
-.debate-forAgainst .debate-topper-container {
-  background-color: #990f3d; }
-  .debate-forAgainst .debate-topper-container .debate-topper {
-    color: white;
-    padding: 20px 20px 25px; }
-    .debate-forAgainst .debate-topper-container .debate-topper h1,
-    .debate-forAgainst .debate-topper-container .debate-topper p {
-      width: 100%;
-      margin: 0; }
-    .debate-forAgainst .debate-topper-container .debate-topper .debate-type {
-      font-family: MetricWeb, sans-serif;
-      font-size: 20px;
-      line-height: 24px;
-      font-weight: 200; }
-    .debate-forAgainst .debate-topper-container .debate-topper .debate-title {
-      font-family: FinancierDisplayWeb, serif;
-      font-size: 40px;
-      line-height: 40px;
-      font-weight: 400;
-      margin: 15px 0 5px; }
-    .debate-forAgainst .debate-topper-container .debate-topper .debate-description {
-      font-family: MetricWeb, sans-serif;
-      font-size: 20px;
-      line-height: 24px;
-      opacity: 0.8; }
-
-.debate-forAgainst .o-teaser {
-  margin: 0; }
-  .debate-forAgainst .o-teaser .o-teaser__content .o-teaser__user {
-    font-weight: bold;
-    margin: 0; }
-  .debate-forAgainst .o-teaser .o-teaser__content .o-teaser__content {
-    border: 0;
-    padding: 0 0 15px 0; }
-  .debate-forAgainst .o-teaser .o-teaser__content .o-teaser__timestamp {
-    position: absolute;
-    text-align: right;
-    right: 10px;
-    top: 5px;
-    width: 50%; }
-  .debate-forAgainst .o-teaser .o-teaser__content .comment-status {
-    display: table;
-    width: 100%;
-    border-top: 1px solid #cccccc;
-    padding: 10px 0;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: #666666;
-    position: absolute;
-    bottom: 0;
-    left: 0; }
-    .debate-forAgainst .o-teaser .o-teaser__content .comment-status div {
-      display: table-cell;
-      text-align: center;
-      border-right: 1px solid #cccccc; }
-    .debate-forAgainst .o-teaser .o-teaser__content .comment-status div:last-child {
-      border-right: none; }
 
 .o-replies {
   max-width: 100%;
@@ -335,7 +248,7 @@ h2.debate-type {
 
 .form-comment-container {
   position: fixed;
-  border-top: 1px solid #cccccc;
+  border-top: 2px solid #cccccc;
   bottom: 0;
   width: 100%;
   background: #fff1e5;
@@ -343,9 +256,26 @@ h2.debate-type {
   .form-comment-container .o-forms {
     max-width: none; }
 
-@media only screen and (max-width: 740px) {
-  .debate-forAgainst .debate-topper-container .debate-topper {
-    padding: 20px 10px 25px; } }
+.form-voting-container,
+.form-results-container {
+  position: fixed;
+  border-top: 2px solid #cccccc;
+  bottom: 0;
+  width: 100%;
+  background: #fff1e5;
+  padding: 10px; }
+  .form-voting-container .o-forms,
+  .form-results-container .o-forms {
+    max-width: none; }
+
+.debate-basic h2 {
+  text-align: center; }
+
+.debate-basic main {
+  margin-bottom: 200px; }
+
+.debate-forAgainst h2 {
+  text-align: center; }
 
 .hide {
   display: none; }

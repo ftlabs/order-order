@@ -6,32 +6,25 @@
 <body class="debate-forAgainst">
     {{> user/header username=user.username }}
 
-    <div class="debate-topper-container">
-        <div class="o-grid-container">
-            <div class="o-grid-row debate-topper">
-                <p class="debate-type">{{debateType}}</p>
-                <h1 class="debate-title">{{title}}</h1>
-                <p class="debate-description">{{description}}</p>
-            </div>
-        </div>
-    </div>
+    {{> components/heading/topper debateType=debateType title=title description=description }}
+
+    {{> debates/basic/status debateOpen=debateOpen votingOpen=votingOpen }}
 
     <main class="o-grid-container">
         <div class="o-grid-row">
             <div class="comments-against" data-o-grid-colspan="6">
                 <h2>Against</h2>
                 {{#if commentsAgainst}}
-                {{> forAgainst/comments class='comments_list' comments=commentsAgainst debateId=debateId }}
+                {{>  components/comments/list class='comments_list' comments=commentsAgainst debateId=debateId  repliesOpen=false }}
                 {{/if}}
             </div>
             <div class="comments-for" data-o-grid-colspan="6">
                 <h2>For</h2>
                 {{#if commentsFor}}
-                {{> forAgainst/comments class='comments_list' comments=commentsFor debateId=debateId }}
+                {{> components/comments/list class='comments_list' comments=commentsFor debateId=debateId repliesOpen=false }}
                 {{/if}}
             </div>
         </div>
-
     </main>
 
     {{#if debateOpen}}

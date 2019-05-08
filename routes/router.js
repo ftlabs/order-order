@@ -78,8 +78,6 @@ router.get('/:debateId', async (req, res) => {
     const username = getS3oUsername(req.cookies);
     const debate = result.Items[0];
 
-    console.log(debate);
-
     const data = {
       debate: debate,
       user: {
