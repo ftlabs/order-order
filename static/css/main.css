@@ -270,6 +270,9 @@ h2.debate-type {
     .form-voting-container .o-forms label,
     .form-results-container .o-forms label {
       text-transform: capitalize; }
+  .form-voting-container .results,
+  .form-results-container .results {
+    display: block; }
 
 .debate-basic h2 {
   text-align: center; }
