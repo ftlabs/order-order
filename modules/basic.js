@@ -1,4 +1,5 @@
 const commentHelper = require('../helpers/comments');
+const votesHelper = require('../helpers/votes');
 
 function display(req, res, data) {
   const { debate, user } = data;
@@ -10,11 +11,13 @@ function display(req, res, data) {
     votingStatus,
     debateType,
     comments,
-    existingVote,
+    votes,
   } = debate;
   const { commentsFor, commentsAgainst } = getAndNestComments(comments);
   const debateOpen = debateStatus === 'open' ? true : false;
   const votingOpen = votingStatus === 'open' ? true : false;
+  const existingVote = votesHelper.hasVoted(votes, user.username);
+  const voteOptions = ['for', 'against'];
 
   res.render(`debates/${debateType}`, {
     title,
@@ -22,6 +25,7 @@ function display(req, res, data) {
     debateOpen,
     votingOpen,
     existingVote,
+    voteOptions,
     debateType,
     commentsFor,
     commentsAgainst,
