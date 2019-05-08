@@ -2,9 +2,20 @@
 	<div class="o-grid-container">
 		<div class="o-grid-row">
 			<p>
-				Debate closed<br />
-				Voting results go here
+				Debate closed
 			</p>
+			<div class="results">
+				<p>
+					Results
+				</p>
+				{{#if voteResults}}
+				{{#each voteResults}}
+				<div>
+					{{this.name}}, {{this.number}}, {{this.percentage}}
+				</div>
+				{{/each}}
+				{{/if}}
+			</div>
 		</div>
 	</div>
 </div>
