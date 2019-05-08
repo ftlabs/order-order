@@ -8,7 +8,7 @@
 
     {{> components/heading/topper debateType=debateType title=title description=description }}
 
-    {{> debates/basic/status debateOpen=debateOpen votingOpen=votingOpen }}
+    {{> components/heading/status debateOpen=debateOpen votingOpen=votingOpen }}
 
     <main class="o-grid-container">
         <div class="o-grid-row">
@@ -62,4 +62,4 @@
     </div>
     {{/if}}
 
-    {{> footer type='forAgainst' }}
+    {{> footer type='forAgainst' comments=true }}
