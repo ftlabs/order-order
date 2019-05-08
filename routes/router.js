@@ -8,6 +8,7 @@ const path = require('path');
 const apiRoutes = require('../routes/api');
 const adminRoutes = require('../routes/admin');
 const commentRoutes = require('../routes/comment');
+const voteRoutes = require('../routes/vote');
 const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
 const dynamoDb = require('../models/dynamoDb');
@@ -17,6 +18,7 @@ const debateTypeDescriptions = require('../data/debates.json');
 router.use('/api', apiRoutes);
 router.use(s3o);
 router.use('/comment', commentRoutes);
+router.use('/vote', voteRoutes);
 router.use('/rating', ratingRoutes);
 router.use('/admin', adminRoutes);
 
