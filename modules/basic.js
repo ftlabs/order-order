@@ -10,6 +10,7 @@ function display(req, res, data) {
     votingStatus,
     debateType,
     comments,
+    existingVote,
   } = debate;
   const { commentsFor, commentsAgainst } = getAndNestComments(comments);
   const debateOpen = debateStatus === 'open' ? true : false;
@@ -20,6 +21,7 @@ function display(req, res, data) {
     description,
     debateOpen,
     votingOpen,
+    existingVote,
     debateType,
     commentsFor,
     commentsAgainst,
