@@ -15,7 +15,7 @@ function display(req, res, data) {
   const debateOpen = debateStatus === 'open' ? true : false;
   const votingOpen = votingStatus === 'open' ? true : false;
 
-  res.render(debateType, {
+  res.render(`debates/${debateType}`, {
     title,
     description,
     debateOpen,

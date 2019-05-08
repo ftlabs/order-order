@@ -1,0 +1,18 @@
+<div class="status-topper-container">
+	<div class="o-grid-container">
+		<div class="o-grid-row status-topper">
+			<p>
+				{{#if debateOpen}}
+				<span>Debate is <b>Open</b></span><br />
+				{{#if votingOpen}}
+				<span>Voting is <b>Open</b><br />Comments are disabled, Replies and Voting are enabled</span>
+				{{else}}
+				<span>Voting is <b>Closed</b><br />Comments & Replies are enabled and Voting is disabled</span>
+				{{/if}}
+				{{else}}
+				Debate is <b>Closed</b><br />Comments, Replies and Voting are disabled
+				{{/if}}
+			</p>
+		</div>
+	</div>
+</div>

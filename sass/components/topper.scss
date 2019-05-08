@@ -1,0 +1,46 @@
+.debate-topper-container {
+  background-color: $o-color-claret;
+
+  .debate-topper {
+    color: white;
+    padding: 20px 20px 25px;
+
+    h1,
+    p {
+      width: 100%;
+      margin: 0;
+    }
+
+    .debate-type {
+      font-family: MetricWeb, sans-serif;
+      font-size: 20px;
+      line-height: 24px;
+      font-weight: 200;
+    }
+
+    .debate-title {
+      font-family: FinancierDisplayWeb, serif;
+      font-size: 40px;
+      line-height: 40px;
+      font-weight: 400;
+      margin: 15px 0 5px;
+    }
+
+    .debate-description {
+      font-family: MetricWeb, sans-serif;
+      font-size: 20px;
+      line-height: 24px;
+      opacity: 0.8;
+    }
+  }
+}
+
+@media only screen and (max-width: $o-width-medium) {
+  .debate-basic {
+    .debate-topper-container {
+      .debate-topper {
+        padding: 20px 10px 25px;
+      }
+    }
+  }
+}

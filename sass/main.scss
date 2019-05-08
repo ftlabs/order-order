@@ -5,6 +5,11 @@
 
 @import 'home/cards';
 
+@import 'components/topper.scss';
+@import 'components/status.scss';
+@import 'components/comments.scss';
+@import 'components/voting.scss';
+
 @import 'debates/basic';
 @import 'debates/foragainst';
 
