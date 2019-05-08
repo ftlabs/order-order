@@ -34,8 +34,8 @@ function addReplyEventListeners() {
   commentReplyRemove.addEventListener('click', removeReplyToComment);
 }
 
-function init() {
+function initComments() {
   addReplyEventListeners();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', initComments);
