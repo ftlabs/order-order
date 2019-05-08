@@ -17,5 +17,10 @@
 
   .results {
     display: block;
+
+    table,
+    tr {
+      border: 1px solid $o-color-black-30;
+    }
   }
 }
