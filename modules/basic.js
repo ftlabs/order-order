@@ -16,8 +16,9 @@ function display(req, res, data) {
   const { commentsFor, commentsAgainst } = getAndNestComments(comments);
   const debateOpen = debateStatus === 'open' ? true : false;
   const votingOpen = votingStatus === 'open' ? true : false;
-  const existingVote = votesHelper.hasVoted(votes, user.username);
   const voteOptions = ['for', 'against'];
+  const existingVote = votesHelper.hasVoted(votes, user.username);
+  const voteResults = votesHelper.calculateResults(votes, voteOptions);
 
   res.render(`debates/${debateType}`, {
     title,
@@ -26,6 +27,7 @@ function display(req, res, data) {
     votingOpen,
     existingVote,
     voteOptions,
+    voteResults,
     debateType,
     commentsFor,
     commentsAgainst,
