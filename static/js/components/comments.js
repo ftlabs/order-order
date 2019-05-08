@@ -31,7 +31,9 @@ function addReplyEventListeners() {
     ),
   );
 
-  commentReplyRemove.addEventListener('click', removeReplyToComment);
+  if (commentReplyRemove) {
+    commentReplyRemove.addEventListener('click', removeReplyToComment);
+  }
 }
 
 function initComments() {
