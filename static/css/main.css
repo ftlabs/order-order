@@ -273,6 +273,11 @@ h2.debate-type {
   .form-voting-container .results,
   .form-results-container .results {
     display: block; }
+    .form-voting-container .results table,
+    .form-voting-container .results tr,
+    .form-results-container .results table,
+    .form-results-container .results tr {
+      border: 1px solid #cccccc; }
 
 .debate-basic h2 {
   text-align: center; }
