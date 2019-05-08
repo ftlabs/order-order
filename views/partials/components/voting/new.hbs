@@ -7,12 +7,13 @@
 					<legend aria-describedby="default-radio-info" class="o-forms__label">Vote For/Against the
 						proposition</legend>
 					<div class="o-forms__group">
-						<input type="radio" name="tags[]" value="for" class="o-forms__radio" id="for" name="tags[]"
-							value="for">
-						<label for="for" class="o-forms__label">For</label>
-						<input type="radio" name="tags[]" value="against" class="o-forms__radio" id="against"
-							name="tags[]" value="against">
-						<label for="against" class="o-forms__label">Against</label>
+						{{#if voteOptions}}
+						{{#each voteOptions}}
+						<input type="radio" name="tags[]" value="{{this}}" class="o-forms__radio" id="{{this}}"
+							name="tags[]">
+						<label for="{{this}}" class="o-forms__label">{{this}}</label>
+						{{/each}}
+						{{/if}}
 					</div>
 					<br />
 					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate_vote"

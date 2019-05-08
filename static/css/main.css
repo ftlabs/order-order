@@ -267,6 +267,9 @@ h2.debate-type {
   .form-voting-container .o-forms,
   .form-results-container .o-forms {
     max-width: none; }
+    .form-voting-container .o-forms label,
+    .form-results-container .o-forms label {
+      text-transform: capitalize; }
 
 .debate-basic h2 {
   text-align: center; }
