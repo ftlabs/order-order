@@ -11,6 +11,7 @@ const commentRoutes = require('../routes/comment');
 const voteRoutes = require('../routes/vote');
 const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
+const votesHelpers = require('../helpers/votes');
 const dynamoDb = require('../models/dynamoDb');
 const { getS3oUsername } = require('../helpers/cookies');
 const debateTypeDescriptions = require('../data/debates.json');
@@ -79,6 +80,8 @@ router.get('/:debateId', async (req, res) => {
     const result = await dynamoDb.getById(debateId);
     const username = getS3oUsername(req.cookies);
     const debate = result.Items[0];
+
+    debate.existingVote = votesHelpers.hasVoted(debate.votes, username);
 
     const data = {
       debate: debate,
