@@ -29,7 +29,7 @@
 
     {{#if debateOpen}}
     {{#if votingOpen}}
-    {{> components/voting/new debateId=debateId}}
+    {{> components/voting/new debateId=debateId existingVote=existingVote}}
     {{else}}
     {{> components/comments/new debateId=debateId}}
     {{/if}}
