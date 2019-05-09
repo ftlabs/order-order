@@ -9,7 +9,7 @@ function updateDescription(e) {
   var typeValue = e ? e.target.value : selectDebateType.value;
   var debateDescriptions = document.getElementsByClassName('debateDescription');
 
-  Array.from(debateDescriptions).forEach(el => {
+  Array.from(debateDescriptions).forEach(function(el) {
     el.classList.add('hide');
   });
 

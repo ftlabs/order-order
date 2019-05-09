@@ -12,6 +12,7 @@ function display(req, res, data) {
     title,
     description,
     debateOpen,
+    debateType,
     commentsFor,
     commentsAgainst,
     debateId: id,
