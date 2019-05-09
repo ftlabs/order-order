@@ -6,6 +6,7 @@ function getCommentReplies(originComment, commentsReplies) {
   commentsReplies.forEach(comment => {
     if (comment.replyTo === originComment.id) {
       const newComment = comment;
+      newComment.formatDate = Utils.formatDate(comment.createdAt);
       newComment.replies = getCommentReplies(newComment, commentsReplies);
       replies.push(newComment);
     }
