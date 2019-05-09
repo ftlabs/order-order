@@ -1,11 +1,11 @@
 const Utils = require('../helpers/utils');
 
-function getCommentReplies(comment, commentsReplies) {
+function getCommentReplies(originComment, commentsReplies) {
   const replies = [];
 
-  commentsReplies.forEach(c => {
-    if (c.replyTo === comment.id) {
-      const newComment = c;
+  commentsReplies.forEach(comment => {
+    if (comment.replyTo === originComment.id) {
+      const newComment = comment;
       newComment.replies = getCommentReplies(newComment, commentsReplies);
       replies.push(newComment);
     }
