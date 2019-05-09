@@ -1,10 +1,10 @@
 <article class="debate-card o-teaser o-teaser--large {{class}}">
 	<div class="o-teaser__content">
 		<p class="o-teaser__user">{{comment.user}}</p>
-		<p class="o-teaser__content">{{comment.content}}</p>
+		<p class="o-teaser__text">{{comment.content}}</p>
 		<div class="o-teaser__timestamp"><time datetime="{{this.formatDate.datetime}}"
 				class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time></div>
-
+		{{#if repliesOpen}}
 		<div class="comment-status-container">
 			<div class="comment-status">
 				<div class="comment-status__left">
@@ -19,11 +19,12 @@
 				</div>
 			</div>
 		</div>
+		{{/if}}
 	</div>
 </article>
 
 {{#if this.replies}}
 <div class="o-replies">
-	{{> structured/comments class="replies" comments=this.replies debateId=debateId }}
+	{{> components/comments/list class="replies" comments=this.replies debateId=debateId }}
 </div>
 {{/if}}

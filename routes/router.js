@@ -8,17 +8,19 @@ const path = require('path');
 const apiRoutes = require('../routes/api');
 const adminRoutes = require('../routes/admin');
 const commentRoutes = require('../routes/comment');
+const voteRoutes = require('../routes/vote');
 const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
 const dynamoDb = require('../models/dynamoDb');
 const { getS3oUsername } = require('../helpers/cookies');
+const debateTypeDescriptions = require('../data/debates.json');
 
 router.use('/api', apiRoutes);
 router.use(s3o);
 router.use('/comment', commentRoutes);
+router.use('/vote', voteRoutes);
 router.use('/rating', ratingRoutes);
 router.use('/admin', adminRoutes);
-
 
 router.get('/', async (req, res) => {
   const username = getS3oUsername(req.cookies);
@@ -28,12 +30,13 @@ router.get('/', async (req, res) => {
 
     res.render('list', {
       pageTitle: 'FT Debates',
-      pageSubtitle: 'Welcome to FT debates, here\'s a list of all available debates and a bit more blurb on how to take part',
+      pageSubtitle:
+        "Welcome to FT debates, here's a list of all available debates and a bit more blurb on how to take part",
       pageType: 'home',
       debateList,
       user: {
         username,
-      }
+      },
     });
   } catch (err) {
     res.status(404).send("Sorry can't find that!");
@@ -48,9 +51,16 @@ router.get('/type/:debateType', async (req, res) => {
     const debateList = await dynamoDb.getDebateList(debateType);
     const debateListByType = debateList[`${debateType}`].debates;
 
+    let debateDescription = '';
+    debateTypeDescriptions.descriptions.forEach(debate => {
+      if (debate.name === debateType) {
+        debateDescription = debate.description;
+      }
+    });
+
     res.render('list', {
       pageTitle: `${debateType}`,
-      pageSubtitle: `List of all ${debateType} debates + a description about what a structured debate is`,
+      pageSubtitle: debateDescription,
       pageType: 'home',
       debateList: debateListByType,
       user: {
@@ -58,6 +68,7 @@ router.get('/type/:debateType', async (req, res) => {
       },
     });
   } catch (err) {
+    console.log(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
@@ -88,7 +99,7 @@ router.get('/:debateId', async (req, res) => {
     moduleType.display(req, res, data);
     return;
   } catch (err) {
-    //console.log(err);
+    console.log(err);
     res.status(404).send("Sorry can't find that!");
   }
 });

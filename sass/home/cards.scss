@@ -1,104 +1,105 @@
 .home-header {
-	background: $o-color-white;
-	margin: 40px 0;
-	border-bottom: 1px solid $o-color-wheat;
+  background: $o-color-white;
+  margin: 40px 0;
+  border-bottom: 1px solid $o-color-wheat;
 }
 
 .home-heading {
-	text-align: center;
-	font-family: 'FinancierDisplayWeb', serif;
-	font-size: 60px;
-    line-height: 60px;
-    font-weight: 400;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    text-transform: capitalize;
+  text-align: center;
+  font-family: 'FinancierDisplayWeb', serif;
+  font-size: 60px;
+  line-height: 60px;
+  font-weight: 400;
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+  text-transform: capitalize;
 
-    &:after {
-    	content: '';
-    	display: block;
-    	background: $o-color-black;
-    	height: 4px;
-    	width: 40%;
-    	margin: 20px auto 0;
-    }
+  &:after {
+    content: '';
+    display: block;
+    background: $o-color-black;
+    height: 4px;
+    width: 40%;
+    margin: 20px auto 0;
+  }
 }
 
 .home-intro {
-	text-align: center;
-	margin-bottom: 40px;
-	font-size: 20px;
-    line-height: 24px;
-    font-weight: 400;
-    color: $o-color-black-60;
-    width: 100%;
+  text-align: center;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: $o-color-black-60;
+  width: 70%;
+  margin: 0 auto 40px auto;
 }
 
 .debates-home {
-	padding: 20px;
-	align-items: baseline;
-	background:	$o-color-wheat;
+  padding: 20px;
+  align-items: baseline;
+  background: $o-color-wheat;
 }
 
 .debate-card {
-	flex-basis:33%;
-	align-self: stretch;
-	padding: 10px;
+  flex-basis: 33%;
+  align-self: stretch;
+  padding: 10px;
 
-	.o-teaser__heading {
-		text-transform: capitalise;
+  .o-teaser__heading {
+    text-transform: capitalise;
 
-		a, a:visited {
-	    	color: $o-color-black;
-	    }
-	}
+    a,
+    a:visited {
+      color: $o-color-black;
+    }
+  }
 
-	.o-teaser__content {
-		height: 100%;
-		position:relative;
-		background-color: $o-color-white;
-	}
+  .o-teaser__content {
+    height: 100%;
+    position: relative;
+    background-color: $o-color-white;
+  }
 
-	.debate-type-tag {
-		text-transform: capitalize;
-	}
+  .debate-type-tag {
+    text-transform: capitalize;
+  }
 
-	.o-teaser__timestamp  {
-		margin-bottom: 40px;
-	}
+  .o-teaser__timestamp {
+    margin-bottom: 40px;
+  }
 
-	.debate-status {
-		display: table;
-	    width: 100%;
-	    border-top: 1px solid $o-color-black-30;
-	    padding: 10px 0;
-	    text-transform: uppercase;
-	    font-weight: 400;
-	    color: $o-color-black-60;
-	    position: absolute;
-	    bottom: 0;
-	    left: 0;
+  .debate-status {
+    display: table;
+    width: 100%;
+    border-top: 1px solid $o-color-black-30;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: $o-color-black-60;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 
-		.debate-state {
-			display: table-cell;
-			text-align: center;
+    .debate-state {
+      display: table-cell;
+      text-align: center;
 
-			&:first-child {
-				border-right: 1px solid $o-color-black-30;
-			}
+      &:first-child {
+        border-right: 1px solid $o-color-black-30;
+      }
 
-			.state-indicator {
-				font-weight: 600;
+      .state-indicator {
+        font-weight: 600;
 
-				&.debate-open {
-					color: $o-color-validation-green;
-				}
+        &.debate-open {
+          color: $o-color-validation-green;
+        }
 
-				&.debate-closed {
-					color: $o-color-validation-red;
-				}
-			}
-		}
-	}
+        &.debate-closed {
+          color: $o-color-validation-red;
+        }
+      }
+    }
+  }
 }
