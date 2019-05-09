@@ -1,0 +1,28 @@
+<div class="form-results-container">
+	<div class="o-grid-container">
+		<div class="o-grid-row">
+			<p data-o-grid-colspan="6">
+				Debate closed
+			</p>
+			<div class="results" data-o-grid-colspan="6">
+				<p>
+					Results
+				</p>
+				<table cellpadding="5">
+					{{#if voteResults}}
+					{{#each voteResults}}
+					<tr>
+						<td>
+							{{this.name}}
+						</td>
+						<td>
+							{{this.percentage}}%
+						</td>
+					</tr>
+					{{/each}}
+					{{/if}}
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

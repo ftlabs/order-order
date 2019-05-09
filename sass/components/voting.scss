@@ -1,0 +1,26 @@
+.form-voting-container,
+.form-results-container {
+  position: fixed;
+  border-top: 2px solid $o-color-black-30;
+  bottom: 0;
+  width: 100%;
+  background: $o-color-paper;
+  padding: 10px;
+
+  .o-forms {
+    max-width: none;
+
+    label {
+      text-transform: capitalize;
+    }
+  }
+
+  .results {
+    display: block;
+
+    table,
+    tr {
+      border: 1px solid $o-color-black-30;
+    }
+  }
+}

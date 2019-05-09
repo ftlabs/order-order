@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
 {{> head title='Hats debate' subtitle='Hats debate' type='hats' }}
 
 <body>
     {{> user/header username=user.username }}
-    
+
+    {{> components/heading/topper debateType=debateType title=title description=description }}
+
     <main class="o-grid-container">
-        <h1>{{ title }}</h1>
-        <p>
-            {{ description }}
-        </p>
         <form id="request_access">
             <input type='hidden' id="request_access_username" value="{{ user.username }}" />
             <input type='hidden' id="request_access_debate_id" value="{{ keySchema.order }}_{{ keySchema.seriesId }}" />

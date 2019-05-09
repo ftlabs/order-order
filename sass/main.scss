@@ -3,9 +3,16 @@
 
 @import 'admin/main';
 
-@import 'debates/structured';
-
 @import 'home/cards';
+
+@import 'components/topper.scss';
+@import 'components/promo.scss';
+@import 'components/status.scss';
+@import 'components/comments.scss';
+@import 'components/voting.scss';
+
+@import 'debates/basic';
+@import 'debates/foragainst';
 
 .hide {
   display: none;
