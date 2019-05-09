@@ -204,7 +204,20 @@ h2.debate-type {
       opacity: 0.8; }
 
 @media only screen and (max-width: 740px) {
-  .debate-basic .debate-topper-container .debate-topper {
+  .debate-topper-container .debate-topper {
+    padding: 20px 10px 25px; } }
+
+.debate-promo-container {
+  background-color: #fff1e5; }
+  .debate-promo-container .debate-promo {
+    padding: 20px 20px 25px; }
+    .debate-promo-container .debate-promo h1,
+    .debate-promo-container .debate-promo p {
+      width: 100%;
+      margin: 0; }
+
+@media only screen and (max-width: 740px) {
+  .debate-promo-container .debate-promo {
     padding: 20px 10px 25px; } }
 
 .status-topper-container {

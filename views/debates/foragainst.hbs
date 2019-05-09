@@ -8,6 +8,11 @@
 
     {{> components/heading/status debateOpen=debateOpen votingOpen=votingOpen }}
 
+    {{#ifNotThisOrThat commentsAgainst commentsFor}}
+    {{> components/heading/promo}}
+    {{/ifNotThisOrThat}}
+
+    {{#ifThisOrThat commentsAgainst commentsFor}}
     <main class="o-grid-container">
         <div class="o-grid-row">
             <div class="comments-against" data-o-grid-colspan="6">
@@ -24,6 +29,7 @@
             </div>
         </div>
     </main>
+    {{/ifThisOrThat}}
 
     {{#if debateOpen}}
     <div class="form-comment-container">
