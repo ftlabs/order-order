@@ -288,6 +288,9 @@ h2.debate-type {
 .debate-forAgainst h2 {
   text-align: center; }
 
+.debate-forAgainst main {
+  margin-bottom: 200px; }
+
 .hide {
   display: none; }
 
