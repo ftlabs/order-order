@@ -1,21 +1,39 @@
+function voteFromRatings(ratings, voteOptions) {
+  let votes = [];
+  console.log;
+
+  if (ratings) {
+    ratings.forEach(rating => {
+      if (voteOptions.includes(rating.rating)) {
+        votes.push(rating);
+      }
+    });
+  }
+  return votes;
+}
+
 function hasVoted(votes, username) {
   let voted = '';
+
+  console.log(votes);
+  console.log(username);
+
   if (votes) {
     votes.forEach(vote => {
       if (vote.user === username) {
-        voted = vote.content[0];
+        voted = vote.rating;
       }
     });
   }
   return voted;
 }
 
-function calculateResults(votes, options) {
+function calculateResults(votes, voteOptions) {
   let voteCalculations = [];
   let voteResults = [];
   let voteTotal = 0;
 
-  options.forEach(opt => {
+  voteOptions.forEach(opt => {
     voteCalculations[opt] = {
       name: opt,
       number: 0,
@@ -24,22 +42,23 @@ function calculateResults(votes, options) {
   });
 
   votes.forEach(vote => {
-    if (options.includes(vote.content[0])) {
+    if (voteOptions.includes(vote.rating)) {
       voteTotal = voteTotal + 1;
-      voteCalculations[vote.content[0]].number =
-        voteCalculations[vote.content[0]].number + 1;
-      voteCalculations[vote.content[0]].percentage =
-        (voteCalculations[vote.content[0]].number / voteTotal) * 100;
+      voteCalculations[vote.rating].number =
+        voteCalculations[vote.rating].number + 1;
+      voteCalculations[vote.rating].percentage =
+        (voteCalculations[vote.rating].number / voteTotal) * 100;
     }
   });
 
-  options.forEach(opt => {
+  voteOptions.forEach(opt => {
     voteResults.push(voteCalculations[opt]);
   });
   return voteResults;
 }
 
 module.exports = {
+  voteFromRatings,
   hasVoted,
   calculateResults,
 };
