@@ -213,9 +213,6 @@ h2.debate-type {
   .status-topper-container .status-topper {
     padding: 0 20px; }
 
-.o-teaser {
-  margin: -9px !important; }
-
 .o-teaser__content .o-teaser__user {
   font-weight: bold;
   margin: 0; }
@@ -248,6 +245,10 @@ h2.debate-type {
 
 .comments-for .o-replies {
   margin: 0 25px 0 0; }
+
+.comments-for .o-teaser,
+.comments-against .o-teaser {
+  margin: -9px !important; }
 
 .form-comment-container {
   position: fixed;
