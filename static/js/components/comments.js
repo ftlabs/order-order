@@ -25,11 +25,11 @@ function addReplyEventListeners() {
   const replyLinks = document.querySelectorAll('.reply');
   const commentReplyRemove = document.querySelector('.comment-reply-remove');
 
-  Array.from(replyLinks).forEach(element =>
-    element.addEventListener('click', () =>
-      replyToComment(element.getAttribute('data-comment-id')),
-    ),
-  );
+  Array.from(replyLinks).forEach(function(element) {
+    element.addEventListener('click', function(e) {
+      replyToComment(element.getAttribute('data-comment-id'));
+    });
+  });
 
   if (commentReplyRemove) {
     commentReplyRemove.addEventListener('click', removeReplyToComment);
