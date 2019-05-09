@@ -36,11 +36,9 @@
 }
 
 @media only screen and (max-width: $o-width-medium) {
-  .debate-basic {
-    .debate-topper-container {
-      .debate-topper {
-        padding: 20px 10px 25px;
-      }
+  .debate-topper-container {
+    .debate-topper {
+      padding: 20px 10px 25px;
     }
   }
 }
