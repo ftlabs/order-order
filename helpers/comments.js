@@ -58,6 +58,42 @@ function getNestedComments(originParams) {
   return commentsNested;
 }
 
+function getAndNestComments(comments) {
+  let commentsFor = [];
+  let commentsAgainst = [];
+
+  if (comments) {
+    const commentsWithIndex = comments.map((comment, index) => ({
+      ...comment,
+      index,
+    }));
+    commentsFor = commentsWithIndex.filter(comment => {
+      if (comment.tags.includes('for')) {
+        return comment;
+      }
+    });
+    commentsAgainst = commentsWithIndex.filter(comment => {
+      if (comment.tags.includes('against')) {
+        return comment;
+      }
+    });
+
+    // adds nesting structure
+    commentsFor = getNestedComments({
+      commentsData: commentsFor,
+    });
+
+    commentsAgainst = getNestedComments({
+      commentsData: commentsAgainst,
+    });
+  }
+
+  return {
+    commentsFor,
+    commentsAgainst,
+  };
+}
+
 module.exports = {
-  getNestedComments,
+  getAndNestComments,
 };
