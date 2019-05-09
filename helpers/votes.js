@@ -1,7 +1,5 @@
 function voteFromRatings(ratings, voteOptions) {
   let votes = [];
-  console.log;
-
   if (ratings) {
     ratings.forEach(rating => {
       if (voteOptions.includes(rating.rating)) {
@@ -14,10 +12,6 @@ function voteFromRatings(ratings, voteOptions) {
 
 function hasVoted(votes, username) {
   let voted = '';
-
-  console.log(votes);
-  console.log(username);
-
   if (votes) {
     votes.forEach(vote => {
       if (vote.user === username) {
