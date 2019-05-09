@@ -8,10 +8,11 @@ function display(req, res, data) {
   );
   const debateOpen = debateStatus === 'open' ? true : false;
 
-  res.render(`debates/${debateType}`, {
+  res.render(debateType, {
     title,
     description,
     debateOpen,
+    debateType,
     commentsFor,
     commentsAgainst,
     debateId: id,
