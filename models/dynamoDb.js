@@ -298,18 +298,6 @@ function constructRatingObject({ rating, user, index }) {
   };
 }
 
-function constructVoteObject({ user, content, displayStatus = 'show' }) {
-  const date = new Date().getTime();
-  return {
-    id: uuidv1(),
-    user,
-    content,
-    displayStatus,
-    updatedAt: date,
-    createdAt: date,
-  };
-}
-
 module.exports = {
   addDebate,
   editDebate,
@@ -323,5 +311,4 @@ module.exports = {
   updateDebate,
   constructCommentObject,
   constructRatingObject,
-  constructVoteObject,
 };
