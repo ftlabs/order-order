@@ -11,14 +11,22 @@ function display(req, res, data) {
     votingStatus,
     debateType,
     comments,
-    votes,
+    debateRatings,
   } = debate;
+
   const { commentsFor, commentsAgainst } = getAndNestComments(comments);
   const debateOpen = debateStatus === 'open' ? true : false;
   const votingOpen = votingStatus === 'open' ? true : false;
   const voteOptions = ['for', 'against'];
-  const existingVote = votesHelper.hasVoted(votes, user.username);
-  const voteResults = votesHelper.calculateResults(votes, voteOptions);
+  const voteFromRatings = votesHelper.voteFromRatings(
+    debateRatings,
+    voteOptions,
+  );
+  const existingVote = votesHelper.hasVoted(voteFromRatings, user.username);
+  const voteResults = votesHelper.calculateResults(
+    voteFromRatings,
+    voteOptions,
+  );
 
   res.render(`debates/${debateType}`, {
     title,

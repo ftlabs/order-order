@@ -6,13 +6,13 @@ router.post('/:debateId', async (req, res) => {
   try {
     const backURL = req.header('Referer') || '/';
     const { debateId } = req.params;
-    const { tags, displayStatus } = req.body;
+    const { tags } = req.body;
     const data = {
-      votes: [
-        dynamoDb.constructVoteObject({
-          content: tags,
+      debateRatings: [
+        dynamoDb.constructRatingObject({
+          rating: tags[0],
           user: req.cookies.s3o_username,
-          displayStatus,
+          index: debateId,
         }),
       ],
     };
