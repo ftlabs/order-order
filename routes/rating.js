@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
 
-router.post('/:debateId', async (req, res) => {
+router.post('/:debateType/:debateId', async (req, res) => {
   try {
     const backURL = req.header('Referer') || '/';
-    const { debateId } = req.params;
+    const { debateId, debateType } = req.params;
     const { rating, index } = req.body;
     const data = {
       ratings: [
@@ -16,9 +18,13 @@ router.post('/:debateId', async (req, res) => {
         }),
       ],
     };
-    if (await invalidPost(debateId, req.cookies.s3o_username, index)) {
-      throw new Error('Something went wrong with the rating');
-    }
+    await customLogic({
+      functionName: 'post',
+      username: req.cookies.s3o_username,
+      debateId,
+      index,
+      debateType,
+    });
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
   } catch (err) {
@@ -27,17 +33,23 @@ router.post('/:debateId', async (req, res) => {
   }
 });
 
-async function invalidPost(debateId, username, index) {
-  try {
-    const debateData = await dynamoDb.getById(debateId);
-    const commentData = debateData.Items[0].comments[index];
-    if (commentData.ratings.find(rating => rating.user === username)) {
-      return true;
-    }
-    return false;
-  } catch (err) {
-    console.error(err);
-    return true;
+async function customLogic({
+  functionName,
+  debateId,
+  index,
+  debateType,
+  username,
+}) {
+  const helperFilePath = path.resolve(
+    `./helpers/routeHelpers/${debateType}/rating.js`,
+  );
+  if (fs.existsSync(helperFilePath)) {
+    const debateTypeHelper = require(helperFilePath);
+    await debateTypeHelper[functionName]({
+      debateId,
+      index,
+      username,
+    });
   }
 }
 
