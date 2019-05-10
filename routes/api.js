@@ -110,15 +110,4 @@ router.put('/debate/:uuid', async (req, res) => {
   }
 });
 
-router.get('/debate/types', async (req, res) => {
-  try {
-    const allDebateTypes = await dynamo_db.getAllTypes();
-    return res.send(JSON.stringify(allDebateTypes));
-  } catch (err) {
-    return res
-      .status(404)
-      .send("Sorry can't find that! Issue with GET /debate/types");
-  }
-});
-
 module.exports = router;
