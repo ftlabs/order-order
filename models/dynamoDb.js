@@ -9,10 +9,15 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: 'eu-west-1',
 });
 
-async function query(type = 'query', params) {
+async function query(
+  type = 'query',
+  params,
+  tableName = process.env.DEBATE_TABLE,
+) {
   try {
+    console.log('tableName', tableName);
     const baseParams = {
-      TableName: process.env.DEBATE_TABLE,
+      TableName: tableName,
     };
 
     const allParams = Object.assign(baseParams, params);
@@ -117,48 +122,27 @@ async function getBy(attribute, value) {
   return { error: queryStatement };
 }
 
-async function getAllTypes() {
-  const params = {
-    ProjectionExpression: 'debateType',
-  };
-
-  const queryStatement = await query('scan', params);
-  const types = [];
-
-  if (queryStatement.result) {
-    queryStatement.result.Items.forEach(result => {
-      if (!types.includes(result.debateType)) {
-        types.push(result.debateType);
-      }
-    });
-    return types;
-  }
-
-  return { error: queryStatement };
-}
-
-async function getAllDebateLists(type = "nested") {
+async function getAllDebateLists(type = 'nested') {
   const queryStatement = await query('scan', {});
 
   if (queryStatement.result) {
     let debates;
 
-    if(type === "flat") {
+    if (type === 'flat') {
       debates = [];
-      queryStatement.result["Items"].forEach(item => {
+      queryStatement.result['Items'].forEach(item => {
         item.formatDate = Utils.formatDate(item.createdAt);
         debates.push(item);
       });
-      
-      Utils.sortByDate(debates, 'createdAt');
 
+      Utils.sortByDate(debates, 'createdAt');
     } else {
       debates = {};
-      queryStatement.result["Items"].map(item => {
+      queryStatement.result['Items'].map(item => {
         if (!debates.hasOwnProperty(item.debateType)) {
           debates[item.debateType] = {
             debateTypeName: item.debateType,
-            debates: []
+            debates: [],
           };
         }
         debates[item.debateType].debates.push(item);
@@ -298,17 +282,87 @@ function constructRatingObject({ rating, user, index }) {
   };
 }
 
+async function createDebateType({
+  name,
+  description,
+  specialUsers,
+  displayName,
+}) {
+  const params = {
+    Item: {
+      name,
+      description,
+      specialUsers,
+      displayName,
+    },
+  };
+
+  const queryStatement = await query(
+    'put',
+    params,
+    process.env.DEBATE_TYPE_TABLE,
+  );
+
+  if (queryStatement.result) {
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement };
+}
+
+async function getDebateType(debateTypeName) {
+  const params = {
+    KeyConditionExpression: '#name = :debateTypeName',
+    ExpressionAttributeNames: {
+      '#name': 'name',
+    },
+    ExpressionAttributeValues: {
+      ':debateTypeName': debateTypeName,
+    },
+  };
+
+  const queryStatement = await query(
+    'query',
+    params,
+    process.env.DEBATE_TYPE_TABLE,
+  );
+
+  if (queryStatement.result) {
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement.result };
+}
+
+async function getAllDebateTypes() {
+  try {
+    const queryStatement = await query(
+      'scan',
+      {},
+      process.env.DEBATE_TYPE_TABLE,
+    );
+    if (queryStatement.result) {
+      return queryStatement.result;
+    }
+    throw new Error('No result');
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 module.exports = {
   addDebate,
   editDebate,
   getAll,
   getById,
   getBy,
-  getAllTypes,
   getDebateList,
   getAllDebateLists,
   getAllReports,
   updateDebate,
   constructCommentObject,
   constructRatingObject,
+  createDebateType,
+  getDebateType,
+  getAllDebateTypes,
 };
