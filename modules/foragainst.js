@@ -8,7 +8,7 @@ function display(req, res, data) {
   );
   const debateOpen = debateStatus === 'open' ? true : false;
 
-  res.render(`debates/${debateType}`, {
+  res.render(`debates/${debateType.toLowerCase()}`, {
     title,
     description,
     debateOpen,
