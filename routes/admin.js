@@ -20,10 +20,15 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/create-debate', (req, res) => {
+router.get('/create-debate', async (req, res) => {
   const username = getS3oUsername(req.cookies);
+<<<<<<< HEAD
   const debateDescriptions = debateTypeDescriptions.descriptions;
 
+=======
+  const debateTypes = await dynamoDb.getAllDebateTypes();
+  console.log(debateTypes);
+>>>>>>> working debate types
   res.render('admin/createDebate', {
     username,
     debateDescriptions,
