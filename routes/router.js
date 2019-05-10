@@ -90,7 +90,7 @@ router.get('/:debateId', async (req, res) => {
     /* eslint-disable global-require */
 
     const modulePath = path.resolve(
-      `${listing.getRootDir()}/modules/${debate.debateType}`,
+      `${listing.getRootDir()}/modules/${debate.debateType.toLowerCase()}`,
     );
     const moduleType = require(modulePath);
 
