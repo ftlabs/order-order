@@ -35,7 +35,6 @@ function sortByDate(arr, property) {
     if (a[property] === b[property]) {
       return 0;
     }
-
     return a[property] > b[property] ? -1 : 1;
   });
 }
