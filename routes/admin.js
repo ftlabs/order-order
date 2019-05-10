@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/createDebate', (req, res) => {
+router.get('/create-debate', (req, res) => {
   const username = getS3oUsername(req.cookies);
   const debateDescriptions = debateTypeDescriptions.descriptions;
 
@@ -77,13 +77,70 @@ router.get('/moderation', async (req, res) => {
   }
 });
 
-router.get('/createDebateType', (req, res) => {
+router.get('/create-debate-type', (req, res) => {
   const username = getS3oUsername(req.cookies);
 
   res.render('admin/createDebateType', {
     username,
-    page: 'create',
+    page: 'create-type',
   });
+});
+
+router.post('/create-debate-type', async (req, res) => {
+  try {
+    const { specialUsers, name, description, displayName } = req.body;
+    const result = await dynamoDb.createDebateType({
+      specialUsers,
+      name,
+      description,
+      displayName,
+    });
+    console.log(result);
+    const username = getS3oUsername(req.cookies);
+    res.render('admin/createDebateType', {
+      username,
+      success: true,
+      page: 'create-type',
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+router.get('/edit-debate-type/:debateName', async (req, res) => {
+  try {
+    const username = getS3oUsername(req.cookies);
+    const { debateName } = req.params;
+    const debateType = await dynamoDb.getDebateType(debateName);
+    if (debateType.Items.length === 0) {
+      throw new Error('Cant find debate type');
+    }
+
+    const {
+      description,
+      name,
+      specialUsers,
+      displayName,
+    } = debateType.Items[0];
+
+    res.render('admin/editDebateType', {
+      username,
+      description,
+      name,
+      displayName,
+      specialUsers: specialUsers.map((specialUser, index) => ({
+        ...specialUser,
+        index,
+      })),
+      page: 'edit-type',
+    });
+  } catch (err) {
+    console.error(err);
+    res.render('admin/editDebateType', {
+      error: 'Something went wrong retrieving your debate type',
+      page: 'edit-type',
+    });
+  }
 });
 
 module.exports = router;
