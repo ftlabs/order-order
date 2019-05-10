@@ -9,10 +9,15 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: 'eu-west-1',
 });
 
-async function query(type = 'query', params) {
+async function query(
+  type = 'query',
+  params,
+  tableName = process.env.DEBATE_TABLE,
+) {
   try {
+    console.log('tableName', tableName);
     const baseParams = {
-      TableName: process.env.DEBATE_TABLE,
+      TableName: tableName,
     };
 
     const allParams = Object.assign(baseParams, params);
@@ -117,6 +122,7 @@ async function getBy(attribute, value) {
   return { error: queryStatement };
 }
 
+<<<<<<< HEAD
 async function getAllTypes() {
   const params = {
     ProjectionExpression: 'debateType',
@@ -137,6 +143,8 @@ async function getAllTypes() {
   return { error: queryStatement };
 }
 
+=======
+>>>>>>> new files
 async function getAllDebateLists(type = 'nested') {
   const queryStatement = await query('scan', {});
 
@@ -298,17 +306,87 @@ function constructRatingObject({ rating, user, index }) {
   };
 }
 
+async function createDebateType({
+  name,
+  description,
+  specialUsers,
+  displayName,
+}) {
+  const params = {
+    Item: {
+      name,
+      description,
+      specialUsers,
+      displayName,
+    },
+  };
+
+  const queryStatement = await query(
+    'put',
+    params,
+    process.env.DEBATE_TYPE_TABLE,
+  );
+
+  if (queryStatement.result) {
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement };
+}
+
+async function getDebateType(debateTypeName) {
+  const params = {
+    KeyConditionExpression: '#name = :debateTypeName',
+    ExpressionAttributeNames: {
+      '#name': 'name',
+    },
+    ExpressionAttributeValues: {
+      ':debateTypeName': debateTypeName,
+    },
+  };
+
+  const queryStatement = await query(
+    'query',
+    params,
+    process.env.DEBATE_TYPE_TABLE,
+  );
+
+  if (queryStatement.result) {
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement.result };
+}
+
+async function getAllDebateTypes() {
+  try {
+    const queryStatement = await query(
+      'scan',
+      {},
+      process.env.DEBATE_TYPE_TABLE,
+    );
+    if (queryStatement.result) {
+      return queryStatement.result;
+    }
+    throw new Error('No result');
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 module.exports = {
   addDebate,
   editDebate,
   getAll,
   getById,
   getBy,
-  getAllTypes,
   getDebateList,
   getAllDebateLists,
   getAllReports,
   updateDebate,
   constructCommentObject,
   constructRatingObject,
+  createDebateType,
+  getDebateType,
+  getAllDebateTypes,
 };
