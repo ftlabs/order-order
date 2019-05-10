@@ -1,24 +1,32 @@
 <body>
 	{{> user/header username=username admin="admin"}}
-		<nav class="o-header-services__secondary-nav" aria-label="secondary" data-o-header-services-nav="">
-			<div class="o-header-services__secondary-nav-content" data-o-header-services-nav-list="">
-				<ol class="o-header-services__secondary-nav-list o-header-services__secondary-nav-list--ancestors" aria-label="Ancestor sections">
-					<li>
-						<a href="">Admin</a>
-					</li>
-				</ol>
+	<nav class="o-header-services__secondary-nav" aria-label="secondary" data-o-header-services-nav="">
+		<div class="o-header-services__secondary-nav-content" data-o-header-services-nav-list="">
+			<ol class="o-header-services__secondary-nav-list o-header-services__secondary-nav-list--ancestors"
+				aria-label="Ancestor sections">
+				<li>
+					<a href="">Admin</a>
+				</li>
+			</ol>
 
-				<ul class="o-header-services__secondary-nav-list o-header-services__secondary-nav-list--children" aria-label="Child sections">
-					<li>
-						<a {{#ifEquals page "dashboard"}} aria-current="true" {{/ifEquals}} href="/admin">Dashboard</a>
-					</li>
-					<li>
-						<a {{#ifEquals page "create"}} aria-current="true" {{/ifEquals}} href="/admin/create_debate">Create debate</a>
-					</li>
-					<li>
-						<a {{#ifEquals page "moderation"}} aria-current="true" {{/ifEquals}} href="/admin/moderation">Moderation</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
+			<ul class="o-header-services__secondary-nav-list o-header-services__secondary-nav-list--children"
+				aria-label="Child sections">
+				<li>
+					<a {{#ifEquals page "dashboard"}} aria-current="true" {{/ifEquals}} href="/admin">Dashboard</a>
+				</li>
+				<li>
+					<a {{#ifEquals page "create"}} aria-current="true" {{/ifEquals}} href="/admin/createDebate">Create
+						debate</a>
+				</li>
+				<li>
+					<a {{#ifEquals page "create-type"}} aria-current="true" {{/ifEquals}}
+						href="/admin/create-debate-type">Create debate type</a>
+				</li>
+				<li>
+					<a {{#ifEquals page "moderation"}} aria-current="true" {{/ifEquals}}
+						href="/admin/moderation">Moderation</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 	</header>
