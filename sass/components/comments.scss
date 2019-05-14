@@ -54,10 +54,14 @@
   border-top: 2px solid $o-color-black-30;
   bottom: 0;
   width: 100%;
-  background: $o-color-paper;
+  background: $o-color-wheat;
   padding: 10px;
 
   .o-forms {
     max-width: none;
+  }
+
+  .o-forms__radio + .o-forms__label::before {
+    background: white;
   }
 }
