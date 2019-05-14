@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const dynamoDb = require('../models/dynamoDb');
+const Utils = require('../helpers/utils');
 const { getS3oUsername } = require('../helpers/cookies');
 const debateTypeDescriptions = require('../data/debates.json');
 
@@ -16,6 +17,7 @@ router.get('/', async (req, res) => {
       page: 'dashboard',
     });
   } catch (err) {
+    console.log(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
