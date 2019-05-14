@@ -162,6 +162,7 @@ async function getAllDebateLists(type = 'nested') {
         }
         item.formatDate = Utils.formatDate(item.createdAt);
         debates[item.debateType].debates.push(item);
+        Utils.sortByDate(debates[item.debateType].debates, 'createdAt');
       });
     }
 
