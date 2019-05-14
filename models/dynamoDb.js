@@ -160,6 +160,7 @@ async function getAllDebateLists(type = 'nested') {
             debates: [],
           };
         }
+        item.formatDate = Utils.formatDate(item.createdAt);
         debates[item.debateType].debates.push(item);
       });
     }
