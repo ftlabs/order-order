@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{{#> head title='404' subtitle='Page or resource not found' }}
+{{/head}}
+
+<body class="four-oh-four">
+    {{> user/header username=user.username }}
+
+    <h1>
+        404
+    </h1>
+    <main class="o-grid-container">
+        <div class="o-grid-row">
+            <div data-o-grid-colspan="8">
+                {{#if production}}
+                <p>
+                    Sorry, there was an issue with your request
+                    <br />
+                    Please refresh the page or contact FT Labs
+                </p>
+                {{else}}
+                <p>
+                    Error
+                </p>
+                <p>
+                    {{method}}
+                    <br />
+                    {{url}}
+                </p>
+                <pre>
+                    {{ error }}
+                </pre>
+                {{/if}}
+
+            </div>
+        </div>
+    </main>
+
+    {{> footer }}

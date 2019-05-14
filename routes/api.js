@@ -16,11 +16,10 @@ router.post('/debate/create', async (req, res) => {
       !data.debateStatus ||
       !data.votingStatus
     ) {
-
       return res.json({
         status: 'error',
         msg: 'Missing all required POST vars',
-        field: 'global'
+        field: 'global',
       });
     }
     // Check if debate of this name exists already
@@ -30,7 +29,7 @@ router.post('/debate/create', async (req, res) => {
       return res.json({
         status: 'error',
         msg: checkDebateName.error,
-        field: 'title'
+        field: 'title',
       });
     }
 
@@ -38,7 +37,7 @@ router.post('/debate/create', async (req, res) => {
       return res.json({
         status: 'error',
         msg: 'A debate with this name exists already',
-        field: 'title'
+        field: 'title',
       });
     }
 
@@ -54,15 +53,13 @@ router.post('/debate/create', async (req, res) => {
       return res.json({
         status: 'error',
         msg: debate.error,
-        field: 'global'
+        field: 'global',
       });
     }
 
     return res.send(JSON.stringify(debate));
   } catch (err) {
-    return res
-      .status(404)
-      .send("Sorry can't find that! Issue with POST /debate/create");
+    next(err);
   }
 });
 
@@ -81,7 +78,7 @@ router.post('/debate/edit', async (req, res) => {
       return res.json({
         status: 'error',
         msg: 'Missing all required POST vars',
-        field: 'global'
+        field: 'global',
       });
     }
 
@@ -89,11 +86,8 @@ router.post('/debate/edit', async (req, res) => {
 
     const debate = await dynamoDb.editDebate(data);
     return res.json({ status: 'ok', data: debate });
-
   } catch (err) {
-    return res
-      .status(404)
-      .send("Sorry can't find that! Issue with POST /debate/create");
+    next(err);
   }
 });
 
@@ -104,9 +98,7 @@ router.put('/debate/:uuid', async (req, res) => {
     const result = await dynamoDb.updateDebate(uuid, data);
     res.send(JSON.stringify(result));
   } catch (err) {
-    res
-      .status(404)
-      .send(`Sorry can't find that! Issue with PUT /debate/${uuid}`);
+    next(err);
   }
 });
 
@@ -115,7 +107,7 @@ router.get('/debate/types', async (req, res) => {
     const allDebateTypes = await dynamo_db.getAllTypes();
     return res.send(JSON.stringify(allDebateTypes));
   } catch (err) {
-    return res.status(404).send("Sorry can't find that! Issue with GET /debate/types");
+    next(err);
   }
 });
 

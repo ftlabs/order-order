@@ -17,8 +17,7 @@ router.get('/', async (req, res) => {
       page: 'dashboard',
     });
   } catch (err) {
-    console.log(err);
-    res.status(404).send("Sorry can't find that!");
+    next(err);
   }
 });
 
@@ -58,8 +57,7 @@ router.get('/edit_debate/:debate_uuid', async (req, res) => {
       page: 'edit',
     });
   } catch (err) {
-    console.log(err);
-    res.status(404).send("Sorry can't find that!");
+    next(err);
   }
 });
 
@@ -75,7 +73,7 @@ router.get('/moderation', async (req, res) => {
       page: 'moderation',
     });
   } catch (err) {
-    res.status(404).send("Sorry can't find that!");
+    next(err);
   }
 });
 
