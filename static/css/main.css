@@ -2,7 +2,7 @@
 /*Widths*/
 html,
 body {
-  background-color: #fff1e5;
+  background-color: #f2dfce;
   font-family: MetricWeb, sans-serif;
   margin: 0;
   padding: 0; }
@@ -268,10 +268,12 @@ h2.debate-type {
   border-top: 2px solid #cccccc;
   bottom: 0;
   width: 100%;
-  background: #fff1e5;
+  background: #f2dfce;
   padding: 10px; }
   .form-comment-container .o-forms {
     max-width: none; }
+  .form-comment-container .o-forms__radio + .o-forms__label::before {
+    background: white; }
 
 .form-voting-container,
 .form-results-container {
