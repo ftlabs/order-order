@@ -47,6 +47,17 @@ body {
 .profile-container .user-name {
   text-transform: capitalize; }
 
+.four-oh-four h1 {
+  font-size: 17em;
+  text-align: center;
+  margin: 0;
+  padding: 0; }
+
+.four-oh-four pre {
+  white-space: normal;
+  padding: 10px;
+  background-color: #cccccc; }
+
 .o-header-services__secondary-nav-list--ancestors li a {
   pointer-events: none; }
 

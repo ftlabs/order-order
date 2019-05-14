@@ -39,7 +39,12 @@ function sortByDate(arr, property) {
   });
 }
 
+function hasOwnPropertyCall(object, property) {
+  return Object.prototype.hasOwnProperty.call(object, property);
+}
+
 module.exports = {
   formatDate,
   sortByDate,
+  hasOwnPropertyCall,
 };

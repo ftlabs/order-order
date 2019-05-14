@@ -24,8 +24,7 @@ router.post('/:debateType/:debateId', async (req, res) => {
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
   } catch (err) {
-    console.error(err);
-    res.status(404).send("Sorry can't find that!");
+    next(err);
   }
 });
 
