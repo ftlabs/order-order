@@ -38,6 +38,37 @@ function addReplyEventListeners() {
   }
 }
 
+function addRatingsEventListeners() {
+  const ratingLinks = document.querySelectorAll('.rate');
+
+  Array.from(ratingLinks).forEach(function(element) {
+    element.addEventListener('click', function(e) {
+      rateComment(
+        element.getAttribute('data-debate-id'),
+        element.getAttribute('data-index'),
+        element.getAttribute('data-rating'),
+      );
+    });
+  });
+}
+
+function rateComment(debateId, index, rating) {
+  var formData = new FormData();
+  formData.append('index', index);
+  formData.append('rating', rating);
+
+  fetch(`rating/${debateId}?`, {
+    method: 'POST',
+    body: formData,
+  })
+    .then(function(res) {
+      console.log(res);
+    })
+    .catch(function(res) {
+      console.log(res);
+    });
+}
+
 function initComments() {
   addReplyEventListeners();
 }

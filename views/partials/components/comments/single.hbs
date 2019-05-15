@@ -1,9 +1,9 @@
-<article class="debate-card o-teaser o-teaser--large {{class}}">
+<!--<article class="debate-card o-teaser o-teaser--large {{class}}">
 	<div class="o-teaser__content">
 		<p class="o-teaser__user">{{comment.user}}</p>
+		<time datetime="{{this.formatDate.datetime}}"
+			class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time>
 		<p class="o-teaser__text">{{comment.content}}</p>
-		<div class="o-teaser__timestamp"><time datetime="{{this.formatDate.datetime}}"
-				class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time></div>
 		{{#if repliesOpen}}
 		<div class="comment-status-container">
 			<div class="comment-status">
@@ -21,10 +21,23 @@
 		</div>
 		{{/if}}
 	</div>
-</article>
+</article>-->
 
-{{#if this.replies}}
-<div class="o-replies">
-	{{> components/comments/list class="replies" comments=this.replies debateId=debateId }}
-</div>
-{{/if}}
+<article class="single-comment">
+	<p class="o-teaser__user">{{comment.user}}</p>
+	<time datetime="{{this.formatDate.datetime}}" class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time>
+	<p class="o-teaser__text">{{comment.content}}</p>
+	<div class="comment-actions">
+		{{#if repliesOpen}}
+		<a data-comment-id="{{comment.id}}" class="reply" href="#">Reply</a>
+		<a data-debate-id="{{debateId}}" data-index="{{index}}" data-rating="upvote" class="rate" href="#">UpVote</a>
+		{{/if}}
+		<a data-comment-id="{{comment.id}}" class="report" href="#">Report</a>
+	</div>
+
+	{{#if this.replies}}
+	<div class="o-replies">
+		{{> components/comments/list class="replies" comments=this.replies debateId=debateId }}
+	</div>
+	{{/if}}
+</article>
