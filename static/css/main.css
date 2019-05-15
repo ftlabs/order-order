@@ -291,68 +291,24 @@ h2.debate-type {
       padding: 10px 0 10px 10px;
       margin-bottom: 0; }
 
+/* ---------------------------- */
+/*    Basic version + colour    */
+/* ---------------------------- */
 .comments-basicWithColour .single-comment {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 15px auto auto auto;
-  align-items: start;
-  padding: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
   border-left: 2px solid #0d7680;
   background-color: white; }
-  .comments-basicWithColour .single-comment .o-teaser__user {
-    font-weight: bold;
-    margin: 0;
-    font-family: MetricWeb, sans-serif;
-    font-size: 14px;
-    line-height: 16px;
-    margin-bottom: 16px;
-    position: relative;
-    width: 100%;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased; }
-  .comments-basicWithColour .single-comment .o-teaser__timestamp {
-    margin-top: 0;
-    text-align: right; }
-  .comments-basicWithColour .single-comment .o-teaser__text {
-    margin: 8px 0; }
-  .comments-basicWithColour .single-comment .o-teaser__text,
-  .comments-basicWithColour .single-comment .o-replies,
-  .comments-basicWithColour .single-comment .comment-actions {
-    grid-column-start: 1;
-    grid-column-end: 3; }
-  .comments-basicWithColour .single-comment .comment-actions {
-    text-align: left; }
-    .comments-basicWithColour .single-comment .comment-actions a {
-      margin: 0;
-      color: gray;
-      opacity: 0.8;
-      font-family: MetricWeb, sans-serif;
-      font-size: 12px;
-      line-height: 16px;
-      margin-bottom: 16px;
-      position: relative;
-      width: 100%;
-      text-decoration: none;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased; }
-      .comments-basicWithColour .single-comment .comment-actions a:hover {
-        text-decoration: underline; }
-  .comments-basicWithColour .single-comment .o-replies {
-    max-width: 100%;
-    margin-top: 15px; }
-    .comments-basicWithColour .single-comment .o-replies .single-comment {
-      padding: 10px 0 10px 10px;
-      margin-bottom: 0;
-      border-left: 2px solid #ff7faa; }
-      .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment {
-        border-left: 2px solid #0f5499; }
-        .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment .single-comment {
-          border-left: 2px solid #ff8833; }
-          .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment .single-comment .single-comment {
-            border-left: 2px solid #593380; }
+  .comments-basicWithColour .single-comment .o-replies .single-comment {
+    border-left: 2px solid #ff7faa; }
+    .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment {
+      border-left: 2px solid #0f5499; }
+      .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment .single-comment {
+        border-left: 2px solid #ff8833; }
+        .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment .single-comment .single-comment {
+          border-left: 2px solid #593380; }
 
+/* ---------------------------- */
+/*    Basic o-teaser version    */
+/* ---------------------------- */
 .comments-basicOTeaser .o-teaser__content .o-teaser__user {
   font-weight: bold;
   margin: 0; }
@@ -403,7 +359,7 @@ h2.debate-type {
     background: white; }
 
 /* ---------------------------- */
-/* ---form-comment-container--- */
+/*    Form Comment Container    */
 /* ---------------------------- */
 .form-comment-container {
   position: fixed;
