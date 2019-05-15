@@ -291,6 +291,120 @@ h2.debate-type {
       padding: 10px 0 10px 10px;
       margin-bottom: 0; }
 
+.comments-basicWithColour .single-comment {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 15px auto auto auto;
+  align-items: start;
+  padding: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border-left: 2px solid #0d7680;
+  background-color: white; }
+  .comments-basicWithColour .single-comment .o-teaser__user {
+    font-weight: bold;
+    margin: 0;
+    font-family: MetricWeb, sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 16px;
+    position: relative;
+    width: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased; }
+  .comments-basicWithColour .single-comment .o-teaser__timestamp {
+    margin-top: 0;
+    text-align: right; }
+  .comments-basicWithColour .single-comment .o-teaser__text {
+    margin: 8px 0; }
+  .comments-basicWithColour .single-comment .o-teaser__text,
+  .comments-basicWithColour .single-comment .o-replies,
+  .comments-basicWithColour .single-comment .comment-actions {
+    grid-column-start: 1;
+    grid-column-end: 3; }
+  .comments-basicWithColour .single-comment .comment-actions {
+    text-align: left; }
+    .comments-basicWithColour .single-comment .comment-actions a {
+      margin: 0;
+      color: gray;
+      opacity: 0.8;
+      font-family: MetricWeb, sans-serif;
+      font-size: 12px;
+      line-height: 16px;
+      margin-bottom: 16px;
+      position: relative;
+      width: 100%;
+      text-decoration: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased; }
+      .comments-basicWithColour .single-comment .comment-actions a:hover {
+        text-decoration: underline; }
+  .comments-basicWithColour .single-comment .o-replies {
+    max-width: 100%;
+    margin-top: 15px; }
+    .comments-basicWithColour .single-comment .o-replies .single-comment {
+      padding: 10px 0 10px 10px;
+      margin-bottom: 0;
+      border-left: 2px solid #ff7faa; }
+      .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment {
+        border-left: 2px solid #0f5499; }
+        .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment .single-comment {
+          border-left: 2px solid #ff8833; }
+          .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment .single-comment .single-comment {
+            border-left: 2px solid #593380; }
+
+.comments-basicOTeaser .o-teaser__content .o-teaser__user {
+  font-weight: bold;
+  margin: 0; }
+
+.comments-basicOTeaser .o-teaser__content .o-teaser__content {
+  border: 0;
+  padding: 0 0 15px 0; }
+
+.comments-basicOTeaser .o-teaser__content .comment-status {
+  display: table;
+  width: 100%;
+  border-top: 1px solid #cccccc;
+  padding: 10px 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #666666;
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+  .comments-basicOTeaser .o-teaser__content .comment-status div {
+    display: table-cell;
+    text-align: center;
+    border-right: 1px solid #cccccc; }
+  .comments-basicOTeaser .o-teaser__content .comment-status div:last-child {
+    border-right: none; }
+
+.comments-basicOTeaser .o-replies {
+  max-width: 100%;
+  margin: 0 0 0 25px; }
+
+.comments-basicOTeaser .comments-for .o-replies {
+  margin: 0 25px 0 0; }
+
+.comments-basicOTeaser .comments-for .o-teaser,
+.comments-basicOTeaser .comments-against .o-teaser {
+  margin: -9px !important; }
+
+.comments-basicOTeaser .form-comment-container {
+  position: fixed;
+  border-top: 2px solid #cccccc;
+  bottom: 0;
+  width: 100%;
+  background: #f2dfce;
+  padding: 10px; }
+  .comments-basicOTeaser .form-comment-container .o-forms {
+    max-width: none; }
+  .comments-basicOTeaser .form-comment-container .o-forms__radio + .o-forms__label::before {
+    background: white; }
+
+/* ---------------------------- */
+/* ---form-comment-container--- */
+/* ---------------------------- */
 .form-comment-container {
   position: fixed;
   border-top: 2px solid #cccccc;
@@ -334,6 +448,9 @@ h2.debate-type {
 
 .debate-forAgainst h2 {
   text-align: center; }
+
+.debate-forAgainst .debate-sides {
+  background: #0f5499; }
 
 .debate-forAgainst main {
   margin-bottom: 200px; }
