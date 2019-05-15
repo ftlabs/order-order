@@ -4,7 +4,7 @@ const router = express.Router();
 const uuidv1 = require('uuid/v1');
 const dynamoDb = require('../models/dynamoDb');
 
-router.post('/debate/create', async (req, res) => {
+router.post('/debate/create', async (req, res, next) => {
   try {
     const data = req.body;
     const timestamp = new Date().getTime();
@@ -63,7 +63,7 @@ router.post('/debate/create', async (req, res) => {
   }
 });
 
-router.post('/debate/edit', async (req, res) => {
+router.post('/debate/edit', async (req, res, next) => {
   try {
     const data = req.body;
 
@@ -91,7 +91,7 @@ router.post('/debate/edit', async (req, res) => {
   }
 });
 
-router.put('/debate/:uuid', async (req, res) => {
+router.put('/debate/:uuid', async (req, res, next) => {
   const { uuid } = req.params;
   const data = req.body;
   try {
@@ -102,7 +102,7 @@ router.put('/debate/:uuid', async (req, res) => {
   }
 });
 
-router.get('/debate/types', async (req, res) => {
+router.get('/debate/types', async (req, res, next) => {
   try {
     const allDebateTypes = await dynamo_db.getAllTypes();
     return res.send(JSON.stringify(allDebateTypes));

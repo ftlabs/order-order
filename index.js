@@ -19,6 +19,7 @@ const { getS3oUsername } = require('./helpers/cookies');
 
 if (!PORT) {
   throw new Error('ERROR: PORT not specified in env');
+  return;
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -52,31 +53,5 @@ let requestLogger = function(req, res, next) {
 app.use(requestLogger);
 app.use('/static', express.static(path.resolve(__dirname + '/static')));
 app.use('/', core_routes);
-
-app.use(function(err, req, res, next) {
-  console.log('Error:');
-  console.log(err);
-  res.status(404);
-
-  if (req.accepts('html')) {
-    res.render('404', {
-      url: req.url,
-      method: req.method,
-      url: req.url,
-      error: err,
-      user: {
-        username: getS3oUsername(req.cookies),
-      },
-    });
-    return;
-  }
-
-  if (req.accepts('json')) {
-    res.send({ msg: 'Not found', error: err });
-    return;
-  }
-
-  res.type('txt').send('Not found');
-});
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));

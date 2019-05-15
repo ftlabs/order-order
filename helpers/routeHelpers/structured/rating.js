@@ -13,6 +13,7 @@ async function postValidation(debateId, username, index) {
   const commentData = debateData.Items[0].comments[index];
   if (commentData.ratings.find(rating => rating.user === username)) {
     throw new Error('User has already rated this post');
+    return;
   }
 }
 
