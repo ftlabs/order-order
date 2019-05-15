@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
 
-router.post('/:debateType/:debateId', async (req, res) => {
+router.post('/:debateType/:debateId', async (req, res, next) => {
   try {
     const backURL = req.header('Referer') || '/';
     const { debateId, debateType } = req.params;

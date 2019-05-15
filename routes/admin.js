@@ -2,11 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 const dynamoDb = require('../models/dynamoDb');
-const Utils = require('../helpers/utils');
 const { getS3oUsername } = require('../helpers/cookies');
 const debateTypeDescriptions = require('../data/debates.json');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   const username = getS3oUsername(req.cookies);
 
   try {
@@ -21,7 +20,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/create_debate', (req, res) => {
+router.get('/create_debate', (req, res, next) => {
   const username = getS3oUsername(req.cookies);
   const debateDescriptions = debateTypeDescriptions.descriptions;
 
@@ -32,14 +31,14 @@ router.get('/create_debate', (req, res) => {
   });
 });
 
-router.get('/edit_debate/:debate_uuid', async (req, res) => {
+router.get('/edit_debate/:debate_uuid', async (req, res, next) => {
   const username = getS3oUsername(req.cookies);
 
   try {
     const debate = await dynamoDb.getById(req.params.debate_uuid);
 
     if (!debate.Items || debate.Items.length === 0) {
-      res.status(404).send('Sorry no debate with that id');
+      throw new Error(`Debate not found with the id: ${debate_uuid}`);
       return;
     }
 
@@ -61,7 +60,7 @@ router.get('/edit_debate/:debate_uuid', async (req, res) => {
   }
 });
 
-router.get('/moderation', async (req, res) => {
+router.get('/moderation', async (req, res, next) => {
   const username = getS3oUsername(req.cookies);
 
   try {
@@ -75,6 +74,19 @@ router.get('/moderation', async (req, res) => {
   } catch (err) {
     next(err);
   }
+});
+
+router.get('/*', async (req, res, next) => {
+  res.render('404', {
+    url: req.url,
+    method: req.method,
+    url: req.url,
+    error: 'No admin page found with that route',
+    user: {
+      username: getS3oUsername(req.cookies),
+    },
+  });
+  return;
 });
 
 module.exports = router;

@@ -107,6 +107,7 @@ router.get('/:debateId', async (req, res, next) => {
       return;
     } else {
       throw new Error(`Debate not found with the id: ${debateId}`);
+      return;
     }
   } catch (err) {
     next(err);
@@ -140,6 +141,31 @@ router.post('/:debateId', async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+router.use(function(err, req, res, next) {
+  console.log(err);
+  res.status(404);
+
+  if (req.accepts('html')) {
+    res.render('404', {
+      url: req.url,
+      method: req.method,
+      url: req.url,
+      error: err,
+      user: {
+        username: getS3oUsername(req.cookies),
+      },
+    });
+    return;
+  }
+
+  if (req.accepts('json')) {
+    res.send({ msg: 'Not found', error: err });
+    return;
+  }
+
+  res.type('txt').send('Not found');
 });
 
 module.exports = router;
