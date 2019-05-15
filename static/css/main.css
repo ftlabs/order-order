@@ -237,42 +237,59 @@ h2.debate-type {
   .status-topper-container .status-topper {
     padding: 0 20px; }
 
-.o-teaser__content .o-teaser__user {
-  font-weight: bold;
-  margin: 0; }
-
-.o-teaser__content .o-teaser__content {
-  border: 0;
-  padding: 0 0 15px 0; }
-
-.o-teaser__content .comment-status {
-  display: table;
-  width: 100%;
-  border-top: 1px solid #cccccc;
-  padding: 10px 0;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: #666666;
-  position: absolute;
-  bottom: 0;
-  left: 0; }
-  .o-teaser__content .comment-status div {
-    display: table-cell;
-    text-align: center;
-    border-right: 1px solid #cccccc; }
-  .o-teaser__content .comment-status div:last-child {
-    border-right: none; }
-
-.o-replies {
-  max-width: 100%;
-  margin: 0 0 0 25px; }
-
-.comments-for .o-replies {
-  margin: 0 25px 0 0; }
-
-.comments-for .o-teaser,
-.comments-against .o-teaser {
-  margin: -9px !important; }
+.single-comment {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 15px auto auto auto;
+  align-items: start;
+  padding: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border-left: 2px solid rgba(70, 70, 70, 0.2); }
+  .single-comment .o-teaser__user {
+    font-weight: bold;
+    margin: 0;
+    font-family: MetricWeb, sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 16px;
+    position: relative;
+    width: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased; }
+  .single-comment .o-teaser__timestamp {
+    margin-top: 0;
+    text-align: right; }
+  .single-comment .o-teaser__text {
+    margin: 8px 0; }
+  .single-comment .o-teaser__text,
+  .single-comment .o-replies,
+  .single-comment .comment-actions {
+    grid-column-start: 1;
+    grid-column-end: 3; }
+  .single-comment .comment-actions {
+    text-align: left; }
+    .single-comment .comment-actions a {
+      margin: 0;
+      color: gray;
+      opacity: 0.8;
+      font-family: MetricWeb, sans-serif;
+      font-size: 12px;
+      line-height: 16px;
+      margin-bottom: 16px;
+      position: relative;
+      width: 100%;
+      text-decoration: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased; }
+      .single-comment .comment-actions a:hover {
+        text-decoration: underline; }
+  .single-comment .o-replies {
+    max-width: 100%;
+    margin-top: 15px; }
+    .single-comment .o-replies .single-comment {
+      padding: 10px 0 10px 10px;
+      margin-bottom: 0; }
 
 .form-comment-container {
   position: fixed;
