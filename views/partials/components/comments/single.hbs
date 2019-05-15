@@ -1,28 +1,3 @@
-<!--<article class="debate-card o-teaser o-teaser--large {{class}}">
-	<div class="o-teaser__content">
-		<p class="o-teaser__user">{{comment.user}}</p>
-		<time datetime="{{this.formatDate.datetime}}"
-			class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time>
-		<p class="o-teaser__text">{{comment.content}}</p>
-		{{#if repliesOpen}}
-		<div class="comment-status-container">
-			<div class="comment-status">
-				<div class="comment-status__left">
-					<a data-comment-id="{{comment.id}}" class="reply" href="#">Reply</a>
-				</div>
-				<div class="comment-status__right">
-					<form action="rating/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="rating-form">
-						<input type="hidden" name="index" value="{{index}}" />
-						<input type="hidden" name="rating" value="upvote" />
-						<input type="submit" value="up vote" />
-					</form>
-				</div>
-			</div>
-		</div>
-		{{/if}}
-	</div>
-</article>-->
-
 <article class="single-comment">
 	<p class="o-teaser__user">{{comment.user}}</p>
 	<time datetime="{{this.formatDate.datetime}}" class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time>
@@ -37,7 +12,7 @@
 
 	{{#if this.replies}}
 	<div class="o-replies">
-		{{> components/comments/list class="replies" comments=this.replies debateId=debateId }}
+		{{> components/comments/list class="replies" comments=this.replies debateId=debateId listStyleClass=listStyleClass }}
 	</div>
 	{{/if}}
 </article>
