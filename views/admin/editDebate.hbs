@@ -1,0 +1,86 @@
+{{> head title='Admin edit new debate' subtitle='Admin section' namedCSS='createDebateType' type='admin'}}
+{{> admin/header }}
+
+{{> alert }}
+
+<main class="o-grid-container">
+	<h1 class="admin-section">Edit debate</h1>
+	<div class="o-grid-row">
+		<section class="admin-content">
+			<form id="form_edit_debate" action="/admin/edit_debate/{{id}}" method="POST">
+				<div class="o-forms">
+					<label for="id" class="o-forms__label">ID</label>
+					<div>{{id}}</div>
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="id"></div>
+				</div>
+				<div class="o-forms">
+					<label for="debateType" class="o-forms__label">Debate type</label>
+					<div>{{debateType}}</div>
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateType"></div>
+				</div>
+				<div class="o-forms">
+					<label for="title" class="o-forms__label">Title</label>
+					<input type="text" name="title" class="o-forms__text" value="{{title}}" required />
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="title"></div>
+				</div>
+				<div class="o-forms">
+					<label for="description" class="o-forms__label">Description</label>
+					<input type="text" name="description" class="o-forms__text" value="{{description}}" required />
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="description"></div>
+				</div>
+				<div class="o-forms">
+					<label for="debateStatus" class="o-forms__label">Debate status</label>
+					<select name="debateStatus" class="o-forms__select" required>
+						<option value="open" {{#ifEquals debateStatus "open"}}selected{{/ifEquals}}>Open</option>
+						<option value="closed" {{#ifEquals debateStatus "closed"}}selected{{/ifEquals}}>Closed
+						</option>
+					</select>
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateStatus"></div>
+				</div>
+				<div class="o-forms">
+					<label for="votingStatus" class="o-forms__label">Voting status</label>
+					<select name="votingStatus" class="o-forms__select" required>
+						<option value="open" {{#ifEquals votingStatus "open"}}selected{{/ifEquals}}>Open</option>
+						<option value="closed" {{#ifEquals votingStatus "closed"}}selected{{/ifEquals}}>Closed
+						</option>
+					</select>
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="votingStatus"></div>
+				</div>
+				<div class="special-users">
+					{{#each specialUsersInformation}}
+					<div class="o-forms" data-special-user-type="{{userType}}">
+						<label for="{{userType}}" class="o-forms__label">{{displayName}}</label>
+						<div class="o-forms__additional-info" id="text-box-info">{{description}}</div>
+						<div class="user-inputs">
+							{{#each users}}
+							<input class="o-forms__text" type="text" name="specialUsers[{{../userType}}]" required=""
+								value="{{this}}">
+							{{/each}}
+						</div>
+						<div class="custom-element-buttons">
+							<button
+								class="add-text-field o-buttons o-buttons-icon o-buttons--big o-buttons-icon--plus o-buttons-icon--icon-only"
+								type="button">
+								<span class="o-buttons-icon__label">Plus</span>
+							</button>
+							<button
+								class="remove-text-field o-buttons o-buttons-icon o-buttons--big o-buttons-icon--minus o-buttons-icon--icon-only"
+								type="button">
+								<span>&#8722;</span>
+								<span class="o-buttons-icon__label">Minus</span>
+							</button>
+						</div>
+						<div id="msg_error" class="error o-forms__errortext hide" data-validation="{{userType}}"></div>
+					</div>
+					{{/each}}
+				</div>
+				<div class="o-forms">
+					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate">Edit new
+						debate</button>
+				</div>
+			</form>
+		</section>
+	</div>
+</main>
+
+{{> footer type="admin" namedJs="createDebate"}}
