@@ -6,6 +6,16 @@ body {
   padding: 0;
 }
 
+.sticky {
+  background-color: $o-color-wheat;
+  border-bottom: 2px solid $o-color-black-30;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+
 .o-header-services__related-content {
   /*TODO: temporary, remove important when breakpoints come in*/
   li {

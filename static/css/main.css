@@ -7,6 +7,15 @@ body {
   margin: 0;
   padding: 0; }
 
+.sticky {
+  background-color: #f2dfce;
+  border-bottom: 2px solid #cccccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5; }
+
 .o-header-services__related-content {
   /*TODO: temporary, remove important when breakpoints come in*/ }
   .o-header-services__related-content li a {

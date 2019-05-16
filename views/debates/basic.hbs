@@ -33,12 +33,12 @@
 
     {{#if debateOpen}}
     {{#if votingOpen}}
-    {{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions}}
+    {{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
     {{else}}
     {{> components/comments/new debateType=debateType debateId=debateId}}
     {{/if}}
     {{else}}
-    {{> components/voting/results}}
+    {{> components/voting/results voteStyleClass="bars"}}
     {{/if}}
 
     {{> footer type='basic' comments=true voting=true }}
