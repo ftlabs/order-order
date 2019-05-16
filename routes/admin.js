@@ -21,16 +21,6 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/create-debate', async (req, res) => {
-<<<<<<< HEAD
-  const username = getS3oUsername(req.cookies);
-  const debateTypes = await dynamoDb.getAllDebateTypes();
-  console.log(debateTypes);
-  res.render('admin/createDebate', {
-    username,
-    debateDescriptions,
-    page: 'create',
-  });
-=======
   try {
     const username = getS3oUsername(req.cookies);
     const debateTypes = await dynamoDb.getAllDebateTypes();
@@ -86,7 +76,6 @@ router.post('/create-debate', async (req, res) => {
   } catch (err) {
     console.error(err);
   }
->>>>>>> add create debate loading from debate type
 });
 
 router.get('/edit-debate/:debateUuid', async (req, res) => {
@@ -100,18 +89,7 @@ router.get('/edit-debate/:debateUuid', async (req, res) => {
       return;
     }
 
-<<<<<<< HEAD
-    let debateDescription = '';
-    debateTypeDescriptions.descriptions.forEach(debateType => {
-      if (debateType.name === debate.Items[0].debateType) {
-        debateDescription = debateType.description;
-      }
-    });
-
-    res.render('admin/edit_debate', {
-=======
     res.render('admin/editDebate', {
->>>>>>> add create debate loading from debate type
       username,
       debate: debate.Items[0],
       debateDescription,
