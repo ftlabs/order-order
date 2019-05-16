@@ -213,7 +213,7 @@ function hide(el) {
 
 function init() {
   if (formNewDebate) {
-    formNewDebate.addEventListener('submit', submitForm);
+    // formNewDebate.addEventListener('submit', submitForm);
   }
 
   if (formEditDebate) {

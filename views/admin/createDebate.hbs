@@ -1,17 +1,23 @@
-{{> head title='Admin create new debate' subtitle='Admin section' }}
+{{> head title='Admin create new debate' subtitle='Admin section' namedCSS="createDebateType" type="admin" }}
 {{> admin/header }}
 
 {{> alert }}
 <main class="o-grid-container">
 	<h1 class="admin-section">Create debate</h1>
 	<div class="o-grid-row">
-
 		<section class="admin-content">
-			<form id="form_new_debate">
+			<form id="form_new_debate" action="/admin/create_debate" method="POST">
 				<div class="o-forms">
 					<label for="debateType" class="o-forms__label">Debate type</label>
-					<select name="debateType" class="o-forms__select" required disabled>
-						<option selected value="structured">Structured debate</option>
+					<select name="debateType" class="debate-type o-forms__select" required>
+						<option disabled selected value> -- select an option -- </option>
+						{{#each debateTypes}}
+						<option data-special-user-description="{{#each specialUsers}}{{description}},{{/each}}"
+							data-special-user-name="{{#each specialUsers}}{{name}},{{/each}}"
+							data-description="{{description}}" data-name="{{name}}" value="{{name}}">
+							{{displayName}}
+						</option>
+						{{/each}}
 					</select>
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateType"></div>
 				</div>
@@ -21,8 +27,8 @@
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="title"></div>
 				</div>
 				<div class="o-forms">
-					<label for="debateDescription" class="o-forms__label">Description</label>
-					<input type="text" name="debateDescription" class="o-forms__text" required />
+					<label for="description" class="o-forms__label">Description</label>
+					<input type="text" name="description" class="o-forms__text" required />
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="description"></div>
 				</div>
 				<div class="o-forms">
@@ -41,66 +47,7 @@
 					</select>
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="votingStatus"></div>
 				</div>
-				<div class="o-forms">
-					<label for="blockedUsers" class="o-forms__label">Blocked users</label>
-					<div id="text-box-info" class="o-forms__additional-info">Add the username of a blocked user in the
-						box below. To add
-						multiple users use the plus button.
-					</div>
-					<div class="user-inputs">
-					</div>
-					<button
-						class="add-text-field-blockedUsers o-buttons o-buttons-icon o-buttons--big o-buttons-icon--plus o-buttons-icon--icon-only"
-						type="button">
-						<span class="o-buttons-icon__label">Plus</span>
-					</button>
-					<button
-						class="remove-text-field o-buttons o-buttons-icon o-buttons--big o-buttons-icon--minus o-buttons-icon--icon-only"
-						type="button">
-						<span>&#8722;</span>
-						<span class="o-buttons-icon__label">Minus</span>
-					</button>
-					<div id="msg_error" class="error o-forms__errortext hide" data-validation="blockedUsers"></div>
-				</div>
-				<div class="o-forms">
-					<label for="allowedUsers" class="o-forms__label">Allowed users</label>
-					<div id="text-box-info" class="o-forms__additional-info">Add users to an allow list. To add
-						multiple users use the plus button.
-					</div>
-					<div class="user-inputs">
-					</div>
-					<button
-						class="add-text-field-allowedUsers o-buttons o-buttons-icon o-buttons--big o-buttons-icon--plus o-buttons-icon--icon-only"
-						type="button">
-						<span class="o-buttons-icon__label">Plus</span>
-					</button>
-					<button
-						class="remove-text-field o-buttons o-buttons-icon o-buttons--big o-buttons-icon--minus o-buttons-icon--icon-only"
-						type="button">
-						<span>&#8722;</span>
-						<span class="o-buttons-icon__label">Minus</span>
-					</button>
-					<div id="msg_error" class="error o-forms__errortext hide" data-validation="allowedUsers"></div>
-				</div>
-				<div class="o-forms">
-					<label for="specialUsers" class="o-forms__label">Special users</label>
-					<div id="text-box-info" class="o-forms__additional-info">Add custom user types and usernames that
-						the view will need
-					</div>
-					<div class="user-inputs">
-					</div>
-					<button
-						class="add-text-field-specialUsers o-buttons o-buttons-icon o-buttons--big o-buttons-icon--plus o-buttons-icon--icon-only"
-						type="button">
-						<span class="o-buttons-icon__label">Plus</span>
-					</button>
-					<button
-						class="remove-text-field o-buttons o-buttons-icon o-buttons--big o-buttons-icon--minus o-buttons-icon--icon-only"
-						type="button">
-						<span>&#8722;</span>
-						<span class="o-buttons-icon__label">Minus</span>
-					</button>
-					<div id="msg_error" class="error o-forms__errortext hide" data-validation="specialUsers"></div>
+				<div class="special-users">
 				</div>
 				<div class="o-forms">
 					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate">Create new

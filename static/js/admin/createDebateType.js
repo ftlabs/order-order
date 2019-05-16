@@ -1,3 +1,4 @@
+// needs refactor
 function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
   const addTextButtons = document.querySelectorAll(
     '.add-text-field-' + attributeName,
@@ -122,9 +123,16 @@ function createNewFieldForm(attributeName, userInputs) {
     userInputs,
     'name',
     'Field Name',
-    'What is the name of your custom field',
+    'This is the name as it will appear in the database. Please use camel case.',
   );
   addSingleTextBox('specialUsers[' + index + '][name]', userInputs);
+  addLabelToField(
+    userInputs,
+    'displayName',
+    'Display Name',
+    'This is the name that will show up in the create debate form when this type is selected.',
+  );
+  addSingleTextBox('specialUsers[' + index + '][displayName]', userInputs);
   addLabelToField(
     userInputs,
     'fieldDescription',
