@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/create-debate', async (req, res) => {
+router.get('/create_debate', async (req, res) => {
   try {
     const username = getS3oUsername(req.cookies);
     const debateTypes = await dynamoDb.getAllDebateTypes();
@@ -34,7 +34,7 @@ router.get('/create-debate', async (req, res) => {
   }
 });
 
-router.post('/create-debate', async (req, res) => {
+router.post('/create_debate', async (req, res) => {
   try {
     const {
       debateType,
@@ -49,20 +49,10 @@ router.post('/create-debate', async (req, res) => {
         'One of the required fields was not filled in correctly.',
       );
     }
-    let spcialUsersFormatted = [];
-    console.log(specialUsers);
-    if (specialUsers) {
-      Object.keys(specialUsers).forEach(userType => {
-        if (typeof specialUsers[userType] === 'string') {
-          specialUsers[userType] = [specialUsers[userType]];
-        }
-        spcialUsersFormatted = [
-          ...spcialUsersFormatted,
-          { userType, users: specialUsers[userType] },
-        ];
-      });
-    }
-    console.log(spcialUsersFormatted);
+    const spcialUsersFormatted = specialUsers
+      ? formatSpecialUsers(specialUsers)
+      : [];
+
     const params = {
       debateType,
       title,
@@ -77,7 +67,7 @@ router.post('/create-debate', async (req, res) => {
   }
 });
 
-router.get('/edit-debate/:debateUuid', async (req, res) => {
+router.get('/edit_debate/:debateUuid', async (req, res) => {
   const username = getS3oUsername(req.cookies);
 
   try {
@@ -88,12 +78,77 @@ router.get('/edit-debate/:debateUuid', async (req, res) => {
       return;
     }
 
+    const {
+      id,
+      debateType,
+      debateStatus,
+      description,
+      title,
+      votingStatus,
+      specialUsers,
+    } = debate.Items[0];
+
+    const debateTypeInformation = await dynamoDb.getDebateType(debateType);
+
+    const specialUsersInformation = debateTypeInformation.Items[0].specialUsers.map(
+      userType => {
+        const userList = specialUsers.find(
+          userInformation => userInformation.userType === userType.name,
+        );
+        return { ...userType, ...userList };
+      },
+    );
+
     res.render('admin/editDebate', {
       username,
-      debate: debate.Items[0],
+      id,
+      debateType,
+      debateStatus,
+      description,
+      title,
+      votingStatus,
+      specialUsers,
+      specialUsersInformation,
       page: 'edit',
     });
   } catch (err) {
+    console.error(err);
+    res.status(404).send("Sorry can't find that!");
+  }
+});
+
+router.post('/edit_debate/:uuid', async (req, res) => {
+  const username = getS3oUsername(req.cookies);
+  try {
+    const { uuid } = req.params;
+    const {
+      debateType,
+      title,
+      description,
+      debateStatus,
+      votingStatus,
+      specialUsers,
+    } = req.body;
+
+    if ((!debateType, !title, !description, !debateStatus, !votingStatus)) {
+      throw new Error(
+        'One of the required fields was not filled in correctly.',
+      );
+    }
+    const spcialUsersFormatted = specialUsers
+      ? formatSpecialUsers(specialUsers)
+      : [];
+
+    const params = {
+      title,
+      description,
+      debateStatus,
+      votingStatus,
+      specialUsers: spcialUsersFormatted,
+    };
+    const debateTypeInformation = await dynamoDb.updateDebate(uuid, params);
+  } catch (err) {
+    console.error(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
@@ -114,7 +169,7 @@ router.get('/moderation', async (req, res) => {
   }
 });
 
-router.get('/create-debate-type', (req, res) => {
+router.get('/create_debate_type', (req, res) => {
   const username = getS3oUsername(req.cookies);
 
   res.render('admin/createDebateType', {
@@ -123,11 +178,23 @@ router.get('/create-debate-type', (req, res) => {
   });
 });
 
-router.post('/create-debate-type', async (req, res) => {
+router.post('/create_debate_type', async (req, res) => {
   try {
     const { specialUsers, name, description, displayName } = req.body;
+    const defaultSpecialUser = [
+      {
+        name: 'allowedUsers',
+        description: 'Add users to a allow list.',
+        displayName: 'Allowed Users',
+      },
+      {
+        name: 'blockedUsers',
+        description: 'Add users to a block list.',
+        displayName: 'Blocked Users',
+      },
+    ];
     const result = await dynamoDb.createDebateType({
-      specialUsers,
+      specialUsers: [...defaultSpecialUser, ...specialUsers],
       name,
       description,
       displayName,
@@ -143,7 +210,7 @@ router.post('/create-debate-type', async (req, res) => {
   }
 });
 
-router.get('/edit-debate-type/:debateName', async (req, res) => {
+router.get('/edit_debate_type/:debateName', async (req, res) => {
   try {
     const username = getS3oUsername(req.cookies);
     const { debateName } = req.params;
@@ -178,5 +245,19 @@ router.get('/edit-debate-type/:debateName', async (req, res) => {
     });
   }
 });
+
+function formatSpecialUsers(specialUsers) {
+  let spcialUsersFormatted = [];
+  Object.keys(specialUsers).forEach(userType => {
+    if (typeof specialUsers[userType] === 'string') {
+      specialUsers[userType] = [specialUsers[userType]];
+    }
+    spcialUsersFormatted = [
+      ...spcialUsersFormatted,
+      { userType, users: specialUsers[userType] },
+    ];
+  });
+  return spcialUsersFormatted;
+}
 
 module.exports = router;
