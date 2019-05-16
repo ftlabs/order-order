@@ -13,6 +13,19 @@
     {{/ifNotThisOrThat}}
 
     {{#ifThisOrThat commentsAgainst commentsFor}}
+    <div class="sticky hide">
+        <div class="o-grid-container ">
+            <div class="o-grid-row">
+                <div class="comments-for" data-o-grid-colspan="6">
+                    <h2>For</h2>
+                </div>
+                <div class="comments-against" data-o-grid-colspan="6">
+                    <h2>Against</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main class="o-grid-container">
         <div class="o-grid-row">
             <div class="comments-against" data-o-grid-colspan="6">
