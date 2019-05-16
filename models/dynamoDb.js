@@ -15,7 +15,6 @@ async function query(
   tableName = process.env.DEBATE_TABLE,
 ) {
   try {
-    console.log('tableName', tableName);
     const baseParams = {
       TableName: tableName,
     };
@@ -29,18 +28,17 @@ async function query(
   }
 }
 
-async function addDebate(data) {
+async function createDebate(data) {
+  const date = new Date().getTime();
+  const createdAt = date;
+  const updatedAt = date;
   const params = {
     Item: {
-      id: data.id,
-      title: data.title,
-      description: data.description,
-      debateType: data.debateType,
+      ...data,
+      id: uuidv1(),
       comments: [],
-      debateStatus: data.debateStatus,
-      votingStatus: data.votingStatus,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
+      createdAt,
+      updatedAt,
     },
   };
 
@@ -257,6 +255,7 @@ function updateExpressionConstruct(data) {
 }
 
 async function updateDebate(uuid, data) {
+  console.log(uuid, data);
   try {
     const params = {
       Key: {
@@ -375,7 +374,7 @@ async function getAllDebateTypes() {
 }
 
 module.exports = {
-  addDebate,
+  createDebate,
   editDebate,
   getAll,
   getById,
