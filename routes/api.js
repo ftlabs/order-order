@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const uuidv1 = require('uuid/v1');
 const dynamoDb = require('../models/dynamoDb');
+const Utils = require('../helpers/utils');
 
 router.post('/debate/create', async (req, res, next) => {
   try {
@@ -25,7 +26,7 @@ router.post('/debate/create', async (req, res, next) => {
     // Check if debate of this name exists already
     const checkDebateName = await dynamoDb.getBy('title', data.title);
 
-    if (Object.prototype.hasOwnProperty.call(checkDebateName, 'error')) {
+    if (Utils.hasOwnPropertyCall(checkDebateName, 'error')) {
       return res.json({
         status: 'error',
         msg: checkDebateName.error,
