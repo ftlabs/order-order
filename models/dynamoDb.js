@@ -189,7 +189,7 @@ async function getDebateList(type) {
     const debates = {};
 
     queryStatement.result.Items.map(item => {
-      if (!Object.prototype.hasOwnProperty.call(debates, item.debateType)) {
+      if (!Utils.hasOwnPropertyCall(debates, item.debateType)) {
         debates[item.debateType] = {
           debateTypeName: item.debateType,
           debates: [],

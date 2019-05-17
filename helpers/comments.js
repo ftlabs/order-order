@@ -30,7 +30,7 @@ function getNestedComments(originParams) {
   const commentsReplies = [];
 
   params.commentsDataFiltered.forEach(comment => {
-    if (!Object.prototype.hasOwnProperty.call(comment, 'replyTo')) {
+    if (!Utils.hasOwnPropertyCall(comment, 'replyTo')) {
       commentsOrigin.push(comment);
     } else {
       commentsReplies.push(comment);
