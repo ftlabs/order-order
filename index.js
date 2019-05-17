@@ -15,7 +15,6 @@ const express_enforces_ssl = require('express-enforces-ssl');
 const bodyParser = require('body-parser');
 const core_routes = require('./routes/router');
 const hbs_helpers = require('./utils/hbs-helpers');
-const { getS3oUsername } = require('./helpers/cookies');
 
 if (!PORT) {
   throw new Error('ERROR: PORT not specified in env');
