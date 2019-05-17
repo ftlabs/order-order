@@ -301,18 +301,18 @@ h2.debate-type {
       margin-bottom: 0; }
 
 /* ---------------------------- */
-/*    Basic version + colour    */
+/*    forAgainstWithVoting version + colour    */
 /* ---------------------------- */
-.comments-basicWithColour .single-comment {
+.comments-forAgainstWithColour .single-comment {
   border-left: 2px solid #0d7680;
   background-color: white; }
-  .comments-basicWithColour .single-comment .o-replies .single-comment {
+  .comments-forAgainstWithColour .single-comment .o-replies .single-comment {
     border-left: 2px solid #ff7faa; }
-    .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment {
+    .comments-forAgainstWithColour .single-comment .o-replies .single-comment .single-comment {
       border-left: 2px solid #0f5499; }
-      .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment .single-comment {
+      .comments-forAgainstWithColour .single-comment .o-replies .single-comment .single-comment .single-comment {
         border-left: 2px solid #ff8833; }
-        .comments-basicWithColour .single-comment .o-replies .single-comment .single-comment .single-comment .single-comment {
+        .comments-forAgainstWithColour .single-comment .o-replies .single-comment .single-comment .single-comment .single-comment {
           border-left: 2px solid #593380; }
 
 /* ---------------------------- */
@@ -416,10 +416,10 @@ h2.debate-type {
         padding: 10px;
         margin: 0; }
 
-.debate-basic h2 {
+.debate-forAgainstWithVoting h2 {
   text-align: center; }
 
-.debate-basic main {
+.debate-forAgainstWithVoting main {
   margin-bottom: 200px; }
 
 .debate-forAgainst h2 {

@@ -41,7 +41,7 @@ You can get to the skeleton admin page here:
   - Could also store events (new debate created, debate voting open, debate deleted etc) for later GUI display for super admins
 - _Debate type file creation_
   - Since there is a useful debate type creation GUI it would be very handy to have the required files generated as well, to give the dev somewhere to start
-  - Perhaps from basic templates?
+  - Perhaps from templates?
 - _Delete/Archive debates_
   - We don't want to truly delete any debate content (may be needed for reference later)
   - But an admin may have made a mistake so needs to hide the debate from everyones view

@@ -6,7 +6,7 @@
 
     {{> components/heading/topper debateType=debateType title=title description=description }}
 
-    {{> debates/basic/status debateOpen=debateOpen votingOpen=votingOpen }}
+    {{> debates/forAgainstWithVoting/status debateOpen=debateOpen votingOpen=votingOpen }}
 
     {{#ifNotThisOrThat commentsAgainst commentsFor}}
     {{> components/heading/promo}}

@@ -11,8 +11,6 @@ function forAgainstStickyHeader() {
   var previousSiblingHeight = getHeightOfSiblings(stickyElement, 0);
   var y = window.scrollY;
 
-  console.log(y);
-
   if (previousSiblingHeight > y) {
     stickyElement.classList.add('hide');
   } else {
