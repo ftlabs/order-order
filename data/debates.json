@@ -1,8 +1,8 @@
 {
   "descriptions": [
     {
-      "name": "basic",
-      "description": "The 'Basic' debate allows user to create comments for and/or against the main debate statement. Users can also reply to any comment, replies are not tagged as for/against. User cannot vote on the debate until voting is enabled. Admin/moderators can open voting. When voting is open users can vote and reply but not create original for/against comments. When voting is closed, votes will be displayed (if votes have been made). When the debate is closed users cannot comment, reply or vote. "
+      "name": "forAgainstWithVoting",
+      "description": "The 'forAgainstWithVoting' debate allows user to create comments for and/or against the main debate statement. Users can also reply to any comment, replies are not tagged as for/against. User cannot vote on the debate until voting is enabled. Admin/moderators can open voting. When voting is open users can vote and reply but not create original for/against comments. When voting is closed, votes will be displayed (if votes have been made). When the debate is closed users cannot comment, reply or vote. "
     },
     {
       "name": "forAgainst",
