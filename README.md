@@ -24,6 +24,8 @@ You can get to the skeleton admin page here:
 
 ## Future Features/PRs
 
+- _Git hook for Prettier_
+  - To enforce Prettier styling for those on the project without the prettier plugin
 - _Moderation_
   - Allow users to report a comment
   - Allow admins to action or ignore the report
