@@ -1,18 +1,18 @@
 /* eslint-env browser */
 
-const originCommentUsername = document.getElementById('comment-new-username');
-const originCommentText = document.getElementById('comment-new-text');
-const originCommentOpt = document.getElementById('comment-new-hat-opt');
-const originCommentSubmit = document.getElementById('comment-new-submit');
-const commentsList = document.getElementsByClassName('comments_list')[0];
+var originCommentUsername = document.getElementById('comment-new-username');
+var originCommentText = document.getElementById('comment-new-text');
+var originCommentOpt = document.getElementById('comment-new-hat-opt');
+var originCommentSubmit = document.getElementById('comment-new-submit');
+var commentsList = document.getElementsByClassName('comments_list')[0];
 
 function newCommentOrigin(e) {
   e.preventDefault();
 
-  const newComment = document.createElement('div');
-  const newCommentUsername = originCommentUsername.value;
-  const newCommentText = originCommentText.value;
-  const newCommentOption = originCommentOpt.value.toLowerCase();
+  var newComment = document.createElement('div');
+  var newCommentUsername = originCommentUsername.value;
+  var newCommentText = originCommentText.value;
+  var newCommentOption = originCommentOpt.value.toLowerCase();
 
   if (newCommentText && newCommentText !== '') {
     newComment.class = newCommentOption;
