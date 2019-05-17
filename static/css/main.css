@@ -399,11 +399,22 @@ h2.debate-type {
   .form-voting-container .results,
   .form-results-container .results {
     display: block; }
-    .form-voting-container .results table,
-    .form-voting-container .results tr,
-    .form-results-container .results table,
-    .form-results-container .results tr {
-      border: 1px solid #cccccc; }
+  .form-voting-container table,
+  .form-results-container table {
+    width: 100%; }
+    .form-voting-container table tr td:first-child,
+    .form-results-container table tr td:first-child {
+      width: 90px;
+      text-transform: capitalize;
+      font-weight: bold; }
+    .form-voting-container table tr td .percentage,
+    .form-results-container table tr td .percentage {
+      background: #ff8833;
+      color: #666666; }
+      .form-voting-container table tr td .percentage p,
+      .form-results-container table tr td .percentage p {
+        padding: 10px;
+        margin: 0; }
 
 .debate-basic h2 {
   text-align: center; }
