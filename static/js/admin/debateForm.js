@@ -118,15 +118,14 @@ function insertSpecialUser({ specialUsersParentDiv, name, description }) {
 
 function addPlusAndMinusButtons(parentElement, type, name) {
   const button = document.createElement('input');
-  button.setAttribute(
-    'class',
-    `${type}-text-field o-buttons o-buttons-icon o-buttons--big o-buttons-icon--${plusOrMinus(
-      type,
-    )} o-buttons-icon--icon-only`,
-  );
+  button.setAttribute('class', `${type}-text-field o-buttons`);
   button.setAttribute('type', 'button');
-  button.innerHTML = type === 'add' ? 'plus' : '&#8722;';
   parentElement.appendChild(button);
+  const buttonSpan = document.createElement('span');
+  buttonSpan.setAttribute('class', 'o-buttons-icon__label');
+  buttonSpan.innerHTML = type === 'add' ? 'Add' : 'Remove';
+  button.appendChild(buttonSpan);
+
   if (type === 'add') {
     const attributeName = `specialUsers[${name}]`;
     addEventListenerPlusAndMinus(
@@ -138,10 +137,6 @@ function addPlusAndMinusButtons(parentElement, type, name) {
   } else {
     addEventListenerPlusAndMinus(button, removeNewUserField);
   }
-}
-
-function plusOrMinus(type) {
-  return type === 'add' ? 'plus' : 'minus';
 }
 
 function getDebateTypeValues(selector, attribute) {
