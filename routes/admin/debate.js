@@ -46,7 +46,8 @@ router.post('/create', async (req, res) => {
       votingStatus,
       specialUsers: spcialUsersFormatted,
     };
-    const reports = await dynamoDb.createDebate(params);
+    const results = await dynamoDb.createDebate(params);
+    console.log('results', results);
   } catch (err) {
     console.error(err);
   }
