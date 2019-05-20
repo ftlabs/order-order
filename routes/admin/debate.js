@@ -47,15 +47,16 @@ router.post('/create', async (req, res) => {
       specialUsers: spcialUsersFormatted,
     };
     const results = await dynamoDb.createDebate(params);
-    console.log('results', results);
+    console.log(results);
+    res.redirect(`/${results.id}`);
   } catch (err) {
     console.error(err);
+    res.status(404).send('Sorry something went wrong');
   }
 });
 
 router.get('/edit/:debateUuid', async (req, res) => {
   const username = getS3oUsername(req.cookies);
-
   try {
     const debate = await dynamoDb.getById(req.params.debateUuid);
 
@@ -133,6 +134,8 @@ router.post('/edit/:uuid', async (req, res) => {
       specialUsers: spcialUsersFormatted,
     };
     const debateTypeInformation = await dynamoDb.updateDebate(uuid, params);
+    const backURL = req.header('Referer') || '/';
+    res.redirect(backURL);
   } catch (err) {
     console.error(err);
     res.status(404).send("Sorry can't find that!");
