@@ -6,7 +6,7 @@ const router = express.Router();
 const s3o = require('@financial-times/s3o-middleware');
 const path = require('path');
 const apiRoutes = require('../routes/api');
-const adminRoutes = require('../routes/admin');
+const adminRoutes = require('./admin/main');
 const commentRoutes = require('../routes/comment');
 const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
@@ -19,7 +19,6 @@ router.use('/comment', commentRoutes);
 router.use('/rating', ratingRoutes);
 router.use('/admin', adminRoutes);
 
-
 router.get('/', async (req, res) => {
   const username = getS3oUsername(req.cookies);
 
@@ -27,12 +26,13 @@ router.get('/', async (req, res) => {
     const debateList = await dynamoDb.getAllDebateLists('flat');
     res.render('list', {
       pageTitle: 'FT Debates',
-      pageSubtitle: 'Welcome to FT debates, here\'s a list of all available debates and a bit more blurb on how to take part',
+      pageSubtitle:
+        "Welcome to FT debates, here's a list of all available debates and a bit more blurb on how to take part",
       pageType: 'home',
       debateList,
       user: {
         username,
-      }
+      },
     });
   } catch (err) {
     res.status(404).send("Sorry can't find that!");
