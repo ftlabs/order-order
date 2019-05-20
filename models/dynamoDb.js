@@ -29,25 +29,26 @@ async function query(
 }
 
 async function createDebate(data) {
-  const date = new Date().getTime();
-  const createdAt = date;
-  const updatedAt = date;
-  const params = {
-    Item: {
-      ...data,
-      id: uuidv1(),
-      comments: [],
-      createdAt,
-      updatedAt,
-    },
-  };
+  try {
+    const date = new Date().getTime();
+    const id = uuidv1();
+    const createdAt = date;
+    const updatedAt = date;
+    const params = {
+      Item: {
+        ...data,
+        id,
+        comments: [],
+        createdAt,
+        updatedAt,
+      },
+    };
 
-  const queryStatement = await query('put', params);
-  if (queryStatement.result) {
-    return queryStatement.result;
+    await query('put', params);
+    return params.Item;
+  } catch (err) {
+    throw new Error(err);
   }
-
-  return { error: queryStatement };
 }
 
 async function editDebate(data) {
@@ -95,7 +96,6 @@ async function getById(debateId) {
   };
 
   const queryStatement = await query('query', params);
-
   if (queryStatement.result) {
     return queryStatement.result;
   }
