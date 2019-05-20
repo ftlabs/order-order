@@ -10,7 +10,6 @@ function addAdditionalTextFieldsListeners(
     const attributeName = `specialUsers[${element.parentElement.parentElement.getAttribute(
       'data-special-user-type',
     )}]`;
-    console.log(element.parentElement.parentElement);
     addEventListenerPlusAndMinus(
       element,
       actionFunction,
@@ -44,8 +43,6 @@ function addEventListenerPlusAndMinus(
 
 function addNewUserField(lastChild, userInputs, appendFunction, attributeName) {
   if (lastChild && !lastChild.value) {
-    console.log('getting to error');
-    // show error for blank last box
   } else {
     appendFunction(userInputs, attributeName);
   }
