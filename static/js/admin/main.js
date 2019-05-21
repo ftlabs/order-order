@@ -212,13 +212,13 @@ function hide(el) {
 }
 
 function init() {
-  if (formNewDebate) {
-    // formNewDebate.addEventListener('submit', submitForm);
-  }
-
-  if (formEditDebate) {
-    formEditDebate.addEventListener('submit', submitForm);
-  }
+  // disabled temporarily for server side validation but client side can be re added here
+  // if (formNewDebate) {
+  //   // formNewDebate.addEventListener('submit', submitForm);
+  // }
+  // if (formEditDebate) {
+  //   formEditDebate.addEventListener('submit', submitForm);
+  // }
 }
 
 init();
