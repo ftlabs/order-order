@@ -39,8 +39,12 @@ router.post('/create', async (req, res) => {
         displayName: 'Blocked Users',
       },
     ];
+    let mergedSpecialUsers = [...defaultSpecialUser];
+    if (specialUsers) {
+      mergedSpecialUsers = [...mergedSpecialUsers, ...specialUsers];
+    }
     const result = await dynamoDb.createDebateType({
-      specialUsers: [...defaultSpecialUser, ...specialUsers],
+      specialUsers: mergedSpecialUsers,
       name,
       description,
       displayName,
