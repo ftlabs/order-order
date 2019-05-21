@@ -5,7 +5,6 @@ var msgStatus = document.querySelector('.o-message--alert');
 var selectDebateType = document.querySelector('.debateType');
 var divDebateTypeDescription = document.querySelector('.debateTypeDescription');
 
-<<<<<<< HEAD
 function updateDescription(e) {
   var typeValue = e ? e.target.value : selectDebateType.value;
   var debateDescriptions = document.getElementsByClassName('debateDescription');
@@ -21,8 +20,6 @@ function updateDescription(e) {
   }
 }
 
-=======
->>>>>>> new files
 function submitForm(e) {
   e.preventDefault();
   clearErrors();
@@ -39,11 +36,8 @@ function submitForm(e) {
   var description = document.getElementsByName('debateDescription')[0].value;
   var debateStatus = document.getElementsByName('debateStatus')[0].value;
   var votingStatus = document.getElementsByName('votingStatus')[0].value;
-<<<<<<< HEAD
-=======
   var blockedUsers = getSpecialUserData('blockedUsers');
   var allowedUsers = getSpecialUserData('allowedUsers');
->>>>>>> new files
 
   if (isAlphaNumericWithCharacters(title)) {
     errors.title = 'Title must be alphanumeric or allowed chars (,_"-\')';
@@ -60,20 +54,13 @@ function submitForm(e) {
     description,
     debateStatus,
     votingStatus,
-<<<<<<< HEAD
-=======
     blockedUsers,
     allowedUsers,
->>>>>>> new files
   };
 
   if (formEditDebate && e.target.id === formEditDebate.id) {
     var debate_id = document.getElementsByName('id')[0].value;
     data.id = debate_id;
-<<<<<<< HEAD
-    data.debateType = document.getElementsByName('debateType')[0].value;
-=======
->>>>>>> new files
   }
 
   // Checking fields have at least some value
@@ -82,35 +69,6 @@ function submitForm(e) {
       if (data[k] === undefined || data[k] === '') {
         errors[data[k]] = k + ' is required';
       }
-<<<<<<< HEAD
-    }
-  }
-
-  if (!isEmpty(errors)) {
-    reportError(errors, 'field');
-  } else {
-    try {
-      var promise = new Promise(function(resolve, reject) {
-        resolve(submitData('/api/debate/' + url, data));
-      });
-
-      promise.then(function(response) {
-        if (response.status === 'error') {
-          reportError(response.msg, response.field);
-        } else if (response.status === 'ok') {
-          if (url === 'edit') {
-            reportStatus('Debate edited');
-          } else {
-            reportStatus('New debate added');
-            clearForm();
-          }
-        }
-      });
-    } catch (error) {
-      reportError('Issue with form submission: ' + error, 'global');
-    }
-  }
-=======
     }
   }
 
@@ -144,7 +102,6 @@ function getSpecialUserData(attributeName) {
   return Array.from(document.getElementsByName(attributeName))
     .map(element => element.value)
     .filter(value => value);
->>>>>>> new files
 }
 
 function submitData(url, data) {
@@ -272,21 +229,13 @@ function hide(el) {
 }
 
 function init() {
-  if (formNewDebate) {
-    // formNewDebate.addEventListener('submit', submitForm);
-  }
-
-  if (formEditDebate) {
-    formEditDebate.addEventListener('submit', submitForm);
-  }
-<<<<<<< HEAD
-
-  if (selectDebateType) {
-    selectDebateType.addEventListener('change', updateDescription);
-    updateDescription();
-  }
-=======
->>>>>>> new files
+  // disabled temporarily for server side validation but client side can be re added here
+  // if (formNewDebate) {
+  //   // formNewDebate.addEventListener('submit', submitForm);
+  // }
+  // if (formEditDebate) {
+  //   formEditDebate.addEventListener('submit', submitForm);
+  // }
 }
 
 init();
