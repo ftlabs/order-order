@@ -117,7 +117,7 @@ function insertSpecialUser({ specialUsersParentDiv, name, description }) {
 }
 
 function addPlusAndMinusButtons(parentElement, type, name) {
-  const button = document.createElement('input');
+  const button = document.createElement('button');
   button.setAttribute('class', `${type}-text-field o-buttons`);
   button.setAttribute('type', 'button');
   parentElement.appendChild(button);
