@@ -47,7 +47,6 @@ router.post('/create', async (req, res) => {
       specialUsers: spcialUsersFormatted,
     };
     const results = await dynamoDb.createDebate(params);
-    console.log(results);
     res.redirect(`/${results.id}`);
   } catch (err) {
     console.error(err);
@@ -76,15 +75,17 @@ router.get('/edit/:debateUuid', async (req, res) => {
     } = debate.Items[0];
 
     const debateTypeInformation = await dynamoDb.getDebateType(debateType);
-
-    const specialUsersInformation = debateTypeInformation.Items[0].specialUsers.map(
-      userType => {
-        const userList = specialUsers.find(
-          userInformation => userInformation.userType === userType.name,
-        );
-        return { ...userType, ...userList };
-      },
-    );
+    let specialUsersInformation = [];
+    if (specialUsers.length < 0) {
+      specialUsersInformation = debateTypeInformation.Items[0].specialUsers.map(
+        userType => {
+          const userList = specialUsers.find(
+            userInformation => userInformation.userType === userType.name,
+          );
+          return { ...userType, ...userList };
+        },
+      );
+    }
 
     res.render('admin/editDebate', {
       username,
@@ -133,12 +134,11 @@ router.post('/edit/:uuid', async (req, res) => {
       votingStatus,
       specialUsers: spcialUsersFormatted,
     };
-    const debateTypeInformation = await dynamoDb.updateDebate(uuid, params);
-    const backURL = req.header('Referer') || '/';
-    res.redirect(backURL);
+    await dynamoDb.updateDebate(uuid, params);
+    res.redirect(`/${uuid}`);
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that!");
+    res.status(404).send('Sorry something went wrong editing your debate!');
   }
 });
 
