@@ -1,4 +1,3 @@
-// needs refactor
 function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
   const addTextButtons = document.querySelectorAll(
     '.add-text-field-' + attributeName,
@@ -56,10 +55,6 @@ function addSingleTextBox(attributeName, userInputs) {
 }
 
 function addNewUserField(attributeName, userInputs) {
-  // const newFieldDiv = document.createElement('div');
-  // newFieldDiv.classList.add('o-forms');
-  // userInputs.appendChild(newFieldDiv);
-
   const newSpecialUserInputs = document.createElement('div');
   newSpecialUserInputs.classList.add('user-inputs');
   userInputs.appendChild(newSpecialUserInputs);
@@ -103,14 +98,6 @@ function saveCustomTextField(textField, saveButton, editButton, userInputs) {
   if (inputElements.length === 0) {
     createNewFieldForm(textField.value, userInputs);
   }
-}
-
-function saveCustomSpecialUser() {
-  // const newUsernameInput = document.createElement('input');
-  // newUsernameInput.classList.add('o-forms__text');
-  // newUsernameInput.setAttribute('type', 'text');
-  // newUsernameInput.required = true;
-  // newSpecialUserInputs.appendChild(newUsernameInput);
 }
 
 function createNewFieldForm(attributeName, userInputs) {
