@@ -1,9 +1,11 @@
-<div id="msg_status" class="o-message o-message--alert hide" aria-hidden="true" data-o-component="o-message">
+{{#if alertMessage}}
+<div class="o-message o-message--alert  o-message--{{alertType}}" data-o-component="o-message">
 	<div class="o-message__container">
 		<div class="o-message__content ">
 			<p class="o-message__content-main">
-				Global messages go here
+				{{alertMessage}}
 			</p>
 		</div>
 	</div>
 </div>
+{{/if}}
