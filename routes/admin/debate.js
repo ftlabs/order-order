@@ -8,11 +8,14 @@ router.get('/create', async (req, res) => {
   try {
     const username = getS3oUsername(req.cookies);
     const debateTypes = await dynamoDb.getAllDebateTypes();
+    const { alertType, alertAction } = req.query;
 
     res.render('admin/createDebate', {
       debateTypes: debateTypes.Items,
       username,
       page: 'create',
+      alertType,
+      alertAction,
     });
   } catch (err) {
     console.error(err);
@@ -50,14 +53,16 @@ router.post('/create', async (req, res) => {
     res.redirect(`/${results.id}`);
   } catch (err) {
     console.error(err);
-    res.status(404).send('Sorry something went wrong');
+    res.redirect(`/admin/debate/create?alertType=error&alertAction=creating`);
   }
 });
 
 router.get('/edit/:debateUuid', async (req, res) => {
   const username = getS3oUsername(req.cookies);
   try {
-    const debate = await dynamoDb.getById(req.params.debateUuid);
+    const { debateUuid } = req.params;
+    bob;
+    const debate = await dynamoDb.getById(debateUuid);
 
     if (!debate.Items || debate.Items.length === 0) {
       res.status(404).send('Sorry no debate with that id');
@@ -101,7 +106,9 @@ router.get('/edit/:debateUuid', async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that!");
+    res.redirect(
+      `/admin/debate/edit/${debateUuid}?alertType=error&alertAction=editing`,
+    );
   }
 });
 
@@ -138,7 +145,9 @@ router.post('/edit/:uuid', async (req, res) => {
     res.redirect(`/${uuid}`);
   } catch (err) {
     console.error(err);
-    res.status(404).send('Sorry something went wrong editing your debate!');
+    res.redirect(
+      `/admin/debate/edit/${debateUuid}?alertType=error&alertAction=editing`,
+    );
   }
 });
 
