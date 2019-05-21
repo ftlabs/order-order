@@ -35,6 +35,7 @@ router.post('/create', async (req, res) => {
       votingStatus,
       specialUsers,
     } = req.body;
+
     if ((!debateType, !title, !description, !debateStatus, !votingStatus)) {
       throw new Error(
         'One of the required fields was not filled in correctly.',
