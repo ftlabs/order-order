@@ -14,8 +14,11 @@ router.get('/create', async (req, res) => {
       debateTypes: debateTypes.Items,
       username,
       page: 'create',
+      alertMessage: getAlertMessage(
+        alertType,
+        alertAction ? alertAction : 'creating',
+      ),
       alertType,
-      alertAction,
     });
   } catch (err) {
     console.error(err);
@@ -57,12 +60,12 @@ router.post('/create', async (req, res) => {
   }
 });
 
-router.get('/edit/:debateUuid', async (req, res) => {
+router.get('/edit/:debateId', async (req, res) => {
   const username = getS3oUsername(req.cookies);
   try {
-    const { debateUuid } = req.params;
-    bob;
-    const debate = await dynamoDb.getById(debateUuid);
+    const { debateId } = req.params;
+    const { alertType, alertAction } = req.query;
+    const debate = await dynamoDb.getById(debateId);
 
     if (!debate.Items || debate.Items.length === 0) {
       res.status(404).send('Sorry no debate with that id');
@@ -81,7 +84,7 @@ router.get('/edit/:debateUuid', async (req, res) => {
 
     const debateTypeInformation = await dynamoDb.getDebateType(debateType);
     let specialUsersInformation = [];
-    if (specialUsers.length < 0) {
+    if (specialUsers && specialUsers.length < 0) {
       specialUsersInformation = debateTypeInformation.Items[0].specialUsers.map(
         userType => {
           const userList = specialUsers.find(
@@ -103,19 +106,23 @@ router.get('/edit/:debateUuid', async (req, res) => {
       specialUsers,
       specialUsersInformation,
       page: 'edit',
+      alertMessage: getAlertMessage(
+        alertType,
+        alertAction ? alertAction : 'editing',
+      ),
+      alertType,
     });
   } catch (err) {
     console.error(err);
     res.redirect(
-      `/admin/debate/edit/${debateUuid}?alertType=error&alertAction=editing`,
+      `/admin/debate/edit/${id}?alertType=error&alertAction=editing`,
     );
   }
 });
 
-router.post('/edit/:uuid', async (req, res) => {
-  const username = getS3oUsername(req.cookies);
+router.post('/edit/:debateId', async (req, res) => {
   try {
-    const { uuid } = req.params;
+    const { debateId } = req.params;
     const {
       debateType,
       title,
@@ -141,12 +148,14 @@ router.post('/edit/:uuid', async (req, res) => {
       votingStatus,
       specialUsers: spcialUsersFormatted,
     };
-    await dynamoDb.updateDebate(uuid, params);
-    res.redirect(`/${uuid}`);
+    await dynamoDb.updateDebate(debateId, params);
+    res.redirect(
+      `/admin/debate/edit/${debateId}?alertType=success&alertAction=editing`,
+    );
   } catch (err) {
     console.error(err);
     res.redirect(
-      `/admin/debate/edit/${debateUuid}?alertType=error&alertAction=editing`,
+      `/admin/debate/edit/${debateId}?alertType=error&alertAction=editing`,
     );
   }
 });
@@ -163,6 +172,17 @@ function formatSpecialUsers(specialUsers) {
     ];
   });
   return spcialUsersFormatted;
+}
+
+function getAlertMessage(alertType, action) {
+  switch (alertType) {
+    case 'success':
+      return `${action} your debate type was succesful.`;
+    case 'error':
+      return `Something went wrong ${action} your debate type.`;
+    default:
+      return undefined;
+  }
 }
 
 module.exports = router;
