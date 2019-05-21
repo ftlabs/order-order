@@ -5,18 +5,23 @@ const dynamoDb = require('../../models/dynamoDb');
 const { getS3oUsername } = require('../../helpers/cookies');
 
 router.get('/create', (req, res) => {
-  const username = getS3oUsername(req.cookies);
-  const { alertType, alertAction } = req.query;
+  try {
+    const username = getS3oUsername(req.cookies);
+    const { alertType, alertAction } = req.query;
 
-  res.render('admin/createDebateType', {
-    username,
-    page: 'create-type',
-    alertMessage: getAlertMessage(
+    res.render('admin/createDebateType', {
+      username,
+      page: 'create-type',
+      alertMessage: getAlertMessage(
+        alertType,
+        alertAction ? alertAction : 'creating',
+      ),
       alertType,
-      alertAction ? alertAction : 'creating',
-    ),
-    alertType,
-  });
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(404).send("Sorry can't find that!");
+  }
 });
 
 router.post('/create', async (req, res) => {
@@ -85,10 +90,7 @@ router.get('/edit/:debateName', async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.render('admin/editDebateType', {
-      error: 'Something went wrong retrieving your debate type',
-      page: 'edit-type',
-    });
+    res.status(404).send("Sorry can't find that!");
   }
 });
 
@@ -99,7 +101,7 @@ function getAlertMessage(alertType, action) {
     case 'error':
       return `Something went wrong ${action} your debate type.`;
     default:
-      return 'Something went wrong.';
+      return undefined;
   }
 }
 
