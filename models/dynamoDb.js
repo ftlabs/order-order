@@ -255,7 +255,6 @@ function updateExpressionConstruct(data) {
 }
 
 async function updateDebate(uuid, data) {
-  console.log(uuid, data);
   try {
     const params = {
       Key: {
