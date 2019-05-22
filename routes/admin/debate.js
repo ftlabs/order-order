@@ -41,7 +41,7 @@ router.post('/create', async (req, res) => {
         'One of the required fields was not filled in correctly.',
       );
     }
-    const spcialUsersFormatted = specialUsers
+    const specialUsersFormatted = specialUsers
       ? formatSpecialUsers(specialUsers)
       : [];
 
@@ -51,7 +51,7 @@ router.post('/create', async (req, res) => {
       description,
       debateStatus,
       votingStatus,
-      specialUsers: spcialUsersFormatted,
+      specialUsers: specialUsersFormatted,
     };
     const results = await dynamoDb.createDebate(params);
     res.redirect(`/${results.id}`);
@@ -138,7 +138,7 @@ router.post('/edit/:debateId', async (req, res) => {
         'One of the required fields was not filled in correctly.',
       );
     }
-    const spcialUsersFormatted = specialUsers
+    const specialUsersFormatted = specialUsers
       ? formatSpecialUsers(specialUsers)
       : [];
 
@@ -147,7 +147,7 @@ router.post('/edit/:debateId', async (req, res) => {
       description,
       debateStatus,
       votingStatus,
-      specialUsers: spcialUsersFormatted,
+      specialUsers: specialUsersFormatted,
     };
     await dynamoDb.updateDebate(debateId, params);
     res.redirect(
@@ -162,17 +162,17 @@ router.post('/edit/:debateId', async (req, res) => {
 });
 
 function formatSpecialUsers(specialUsers) {
-  let spcialUsersFormatted = [];
+  let specialUsersFormatted = [];
   Object.keys(specialUsers).forEach(userType => {
     if (typeof specialUsers[userType] === 'string') {
       specialUsers[userType] = [specialUsers[userType]];
     }
-    spcialUsersFormatted = [
-      ...spcialUsersFormatted,
+    specialUsersFormatted = [
+      ...specialUsersFormatted,
       { userType, users: specialUsers[userType] },
     ];
   });
-  return spcialUsersFormatted;
+  return specialUsersFormatted;
 }
 
 function getAlertMessage(alertType, action) {
