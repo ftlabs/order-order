@@ -98,6 +98,31 @@ router.get('/edit/:debateName', async (req, res) => {
   }
 });
 
+router.post('/edit/:debateName', async (req, res) => {
+  try {
+    const { specialUsers, name, description, displayName } = req.body;
+    const { debateName } = req.params;
+
+    const result = await dynamoDb.createDebateType({
+      specialUsers,
+      name: debateName,
+      description,
+      displayName,
+    });
+    if (result.error) {
+      throw new Error(result.error);
+    }
+    res.redirect(
+      `/admin/debate_type/edit/${debateName}?alertType=success&alertAction=editing`,
+    );
+  } catch (err) {
+    console.error(err);
+    res.redirect(
+      `/admin/debate_type/edit/${debateName}?alertType=error&alertAction=editing`,
+    );
+  }
+});
+
 function getAlertMessage(alertType, action) {
   switch (alertType) {
     case 'success':
