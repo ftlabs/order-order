@@ -98,8 +98,6 @@ router.get('/edit/:debateName', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 router.post('/edit/:debateName', async (req, res) => {
   try {
     const { specialUsers, name, description, displayName } = req.body;
@@ -125,7 +123,6 @@ router.post('/edit/:debateName', async (req, res) => {
   }
 });
 
->>>>>>> d0da316b77c7cb825049605e1d674a4b6a63a1d7
 function getAlertMessage(alertType, action) {
   switch (alertType) {
     case 'success':
