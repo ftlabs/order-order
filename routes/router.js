@@ -8,14 +8,17 @@ const path = require('path');
 const apiRoutes = require('../routes/api');
 const adminRoutes = require('./admin/main');
 const commentRoutes = require('../routes/comment');
+const voteRoutes = require('../routes/vote');
 const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
 const dynamoDb = require('../models/dynamoDb');
 const { getS3oUsername } = require('../helpers/cookies');
+const debateTypeDescriptions = require('../data/debates.json');
 
 router.use('/api', apiRoutes);
 router.use(s3o);
 router.use('/comment', commentRoutes);
+router.use('/vote', voteRoutes);
 router.use('/rating', ratingRoutes);
 router.use('/admin', adminRoutes);
 
@@ -24,6 +27,7 @@ router.get('/', async (req, res) => {
 
   try {
     const debateList = await dynamoDb.getAllDebateLists('flat');
+
     res.render('list', {
       pageTitle: 'FT Debates',
       pageSubtitle:
@@ -45,17 +49,26 @@ router.get('/type/:debateType', async (req, res) => {
   try {
     const { debateType } = req.params;
     const debateList = await dynamoDb.getDebateList(debateType);
+    const debateListByType = debateList[`${debateType}`].debates;
+
+    let debateDescription = '';
+    debateTypeDescriptions.descriptions.forEach(debate => {
+      if (debate.name === debateType) {
+        debateDescription = debate.description;
+      }
+    });
 
     res.render('list', {
-      pageTitle: `Debates: ${debateType}`,
-      pageSubtitle: `List of all ${debateType} type debates`,
+      pageTitle: `${debateType}`,
+      pageSubtitle: debateDescription,
       pageType: 'home',
-      debateList,
+      debateList: debateListByType,
       user: {
         username,
       },
     });
   } catch (err) {
+    console.log(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
@@ -77,7 +90,7 @@ router.get('/:debateId', async (req, res) => {
     /* eslint-disable global-require */
 
     const modulePath = path.resolve(
-      `${listing.getRootDir()}/modules/${debate.debateType}`,
+      `${listing.getRootDir()}/modules/${debate.debateType.toLowerCase()}`,
     );
     const moduleType = require(modulePath);
 
@@ -86,7 +99,7 @@ router.get('/:debateId', async (req, res) => {
     moduleType.display(req, res, data);
     return;
   } catch (err) {
-    //console.log(err);
+    console.log(err);
     res.status(404).send("Sorry can't find that!");
   }
 });

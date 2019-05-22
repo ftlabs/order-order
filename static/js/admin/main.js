@@ -2,7 +2,27 @@
 var formNewDebate = document.getElementById('form_new_debate');
 var formEditDebate = document.getElementById('form_edit_debate');
 var msgStatus = document.querySelector('.o-message--alert');
+var selectDebateType = document.querySelector('.debateType');
+var divDebateTypeDescription = document.querySelector('.debateTypeDescription');
 
+<<<<<<< HEAD
+=======
+function updateDescription(e) {
+  var typeValue = e ? e.target.value : selectDebateType.value;
+  var debateDescriptions = document.getElementsByClassName('debateDescription');
+
+  Array.from(debateDescriptions).forEach(function(el) {
+    el.classList.add('hide');
+  });
+
+  var descriptionToShow = document.getElementById('description-' + typeValue);
+
+  if (descriptionToShow) {
+    descriptionToShow.classList.remove('hide');
+  }
+}
+
+>>>>>>> d0da316b77c7cb825049605e1d674a4b6a63a1d7
 function submitForm(e) {
   e.preventDefault();
   clearErrors();

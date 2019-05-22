@@ -10,11 +10,11 @@
             {{#if error}}
             <div>{{error}}</div>
             {{else}}
-            <form id="form_new_debate_type" action="/admin/debate_type/create" method="POST"
+            <form id="form_new_debate_type" action="/admin/debate_type/edit/{{name}}" method="POST"
                 encrypt="multipart/form-data">
                 <div class="o-forms">
                     <label for="name" class="o-forms__label">Name</label>
-                    <input type="text" name="name" class="o-forms__text" value="{{name}}" required />
+                    <input type="text" name="name" class="o-forms__text" value="{{name}}" required disabled />
                     <div id="msg_error" class="error o-forms__errortext hide" data-validation="name"></div>
                 </div>
                 <div class="o-forms">

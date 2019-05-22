@@ -1,7 +1,7 @@
 {
   "name": "order-order",
   "version": "1.0.0",
-  "description": "A swiss army knife of various forms of structured comments.",
+  "description": "A swiss army knife of various forms of structured debates.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -39,7 +39,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.12.0",
     "nodemon": "^1.18.11"
   },
   "engines": {

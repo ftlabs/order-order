@@ -1,0 +1,31 @@
+<div class="form-voting-container">
+	<div class="o-forms">
+		<div class="o-grid-container">
+			<div class="o-grid-row">
+				<form action="vote/{{debateId}}?" method="POST" encrypt="multipart/form-data" class="comment-form"
+					data-o-grid-colspan="6">
+					<legend aria-describedby="default-radio-info" class="o-forms__label">Vote For/Against the
+						proposition</legend>
+					<div class="o-forms__group">
+						{{#if voteOptions}}
+						{{#each voteOptions}}
+						<input type="radio" name="tags[]" value="{{this}}" class="o-forms__radio" id="{{this}}"
+							name="tags[]">
+						<label for="{{this}}" class="o-forms__label">{{this}}</label>
+						{{/each}}
+						{{/if}}
+					</div>
+					<br />
+					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate_vote"
+						value="Submit">Submit vote</button>
+				</form>
+				{{#if existingVote}}
+				<p data-o-grid-colspan="6">
+					You have already voted as <b>{{existingVote}}</b> in this debate.<br />Vote again to change your
+					vote.
+				</p>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</div>

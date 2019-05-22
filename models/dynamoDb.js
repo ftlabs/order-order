@@ -120,6 +120,26 @@ async function getBy(attribute, value) {
   return { error: queryStatement };
 }
 
+async function getAllTypes() {
+  const params = {
+    ProjectionExpression: 'debateType',
+  };
+
+  const queryStatement = await query('scan', params);
+  const types = [];
+
+  if (queryStatement.result) {
+    queryStatement.result.Items.forEach(result => {
+      if (!types.includes(result.debateType)) {
+        types.push(result.debateType);
+      }
+    });
+    return types;
+  }
+
+  return { error: queryStatement };
+}
+
 async function getAllDebateLists(type = 'nested') {
   const queryStatement = await query('scan', {});
 
@@ -177,6 +197,7 @@ async function getDebateList(type) {
         };
       }
 
+      item.formatDate = Utils.formatDate(item.createdAt);
       debates[item.debateType].debates.push(item);
       return true;
     });
