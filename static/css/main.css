@@ -100,6 +100,14 @@ h2.debate-type {
     border-bottom: 1px solid rgba(179, 169, 160, 0.2);
     box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2); }
 
+.user-inputs {
+  margin: 20px;
+  padding: 10px;
+  background-color: #f2e5da; }
+
+.custom-element-buttons {
+  margin: 20px; }
+
 .home-header {
   background: #ffffff;
   margin: 40px 0;
