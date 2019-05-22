@@ -5,8 +5,6 @@ var msgStatus = document.querySelector('.o-message--alert');
 var selectDebateType = document.querySelector('.debateType');
 var divDebateTypeDescription = document.querySelector('.debateTypeDescription');
 
-<<<<<<< HEAD
-=======
 function updateDescription(e) {
   var typeValue = e ? e.target.value : selectDebateType.value;
   var debateDescriptions = document.getElementsByClassName('debateDescription');
@@ -22,7 +20,6 @@ function updateDescription(e) {
   }
 }
 
->>>>>>> d0da316b77c7cb825049605e1d674a4b6a63a1d7
 function submitForm(e) {
   e.preventDefault();
   clearErrors();
