@@ -5,7 +5,6 @@ const express = require('express');
 const router = express.Router();
 const s3o = require('@financial-times/s3o-middleware');
 const path = require('path');
-const apiRoutes = require('../routes/api');
 const adminRoutes = require('./admin/main');
 const commentRoutes = require('../routes/comment');
 const voteRoutes = require('../routes/vote');
