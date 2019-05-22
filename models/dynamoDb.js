@@ -120,7 +120,6 @@ async function getBy(attribute, value) {
   return { error: queryStatement };
 }
 
-<<<<<<< HEAD
 async function getAllTypes() {
   const params = {
     ProjectionExpression: 'debateType',
@@ -141,8 +140,6 @@ async function getAllTypes() {
   return { error: queryStatement };
 }
 
-=======
->>>>>>> new files
 async function getAllDebateLists(type = 'nested') {
   const queryStatement = await query('scan', {});
 
