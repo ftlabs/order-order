@@ -14,7 +14,6 @@ const dynamoDb = require('../models/dynamoDb');
 const { getS3oUsername } = require('../helpers/cookies');
 const debateTypeDescriptions = require('../data/debates.json');
 
-router.use('/api', apiRoutes);
 router.use(s3o);
 router.use('/comment', commentRoutes);
 router.use('/vote', voteRoutes);
