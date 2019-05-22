@@ -1,16 +1,25 @@
-@import "main/vars";
-@import "main/site";
+@import 'main/vars';
+@import 'main/site';
 
-@import "admin/main";
+@import 'admin/main';
 
-@import "home/cards";
+@import 'home/cards';
+
+@import 'components/topper.scss';
+@import 'components/promo.scss';
+@import 'components/status.scss';
+@import 'components/comments.scss';
+@import 'components/voting.scss';
+
+@import 'debates/basic';
+@import 'debates/foragainst';
 
 .hide {
   display: none;
 }
 
 .clearfix::after {
-  content: "";
+  content: '';
   clear: both;
   display: table;
 }
