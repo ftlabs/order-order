@@ -1,41 +1,41 @@
 {{> head title='Hats debate' subtitle='Hats debate' type='hats' }}
 
 <body>
-    {{> user/header username=user.username }}
+	{{> user/header username=user.username }}
 
-    {{> components/heading/topper debateType=debateType title=title description=description }}
+	{{> components/heading/topper debateType=debateType title=title description=description }}
 
-    <main class="o-grid-container">
-        <form id="request_access">
-            <input type='hidden' id="request_access_username" value="{{ user.username }}" />
-            <input type='hidden' id="request_access_debate_id" value="{{ keySchema.order }}_{{ keySchema.seriesId }}" />
-            <button id="btn_request_access">Request access to this debate</button>
-        </form>
-        <h2>
-            Comments
-        </h2>
-        {{> hats/comments class='comments_list' comments=commentsStructured }}
-        <div id="main_comment" class="comment_new">
-            <form>
-                <input type="hidden" id="comment-new-username" name="comment-new-username"
-                    value="{{ user.username }}" />
-                <label>New comment</label>
-                <br />
-                <textarea rows="5" cols="100" id="comment-new-text" name="comment-new-text"
-                    placeholder="Add new comment here..." required=""></textarea>
-                <br />
-                <label>Hat type</label>
-                <select id="comment-new-hat-opt" name="comment-new-hat-opt" required>
-                    <option selected>White</option>
-                    <option>Yellow</option>
-                    <option>Black</option>
-                    <option>Red</option>
-                    <option>Green</option>
-                    <option>Blue</option>
-                </select>
-                <br />
-                <button id="comment-new-submit">Add new comment</button>
-            </form>
-        </div>
-    </main>
-    {{> footer type='hats'}}
+	<main class="o-grid-container">
+		<form id="request_access">
+			<input type='hidden' id="request_access_username" value="{{ user.username }}" />
+			<input type='hidden' id="request_access_debate_id" value="{{ keySchema.order }}_{{ keySchema.seriesId }}" />
+			<button id="btn_request_access">Request access to this debate</button>
+		</form>
+		<h2>
+			Comments
+		</h2>
+		{{> hats/comments class='comments_list' comments=commentsStructured }}
+		<div id="main_comment" class="comment_new">
+			<form>
+				<input type="hidden" id="comment-new-username" name="comment-new-username"
+					value="{{ user.username }}" />
+				<label>New comment</label>
+				<br />
+				<textarea rows="5" cols="100" id="comment-new-text" name="comment-new-text"
+					placeholder="Add new comment here..." required=""></textarea>
+				<br />
+				<label>Hat type</label>
+				<select id="comment-new-hat-opt" name="comment-new-hat-opt" required>
+					<option selected>White</option>
+					<option>Yellow</option>
+					<option>Black</option>
+					<option>Red</option>
+					<option>Green</option>
+					<option>Blue</option>
+				</select>
+				<br />
+				<button id="comment-new-submit">Add new comment</button>
+			</form>
+		</div>
+	</main>
+	{{> footer type='hats'}}

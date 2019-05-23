@@ -1,78 +1,78 @@
 .o-header-services__secondary-nav-list--ancestors {
-  li {
-    a {
-      pointer-events: none;
-    }
-  }
+	li {
+		a {
+			pointer-events: none;
+		}
+	}
 }
 
 h1.admin-section {
-  font-family: FinancierDisplayWeb, serif;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 32px;
-  margin: 40px 0 20px;
+	font-family: FinancierDisplayWeb, serif;
+	font-weight: 400;
+	font-size: 32px;
+	line-height: 32px;
+	margin: 40px 0 20px;
 
-  &:after {
-    padding-top: 10px;
-    padding-bottom: 0;
-    content: '';
-    display: block;
-    width: 25%;
-    border-bottom: 4px solid $o-color-black;
-  }
+	&:after {
+		padding-top: 10px;
+		padding-bottom: 0;
+		content: '';
+		display: block;
+		width: 25%;
+		border-bottom: 4px solid $o-color-black;
+	}
 }
 
 .debate-type-tag {
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
-  color: $o-color-claret;
+	font-size: 16px;
+	line-height: 20px;
+	font-weight: 600;
+	color: $o-color-claret;
 }
 
 h2.debate-type {
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  margin: 0 0 20px;
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 24px;
+	margin: 0 0 20px;
 }
 
 .admin-content {
-  width: 100%;
-  background: $o-color-white;
-  min-height: 60%;
-  padding: 30px;
-  margin: 20px 0;
+	width: 100%;
+	background: $o-color-white;
+	min-height: 60%;
+	padding: 30px;
+	margin: 20px 0;
 
-  #form_new_debate {
-    padding: 0;
-  }
+	#form_new_debate {
+		padding: 0;
+	}
 
-  .debateTypeDescription {
-    background-color: $o-color-white;
-    padding: 20px;
-    border: 1px solid $o-color-black-30;
-  }
+	.debateTypeDescription {
+		background-color: $o-color-white;
+		padding: 20px;
+		border: 1px solid $o-color-black-30;
+	}
 
-  .o-table--row-stripes {
-    background-color: $o-color-white;
-    tbody {
-      tr {
-        &:nth-child(even) {
-          background-color: #e6e6e6;
-        }
-      }
+	.o-table--row-stripes {
+		background-color: $o-color-white;
+		tbody {
+			tr {
+				&:nth-child(even) {
+					background-color: #e6e6e6;
+				}
+			}
 
-      a {
-        color: $o-color-teal;
-      }
-    }
-  }
+			a {
+				color: $o-color-teal;
+			}
+		}
+	}
 
-  &.admin-debates-list {
-    min-height: 0;
-    border-bottom: 1px solid rgba(179, 169, 160, 0.2);
-    box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2);
-  }
+	&.admin-debates-list {
+		min-height: 0;
+		border-bottom: 1px solid rgba(179, 169, 160, 0.2);
+		box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2);
+	}
 }

@@ -1,69 +1,69 @@
 html,
 body {
-  background-color: $o-color-wheat;
-  font-family: MetricWeb, sans-serif;
-  margin: 0;
-  padding: 0;
+	background-color: $o-color-wheat;
+	font-family: MetricWeb, sans-serif;
+	margin: 0;
+	padding: 0;
 }
 
 .sticky {
-  background-color: $o-color-wheat;
-  border-bottom: 2px solid $o-color-black-30;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 5;
+	background-color: $o-color-wheat;
+	border-bottom: 2px solid $o-color-black-30;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 5;
 }
 
 .o-header-services__related-content {
-  /*TODO: temporary, remove important when breakpoints come in*/
-  li {
-    a {
-      padding: 5px 12px !important;
-    }
-  }
+	/*TODO: temporary, remove important when breakpoints come in*/
+	li {
+		a {
+			padding: 5px 12px !important;
+		}
+	}
 }
 
 .profile-container {
-  .profile {
-    display: block;
-    width: 30px;
-    height: 30px;
-    background: $o-color-teal;
-    border-radius: 50%;
-    overflow: hidden;
-    font-size: 0;
-    display: inline-block;
-    vertical-align: middle;
-    border-color: transparent;
-    border: 1px solid $o-color-teal;
-    margin-right: 5px;
+	.profile {
+		display: block;
+		width: 30px;
+		height: 30px;
+		background: $o-color-teal;
+		border-radius: 50%;
+		overflow: hidden;
+		font-size: 0;
+		display: inline-block;
+		vertical-align: middle;
+		border-color: transparent;
+		border: 1px solid $o-color-teal;
+		margin-right: 5px;
 
-    &:before {
-      content: '';
-      display: block;
-      width: 13px;
-      height: 13px;
-      margin: 5px auto;
-      background: $o-color-wheat;
-      border-radius: 50%;
-      overflow: hidden;
-    }
+		&:before {
+			content: '';
+			display: block;
+			width: 13px;
+			height: 13px;
+			margin: 5px auto;
+			background: $o-color-wheat;
+			border-radius: 50%;
+			overflow: hidden;
+		}
 
-    &:after {
-      content: '';
-      display: block;
-      width: 30px;
-      height: 30px;
-      margin: -22px 0;
-      background: $o-color-wheat;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-  }
+		&:after {
+			content: '';
+			display: block;
+			width: 30px;
+			height: 30px;
+			margin: -22px 0;
+			background: $o-color-wheat;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+	}
 
-  .user-name {
-    text-transform: capitalize;
-  }
+	.user-name {
+		text-transform: capitalize;
+	}
 }

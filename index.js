@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config({
-  silent: process.env.NODE_ENV === 'production',
+	silent: process.env.NODE_ENV === 'production'
 });
 
 const PORT = process.env.PORT || 9090;
@@ -17,24 +17,24 @@ const core_routes = require('./routes/router');
 const hbs_helpers = require('./utils/hbs-helpers');
 
 if (!PORT) {
-  throw new Error('ERROR: PORT not specified in env');
-  return;
+	throw new Error('ERROR: PORT not specified in env');
+	return;
 }
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(helmet());
-  app.enable('trust proxy');
-  app.use(express_enforces_ssl());
+	app.use(helmet());
+	app.enable('trust proxy');
+	app.use(express_enforces_ssl());
 }
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.engine(
-  'hbs',
-  hbs.express4({
-    partialsDir: __dirname + '/views/partials',
-  }),
+	'hbs',
+	hbs.express4({
+		partialsDir: __dirname + '/views/partials'
+	})
 );
 
 hbs_helpers.registerHelpers(hbs);
@@ -43,8 +43,8 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
 let requestLogger = function(req, res, next) {
-  debug('RECEIVED REQUEST:', req.method, req.url);
-  next();
+	debug('RECEIVED REQUEST:', req.method, req.url);
+	next();
 };
 
 // app.use(express.json());

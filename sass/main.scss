@@ -17,11 +17,11 @@
 @import 'debates/foragainst';
 
 .hide {
-  display: none;
+	display: none;
 }
 
 .clearfix::after {
-  content: '';
-  clear: both;
-  display: table;
+	content: '';
+	clear: both;
+	display: table;
 }
