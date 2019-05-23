@@ -1,62 +1,62 @@
 {
-  "keySchema": {
-    "order": 0,
-    "seriesId": 0
-  },
-  "type": "structured",
-  "permitted": {
-    "commenters": [],
-    "replies": [],
-    "voters": []
-  },
-  "restricted": {
-    "commenters": [],
-    "replies": [],
-    "voters": []
-  },
-  "starter": {
-    "title": "Should the United Kingdom have a second referendum?",
-    "description": "blah blah blah blah blah blah blah blah blah blah"
-  },
-  "comments": [
-    {
-      "id": 0,
-      "userId": "huffington1",
-      "content": "This could be a simple comment for",
-      "tags": ["for"],
-      "Ratings": [
-        {
-          "userId": 0,
-          "rating": 4
-        }
-      ],
-      "Reply to": "",
-      "createdOn": "datetimestamp",
-      "updatedOn": "datetimestamp"
-    },
-    {
-      "id": 1,
-      "userId": "Elgot",
-      "content": "This could be a simple comment against",
-      "tags": ["against"],
-      "Ratings": [
-        {
-          "userId": 0,
-          "rating": 4
-        }
-      ],
-      "Reply to": "",
-      "createdOn": "datetimestamp",
-      "updatedOn": "datetimestamp"
-    }
-  ],
-  "specialUsers": [],
-  "state": {
-    "open": 0,
-    "votable": 0
-  },
-  "teams": [],
-  "votes": [],
-  "createdOn": "datetimestamp",
-  "updatedOn": "datetimestamp"
+	"keySchema": {
+		"order": 0,
+		"seriesId": 0
+	},
+	"type": "structured",
+	"permitted": {
+		"commenters": [],
+		"replies": [],
+		"voters": []
+	},
+	"restricted": {
+		"commenters": [],
+		"replies": [],
+		"voters": []
+	},
+	"starter": {
+		"title": "Should the United Kingdom have a second referendum?",
+		"description": "blah blah blah blah blah blah blah blah blah blah"
+	},
+	"comments": [
+		{
+			"id": 0,
+			"userId": "huffington1",
+			"content": "This could be a simple comment for",
+			"tags": ["for"],
+			"Ratings": [
+				{
+					"userId": 0,
+					"rating": 4
+				}
+			],
+			"Reply to": "",
+			"createdOn": "datetimestamp",
+			"updatedOn": "datetimestamp"
+		},
+		{
+			"id": 1,
+			"userId": "Elgot",
+			"content": "This could be a simple comment against",
+			"tags": ["against"],
+			"Ratings": [
+				{
+					"userId": 0,
+					"rating": 4
+				}
+			],
+			"Reply to": "",
+			"createdOn": "datetimestamp",
+			"updatedOn": "datetimestamp"
+		}
+	],
+	"specialUsers": [],
+	"state": {
+		"open": 0,
+		"votable": 0
+	},
+	"teams": [],
+	"votes": [],
+	"createdOn": "datetimestamp",
+	"updatedOn": "datetimestamp"
 }
