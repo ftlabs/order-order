@@ -5,14 +5,19 @@
 <main class="o-grid-container">
 	<h1 class="admin-section">Create debate</h1>
 	<div class="o-grid-row">
-
 		<section class="admin-content">
-			<form id="form_new_debate" data-o-grid-colspan="6">
+			<form id="form_new_debate" action="/admin/debate/create" method="POST">
 				<div class="o-forms">
 					<label for="debateType" class="o-forms__label">Debate type</label>
-					<select name="debateType" class="o-forms__select debateType" required>
-						<option selected value="basic">Basic debate</option>
-						<option selected value="forAgainst">For/Against</option>
+					<select name="debateType" class="debate-type o-forms__select" required>
+						<option disabled selected value> -- select an option -- </option>
+						{{#each debateTypes}}
+						<option data-special-user-description="{{#each specialUsers}}{{description}},{{/each}}"
+							data-special-user-name="{{#each specialUsers}}{{name}},{{/each}}"
+							data-description="{{description}}" data-name="{{name}}" value="{{name}}">
+							{{displayName}}
+						</option>
+						{{/each}}
 					</select>
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateType"></div>
 				</div>
@@ -22,8 +27,8 @@
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="title"></div>
 				</div>
 				<div class="o-forms">
-					<label for="debateDescription" class="o-forms__label">Description</label>
-					<input type="text" name="debateDescription" class="o-forms__text" required />
+					<label for="description" class="o-forms__label">Description</label>
+					<input type="text" name="description" class="o-forms__text" required />
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="description"></div>
 				</div>
 				<div class="o-forms">
@@ -42,26 +47,15 @@
 					</select>
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="votingStatus"></div>
 				</div>
+				<div class="special-users">
+				</div>
 				<div class="o-forms">
 					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate">Create new
 						debate</button>
 				</div>
 			</form>
-			<div data-o-grid-colspan="6">
-				<div class="debateTypeDescription">
-					{{#if debateDescriptions}}
-					{{#each debateDescriptions}}
-					<div id="description-{{this.name}}" class="debateDescription">
-						<p>
-							{{this.description}}
-						</p>
-					</div>
-					{{/each}}
-					{{/if}}
-				</div>
-			</div>
 		</section>
 	</div>
 </main>
 
-{{> footer type="admin"}}
+{{> footer type="admin" namedJs="debateForm"}}
