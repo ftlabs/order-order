@@ -45,13 +45,12 @@
     {{/ifThisOrThat}}
 
     {{#if debateOpen}}
-    {{#if votingOpen}}
-    {{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
-    {{else}}
     {{> components/comments/new debateType=debateType debateId=debateId}}
-    {{/if}}
     {{else}}
     {{> components/voting/results voteStyleClass="bars"}}
+    {{/if}}
+    {{#if votingOpen}}
+    {{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
     {{/if}}
 
     {{> footer type='forAgainst' comments=true voting=true }}

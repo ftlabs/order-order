@@ -14,6 +14,7 @@ function replyToComment(commentId) {
 
 function removeReplyToComment() {
   showCommentTypes();
+  showVotes();
   var replyTo = document.querySelector('.comment-reply-to');
   var commentReplyNotification = document.querySelector(
     '.comment-reply-notification',
@@ -29,6 +30,7 @@ function addReplyEventListeners() {
   Array.from(replyLinks).forEach(function(element) {
     element.addEventListener('click', function(e) {
       hideCommentTypes();
+      hideVotes();
       replyToComment(element.getAttribute('data-comment-id'));
     });
   });
@@ -76,6 +78,20 @@ function initComments() {
 function hideCommentTypes() {
   var commentTypes = document.querySelector('.comment-types');
   commentTypes.classList.add('hide');
+}
+
+function hideVotes() {
+  var voteContainer = document.querySelector('.form-voting-container');
+  if (voteContainer) {
+    voteContainer.classList.add('hide');
+  }
+}
+
+function showVotes() {
+  var voteContainer = document.querySelector('.form-voting-container');
+  if (voteContainer) {
+    voteContainer.classList.remove('hide');
+  }
 }
 
 function showCommentTypes() {
