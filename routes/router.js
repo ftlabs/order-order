@@ -13,7 +13,6 @@ const listing = require('../helpers/listings');
 const Utils = require('../helpers/utils');
 const dynamoDb = require('../models/dynamoDb');
 const { getS3oUsername } = require('../helpers/cookies');
-const debateTypeDescriptions = require('../data/debates.json');
 
 router.use(s3o);
 router.use('/comment', commentRoutes);
@@ -56,12 +55,7 @@ router.get('/type/:debateType', async (req, res, next) => {
 
     const debateListByType = debateList[`${debateType}`].debates;
 
-    let debateDescription = '';
-    debateTypeDescriptions.descriptions.forEach(debate => {
-      if (debate.name === debateType) {
-        debateDescription = debate.description;
-      }
-    });
+    let debateDescription = 'foooo bar';
 
     res.render('list', {
       pageTitle: `${debateType}`,
