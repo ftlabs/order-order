@@ -46,16 +46,16 @@ router.get('/type/:debateType', async (req, res, next) => {
 
   try {
     const { debateType } = req.params;
-    const debateList = await dynamoDb.getDebateList(debateType);
+    const debateTypeDetails = await dynamoDb.getDebateType(debateType);
 
-    if (debateList[`${debateType}`] === undefined) {
+    if (!debateTypeDetails || debateTypeDetails.Items.length === 0) {
       next(`No debates found for debateType '${debateType}'`);
       return;
     }
 
+    const debateList = await dynamoDb.getDebateList(debateType);
     const debateListByType = debateList[`${debateType}`].debates;
-
-    let debateDescription = 'foooo bar';
+    const debateDescription = debateTypeDetails.Items[0].description;
 
     res.render('list', {
       pageTitle: `${debateType}`,

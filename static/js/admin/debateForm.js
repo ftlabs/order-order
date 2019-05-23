@@ -78,6 +78,7 @@ function addDebateTypeSelectListener() {
       const description = this.options[this.selectedIndex].getAttribute(
         'data-description',
       );
+
       const name = this.options[this.selectedIndex].getAttribute('data-name');
       const specialUsers = specialUserName.map((name, index) => ({
         name,
@@ -89,8 +90,15 @@ function addDebateTypeSelectListener() {
       specialUsers.forEach(specialUser =>
         insertSpecialUser({ specialUsersParentDiv, ...specialUser }),
       );
+
+      updateDescription(description);
     });
   }
+}
+
+function updateDescription(description) {
+  const debateDescriptions = document.querySelector('.debateDescription');
+  debateDescriptions.innerHTML = description;
 }
 
 function insertSpecialUser({ specialUsersParentDiv, name, description }) {
