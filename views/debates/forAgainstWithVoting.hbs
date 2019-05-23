@@ -43,14 +43,14 @@
         </div>
     </main>
     {{/ifThisOrThat}}
-
+    ]
+    {{#if votingOpen}}
+    {{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
+    {{/if}}
     {{#if debateOpen}}
     {{> components/comments/new debateType=debateType debateId=debateId}}
     {{else}}
     {{> components/voting/results voteStyleClass="bars"}}
-    {{/if}}
-    {{#if votingOpen}}
-    {{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
     {{/if}}
 
     {{> footer type='forAgainst' comments=true voting=true }}

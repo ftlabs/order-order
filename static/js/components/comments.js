@@ -73,6 +73,7 @@ function rateComment(debateId, index, rating) {
 
 function initComments() {
   addReplyEventListeners();
+  showVotes();
 }
 
 function hideCommentTypes() {
@@ -80,23 +81,27 @@ function hideCommentTypes() {
   commentTypes.classList.add('hide');
 }
 
+function showCommentTypes() {
+  var commentTypes = document.querySelector('.comment-types');
+  commentTypes.classList.remove('hide');
+}
+
 function hideVotes() {
   var voteContainer = document.querySelector('.form-voting-container');
+  var commentContainer = document.querySelector('.form-comment-container');
   if (voteContainer) {
     voteContainer.classList.add('hide');
+    commentContainer.classList.remove('hide');
   }
 }
 
 function showVotes() {
   var voteContainer = document.querySelector('.form-voting-container');
+  var commentContainer = document.querySelector('.form-comment-container');
   if (voteContainer) {
     voteContainer.classList.remove('hide');
+    commentContainer.classList.add('hide');
   }
-}
-
-function showCommentTypes() {
-  var commentTypes = document.querySelector('.comment-types');
-  commentTypes.classList.remove('hide');
 }
 
 document.addEventListener('DOMContentLoaded', initComments);
