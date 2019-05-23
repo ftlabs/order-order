@@ -94,7 +94,10 @@ router.get('/edit/:debateName', async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(404).send("Sorry can't find that!");
+    res.render('admin/editDebateType', {
+      error: 'Something went wrong trying to get your debate type.',
+      page: 'edit-type',
+    });
   }
 });
 
