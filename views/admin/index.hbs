@@ -14,6 +14,7 @@
 						<th scope="col" role="columnheader"> Name </th>
 						<th scope="col" role="columnheader"> Status </th>
 						<th scope="col" role="columnheader"> Voting </th>
+						<th scope="col" role="columnheader"> Creation date </th>
 					</tr>
 				</thead>
 				{{#if debates}}
@@ -30,10 +31,13 @@
 							{{this.votingStatus}}
 						</td>
 						<td>
+							{{this.formatDate.readable}}
+						</td>
+						<td>
 							<a href="/{{ this.id }}">view</a>
 						</td>
 						<td>
-							<a href="/admin/edit_debate/{{ this.id }}">edit</a>
+							<a href="/admin/debate/edit/{{ this.id }}">edit</a>
 						</td>
 					</tr>
 					{{/each}}

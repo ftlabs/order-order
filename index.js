@@ -18,6 +18,7 @@ const hbs_helpers = require('./utils/hbs-helpers');
 
 if (!PORT) {
   throw new Error('ERROR: PORT not specified in env');
+  return;
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -51,10 +52,5 @@ let requestLogger = function(req, res, next) {
 app.use(requestLogger);
 app.use('/static', express.static(path.resolve(__dirname + '/static')));
 app.use('/', core_routes);
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));

@@ -1,7 +1,9 @@
 @import 'main/vars';
 @import 'main/site';
+@import 'main/four-oh-four';
 
 @import 'admin/main';
+@import 'admin/debateForm';
 
 @import 'home/cards';
 
@@ -11,15 +13,15 @@
 @import 'components/comments.scss';
 @import 'components/voting.scss';
 
-@import 'debates/basic';
+@import 'debates/foragainstwithvoting';
 @import 'debates/foragainst';
 
 .hide {
-  display: none;
+	display: none;
 }
 
 .clearfix::after {
-  content: '';
-  clear: both;
-  display: table;
+	content: '';
+	clear: both;
+	display: table;
 }

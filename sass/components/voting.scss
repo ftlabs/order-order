@@ -1,26 +1,45 @@
 .form-voting-container,
 .form-results-container {
-  position: fixed;
-  border-top: 2px solid $o-color-black-30;
-  bottom: 0;
-  width: 100%;
-  background: $o-color-paper;
-  padding: 10px;
+	position: fixed;
+	border-top: 2px solid $o-color-black-30;
+	bottom: 0;
+	width: 100%;
+	background: $o-color-paper;
+	padding: 10px;
 
-  .o-forms {
-    max-width: none;
+	.o-forms {
+		max-width: none;
 
-    label {
-      text-transform: capitalize;
-    }
-  }
+		label {
+			text-transform: capitalize;
+		}
+	}
 
-  .results {
-    display: block;
+	.results {
+		display: block;
+	}
 
-    table,
-    tr {
-      border: 1px solid $o-color-black-30;
-    }
-  }
+	table {
+		width: 100%;
+
+		tr {
+			td:first-child {
+				width: 90px;
+				text-transform: capitalize;
+				font-weight: bold;
+			}
+
+			td {
+				.percentage {
+					background: $o-color-mandarin;
+					color: $o-color-black-60;
+
+					p {
+						padding: 10px;
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
 }
