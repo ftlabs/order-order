@@ -9,10 +9,14 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient({
   region: 'eu-west-1',
 });
 
-async function query(type = 'query', params) {
+async function query(
+  type = 'query',
+  params,
+  tableName = process.env.DEBATE_TABLE,
+) {
   try {
     const baseParams = {
-      TableName: process.env.DEBATE_TABLE,
+      TableName: tableName,
     };
 
     const allParams = Object.assign(baseParams, params);
@@ -24,27 +28,27 @@ async function query(type = 'query', params) {
   }
 }
 
-async function addDebate(data) {
-  const params = {
-    Item: {
-      id: data.id,
-      title: data.title,
-      description: data.description,
-      debateType: data.debateType,
-      comments: [],
-      debateStatus: data.debateStatus,
-      votingStatus: data.votingStatus,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
-    },
-  };
+async function createDebate(data) {
+  try {
+    const date = new Date().getTime();
+    const id = uuidv1();
+    const createdAt = date;
+    const updatedAt = date;
+    const params = {
+      Item: {
+        ...data,
+        id,
+        comments: [],
+        createdAt,
+        updatedAt,
+      },
+    };
 
-  const queryStatement = await query('put', params);
-  if (queryStatement.result) {
-    return queryStatement.result;
+    await query('put', params);
+    return params.Item;
+  } catch (err) {
+    throw new Error(err);
   }
-
-  return { error: queryStatement };
 }
 
 async function editDebate(data) {
@@ -92,7 +96,6 @@ async function getById(debateId) {
   };
 
   const queryStatement = await query('query', params);
-
   if (queryStatement.result) {
     return queryStatement.result;
   }
@@ -300,17 +303,87 @@ function constructRatingObject({ rating, user, index }) {
   };
 }
 
+async function createDebateType({
+  name,
+  description,
+  specialUsers,
+  displayName,
+}) {
+  const params = {
+    Item: {
+      name,
+      description,
+      specialUsers,
+      displayName,
+    },
+  };
+
+  const queryStatement = await query(
+    'put',
+    params,
+    process.env.DEBATE_TYPE_TABLE,
+  );
+
+  if (queryStatement.result) {
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement };
+}
+
+async function getDebateType(debateTypeName) {
+  const params = {
+    KeyConditionExpression: '#name = :debateTypeName',
+    ExpressionAttributeNames: {
+      '#name': 'name',
+    },
+    ExpressionAttributeValues: {
+      ':debateTypeName': debateTypeName,
+    },
+  };
+
+  const queryStatement = await query(
+    'query',
+    params,
+    process.env.DEBATE_TYPE_TABLE,
+  );
+
+  if (queryStatement.result) {
+    return queryStatement.result;
+  }
+
+  return { error: queryStatement.result };
+}
+
+async function getAllDebateTypes() {
+  try {
+    const queryStatement = await query(
+      'scan',
+      {},
+      process.env.DEBATE_TYPE_TABLE,
+    );
+    if (queryStatement.result) {
+      return queryStatement.result;
+    }
+    throw new Error('No result');
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 module.exports = {
-  addDebate,
+  createDebate,
   editDebate,
   getAll,
   getById,
   getBy,
-  getAllTypes,
   getDebateList,
   getAllDebateLists,
   getAllReports,
   updateDebate,
   constructCommentObject,
   constructRatingObject,
+  createDebateType,
+  getDebateType,
+  getAllDebateTypes,
 };
