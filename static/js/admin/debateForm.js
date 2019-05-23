@@ -67,28 +67,30 @@ function addDebateTypeSelectListener() {
   const debateTypeSelector = document.querySelector('.debate-type');
   const specialUsersParentDiv = document.querySelector('.special-users');
 
-  debateTypeSelector.addEventListener('change', function(e) {
-    const specialUserDescription = getDebateTypeValues(
-      this,
-      'special-user-description',
-    );
-    const specialUserName = getDebateTypeValues(this, 'special-user-name');
-    const displayName = this.value;
-    const description = this.options[this.selectedIndex].getAttribute(
-      'data-description',
-    );
-    const name = this.options[this.selectedIndex].getAttribute('data-name');
-    const specialUsers = specialUserName.map((name, index) => ({
-      name,
-      description: specialUserDescription[index],
-    }));
-    while (specialUsersParentDiv.firstChild) {
-      specialUsersParentDiv.removeChild(specialUsersParentDiv.firstChild);
-    }
-    specialUsers.forEach(specialUser =>
-      insertSpecialUser({ specialUsersParentDiv, ...specialUser }),
-    );
-  });
+  if (debateTypeSelector) {
+    debateTypeSelector.addEventListener('change', function(e) {
+      const specialUserDescription = getDebateTypeValues(
+        this,
+        'special-user-description',
+      );
+      const specialUserName = getDebateTypeValues(this, 'special-user-name');
+      const displayName = this.value;
+      const description = this.options[this.selectedIndex].getAttribute(
+        'data-description',
+      );
+      const name = this.options[this.selectedIndex].getAttribute('data-name');
+      const specialUsers = specialUserName.map((name, index) => ({
+        name,
+        description: specialUserDescription[index],
+      }));
+      while (specialUsersParentDiv.firstChild) {
+        specialUsersParentDiv.removeChild(specialUsersParentDiv.firstChild);
+      }
+      specialUsers.forEach(specialUser =>
+        insertSpecialUser({ specialUsersParentDiv, ...specialUser }),
+      );
+    });
+  }
 }
 
 function insertSpecialUser({ specialUsersParentDiv, name, description }) {
