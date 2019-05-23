@@ -4,19 +4,23 @@
 			<p data-o-grid-colspan="6">
 				Debate closed
 			</p>
-			<div class="results" data-o-grid-colspan="6">
-				<p>
+			<div class="results results-{{voteStyleClass}}" data-o-grid-colspan="6">
+				<p class="title">
 					Results
 				</p>
-				<table cellpadding="5">
+				<table>
 					{{#if voteResults}}
 					{{#each voteResults}}
 					<tr>
 						<td>
-							{{this.name}}
+							{{name}}
 						</td>
 						<td>
-							{{this.percentage}}%
+							<div class="percentage" style="width:{{percentage}}%">
+								<p>
+									{{percentage}}%
+								</p>
+							</div>
 						</td>
 					</tr>
 					{{/each}}

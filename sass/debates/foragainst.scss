@@ -1,9 +1,13 @@
 .debate-forAgainst {
-  h2 {
-    text-align: center;
-  }
+	h2 {
+		text-align: center;
+	}
 
-  main {
-    margin-bottom: 200px;
-  }
+	.debate-sides {
+		background: $o-color-oxford;
+	}
+
+	main {
+		margin-bottom: 200px;
+	}
 }

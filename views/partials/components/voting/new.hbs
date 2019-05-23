@@ -9,15 +9,15 @@
 					<div class="o-forms__group">
 						{{#if voteOptions}}
 						{{#each voteOptions}}
-						<input type="radio" name="tags[]" value="{{this}}" class="o-forms__radio" id="{{this}}"
-							name="tags[]">
+						<input type="radio" name="tags[]" value="{{this}}" class="o-forms__radio vote-option"
+							id="{{this}}" name="tags[]">
 						<label for="{{this}}" class="o-forms__label">{{this}}</label>
 						{{/each}}
 						{{/if}}
 					</div>
 					<br />
 					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate_vote"
-						value="Submit">Submit vote</button>
+						value="Submit" disabled>Submit vote</button>
 				</form>
 				{{#if existingVote}}
 				<p data-o-grid-colspan="6">

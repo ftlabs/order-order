@@ -5,133 +5,159 @@ const express = require('express');
 const router = express.Router();
 const s3o = require('@financial-times/s3o-middleware');
 const path = require('path');
-const apiRoutes = require('../routes/api');
-const adminRoutes = require('../routes/admin');
+const adminRoutes = require('./admin/main');
 const commentRoutes = require('../routes/comment');
 const voteRoutes = require('../routes/vote');
 const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
+const Utils = require('../helpers/utils');
 const dynamoDb = require('../models/dynamoDb');
 const { getS3oUsername } = require('../helpers/cookies');
-const debateTypeDescriptions = require('../data/debates.json');
 
-router.use('/api', apiRoutes);
 router.use(s3o);
 router.use('/comment', commentRoutes);
 router.use('/vote', voteRoutes);
 router.use('/rating', ratingRoutes);
 router.use('/admin', adminRoutes);
 
-router.get('/', async (req, res) => {
-  const username = getS3oUsername(req.cookies);
+router.get('/', async (req, res, next) => {
+	const username = getS3oUsername(req.cookies);
 
-  try {
-    const debateList = await dynamoDb.getAllDebateLists('flat');
+	try {
+		const debateList = await dynamoDb.getAllDebateLists('flat');
 
-    res.render('list', {
-      pageTitle: 'FT Debates',
-      pageSubtitle:
-        "Welcome to FT debates, here's a list of all available debates and a bit more blurb on how to take part",
-      pageType: 'home',
-      debateList,
-      user: {
-        username,
-      },
-    });
-  } catch (err) {
-    res.status(404).send("Sorry can't find that!");
-  }
+		res.render('list', {
+			pageTitle: 'FT Debates',
+			pageSubtitle:
+				"Welcome to FT debates, here's a list of all available debates and a bit more blurb on how to take part",
+			pageType: 'home',
+			debateList,
+			user: {
+				username
+			}
+		});
+	} catch (err) {
+		next(err);
+	}
 });
 
-router.get('/type/:debateType', async (req, res) => {
-  const username = getS3oUsername(req.cookies);
+router.get('/type/:debateType', async (req, res, next) => {
+	const username = getS3oUsername(req.cookies);
 
-  try {
-    const { debateType } = req.params;
-    const debateList = await dynamoDb.getDebateList(debateType);
-    const debateListByType = debateList[`${debateType}`].debates;
+	try {
+		const { debateType } = req.params;
+		const debateTypeDetails = await dynamoDb.getDebateType(debateType);
 
-    let debateDescription = '';
-    debateTypeDescriptions.descriptions.forEach(debate => {
-      if (debate.name === debateType) {
-        debateDescription = debate.description;
-      }
-    });
+		if (!debateTypeDetails || debateTypeDetails.Items.length === 0) {
+			next(`No debates found for debateType '${debateType}'`);
+			return;
+		}
 
-    res.render('list', {
-      pageTitle: `${debateType}`,
-      pageSubtitle: debateDescription,
-      pageType: 'home',
-      debateList: debateListByType,
-      user: {
-        username,
-      },
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("Sorry can't find that!");
-  }
+		const debateList = await dynamoDb.getDebateList(debateType);
+		const debateListByType = debateList[`${debateType}`].debates;
+		const debateDescription = debateTypeDetails.Items[0].description;
+
+		res.render('list', {
+			pageTitle: `${debateType}`,
+			pageSubtitle: debateDescription,
+			pageType: 'home',
+			debateList: debateListByType,
+			user: {
+				username
+			}
+		});
+	} catch (err) {
+		next(err);
+	}
 });
 
-router.get('/:debateId', async (req, res) => {
-  try {
-    const { debateId } = req.params;
-    const result = await dynamoDb.getById(debateId);
-    const username = getS3oUsername(req.cookies);
-    const debate = result.Items[0];
+router.get('/:debateId', async (req, res, next) => {
+	try {
+		const { debateId } = req.params;
+		const result = await dynamoDb.getById(debateId);
+		const username = getS3oUsername(req.cookies);
+		const debate = result.Items[0];
 
-    const data = {
-      debate: debate,
-      user: {
-        username,
-      },
-    };
+		const data = {
+			debate: debate,
+			user: {
+				username
+			}
+		};
 
-    /* eslint-disable global-require */
+		if (debate && Utils.hasOwnPropertyCall(debate, 'debateType')) {
+			/* eslint-disable global-require */
 
-    const modulePath = path.resolve(
-      `${listing.getRootDir()}/modules/${debate.debateType}`,
-    );
-    const moduleType = require(modulePath);
+			const modulePath = path.resolve(
+				`${listing.getRootDir()}/modules/${debate.debateType.toLowerCase()}`
+			);
+			const moduleType = require(modulePath);
 
-    /* eslint-disable global-require */
+			/* eslint-disable global-require */
 
-    moduleType.display(req, res, data);
-    return;
-  } catch (err) {
-    console.log(err);
-    res.status(404).send("Sorry can't find that!");
-  }
+			moduleType.display(req, res, data);
+			return;
+		} else {
+			throw new Error(`Debate not found with the id: ${debateId}`);
+			return;
+		}
+	} catch (err) {
+		next(err);
+	}
 });
 
-router.post('/:debateId', async (req, res) => {
-  const backURL = req.header('Referer') || '/';
-  try {
-    const { debateId } = req.params;
-    const formData = req.body;
-    let data = {};
-    if (formData.comment) {
-      const { comment, tags, displayStatus, replyTo } = formData;
-      data = {
-        comments: [
-          dynamoDb.constructCommentObject({
-            content: comment,
-            user: req.cookies.s3o_username,
-            tags,
-            replyTo,
-            displayStatus,
-          }),
-        ],
-        ...data,
-      };
-    }
+router.post('/:debateId', async (req, res, next) => {
+	const backURL = req.header('Referer') || '/';
+	try {
+		const { debateId } = req.params;
+		const formData = req.body;
+		let data = {};
+		if (formData.comment) {
+			const { comment, tags, displayStatus, replyTo } = formData;
+			data = {
+				comments: [
+					dynamoDb.constructCommentObject({
+						content: comment,
+						user: req.cookies.s3o_username,
+						tags,
+						replyTo,
+						displayStatus
+					})
+				],
+				...data
+			};
+		}
 
-    await dynamoDb.updateDebate(debateId, data);
-    res.redirect(backURL);
-  } catch (err) {
-    console.error(err);
-    res.status(404).send("Sorry can't find that!");
-  }
+		await dynamoDb.updateDebate(debateId, data);
+		res.redirect(backURL);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.use(function(err, req, res, next) {
+	console.log(err);
+	res.status(404);
+
+	if (req.accepts('html')) {
+		res.render('404', {
+			url: req.url,
+			method: req.method,
+			url: req.url,
+			error: err,
+			user: {
+				username: getS3oUsername(req.cookies)
+			}
+		});
+		return;
+	}
+
+	if (req.accepts('json')) {
+		res.send({ msg: 'Not found', error: err });
+		return;
+	}
+
+	res.type('txt').send('Not found');
 });
 
 module.exports = router;
