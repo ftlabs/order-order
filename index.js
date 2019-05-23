@@ -13,8 +13,8 @@ const app = express();
 const helmet = require('helmet');
 const express_enforces_ssl = require('express-enforces-ssl');
 const bodyParser = require('body-parser');
-const core_routes = require('./routes/router');
-const hbs_helpers = require('./utils/hbs-helpers');
+const core_routes = require('./src/routes/router');
+const hbs_helpers = require('./src/utils/hbs-helpers');
 
 if (!PORT) {
   throw new Error('ERROR: PORT not specified in env');
@@ -32,14 +32,14 @@ app.use(bodyParser.json());
 app.engine(
   'hbs',
   hbs.express4({
-    partialsDir: __dirname + '/views/partials',
+    partialsDir: __dirname + '/src/views/partials',
   }),
 );
 
 hbs_helpers.registerHelpers(hbs);
 
 app.set('view engine', 'hbs');
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/src/views');
 
 let requestLogger = function(req, res, next) {
   debug('RECEIVED REQUEST:', req.method, req.url);
@@ -49,7 +49,7 @@ let requestLogger = function(req, res, next) {
 // app.use(express.json());
 
 app.use(requestLogger);
-app.use('/static', express.static(path.resolve(__dirname + '/static')));
+app.use('/static', express.static(path.resolve(__dirname + '/src/static')));
 app.use('/', core_routes);
 
 app.use((err, req, res, next) => {
