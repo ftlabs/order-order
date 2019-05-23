@@ -6,7 +6,7 @@
 	<h1 class="admin-section">Create debate</h1>
 	<div class="o-grid-row">
 		<section class="admin-content">
-			<form id="form_new_debate" action="/admin/debate/create" method="POST">
+			<form id="form_new_debate" action="/admin/debate/create" method="POST" data-o-grid-colspan="6">
 				<div class="o-forms">
 					<label for="debateType" class="o-forms__label">Debate type</label>
 					<select name="debateType" class="debate-type o-forms__select" required>
@@ -54,7 +54,15 @@
 						debate</button>
 				</div>
 			</form>
-		</section>
+			<div data-o-grid-colspan="6">
+				<div class="debateTypeDescription">
+					<p class="debateDescription">
+						<!-- Filled in by JS -->
+					</p>
+				</div>
+			</div>
+	</div>
+	</section>
 	</div>
 </main>
 
