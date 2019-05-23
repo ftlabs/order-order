@@ -55,5 +55,8 @@ You can get to the skeleton admin page here:
     - Suspend/Delete admin
     - Re-assign deleted admins content to another admin
     - Add/remove admin permissions on different debates
+- _Debate scheduling_
+  - Set date/time for debate to open or close
+  - Set date/time for debate's voting to open or close
 
 ## Questions
