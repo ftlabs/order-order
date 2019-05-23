@@ -36,6 +36,8 @@ function submitForm(e) {
   var description = document.getElementsByName('debateDescription')[0].value;
   var debateStatus = document.getElementsByName('debateStatus')[0].value;
   var votingStatus = document.getElementsByName('votingStatus')[0].value;
+  var blockedUsers = getSpecialUserData('blockedUsers');
+  var allowedUsers = getSpecialUserData('allowedUsers');
 
   if (isAlphaNumericWithCharacters(title)) {
     errors.title = 'Title must be alphanumeric or allowed chars (,_"-\')';
@@ -52,12 +54,13 @@ function submitForm(e) {
     description,
     debateStatus,
     votingStatus,
+    blockedUsers,
+    allowedUsers,
   };
 
   if (formEditDebate && e.target.id === formEditDebate.id) {
     var debate_id = document.getElementsByName('id')[0].value;
     data.id = debate_id;
-    data.debateType = document.getElementsByName('debateType')[0].value;
   }
 
   // Checking fields have at least some value
@@ -93,6 +96,12 @@ function submitForm(e) {
       reportError('Issue with form submission: ' + error, 'global');
     }
   }
+}
+
+function getSpecialUserData(attributeName) {
+  return Array.from(document.getElementsByName(attributeName))
+    .map(element => element.value)
+    .filter(value => value);
 }
 
 function submitData(url, data) {
@@ -220,18 +229,13 @@ function hide(el) {
 }
 
 function init() {
-  if (formNewDebate) {
-    formNewDebate.addEventListener('submit', submitForm);
-  }
-
-  if (formEditDebate) {
-    formEditDebate.addEventListener('submit', submitForm);
-  }
-
-  if (selectDebateType) {
-    selectDebateType.addEventListener('change', updateDescription);
-    updateDescription();
-  }
+  // disabled temporarily for server side validation but client side can be re added here
+  // if (formNewDebate) {
+  //   // formNewDebate.addEventListener('submit', submitForm);
+  // }
+  // if (formEditDebate) {
+  //   formEditDebate.addEventListener('submit', submitForm);
+  // }
 }
 
 init();
