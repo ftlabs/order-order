@@ -7,34 +7,34 @@ const debateRoutes = require('./debate');
 const debateTypeRoutes = require('./debateType');
 
 router.get('/', async (req, res) => {
-  const username = getS3oUsername(req.cookies);
+	const username = getS3oUsername(req.cookies);
 
-  try {
-    const debateList = await dynamoDb.getAllDebateLists();
-    res.render('admin/index', {
-      username,
-      debateList,
-      page: 'dashboard',
-    });
-  } catch (err) {
-    res.status(404).send("Sorry can't find that!");
-  }
+	try {
+		const debateList = await dynamoDb.getAllDebateLists();
+		res.render('admin/index', {
+			username,
+			debateList,
+			page: 'dashboard'
+		});
+	} catch (err) {
+		res.status(404).send("Sorry can't find that!");
+	}
 });
 
 router.get('/moderation', async (req, res) => {
-  const username = getS3oUsername(req.cookies);
+	const username = getS3oUsername(req.cookies);
 
-  try {
-    const reports = await dynamoDb.getAllReports();
+	try {
+		const reports = await dynamoDb.getAllReports();
 
-    res.render('admin/moderation', {
-      username,
-      reports,
-      page: 'moderation',
-    });
-  } catch (err) {
-    res.status(404).send("Sorry can't find that!");
-  }
+		res.render('admin/moderation', {
+			username,
+			reports,
+			page: 'moderation'
+		});
+	} catch (err) {
+		res.status(404).send("Sorry can't find that!");
+	}
 });
 
 router.use('/debate', debateRoutes);

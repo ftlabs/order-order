@@ -1,21 +1,21 @@
 .debate-promo-container {
-  background-color: $o-color-paper;
+	background-color: $o-color-paper;
 
-  .debate-promo {
-    padding: 20px 20px 25px;
+	.debate-promo {
+		padding: 20px 20px 25px;
 
-    h1,
-    p {
-      width: 100%;
-      margin: 0;
-    }
-  }
+		h1,
+		p {
+			width: 100%;
+			margin: 0;
+		}
+	}
 }
 
 @media only screen and (max-width: $o-width-medium) {
-  .debate-promo-container {
-    .debate-promo {
-      padding: 20px 10px 25px;
-    }
-  }
+	.debate-promo-container {
+		.debate-promo {
+			padding: 20px 10px 25px;
+		}
+	}
 }

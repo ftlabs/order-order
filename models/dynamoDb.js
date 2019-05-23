@@ -6,384 +6,386 @@ const LIST_TYPES = ['comments'];
 const NESTED_LIST_TYPES = ['ratings'];
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
-  region: 'eu-west-1',
+	region: 'eu-west-1'
 });
 
 async function query(
-  type = 'query',
-  params,
-  tableName = process.env.DEBATE_TABLE,
+	type = 'query',
+	params,
+	tableName = process.env.DEBATE_TABLE
 ) {
-  try {
-    const baseParams = {
-      TableName: tableName,
-    };
+	try {
+		const baseParams = {
+			TableName: tableName
+		};
 
-    const allParams = Object.assign(baseParams, params);
-    const result = await dynamoDb[type](allParams).promise();
+		const allParams = Object.assign(baseParams, params);
+		const result = await dynamoDb[type](allParams).promise();
 
-    return { result };
-  } catch (err) {
-    return `Error with request ${err}`;
-  }
+		return { result };
+	} catch (err) {
+		return `Error with request ${err}`;
+	}
 }
 
 async function createDebate(data) {
-  try {
-    const date = new Date().getTime();
-    const id = uuidv1();
-    const createdAt = date;
-    const updatedAt = date;
-    const params = {
-      Item: {
-        ...data,
-        id,
-        comments: [],
-        createdAt,
-        updatedAt,
-      },
-    };
+	try {
+		const date = new Date().getTime();
+		const id = uuidv1();
+		const createdAt = date;
+		const updatedAt = date;
+		const params = {
+			Item: {
+				...data,
+				id,
+				comments: [],
+				createdAt,
+				updatedAt
+			}
+		};
 
-    await query('put', params);
-    return params.Item;
-  } catch (err) {
-    throw new Error(err);
-  }
+		await query('put', params);
+		return params.Item;
+	} catch (err) {
+		throw new Error(err);
+	}
 }
 
 async function editDebate(data) {
-  const params = {
-    Key: {
-      id: String(data.id),
-    },
-    UpdateExpression:
-      'set title=:t, description=:d, debateStatus=:s, votingStatus=:vs, updatedAt=:u',
-    ExpressionAttributeValues: {
-      ':t': data.title,
-      ':d': data.description,
-      ':s': data.debateStatus,
-      ':vs': data.votingStatus,
-      ':u': data.timestamp,
-    },
-    ReturnValues: 'UPDATED_NEW',
-  };
+	const params = {
+		Key: {
+			id: String(data.id)
+		},
+		UpdateExpression:
+			'set title=:t, description=:d, debateStatus=:s, votingStatus=:vs, updatedAt=:u',
+		ExpressionAttributeValues: {
+			':t': data.title,
+			':d': data.description,
+			':s': data.debateStatus,
+			':vs': data.votingStatus,
+			':u': data.timestamp
+		},
+		ReturnValues: 'UPDATED_NEW'
+	};
 
-  const queryStatement = await query('update', params);
+	const queryStatement = await query('update', params);
 
-  if (queryStatement.result) {
-    return queryStatement.result;
-  }
+	if (queryStatement.result) {
+		return queryStatement.result;
+	}
 
-  return { error: queryStatement };
+	return { error: queryStatement };
 }
 
 async function getAll() {
-  const queryStatement = await query('scan', {});
+	const queryStatement = await query('scan', {});
 
-  if (queryStatement.result) {
-    return queryStatement.result;
-  }
+	if (queryStatement.result) {
+		return queryStatement.result;
+	}
 
-  return { error: queryStatement };
+	return { error: queryStatement };
 }
 
 async function getById(debateId) {
-  const params = {
-    KeyConditionExpression: 'id = :debateId',
-    ExpressionAttributeValues: {
-      ':debateId': debateId,
-    },
-  };
+	const params = {
+		KeyConditionExpression: 'id = :debateId',
+		ExpressionAttributeValues: {
+			':debateId': debateId
+		}
+	};
 
-  const queryStatement = await query('query', params);
-  if (queryStatement.result) {
-    return queryStatement.result;
-  }
+	const queryStatement = await query('query', params);
+	if (queryStatement.result) {
+		return queryStatement.result;
+	}
 
-  return { error: queryStatement.result };
+	return { error: queryStatement.result };
 }
 
 async function getBy(attribute, value) {
-  const params = {
-    FilterExpression: `${attribute} = :v`,
-    ExpressionAttributeValues: {
-      ':v': value,
-    },
-  };
+	const params = {
+		FilterExpression: `${attribute} = :v`,
+		ExpressionAttributeValues: {
+			':v': value
+		}
+	};
 
-  const queryStatement = await query('scan', params);
+	const queryStatement = await query('scan', params);
 
-  if (queryStatement.result) {
-    return queryStatement.result;
-  }
+	if (queryStatement.result) {
+		return queryStatement.result;
+	}
 
-  return { error: queryStatement };
+	return { error: queryStatement };
 }
 
 async function getAllTypes() {
-  const params = {
-    ProjectionExpression: 'debateType',
-  };
+	const params = {
+		ProjectionExpression: 'debateType'
+	};
 
-  const queryStatement = await query('scan', params);
-  const types = [];
+	const queryStatement = await query('scan', params);
+	const types = [];
 
-  if (queryStatement.result) {
-    queryStatement.result.Items.forEach(result => {
-      if (!types.includes(result.debateType)) {
-        types.push(result.debateType);
-      }
-    });
-    return types;
-  }
+	if (queryStatement.result) {
+		queryStatement.result.Items.forEach((result) => {
+			if (!types.includes(result.debateType)) {
+				types.push(result.debateType);
+			}
+		});
+		return types;
+	}
 
-  return { error: queryStatement };
+	return { error: queryStatement };
 }
 
 async function getAllDebateLists(type = 'nested') {
-  const queryStatement = await query('scan', {});
+	const queryStatement = await query('scan', {});
 
-  if (queryStatement.result) {
-    let debates;
+	if (queryStatement.result) {
+		let debates;
 
-    if (type === 'flat') {
-      debates = [];
-      queryStatement.result['Items'].forEach(item => {
-        item.formatDate = Utils.formatDate(item.createdAt);
-        debates.push(item);
-      });
+		if (type === 'flat') {
+			debates = [];
+			queryStatement.result['Items'].forEach((item) => {
+				item.formatDate = Utils.formatDate(item.createdAt);
+				debates.push(item);
+			});
 
-      Utils.sortByDate(debates, 'createdAt');
-    } else {
-      debates = {};
-      queryStatement.result['Items'].map(item => {
-        if (!debates.hasOwnProperty(item.debateType)) {
-          debates[item.debateType] = {
-            debateTypeName: item.debateType,
-            debates: [],
-          };
-        }
-        item.formatDate = Utils.formatDate(item.createdAt);
-        debates[item.debateType].debates.push(item);
-        Utils.sortByDate(debates[item.debateType].debates, 'createdAt');
-      });
-    }
+			Utils.sortByDate(debates, 'createdAt');
+		} else {
+			debates = {};
+			queryStatement.result['Items'].map((item) => {
+				if (!debates.hasOwnProperty(item.debateType)) {
+					debates[item.debateType] = {
+						debateTypeName: item.debateType,
+						debates: []
+					};
+				}
+				item.formatDate = Utils.formatDate(item.createdAt);
+				debates[item.debateType].debates.push(item);
+				Utils.sortByDate(debates[item.debateType].debates, 'createdAt');
+			});
+		}
 
-    return debates;
-  }
+		return debates;
+	}
 
-  return { error: queryStatement };
+	return { error: queryStatement };
 }
 
 async function getDebateList(type) {
-  const params = {
-    FilterExpression: '#ty = :type_str',
-    ExpressionAttributeNames: {
-      '#ty': 'debateType',
-    },
-    ExpressionAttributeValues: {
-      ':type_str': type,
-    },
-  };
+	const params = {
+		FilterExpression: '#ty = :type_str',
+		ExpressionAttributeNames: {
+			'#ty': 'debateType'
+		},
+		ExpressionAttributeValues: {
+			':type_str': type
+		}
+	};
 
-  const queryStatement = await query('scan', params);
+	const queryStatement = await query('scan', params);
 
-  if (queryStatement.result) {
-    const debates = {};
+	if (queryStatement.result) {
+		const debates = {};
 
-    queryStatement.result.Items.map(item => {
-      if (!Utils.hasOwnPropertyCall(debates, item.debateType)) {
-        debates[item.debateType] = {
-          debateTypeName: item.debateType,
-          debates: [],
-        };
-      }
+		queryStatement.result.Items.map((item) => {
+			if (!Utils.hasOwnPropertyCall(debates, item.debateType)) {
+				debates[item.debateType] = {
+					debateTypeName: item.debateType,
+					debates: []
+				};
+			}
 
-      item.formatDate = Utils.formatDate(item.createdAt);
-      debates[item.debateType].debates.push(item);
-      return true;
-    });
+			item.formatDate = Utils.formatDate(item.createdAt);
+			debates[item.debateType].debates.push(item);
+			return true;
+		});
 
-    return debates;
-  }
+		return debates;
+	}
 
-  return { error: queryStatement };
+	return { error: queryStatement };
 }
 
 async function getAllReports() {
-  const params = {
-    // TODO
-  };
+	const params = {
+		// TODO
+	};
 
-  const queryStatement = await query('scan', params);
+	const queryStatement = await query('scan', params);
 
-  if (queryStatement.result) {
-    // TODO: list all content with reports
-  }
+	if (queryStatement.result) {
+		// TODO: list all content with reports
+	}
 
-  return { error: queryStatement };
+	return { error: queryStatement };
 }
 
 function updateExpressionConstruct(data) {
-  const newData = { ...data, updatedAt: new Date().getTime() };
-  let expressionAttributeValues = {};
-  let updateExpression = 'SET';
-  const fields = Object.keys(newData);
-  fields.forEach((key, index) => {
-    expressionAttributeValues = {
-      ...expressionAttributeValues,
-      [`:${key}`]: newData[key],
-    };
-    if (LIST_TYPES.includes(key)) {
-      updateExpression += ` ${key}=list_append(${key}, :${key})`;
-    } else if (NESTED_LIST_TYPES.includes(key)) {
-      updateExpression += ` comments[${
-        data[key][0].index
-      }].${key}=list_append(comments[${data[key][0].index}].${key}, :${key})`;
-    } else {
-      updateExpression += ` ${key}=:${key}`;
-    }
-    if (fields.length !== index + 1) {
-      updateExpression += ',';
-    }
-  });
-  return {
-    ExpressionAttributeValues: expressionAttributeValues,
-    UpdateExpression: updateExpression,
-  };
+	const newData = { ...data, updatedAt: new Date().getTime() };
+	let expressionAttributeValues = {};
+	let updateExpression = 'SET';
+	const fields = Object.keys(newData);
+	fields.forEach((key, index) => {
+		expressionAttributeValues = {
+			...expressionAttributeValues,
+			[`:${key}`]: newData[key]
+		};
+		if (LIST_TYPES.includes(key)) {
+			updateExpression += ` ${key}=list_append(${key}, :${key})`;
+		} else if (NESTED_LIST_TYPES.includes(key)) {
+			updateExpression += ` comments[${
+				data[key][0].index
+			}].${key}=list_append(comments[${
+				data[key][0].index
+			}].${key}, :${key})`;
+		} else {
+			updateExpression += ` ${key}=:${key}`;
+		}
+		if (fields.length !== index + 1) {
+			updateExpression += ',';
+		}
+	});
+	return {
+		ExpressionAttributeValues: expressionAttributeValues,
+		UpdateExpression: updateExpression
+	};
 }
 
 async function updateDebate(uuid, data) {
-  try {
-    const params = {
-      Key: {
-        id: uuid,
-      },
-      ReturnValues: 'ALL_NEW',
-      ...updateExpressionConstruct(data),
-    };
-    const result = await query('update', params);
-    return result.result;
-  } catch (err) {
-    throw err;
-  }
+	try {
+		const params = {
+			Key: {
+				id: uuid
+			},
+			ReturnValues: 'ALL_NEW',
+			...updateExpressionConstruct(data)
+		};
+		const result = await query('update', params);
+		return result.result;
+	} catch (err) {
+		throw err;
+	}
 }
 
 function constructCommentObject({
-  user,
-  content,
-  tags = [],
-  replyTo = undefined,
-  displayStatus = 'show',
+	user,
+	content,
+	tags = [],
+	replyTo = undefined,
+	displayStatus = 'show'
 }) {
-  const date = new Date().getTime();
-  replyTo = !replyTo ? undefined : replyTo;
-  return {
-    id: uuidv1(),
-    user,
-    content,
-    ratings: [],
-    tags,
-    replyTo,
-    displayStatus,
-    reports: [],
-    updatedAt: date,
-    createdAt: date,
-  };
+	const date = new Date().getTime();
+	replyTo = !replyTo ? undefined : replyTo;
+	return {
+		id: uuidv1(),
+		user,
+		content,
+		ratings: [],
+		tags,
+		replyTo,
+		displayStatus,
+		reports: [],
+		updatedAt: date,
+		createdAt: date
+	};
 }
 
 function constructRatingObject({ rating, user, index }) {
-  const createdAt = new Date().getTime();
-  return {
-    id: uuidv1(),
-    user,
-    rating,
-    createdAt,
-    index,
-  };
+	const createdAt = new Date().getTime();
+	return {
+		id: uuidv1(),
+		user,
+		rating,
+		createdAt,
+		index
+	};
 }
 
 async function createDebateType({
-  name,
-  description,
-  specialUsers,
-  displayName,
+	name,
+	description,
+	specialUsers,
+	displayName
 }) {
-  const params = {
-    Item: {
-      name,
-      description,
-      specialUsers,
-      displayName,
-    },
-  };
+	const params = {
+		Item: {
+			name,
+			description,
+			specialUsers,
+			displayName
+		}
+	};
 
-  const queryStatement = await query(
-    'put',
-    params,
-    process.env.DEBATE_TYPE_TABLE,
-  );
+	const queryStatement = await query(
+		'put',
+		params,
+		process.env.DEBATE_TYPE_TABLE
+	);
 
-  if (queryStatement.result) {
-    return queryStatement.result;
-  }
+	if (queryStatement.result) {
+		return queryStatement.result;
+	}
 
-  return { error: queryStatement };
+	return { error: queryStatement };
 }
 
 async function getDebateType(debateTypeName) {
-  const params = {
-    KeyConditionExpression: '#name = :debateTypeName',
-    ExpressionAttributeNames: {
-      '#name': 'name',
-    },
-    ExpressionAttributeValues: {
-      ':debateTypeName': debateTypeName,
-    },
-  };
+	const params = {
+		KeyConditionExpression: '#name = :debateTypeName',
+		ExpressionAttributeNames: {
+			'#name': 'name'
+		},
+		ExpressionAttributeValues: {
+			':debateTypeName': debateTypeName
+		}
+	};
 
-  const queryStatement = await query(
-    'query',
-    params,
-    process.env.DEBATE_TYPE_TABLE,
-  );
+	const queryStatement = await query(
+		'query',
+		params,
+		process.env.DEBATE_TYPE_TABLE
+	);
 
-  if (queryStatement.result) {
-    return queryStatement.result;
-  }
+	if (queryStatement.result) {
+		return queryStatement.result;
+	}
 
-  return { error: queryStatement.result };
+	return { error: queryStatement.result };
 }
 
 async function getAllDebateTypes() {
-  try {
-    const queryStatement = await query(
-      'scan',
-      {},
-      process.env.DEBATE_TYPE_TABLE,
-    );
-    if (queryStatement.result) {
-      return queryStatement.result;
-    }
-    throw new Error('No result');
-  } catch (err) {
-    console.error(err);
-  }
+	try {
+		const queryStatement = await query(
+			'scan',
+			{},
+			process.env.DEBATE_TYPE_TABLE
+		);
+		if (queryStatement.result) {
+			return queryStatement.result;
+		}
+		throw new Error('No result');
+	} catch (err) {
+		console.error(err);
+	}
 }
 
 module.exports = {
-  createDebate,
-  editDebate,
-  getAll,
-  getById,
-  getBy,
-  getDebateList,
-  getAllDebateLists,
-  getAllReports,
-  updateDebate,
-  constructCommentObject,
-  constructRatingObject,
-  createDebateType,
-  getDebateType,
-  getAllDebateTypes,
+	createDebate,
+	editDebate,
+	getAll,
+	getById,
+	getBy,
+	getDebateList,
+	getAllDebateLists,
+	getAllReports,
+	updateDebate,
+	constructCommentObject,
+	constructRatingObject,
+	createDebateType,
+	getDebateType,
+	getAllDebateTypes
 };

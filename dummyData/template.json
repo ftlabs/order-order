@@ -1,74 +1,74 @@
 {
-  "keySchema": {
-    "order": 0,
-    "seriesId": 0
-  },
-  "type": "name",
-  "permitted": {
-    "commenters": [0, 1, 2],
-    "replies": [0, 1, 2],
-    "voters": [0, 1, 2]
-  },
-  "restricted": {
-    "commenters": [0, 1, 2],
-    "replies": [0, 1, 2],
-    "voters": [0, 1, 2]
-  },
-  "starter": {
-    "title": "title",
-    "description": "description"
-  },
-  "comments": [
-    {
-      "id": 0,
-      "userId": 0,
-      "content": "This could be a simple comment",
-      "audio": "url",
-      "video": "url",
-      "tags": ["Red", "Blue", "For", "Against", "Etc"],
-      "ratings": [
-        {
-          "userId": 0,
-          "rating": 0
-        }
-      ],
-      "replyTo": 0,
-      "createdOn": "datetimestamp",
-      "updatedOn": "datetimestamp"
-    }
-  ],
-  "specialUsers": [
-    {
-      "userId": 0,
-      "type": "teamA | moderator | teamACaptain etc"
-    }
-  ],
-  "state": {
-    "open": 0,
-    "votable": 0
-  },
-  "teams": [
-    {
-      "teamName": "teamnameA",
-      "scores": [
-        {
-          "userId": 0,
-          "score": 0
-        }
-      ],
-      "members": [
-        {
-          "userId": 0
-        }
-      ]
-    }
-  ],
-  "votes": [
-    {
-      "userId": 0,
-      "score": 0
-    }
-  ],
-  "createdOn": "datetimestamp",
-  "updatedOn": "datetimestamp"
+	"keySchema": {
+		"order": 0,
+		"seriesId": 0
+	},
+	"type": "name",
+	"permitted": {
+		"commenters": [0, 1, 2],
+		"replies": [0, 1, 2],
+		"voters": [0, 1, 2]
+	},
+	"restricted": {
+		"commenters": [0, 1, 2],
+		"replies": [0, 1, 2],
+		"voters": [0, 1, 2]
+	},
+	"starter": {
+		"title": "title",
+		"description": "description"
+	},
+	"comments": [
+		{
+			"id": 0,
+			"userId": 0,
+			"content": "This could be a simple comment",
+			"audio": "url",
+			"video": "url",
+			"tags": ["Red", "Blue", "For", "Against", "Etc"],
+			"ratings": [
+				{
+					"userId": 0,
+					"rating": 0
+				}
+			],
+			"replyTo": 0,
+			"createdOn": "datetimestamp",
+			"updatedOn": "datetimestamp"
+		}
+	],
+	"specialUsers": [
+		{
+			"userId": 0,
+			"type": "teamA | moderator | teamACaptain etc"
+		}
+	],
+	"state": {
+		"open": 0,
+		"votable": 0
+	},
+	"teams": [
+		{
+			"teamName": "teamnameA",
+			"scores": [
+				{
+					"userId": 0,
+					"score": 0
+				}
+			],
+			"members": [
+				{
+					"userId": 0
+				}
+			]
+		}
+	],
+	"votes": [
+		{
+			"userId": 0,
+			"score": 0
+		}
+	],
+	"createdOn": "datetimestamp",
+	"updatedOn": "datetimestamp"
 }

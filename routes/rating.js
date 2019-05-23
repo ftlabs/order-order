@@ -5,51 +5,51 @@ const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
 
 router.post('/:debateType/:debateId', async (req, res, next) => {
-  try {
-    const backURL = req.header('Referer') || '/';
-    const { debateId, debateType } = req.params;
-    const { rating, index } = req.body;
-    const data = {
-      ratings: [
-        dynamoDb.constructRatingObject({
-          rating,
-          index,
-          user: req.cookies.s3o_username,
-        }),
-      ],
-    };
-    await customLogic({
-      functionName: 'post',
-      username: req.cookies.s3o_username,
-      debateId,
-      index,
-      debateType,
-    });
-    await dynamoDb.updateDebate(debateId, data);
-    res.redirect(backURL);
-  } catch (err) {
-    next(err);
-  }
+	try {
+		const backURL = req.header('Referer') || '/';
+		const { debateId, debateType } = req.params;
+		const { rating, index } = req.body;
+		const data = {
+			ratings: [
+				dynamoDb.constructRatingObject({
+					rating,
+					index,
+					user: req.cookies.s3o_username
+				})
+			]
+		};
+		await customLogic({
+			functionName: 'post',
+			username: req.cookies.s3o_username,
+			debateId,
+			index,
+			debateType
+		});
+		await dynamoDb.updateDebate(debateId, data);
+		res.redirect(backURL);
+	} catch (err) {
+		next(err);
+	}
 });
 
 async function customLogic({
-  functionName,
-  debateId,
-  index,
-  debateType,
-  username,
+	functionName,
+	debateId,
+	index,
+	debateType,
+	username
 }) {
-  const helperFilePath = path.resolve(
-    `./helpers/routeHelpers/${debateType}/rating.js`,
-  );
-  if (fs.existsSync(helperFilePath)) {
-    const debateTypeHelper = require(helperFilePath);
-    await debateTypeHelper[functionName]({
-      debateId,
-      index,
-      username,
-    });
-  }
+	const helperFilePath = path.resolve(
+		`./helpers/routeHelpers/${debateType}/rating.js`
+	);
+	if (fs.existsSync(helperFilePath)) {
+		const debateTypeHelper = require(helperFilePath);
+		await debateTypeHelper[functionName]({
+			debateId,
+			index,
+			username
+		});
+	}
 }
 
 module.exports = router;
