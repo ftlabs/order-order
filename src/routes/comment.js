@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
-const dynamoDb = require('../models/dynamoDb');
+import fs from 'fs';
+import path from 'path';
+import dynamoDb from '../models/dynamoDb';
 
 router.post('/:debateType/:debateId', async (req, res) => {
   try {
@@ -39,4 +39,4 @@ async function customLogic({ functionName, debateType }) {
   }
 }
 
-module.exports = router;
+export default router;

@@ -8,4 +8,4 @@ function display(req, res, data) {
   });
 }
 
-module.exports = { display };
+export default { display };

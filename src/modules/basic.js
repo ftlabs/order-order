@@ -1,5 +1,5 @@
-const commentHelper = require('../helpers/comments');
-const votesHelper = require('../helpers/votes');
+import commentHelper from '../helpers/comments';
+import votesHelper from '../helpers/votes';
 
 function display(req, res, data) {
   const { debate, user } = data;
@@ -46,4 +46,4 @@ function display(req, res, data) {
   });
 }
 
-module.exports = { display };
+export default { display };

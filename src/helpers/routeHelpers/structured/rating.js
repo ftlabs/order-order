@@ -1,4 +1,4 @@
-const dynamoDb = require('../../../models/dynamoDb');
+import dynamoDb from '../../../models/dynamoDb';
 
 async function post({ debateId, username, index }) {
   try {
@@ -16,6 +16,6 @@ async function postValidation(debateId, username, index) {
   }
 }
 
-module.exports = {
+export default {
   post,
 };

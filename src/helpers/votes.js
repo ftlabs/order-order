@@ -51,7 +51,7 @@ function calculateResults(votes, voteOptions) {
   return voteResults;
 }
 
-module.exports = {
+export default {
   voteFromRatings,
   hasVoted,
   calculateResults,

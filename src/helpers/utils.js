@@ -39,7 +39,7 @@ function sortByDate(arr, property) {
   });
 }
 
-module.exports = {
+export default {
   formatDate,
   sortByDate,
 };

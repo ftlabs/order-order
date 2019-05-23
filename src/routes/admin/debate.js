@@ -1,24 +1,24 @@
-const express = require('express');
+import express from 'express';
 
 const router = express.Router();
-const dynamoDb = require('../../models/dynamoDb');
-const { getS3oUsername } = require('../../helpers/cookies');
+import dynamoDb from '../../models/dynamoDb';
+// import { getS3oUsername } from '../../helpers/cookies';
 
 router.get('/create', async (req, res) => {
   try {
-    const username = getS3oUsername(req.cookies);
+    // const username = getS3oUsername(req.cookies);
     const debateTypes = await dynamoDb.getAllDebateTypes();
     const { alertType, alertAction } = req.query;
 
     res.render('admin/createDebate', {
       debateTypes: debateTypes.Items,
-      username,
+      // username,
       page: 'create',
       alertMessage: getAlertMessage(
         alertType,
-        alertAction ? alertAction : 'creating',
+        alertAction ? alertAction : 'creating'
       ),
-      alertType,
+      alertType
     });
   } catch (err) {
     console.error(err);
@@ -33,12 +33,12 @@ router.post('/create', async (req, res) => {
       description,
       debateStatus,
       votingStatus,
-      specialUsers,
+      specialUsers
     } = req.body;
 
     if ((!debateType, !title, !description, !debateStatus, !votingStatus)) {
       throw new Error(
-        'One of the required fields was not filled in correctly.',
+        'One of the required fields was not filled in correctly.'
       );
     }
     const spcialUsersFormatted = specialUsers
@@ -51,7 +51,7 @@ router.post('/create', async (req, res) => {
       description,
       debateStatus,
       votingStatus,
-      specialUsers: spcialUsersFormatted,
+      specialUsers: spcialUsersFormatted
     };
     const results = await dynamoDb.createDebate(params);
     res.redirect(`/${results.id}`);
@@ -62,7 +62,7 @@ router.post('/create', async (req, res) => {
 });
 
 router.get('/edit/:debateId', async (req, res) => {
-  const username = getS3oUsername(req.cookies);
+  // const username = getS3oUsername(req.cookies);
   try {
     const { debateId } = req.params;
     const { alertType, alertAction } = req.query;
@@ -80,7 +80,7 @@ router.get('/edit/:debateId', async (req, res) => {
       description,
       title,
       votingStatus,
-      specialUsers,
+      specialUsers
     } = debate.Items[0];
 
     const debateTypeInformation = await dynamoDb.getDebateType(debateType);
@@ -89,15 +89,15 @@ router.get('/edit/:debateId', async (req, res) => {
       specialUsersInformation = debateTypeInformation.Items[0].specialUsers.map(
         userType => {
           const userList = specialUsers.find(
-            userInformation => userInformation.userType === userType.name,
+            userInformation => userInformation.userType === userType.name
           );
           return { ...userType, ...userList };
-        },
+        }
       );
     }
 
     res.render('admin/editDebate', {
-      username,
+      // username,
       id,
       debateType,
       debateStatus,
@@ -109,14 +109,14 @@ router.get('/edit/:debateId', async (req, res) => {
       page: 'edit',
       alertMessage: getAlertMessage(
         alertType,
-        alertAction ? alertAction : 'editing',
+        alertAction ? alertAction : 'editing'
       ),
-      alertType,
+      alertType
     });
   } catch (err) {
     console.error(err);
     res.redirect(
-      `/admin/debate/edit/${id}?alertType=error&alertAction=editing`,
+      `/admin/debate/edit/${id}?alertType=error&alertAction=editing`
     );
   }
 });
@@ -130,12 +130,12 @@ router.post('/edit/:debateId', async (req, res) => {
       description,
       debateStatus,
       votingStatus,
-      specialUsers,
+      specialUsers
     } = req.body;
 
     if ((!debateType, !title, !description, !debateStatus, !votingStatus)) {
       throw new Error(
-        'One of the required fields was not filled in correctly.',
+        'One of the required fields was not filled in correctly.'
       );
     }
     const spcialUsersFormatted = specialUsers
@@ -147,16 +147,16 @@ router.post('/edit/:debateId', async (req, res) => {
       description,
       debateStatus,
       votingStatus,
-      specialUsers: spcialUsersFormatted,
+      specialUsers: spcialUsersFormatted
     };
     await dynamoDb.updateDebate(debateId, params);
     res.redirect(
-      `/admin/debate/edit/${debateId}?alertType=success&alertAction=editing`,
+      `/admin/debate/edit/${debateId}?alertType=success&alertAction=editing`
     );
   } catch (err) {
     console.error(err);
     res.redirect(
-      `/admin/debate/edit/${debateId}?alertType=error&alertAction=editing`,
+      `/admin/debate/edit/${debateId}?alertType=error&alertAction=editing`
     );
   }
 });
@@ -169,7 +169,7 @@ function formatSpecialUsers(specialUsers) {
     }
     spcialUsersFormatted = [
       ...spcialUsersFormatted,
-      { userType, users: specialUsers[userType] },
+      { userType, users: specialUsers[userType] }
     ];
   });
   return spcialUsersFormatted;
@@ -186,4 +186,4 @@ function getAlertMessage(alertType, action) {
   }
 }
 
-module.exports = router;
+export default router;

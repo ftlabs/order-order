@@ -1,4 +1,4 @@
-const Utils = require('../helpers/utils');
+import Utils from '../helpers/utils';
 
 function getCommentReplies(originComment, commentsReplies) {
   const replies = [];
@@ -97,6 +97,6 @@ function getAndNestComments(comments) {
   };
 }
 
-module.exports = {
+export default {
   getAndNestComments,
 };

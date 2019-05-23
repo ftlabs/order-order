@@ -1,22 +1,22 @@
-const express = require('express');
+import express from 'express';
 
 const router = express.Router();
-const dynamoDb = require('../../models/dynamoDb');
-const { getS3oUsername } = require('../../helpers/cookies');
+import dynamoDb from '../../models/dynamoDb';
+// import { getS3oUsername } from '../../helpers/cookies';
 
 router.get('/create', (req, res) => {
   try {
-    const username = getS3oUsername(req.cookies);
+    // const username = getS3oUsername(req.cookies);
     const { alertType, alertAction } = req.query;
 
     res.render('admin/createDebateType', {
-      username,
+      // username,
       page: 'create-type',
       alertMessage: getAlertMessage(
         alertType,
-        alertAction ? alertAction : 'creating',
+        alertAction ? alertAction : 'creating'
       ),
-      alertType,
+      alertType
     });
   } catch (err) {
     console.error(err);
@@ -31,13 +31,13 @@ router.post('/create', async (req, res) => {
       {
         name: 'allowedUsers',
         description: 'Add users to a allow list.',
-        displayName: 'Allowed Users',
+        displayName: 'Allowed Users'
       },
       {
         name: 'blockedUsers',
         description: 'Add users to a block list.',
-        displayName: 'Blocked Users',
-      },
+        displayName: 'Blocked Users'
+      }
     ];
     let mergedSpecialUsers = [...defaultSpecialUser];
     if (specialUsers) {
@@ -47,15 +47,15 @@ router.post('/create', async (req, res) => {
       specialUsers: mergedSpecialUsers,
       name,
       description,
-      displayName,
+      displayName
     });
     res.redirect(
-      `/admin/debate_type/edit/${name}?alertType=success&alertAction=creating`,
+      `/admin/debate_type/edit/${name}?alertType=success&alertAction=creating`
     );
   } catch (err) {
     console.error(err);
     res.redirect(
-      `/admin/debate_type/create?alertType=error&alertAction=creating`,
+      `/admin/debate_type/create?alertType=error&alertAction=creating`
     );
   }
 });
@@ -63,7 +63,7 @@ router.post('/create', async (req, res) => {
 router.get('/edit/:debateName', async (req, res) => {
   try {
     const { alertType, alertAction } = req.query;
-    const username = getS3oUsername(req.cookies);
+    // const username = getS3oUsername(req.cookies);
     const { debateName } = req.params;
     const debateType = await dynamoDb.getDebateType(debateName);
     if (debateType.Items.length === 0) {
@@ -73,24 +73,24 @@ router.get('/edit/:debateName', async (req, res) => {
       description,
       name,
       specialUsers,
-      displayName,
+      displayName
     } = debateType.Items[0];
 
     res.render('admin/editDebateType', {
-      username,
+      // username,
       description,
       name,
       displayName,
       specialUsers: specialUsers.map((specialUser, index) => ({
         ...specialUser,
-        index,
+        index
       })),
       page: 'edit-type',
       alertMessage: getAlertMessage(
         alertType,
-        alertAction ? alertAction : 'editing',
+        alertAction ? alertAction : 'editing'
       ),
-      alertType,
+      alertType
     });
   } catch (err) {
     console.error(err);
@@ -107,18 +107,18 @@ router.post('/edit/:debateName', async (req, res) => {
       specialUsers,
       name: debateName,
       description,
-      displayName,
+      displayName
     });
     if (result.error) {
       throw new Error(result.error);
     }
     res.redirect(
-      `/admin/debate_type/edit/${debateName}?alertType=success&alertAction=editing`,
+      `/admin/debate_type/edit/${debateName}?alertType=success&alertAction=editing`
     );
   } catch (err) {
     console.error(err);
     res.redirect(
-      `/admin/debate_type/edit/${debateName}?alertType=error&alertAction=editing`,
+      `/admin/debate_type/edit/${debateName}?alertType=error&alertAction=editing`
     );
   }
 });
@@ -134,4 +134,4 @@ function getAlertMessage(alertType, action) {
   }
 }
 
-module.exports = router;
+export default router;

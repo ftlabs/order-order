@@ -47,7 +47,7 @@ async function getDynamoDebateListings() {
   return [];
 }
 
-module.exports = {
+export default {
   getRootDir,
   getDebateListings,
   getDynamoDebateListings,

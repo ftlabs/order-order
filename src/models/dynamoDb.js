@@ -1,22 +1,22 @@
-const AWS = require('aws-sdk');
-const uuidv1 = require('uuid/v1');
-const Utils = require('../helpers/utils');
+import AWS from 'aws-sdk';
+import uuidv1 from 'uuid/v1';
+import Utils from '../helpers/utils';
 
 const LIST_TYPES = ['comments'];
 const NESTED_LIST_TYPES = ['ratings'];
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient({
-  region: 'eu-west-1',
+  region: 'eu-west-1'
 });
 
 async function query(
   type = 'query',
   params,
-  tableName = process.env.DEBATE_TABLE,
+  tableName = process.env.DEBATE_TABLE
 ) {
   try {
     const baseParams = {
-      TableName: tableName,
+      TableName: tableName
     };
 
     const allParams = Object.assign(baseParams, params);
@@ -40,8 +40,8 @@ async function createDebate(data) {
         id,
         comments: [],
         createdAt,
-        updatedAt,
-      },
+        updatedAt
+      }
     };
 
     await query('put', params);
@@ -54,7 +54,7 @@ async function createDebate(data) {
 async function editDebate(data) {
   const params = {
     Key: {
-      id: String(data.id),
+      id: String(data.id)
     },
     UpdateExpression:
       'set title=:t, description=:d, debateStatus=:s, votingStatus=:vs, updatedAt=:u',
@@ -63,9 +63,9 @@ async function editDebate(data) {
       ':d': data.description,
       ':s': data.debateStatus,
       ':vs': data.votingStatus,
-      ':u': data.timestamp,
+      ':u': data.timestamp
     },
-    ReturnValues: 'UPDATED_NEW',
+    ReturnValues: 'UPDATED_NEW'
   };
 
   const queryStatement = await query('update', params);
@@ -91,8 +91,8 @@ async function getById(debateId) {
   const params = {
     KeyConditionExpression: 'id = :debateId',
     ExpressionAttributeValues: {
-      ':debateId': debateId,
-    },
+      ':debateId': debateId
+    }
   };
 
   const queryStatement = await query('query', params);
@@ -107,8 +107,8 @@ async function getBy(attribute, value) {
   const params = {
     FilterExpression: `${attribute} = :v`,
     ExpressionAttributeValues: {
-      ':v': value,
-    },
+      ':v': value
+    }
   };
 
   const queryStatement = await query('scan', params);
@@ -122,7 +122,7 @@ async function getBy(attribute, value) {
 
 async function getAllTypes() {
   const params = {
-    ProjectionExpression: 'debateType',
+    ProjectionExpression: 'debateType'
   };
 
   const queryStatement = await query('scan', params);
@@ -141,6 +141,7 @@ async function getAllTypes() {
 }
 
 async function getAllDebateLists(type = 'nested') {
+  console.log('debate table', process.env.DEBATE_TABLE);
   const queryStatement = await query('scan', {});
 
   if (queryStatement.result) {
@@ -160,7 +161,7 @@ async function getAllDebateLists(type = 'nested') {
         if (!debates.hasOwnProperty(item.debateType)) {
           debates[item.debateType] = {
             debateTypeName: item.debateType,
-            debates: [],
+            debates: []
           };
         }
         debates[item.debateType].debates.push(item);
@@ -177,11 +178,11 @@ async function getDebateList(type) {
   const params = {
     FilterExpression: '#ty = :type_str',
     ExpressionAttributeNames: {
-      '#ty': 'debateType',
+      '#ty': 'debateType'
     },
     ExpressionAttributeValues: {
-      ':type_str': type,
-    },
+      ':type_str': type
+    }
   };
 
   const queryStatement = await query('scan', params);
@@ -193,7 +194,7 @@ async function getDebateList(type) {
       if (!Object.prototype.hasOwnProperty.call(debates, item.debateType)) {
         debates[item.debateType] = {
           debateTypeName: item.debateType,
-          debates: [],
+          debates: []
         };
       }
 
@@ -230,7 +231,7 @@ function updateExpressionConstruct(data) {
   fields.forEach((key, index) => {
     expressionAttributeValues = {
       ...expressionAttributeValues,
-      [`:${key}`]: newData[key],
+      [`:${key}`]: newData[key]
     };
     if (LIST_TYPES.includes(key)) {
       updateExpression += ` ${key}=list_append(${key}, :${key})`;
@@ -247,7 +248,7 @@ function updateExpressionConstruct(data) {
   });
   return {
     ExpressionAttributeValues: expressionAttributeValues,
-    UpdateExpression: updateExpression,
+    UpdateExpression: updateExpression
   };
 }
 
@@ -255,10 +256,10 @@ async function updateDebate(uuid, data) {
   try {
     const params = {
       Key: {
-        id: uuid,
+        id: uuid
       },
       ReturnValues: 'ALL_NEW',
-      ...updateExpressionConstruct(data),
+      ...updateExpressionConstruct(data)
     };
     const result = await query('update', params);
     return result.result;
@@ -272,7 +273,7 @@ function constructCommentObject({
   content,
   tags = [],
   replyTo = undefined,
-  displayStatus = 'show',
+  displayStatus = 'show'
 }) {
   const date = new Date().getTime();
   replyTo = !replyTo ? undefined : replyTo;
@@ -286,7 +287,7 @@ function constructCommentObject({
     displayStatus,
     reports: [],
     updatedAt: date,
-    createdAt: date,
+    createdAt: date
   };
 }
 
@@ -297,7 +298,7 @@ function constructRatingObject({ rating, user, index }) {
     user,
     rating,
     createdAt,
-    index,
+    index
   };
 }
 
@@ -305,21 +306,21 @@ async function createDebateType({
   name,
   description,
   specialUsers,
-  displayName,
+  displayName
 }) {
   const params = {
     Item: {
       name,
       description,
       specialUsers,
-      displayName,
-    },
+      displayName
+    }
   };
 
   const queryStatement = await query(
     'put',
     params,
-    process.env.DEBATE_TYPE_TABLE,
+    process.env.DEBATE_TYPE_TABLE
   );
 
   if (queryStatement.result) {
@@ -333,17 +334,17 @@ async function getDebateType(debateTypeName) {
   const params = {
     KeyConditionExpression: '#name = :debateTypeName',
     ExpressionAttributeNames: {
-      '#name': 'name',
+      '#name': 'name'
     },
     ExpressionAttributeValues: {
-      ':debateTypeName': debateTypeName,
-    },
+      ':debateTypeName': debateTypeName
+    }
   };
 
   const queryStatement = await query(
     'query',
     params,
-    process.env.DEBATE_TYPE_TABLE,
+    process.env.DEBATE_TYPE_TABLE
   );
 
   if (queryStatement.result) {
@@ -358,7 +359,7 @@ async function getAllDebateTypes() {
     const queryStatement = await query(
       'scan',
       {},
-      process.env.DEBATE_TYPE_TABLE,
+      process.env.DEBATE_TYPE_TABLE
     );
     if (queryStatement.result) {
       return queryStatement.result;
@@ -369,7 +370,7 @@ async function getAllDebateTypes() {
   }
 }
 
-module.exports = {
+export default {
   createDebate,
   editDebate,
   getAll,
@@ -383,5 +384,5 @@ module.exports = {
   constructRatingObject,
   createDebateType,
   getDebateType,
-  getAllDebateTypes,
+  getAllDebateTypes
 };

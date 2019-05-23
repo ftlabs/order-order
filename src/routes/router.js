@@ -1,19 +1,19 @@
 /* eslint-disable import/no-dynamic-require */
 
-const express = require('express');
+import express from 'express';
 
 const router = express.Router();
 const s3o = require('@financial-times/s3o-middleware');
-const path = require('path');
-const apiRoutes = require('../routes/api');
-const adminRoutes = require('./admin/main');
-const commentRoutes = require('../routes/comment');
-const voteRoutes = require('../routes/vote');
-const ratingRoutes = require('./rating');
-const listing = require('../helpers/listings');
-const dynamoDb = require('../models/dynamoDb');
-const { getS3oUsername } = require('../helpers/cookies');
-const debateTypeDescriptions = require('../data/debates.json');
+import path from 'path';
+import apiRoutes from '../routes/api';
+import adminRoutes from './admin/main';
+import commentRoutes from '../routes/comment';
+import voteRoutes from '../routes/vote';
+import ratingRoutes from './rating';
+import listing from '../helpers/listings';
+import dynamoDb from '../models/dynamoDb';
+// import { getS3oUsername } from '../helpers/cookies';
+import debateTypeDescriptions from '../data/debates.json';
 
 router.use('/api', apiRoutes);
 router.use(s3o);
@@ -23,10 +23,12 @@ router.use('/rating', ratingRoutes);
 router.use('/admin', adminRoutes);
 
 router.get('/', async (req, res) => {
-  const username = getS3oUsername(req.cookies);
+  // const username = getS3oUsername(req.cookies);
 
   try {
+    console.log('getting to before debate');
     const debateList = await dynamoDb.getAllDebateLists('flat');
+    console.log('getting to AFTER debate');
 
     res.render('list', {
       pageTitle: 'FT Debates',
@@ -35,16 +37,17 @@ router.get('/', async (req, res) => {
       pageType: 'home',
       debateList,
       user: {
-        username,
-      },
+        // username
+      }
     });
   } catch (err) {
+    console.error(err);
     res.status(404).send("Sorry can't find that!");
   }
 });
 
 router.get('/type/:debateType', async (req, res) => {
-  const username = getS3oUsername(req.cookies);
+  // const username = getS3oUsername(req.cookies);
 
   try {
     const { debateType } = req.params;
@@ -64,8 +67,8 @@ router.get('/type/:debateType', async (req, res) => {
       pageType: 'home',
       debateList: debateListByType,
       user: {
-        username,
-      },
+        // username
+      }
     });
   } catch (err) {
     console.log(err);
@@ -77,20 +80,20 @@ router.get('/:debateId', async (req, res) => {
   try {
     const { debateId } = req.params;
     const result = await dynamoDb.getById(debateId);
-    const username = getS3oUsername(req.cookies);
+    // const username = getS3oUsername(req.cookies);
     const debate = result.Items[0];
 
     const data = {
       debate: debate,
       user: {
-        username,
-      },
+        // username
+      }
     };
 
     /* eslint-disable global-require */
 
     const modulePath = path.resolve(
-      `${listing.getRootDir()}/modules/${debate.debateType.toLowerCase()}`,
+      `${listing.getRootDir()}/src/modules/${debate.debateType.toLowerCase()}`
     );
     const moduleType = require(modulePath);
 
@@ -119,10 +122,10 @@ router.post('/:debateId', async (req, res) => {
             user: req.cookies.s3o_username,
             tags,
             replyTo,
-            displayStatus,
-          }),
+            displayStatus
+          })
         ],
-        ...data,
+        ...data
       };
     }
 
@@ -134,4 +137,4 @@ router.post('/:debateId', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

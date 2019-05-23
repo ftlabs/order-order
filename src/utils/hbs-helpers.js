@@ -20,6 +20,6 @@ function registerHelpers(hbs) {
   hbs.registerHelper('ifNotThisOrThat', ifNotThisOrThat);
 }
 
-module.exports = {
+export default {
   registerHelpers,
 };

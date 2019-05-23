@@ -1,4 +1,4 @@
-const comments = require('../helpers/comments');
+import comments from '../helpers/comments';
 
 function display(req, res, data) {
   const params = {
@@ -9,4 +9,4 @@ function display(req, res, data) {
   res.render(data.type, newData);
 }
 
-module.exports = { display };
+export default { display };

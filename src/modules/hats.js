@@ -1,4 +1,4 @@
-const commentHelper = require('../helpers/comments');
+import commentHelper from '../helpers/comments';
 
 function display(req, res, data) {
   const { debate } = data;
@@ -13,4 +13,4 @@ function display(req, res, data) {
   res.render(`debates/${debate.debateType}`, data);
 }
 
-module.exports = { display };
+export default { display };

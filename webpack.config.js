@@ -2,19 +2,22 @@ const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Dotenv = require('dotenv-webpack');
+
 module.exports = {
   entry: {
-    server: './index.js',
+    server: ['babel-polyfill', './index.js']
   },
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
-    filename: '[name].js',
+    filename: '[name].js'
   },
   target: 'node',
   node: {
-    __dirname: false,
-    __filename: false,
+    __dirname: true,
+    __filename: true
   },
   externals: [nodeExternals()],
   module: {
@@ -24,20 +27,50 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-        },
+          loader: 'babel-loader'
+        }
       },
+      { test: /\.hbs$/, loader: 'handlebars-loader' },
       {
-        test: /\.html$/,
-        use: [{ loader: 'html-loader' }],
-      },
-    ],
+        test: /\.(scss|css)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {}
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              autoprefixer: {
+                browsers: ['last 2 versions']
+              },
+              plugins: () => [autoprefixer]
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {}
+          }
+        ]
+      }
+    ]
   },
   plugins: [
-    new HtmlWebPackPlugin({
-      template: './index.html',
-      filename: './index.html',
-      excludeChunks: ['server'],
+    new Dotenv(),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        handlebarsLoader: {}
+      }
     }),
-  ],
+    new HtmlWebPackPlugin({
+      title: 'My awesome service',
+      template: './src/index.hbs',
+      excludeChunks: ['server']
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name]-styles.css',
+      chunkFilename: '[id].css'
+    })
+  ]
 };

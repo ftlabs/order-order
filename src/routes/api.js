@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 
 const router = express.Router();
-const dynamoDb = require('../models/dynamoDb');
+import dynamoDb from '../models/dynamoDb';
 
 router.post('/debate/edit', async (req, res) => {
   try {
@@ -46,4 +46,4 @@ router.put('/debate/:uuid', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

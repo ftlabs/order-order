@@ -1,20 +1,23 @@
-const dotenv = require('dotenv').config({
-  silent: process.env.NODE_ENV === 'production',
-});
+// import { config as dotenv } from 'dotenv';
+
+// const dotenv = dotenvModule({
+//   silent: process.env.NODE_ENV === 'production',
+// });
 
 const PORT = process.env.PORT || 9090;
 
-const package = require('./package.json');
-const debug = require('debug')(`${package.name}:index`);
-const express = require('express');
-const hbs = require('express-hbs');
-const path = require('path');
+// import packageJson from './package.json';
+// import debugModule from 'debug';
+// const debug = debugModule(`${packageJson.name}:index`);
+import express from 'express';
+import hbs from 'express-hbs';
+import path from 'path';
 const app = express();
-const helmet = require('helmet');
-const express_enforces_ssl = require('express-enforces-ssl');
-const bodyParser = require('body-parser');
-const core_routes = require('./src/routes/router');
-const hbs_helpers = require('./src/utils/hbs-helpers');
+import helmet from 'helmet';
+import express_enforces_ssl from 'express-enforces-ssl';
+import bodyParser from 'body-parser';
+import core_routes from './src/routes/router';
+import hbs_helpers from './src/utils/hbs-helpers';
 
 if (!PORT) {
   throw new Error('ERROR: PORT not specified in env');
@@ -32,28 +35,28 @@ app.use(bodyParser.json());
 app.engine(
   'hbs',
   hbs.express4({
-    partialsDir: __dirname + '/src/views/partials',
-  }),
+    partialsDir: './src/views/partials'
+  })
 );
 
 hbs_helpers.registerHelpers(hbs);
 
 app.set('view engine', 'hbs');
-app.set('views', __dirname + '/src/views');
+app.set('views', './src/views');
 
 let requestLogger = function(req, res, next) {
-  debug('RECEIVED REQUEST:', req.method, req.url);
+  // debug('RECEIVED REQUEST:', req.method, req.url);
   next();
 };
 
 // app.use(express.json());
 
 app.use(requestLogger);
-app.use('/static', express.static(path.resolve(__dirname + '/src/static')));
+app.use('/static', express.static(path.resolve('./src/static')));
 app.use('/', core_routes);
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err);
   res.status(500).send('Something broke!');
 });
 

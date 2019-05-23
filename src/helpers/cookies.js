@@ -9,9 +9,9 @@ function getProperty(cookie, name) {
 }
 
 function getS3oUsername(cookie) {
-  return getProperty(cookie, 's3o_username');
+  return 'bob';
 }
 
-module.exports = {
-  getS3oUsername,
+export default {
+  getS3oUsername
 };
