@@ -1,63 +1,195 @@
-.o-teaser__content {
+.single-comment {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 15px auto auto auto;
+  align-items: start;
+  padding: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border-left: 2px solid rgba(70, 70, 70, 0.2);
+
   .o-teaser__user {
     font-weight: bold;
     margin: 0;
-  }
-  .o-teaser__content {
-    border: 0;
-    padding: 0 0 15px 0;
-  }
-  .comment-status {
-    display: table;
+    font-family: MetricWeb, sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom: 16px;
+    position: relative;
     width: 100%;
-    border-top: 1px solid $o-color-black-30;
-    padding: 10px 0;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: #666666;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
 
-    div {
-      display: table-cell;
-      text-align: center;
-      border-right: 1px solid $o-color-black-30;
-    }
+  .o-teaser__timestamp {
+    margin-top: 0;
+    text-align: right;
+  }
 
-    div:last-child {
-      border-right: none;
+  .o-teaser__text {
+    margin: 8px 0;
+  }
+
+  .o-teaser__text,
+  .o-replies,
+  .comment-actions {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .comment-actions {
+    text-align: left;
+    a {
+      margin: 0;
+      color: gray;
+      opacity: 0.8;
+      font-family: MetricWeb, sans-serif;
+      font-size: 12px;
+      line-height: 16px;
+      margin-bottom: 16px;
+      position: relative;
+      width: 100%;
+      text-decoration: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
-}
 
-.o-replies {
-  max-width: 100%;
-  margin: 0 0 0 25px;
-}
-
-.comments-for {
   .o-replies {
-    margin: 0 25px 0 0;
+    max-width: 100%;
+    margin-top: 15px;
+
+    .single-comment {
+      padding: 10px 0 10px 10px;
+      margin-bottom: 0;
+    }
   }
 }
 
-.comments-for,
-.comments-against {
-  .o-teaser {
-    margin: -9px !important;
+/* ---------------------------- */
+/*    forAgainstWithVoting version + colour    */
+/* ---------------------------- */
+
+.comments-forAgainstWithColour {
+  .single-comment {
+    border-left: 2px solid $o-color-teal;
+    background-color: white;
+
+    .o-replies {
+      .single-comment {
+        border-left: 2px solid $o-color-candy;
+
+        .single-comment {
+          border-left: 2px solid $o-color-oxford;
+
+          .single-comment {
+            border-left: 2px solid $o-color-mandarin;
+
+            .single-comment {
+              border-left: 2px solid $o-color-velvet;
+            }
+          }
+        }
+      }
+    }
   }
 }
+
+/* ---------------------------- */
+/*    Basic o-teaser version    */
+/* ---------------------------- */
+
+.comments-basicOTeaser {
+  .o-teaser__content {
+    .o-teaser__user {
+      font-weight: bold;
+      margin: 0;
+    }
+    .o-teaser__content {
+      border: 0;
+      padding: 0 0 15px 0;
+    }
+    .comment-status {
+      display: table;
+      width: 100%;
+      border-top: 1px solid $o-color-black-30;
+      padding: 10px 0;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: #666666;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      div {
+        display: table-cell;
+        text-align: center;
+        border-right: 1px solid $o-color-black-30;
+      }
+
+      div:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  .o-replies {
+    max-width: 100%;
+    margin: 0 0 0 25px;
+  }
+
+  .comments-for {
+    .o-replies {
+      margin: 0 25px 0 0;
+    }
+  }
+
+  .comments-for,
+  .comments-against {
+    .o-teaser {
+      margin: -9px !important;
+    }
+  }
+
+  .form-comment-container {
+    position: fixed;
+    border-top: 2px solid $o-color-black-30;
+    bottom: 0;
+    width: 100%;
+    background: $o-color-wheat;
+    padding: 10px;
+
+    .o-forms {
+      max-width: none;
+    }
+
+    .o-forms__radio + .o-forms__label::before {
+      background: white;
+    }
+  }
+}
+
+/* ---------------------------- */
+/*    Form Comment Container    */
+/* ---------------------------- */
 
 .form-comment-container {
   position: fixed;
   border-top: 2px solid $o-color-black-30;
   bottom: 0;
   width: 100%;
-  background: $o-color-paper;
+  background: $o-color-wheat;
   padding: 10px;
 
   .o-forms {
     max-width: none;
+  }
+
+  .o-forms__radio + .o-forms__label::before {
+    background: white;
   }
 }
