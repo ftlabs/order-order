@@ -49,6 +49,9 @@ router.post('/create', async (req, res) => {
       description,
       displayName,
     });
+    if (result.error) {
+      throw new Error(result.error);
+    }
     res.redirect(
       `/admin/debate_type/edit/${name}?alertType=success&alertAction=creating`,
     );
