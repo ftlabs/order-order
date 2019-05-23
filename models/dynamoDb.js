@@ -163,7 +163,9 @@ async function getAllDebateLists(type = 'nested') {
             debates: [],
           };
         }
+        item.formatDate = Utils.formatDate(item.createdAt);
         debates[item.debateType].debates.push(item);
+        Utils.sortByDate(debates[item.debateType].debates, 'createdAt');
       });
     }
 
@@ -190,7 +192,7 @@ async function getDebateList(type) {
     const debates = {};
 
     queryStatement.result.Items.map(item => {
-      if (!Object.prototype.hasOwnProperty.call(debates, item.debateType)) {
+      if (!Utils.hasOwnPropertyCall(debates, item.debateType)) {
         debates[item.debateType] = {
           debateTypeName: item.debateType,
           debates: [],

@@ -3,11 +3,11 @@
 /* eslint-env browser */
 
 function replyToComment(commentId) {
-  const replyTo = document.querySelector('.comment-reply-to');
-  const commentReplyNotification = document.querySelector(
+  var replyTo = document.querySelector('.comment-reply-to');
+  var commentReplyNotification = document.querySelector(
     '.comment-reply-notification',
   );
-  const commentReplyMessage = document.querySelector('.comment-reply-message');
+  var commentReplyMessage = document.querySelector('.comment-reply-message');
 
   replyTo.setAttribute('value', commentId);
   commentReplyNotification.classList.remove('hidden');
@@ -15,8 +15,8 @@ function replyToComment(commentId) {
 }
 
 function removeReplyToComment() {
-  const replyTo = document.querySelector('.comment-reply-to');
-  const commentReplyNotification = document.querySelector(
+  var replyTo = document.querySelector('.comment-reply-to');
+  var commentReplyNotification = document.querySelector(
     '.comment-reply-notification',
   );
   commentReplyNotification.classList.add('hidden');
@@ -24,8 +24,8 @@ function removeReplyToComment() {
 }
 
 function addReplyEventListeners() {
-  const replyLinks = document.querySelectorAll('.reply');
-  const commentReplyRemove = document.querySelector('.comment-reply-remove');
+  var replyLinks = document.querySelectorAll('.reply');
+  var commentReplyRemove = document.querySelector('.comment-reply-remove');
 
   Array.from(replyLinks).forEach(element =>
     element.addEventListener('click', () =>

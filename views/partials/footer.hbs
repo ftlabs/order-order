@@ -19,14 +19,14 @@
 <script src="/static/js/components/comments.js"></script>
 {{/if}}
 
+{{#if type}}
 <script src="/static/js/debates/{{ type }}/main.js"></script>
+{{/if}}
 
 {{/ifEquals}}
 
 {{#if namedJs}}
 <script src="/static/js/{{ type }}/{{ namedJs }}.js"></script>
-{{else}}
-<script src="/static/js/{{ type }}/main.js"></script>
 {{/if}}
 </body>
 

@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
 
-router.post('/:debateType/:debateId', async (req, res) => {
+router.post('/:debateType/:debateId', async (req, res, next) => {
   try {
     const backURL = req.header('Referer') || '/';
     const { debateId, debateType } = req.params;
@@ -24,8 +24,7 @@ router.post('/:debateType/:debateId', async (req, res) => {
     await dynamoDb.updateDebate(debateId, data);
     res.redirect(backURL);
   } catch (err) {
-    console.error(err);
-    res.status(404).send("Sorry can't find that!");
+    next(err);
   }
 });
 

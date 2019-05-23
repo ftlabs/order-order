@@ -1,5 +1,6 @@
 @import 'main/vars';
 @import 'main/site';
+@import 'main/four-oh-four';
 
 @import 'admin/main';
 @import 'admin/debateForm';
@@ -12,7 +13,7 @@
 @import 'components/comments.scss';
 @import 'components/voting.scss';
 
-@import 'debates/basic';
+@import 'debates/foragainstwithvoting';
 @import 'debates/foragainst';
 
 .hide {
