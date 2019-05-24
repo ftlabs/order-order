@@ -3,7 +3,7 @@
 import express from 'express';
 
 const router = express.Router();
-const s3o = require('@financial-times/s3o-middleware');
+import s3o from ('@financial-times/s3o-middleware');
 import path from 'path';
 import apiRoutes from '../routes/api';
 import adminRoutes from './admin/main';

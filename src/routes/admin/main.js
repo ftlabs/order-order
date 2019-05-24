@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   try {
     const debateList = await dynamoDb.getAllDebateLists();
     res.render('admin/index', {
-      username,
+      // username,
       debateList,
       page: 'dashboard'
     });

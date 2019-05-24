@@ -2,9 +2,13 @@ import AWS from 'aws-sdk';
 import uuidv1 from 'uuid/v1';
 import Utils from '../helpers/utils';
 
-AWS.config = new AWS.Config();
-AWS.config.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-AWS.config.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+AWS.config.update({
+  accessKeyId,
+  secretAccessKey,
+  region: 'eu-west-1'
+});
 
 const LIST_TYPES = ['comments'];
 const NESTED_LIST_TYPES = ['ratings'];
