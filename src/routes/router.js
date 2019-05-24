@@ -26,9 +26,7 @@ router.get('/', async (req, res) => {
   // const username = getS3oUsername(req.cookies);
 
   try {
-    console.log('getting to before debate');
     const debateList = await dynamoDb.getAllDebateLists('flat');
-    console.log('getting to AFTER debate');
 
     res.render('list', {
       pageTitle: 'FT Debates',

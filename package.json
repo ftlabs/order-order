@@ -4,6 +4,7 @@
   "description": "A swiss army knife of various forms of structured debates.",
   "main": "index.js",
   "scripts": {
+    "go": "npm run build && npm run start",
     "build": "rm -rf dist && webpack --mode development",
     "start": "node ./dist/server.js",
     "build-css": "node-sass --include-path scss sass/main.scss static/css/main.css",

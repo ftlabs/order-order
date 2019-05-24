@@ -2,6 +2,10 @@ import AWS from 'aws-sdk';
 import uuidv1 from 'uuid/v1';
 import Utils from '../helpers/utils';
 
+AWS.config = new AWS.Config();
+AWS.config.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+AWS.config.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+
 const LIST_TYPES = ['comments'];
 const NESTED_LIST_TYPES = ['ratings'];
 
@@ -143,6 +147,10 @@ async function getAllTypes() {
 async function getAllDebateLists(type = 'nested') {
   console.log('debate table', process.env.DEBATE_TABLE);
   const queryStatement = await query('scan', {});
+  console.log(process.env.AWS_SECRET_ACCESS_KEY);
+  console.log(process.env.AWS_ACCESS_KEY_ID);
+
+  console.log(queryStatement);
 
   if (queryStatement.result) {
     let debates;
