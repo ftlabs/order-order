@@ -310,7 +310,7 @@ async function createDebateType({
 	description,
 	specialUsers,
 	displayName,
-	creator
+	createdBy
 }) {
 	const params = {
 		Item: {
@@ -318,7 +318,7 @@ async function createDebateType({
 			description,
 			specialUsers,
 			displayName,
-			creator
+			createdBy
 		}
 	};
 
