@@ -27,7 +27,7 @@ You can get to the skeleton admin page here:
 -   _Git hook for Prettier_
     -   To enforce Prettier styling for those on the project without the prettier plugin
 -   _Tracking creation_
-    -   Track who created a deabte type
+    -   Track who created a debate type
     -   Track who created a debate
 -   _Moderation_
     -   Allow users to report a comment
