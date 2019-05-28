@@ -34,7 +34,7 @@ router.post('/create', async (req, res) => {
 			debateStatus,
 			votingStatus,
 			specialUsers,
-			creator
+			createdBy
 		} = req.body;
 
 		if ((!debateType, !title, !description, !debateStatus, !votingStatus)) {
@@ -53,7 +53,7 @@ router.post('/create', async (req, res) => {
 			debateStatus,
 			votingStatus,
 			specialUsers: specialUsersFormatted,
-			creator
+			createdBy
 		};
 		const results = await dynamoDb.createDebate(params);
 		res.redirect(`/${results.id}`);
@@ -85,7 +85,7 @@ router.get('/edit/:debateId', async (req, res) => {
 			title,
 			votingStatus,
 			specialUsers,
-			creator
+			createdBy
 		} = debate.Items[0];
 
 		const debateTypeInformation = await dynamoDb.getDebateType(debateType);
@@ -112,7 +112,7 @@ router.get('/edit/:debateId', async (req, res) => {
 			votingStatus,
 			specialUsers,
 			specialUsersInformation,
-			creator,
+			createdBy,
 			page: 'edit',
 			alertMessage: getAlertMessage(
 				alertType,

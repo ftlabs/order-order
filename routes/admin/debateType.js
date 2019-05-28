@@ -31,7 +31,7 @@ router.post('/create', async (req, res) => {
 			name,
 			description,
 			displayName,
-			creator
+			createdBy
 		} = req.body;
 		const defaultSpecialUser = [
 			{
@@ -54,7 +54,7 @@ router.post('/create', async (req, res) => {
 			name,
 			description,
 			displayName,
-			creator
+			createdBy
 		});
 		if (result.error) {
 			throw new Error(result.error);
@@ -84,7 +84,7 @@ router.get('/edit/:debateName', async (req, res) => {
 			name,
 			specialUsers,
 			displayName,
-			creator
+			createdBy
 		} = debateType.Items[0];
 
 		res.render('admin/editDebateType', {
@@ -92,7 +92,7 @@ router.get('/edit/:debateName', async (req, res) => {
 			description,
 			name,
 			displayName,
-			creator,
+			createdBy,
 			specialUsers: specialUsers.map((specialUser, index) => ({
 				...specialUser,
 				index
