@@ -26,9 +26,6 @@ You can get to the skeleton admin page here:
 
 -   _Git hook for Prettier_
     -   To enforce Prettier styling for those on the project without the prettier plugin
--   _Tracking creation_
-    -   Track who created a deabte type
-    -   Track who created a debate
 -   _Moderation_
     -   Allow users to report a comment
     -   Allow admins to action or ignore the report
@@ -61,5 +58,7 @@ You can get to the skeleton admin page here:
 -   _Debate scheduling_
     -   Set date/time for debate to open or close
     -   Set date/time for debate's voting to open or close
+-   _Debate/Debate type edit version history_
+    -   admin changing the details of the debate/debateType - admin opening/closing the debate/voting
 
 ## Questions

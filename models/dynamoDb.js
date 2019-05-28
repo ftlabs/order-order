@@ -309,14 +309,16 @@ async function createDebateType({
 	name,
 	description,
 	specialUsers,
-	displayName
+	displayName,
+	createdBy
 }) {
 	const params = {
 		Item: {
 			name,
 			description,
 			specialUsers,
-			displayName
+			displayName,
+			createdBy
 		}
 	};
 
