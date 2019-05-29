@@ -71,12 +71,12 @@ router.post('/create', async (req, res) => {
 	}
 });
 
-router.get('/edit/:debateName', async (req, res) => {
+router.get('/edit/:debateTypeName', async (req, res) => {
 	try {
 		const { alertType, alertAction } = req.query;
 		const username = getS3oUsername(req.cookies);
-		const { debateName } = req.params;
-		const debateType = await dynamoDb.getDebateType(debateName);
+		const { debateTypeName } = req.params;
+		const debateType = await dynamoDb.getDebateType(debateTypeName);
 		if (debateType.Items.length === 0) {
 			throw new Error('Cant find debate type');
 		}
@@ -117,7 +117,7 @@ router.get('/edit/:debateName', async (req, res) => {
 	}
 });
 
-router.post('/edit/:debateName', async (req, res) => {
+router.post('/edit/:debateTypeName', async (req, res) => {
 	try {
 		const {
 			specialUsers,
@@ -126,11 +126,11 @@ router.post('/edit/:debateName', async (req, res) => {
 			createdAt,
 			createdBy
 		} = req.body;
-		const { debateName } = req.params;
+		const { debateTypeName } = req.params;
 
 		const result = await dynamoDb.createDebateType({
 			specialUsers,
-			name: debateName,
+			name: debateTypeName,
 			description,
 			displayName,
 			createdAt,
@@ -140,26 +140,26 @@ router.post('/edit/:debateName', async (req, res) => {
 			throw new Error(result.error);
 		}
 		res.redirect(
-			`/admin/debate_type/edit/${debateName}?alertType=success&alertAction=editing`
+			`/admin/debate_type/edit/${debateTypeName}?alertType=success&alertAction=editing`
 		);
 	} catch (err) {
 		console.error(err);
 		res.redirect(
-			`/admin/debate_type/edit/${debateName}?alertType=error&alertAction=editing`
+			`/admin/debate_type/edit/${debateTypeName}?alertType=error&alertAction=editing`
 		);
 	}
 });
 
-router.get('/list/:debateName', async (req, res) => {
+router.get('/list/:debateTypeName', async (req, res) => {
 	const username = getS3oUsername(req.cookies);
 
 	try {
-		const { debateName } = req.params;
+		const { debateTypeName } = req.params;
 		const debatesByType = await dynamoDb.getAllDebateLists();
 
 		res.render('admin/listDebatesByType', {
 			username,
-			debatesByType: debatesByType[debateName],
+			debatesByType: debatesByType[debateTypeName],
 			page: 'debatesByType'
 		});
 	} catch (err) {
