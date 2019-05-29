@@ -156,10 +156,20 @@ async function getAllDebateLists(type = 'nested') {
 			Utils.sortByDate(debates, 'createdAt');
 		} else {
 			debates = {};
+
+			const debateTypes = await getAllDebateTypes();
+			let debateTypeDetails = [];
+
+			debateTypes.Items.forEach((type) => {
+				debateTypeDetails[type.name] = type.displayName;
+			});
+
 			queryStatement.result['Items'].map((item) => {
 				if (!debates.hasOwnProperty(item.debateType)) {
 					debates[item.debateType] = {
 						debateTypeName: item.debateType,
+						debateTypeDisplayName:
+							debateTypeDetails[item.debateType],
 						debates: []
 					};
 				}
