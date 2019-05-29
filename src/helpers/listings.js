@@ -1,13 +1,13 @@
-const { lstatSync, readdirSync } = require('fs');
-const { dirname, join } = require('path');
+import { lstatSync, readdirSync } from 'fs';
+import { dirname, join } from 'path';
 
-function getRootDir() {
+export function getRootDir() {
   return dirname(require.main.filename || process.mainModule.filename);
 }
 
 const isDirectory = source => lstatSync(source).isDirectory();
 
-function getDirectories(source) {
+export function getDirectories(source) {
   return readdirSync(source)
     .map(name => join(source, name))
     .filter(isDirectory)
@@ -15,12 +15,12 @@ function getDirectories(source) {
       const arr = path.split('/');
       return {
         type: arr[arr.length - 1],
-        path,
+        path
       };
     });
 }
 
-function getDebateListings(folder, searchedType = '') {
+export function getDebateListings(folder, searchedType = '') {
   const directoryList = getDirectories(`${getRootDir()}/${folder}/`);
   const newDirectoryList = [];
 
@@ -43,12 +43,6 @@ function getDebateListings(folder, searchedType = '') {
   return newDirectoryList;
 }
 
-async function getDynamoDebateListings() {
+export async function getDynamoDebateListings() {
   return [];
 }
-
-export default {
-  getRootDir,
-  getDebateListings,
-  getDynamoDebateListings,
-};

@@ -2,17 +2,17 @@ import express from 'express';
 
 const router = express.Router();
 import dynamoDb from '../../models/dynamoDb';
-// import { getS3oUsername } from '../../helpers/cookies';
+import { getS3oUsername } from '../../helpers/cookies';
 
 router.get('/create', async (req, res) => {
   try {
-    // const username = getS3oUsername(req.cookies);
+    const username = getS3oUsername(req.cookies);
     const debateTypes = await dynamoDb.getAllDebateTypes();
     const { alertType, alertAction } = req.query;
 
     res.render('admin/createDebate', {
       debateTypes: debateTypes.Items,
-      // username,
+      username,
       page: 'create',
       alertMessage: getAlertMessage(
         alertType,
@@ -62,7 +62,7 @@ router.post('/create', async (req, res) => {
 });
 
 router.get('/edit/:debateId', async (req, res) => {
-  // const username = getS3oUsername(req.cookies);
+  const username = getS3oUsername(req.cookies);
   try {
     const { debateId } = req.params;
     const { alertType, alertAction } = req.query;
@@ -97,7 +97,7 @@ router.get('/edit/:debateId', async (req, res) => {
     }
 
     res.render('admin/editDebate', {
-      // username,
+      username,
       id,
       debateType,
       debateStatus,

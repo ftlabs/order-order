@@ -1,18 +1,18 @@
 import express from 'express';
 const router = express.Router();
 import dynamoDb from '../../models/dynamoDb';
-// import { getS3oUsername } from '../../helpers/cookies';
+import { getS3oUsername } from '../../helpers/cookies';
 
 import debateRoutes from './debate';
 import debateTypeRoutes from './debateType';
 
 router.get('/', async (req, res) => {
-  // const username = getS3oUsername(req.cookies);
+  const username = getS3oUsername(req.cookies);
 
   try {
     const debateList = await dynamoDb.getAllDebateLists();
     res.render('admin/index', {
-      // username,
+      username,
       debateList,
       page: 'dashboard'
     });
@@ -24,13 +24,13 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/moderation', async (req, res) => {
-  // const username = getS3oUsername(req.cookies);
+  const username = getS3oUsername(req.cookies);
 
   try {
     const reports = await dynamoDb.getAllReports();
 
     res.render('admin/moderation', {
-      // username,
+      username,
       reports,
       page: 'moderation'
     });

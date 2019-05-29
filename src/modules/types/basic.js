@@ -1,5 +1,5 @@
-import commentHelper from '../helpers/comments';
-import votesHelper from '../helpers/votes';
+import commentHelper from '../../helpers/comments';
+import votesHelper from '../../helpers/votes';
 
 function display(req, res, data) {
   const { debate, user } = data;
@@ -11,23 +11,23 @@ function display(req, res, data) {
     votingStatus,
     debateType,
     comments,
-    debateRatings,
+    debateRatings
   } = debate;
 
   const { commentsFor, commentsAgainst } = commentHelper.getAndNestComments(
-    comments,
+    comments
   );
   const debateOpen = debateStatus === 'open' ? true : false;
   const votingOpen = votingStatus === 'open' ? true : false;
   const voteOptions = ['for', 'against'];
   const voteFromRatings = votesHelper.voteFromRatings(
     debateRatings,
-    voteOptions,
+    voteOptions
   );
   const existingVote = votesHelper.hasVoted(voteFromRatings, user.username);
   const voteResults = votesHelper.calculateResults(
     voteFromRatings,
-    voteOptions,
+    voteOptions
   );
 
   res.render(`debates/${debateType}`, {
@@ -42,8 +42,8 @@ function display(req, res, data) {
     commentsFor,
     commentsAgainst,
     debateId: id,
-    user,
+    user
   });
 }
 
-export default { display };
+export { display };

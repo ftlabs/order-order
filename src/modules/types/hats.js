@@ -1,11 +1,11 @@
-import commentHelper from '../helpers/comments';
+import commentHelper from '../../helpers/comments';
 
 function display(req, res, data) {
   const { debate } = data;
 
   if (debate.comments) {
     const params = {
-      commentsData: debate.comments,
+      commentsData: debate.comments
     };
     debate.commentsStructured = commentHelper.getNestedComments(params).data;
   }

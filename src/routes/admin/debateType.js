@@ -1,16 +1,16 @@
 import express from 'express';
+import dynamoDb from '../../models/dynamoDb';
+import { getS3oUsername } from '../../helpers/cookies';
 
 const router = express.Router();
-import dynamoDb from '../../models/dynamoDb';
-// import { getS3oUsername } from '../../helpers/cookies';
 
 router.get('/create', (req, res) => {
   try {
-    // const username = getS3oUsername(req.cookies);
+    const username = getS3oUsername(req.cookies);
     const { alertType, alertAction } = req.query;
 
     res.render('admin/createDebateType', {
-      // username,
+      username,
       page: 'create-type',
       alertMessage: getAlertMessage(
         alertType,
@@ -63,7 +63,7 @@ router.post('/create', async (req, res) => {
 router.get('/edit/:debateName', async (req, res) => {
   try {
     const { alertType, alertAction } = req.query;
-    // const username = getS3oUsername(req.cookies);
+    const username = getS3oUsername(req.cookies);
     const { debateName } = req.params;
     const debateType = await dynamoDb.getDebateType(debateName);
     if (debateType.Items.length === 0) {
@@ -77,7 +77,7 @@ router.get('/edit/:debateName', async (req, res) => {
     } = debateType.Items[0];
 
     res.render('admin/editDebateType', {
-      // username,
+      username,
       description,
       name,
       displayName,
