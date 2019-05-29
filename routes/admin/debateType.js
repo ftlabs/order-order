@@ -1,6 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
+const Utils = require('../../helpers/utils');
 const dynamoDb = require('../../models/dynamoDb');
 const { getS3oUsername } = require('../../helpers/cookies');
 
@@ -84,7 +85,8 @@ router.get('/edit/:debateName', async (req, res) => {
 			name,
 			specialUsers,
 			displayName,
-			createdBy
+			createdBy,
+			createdAt
 		} = debateType.Items[0];
 
 		res.render('admin/editDebateType', {
@@ -93,6 +95,8 @@ router.get('/edit/:debateName', async (req, res) => {
 			name,
 			displayName,
 			createdBy,
+			createdAt,
+			formatDate: Utils.formatDate(Number(createdAt)),
 			specialUsers: specialUsers.map((specialUser, index) => ({
 				...specialUser,
 				index
@@ -115,14 +119,22 @@ router.get('/edit/:debateName', async (req, res) => {
 
 router.post('/edit/:debateName', async (req, res) => {
 	try {
-		const { specialUsers, name, description, displayName } = req.body;
+		const {
+			specialUsers,
+			description,
+			displayName,
+			createdAt,
+			createdBy
+		} = req.body;
 		const { debateName } = req.params;
 
 		const result = await dynamoDb.createDebateType({
 			specialUsers,
 			name: debateName,
 			description,
-			displayName
+			displayName,
+			createdAt,
+			createdBy
 		});
 		if (result.error) {
 			throw new Error(result.error);

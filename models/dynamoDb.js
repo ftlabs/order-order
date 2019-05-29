@@ -310,10 +310,18 @@ async function createDebateType({
 	description,
 	specialUsers,
 	displayName,
-	createdBy
+	createdBy,
+	createdAt = null
 }) {
-	const createdAt = date;
+	const date = new Date().getTime();
 	const updatedAt = date;
+
+	if (createdAt === null) {
+		createdAt = date;
+	} else {
+		createdAt = Number(createdAt);
+	}
+
 	const params = {
 		Item: {
 			name,
