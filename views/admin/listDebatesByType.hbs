@@ -1,14 +1,11 @@
 {{> head title='Debate dashboard' subtitle='Admin section' }}
 {{> admin/header }}
 <main class="o-grid-container">
-	<h1 class="admin-section">Debate Dashboard</h1>
-	{{#if debateList}}
-	{{#each debateList}}
+	<h1 class="admin-section">Debate</h1>
 	<div class="o-grid-row">
 		<section class="admin-content admin-debates-list">
 			<span class="debate-type-tag">Debate type</span>
-			<h2 class="debate-type">
-				<a href="/admin/debate_type/list/{{ debateTypeName }}">{{ debateTypeName }}</a></h2>
+			<h2 class="debate-type">{{ debatesByType.debateTypeName }}</h2>
 			<table class="list-debates o-table  o-table--row-stripes" data-o-component="o-table">
 				<thead>
 					<tr>
@@ -18,9 +15,9 @@
 						<th scope="col" role="columnheader"> Creation date </th>
 					</tr>
 				</thead>
-				{{#if debates}}
+				{{#if debatesByType.debates}}
 				<tbody>
-					{{#each debates}}
+					{{#each debatesByType.debates}}
 					<tr>
 						<td>
 							{{ this.title }}
@@ -47,8 +44,6 @@
 			</table>
 		</section>
 	</div>
-	{{/each}}
-	{{/if}}
 </main>
 
 {{> footer type="admin"}}

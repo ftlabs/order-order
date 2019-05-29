@@ -374,7 +374,6 @@ async function getAllDebateTypes() {
 			let debateTypes = [];
 			queryStatement.result['Items'].forEach((item) => {
 				item.formatDate = Utils.formatDate(item.createdAt);
-				console.log(item);
 				debateTypes.push(item);
 			});
 			return debateTypes;
