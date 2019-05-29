@@ -312,13 +312,17 @@ async function createDebateType({
 	displayName,
 	createdBy
 }) {
+	const createdAt = date;
+	const updatedAt = date;
 	const params = {
 		Item: {
 			name,
 			description,
 			specialUsers,
 			displayName,
-			createdBy
+			createdBy,
+			createdAt,
+			updatedAt
 		}
 	};
 
@@ -367,7 +371,13 @@ async function getAllDebateTypes() {
 			process.env.DEBATE_TYPE_TABLE
 		);
 		if (queryStatement.result) {
-			return queryStatement.result;
+			let debateTypes = [];
+			queryStatement.result['Items'].forEach((item) => {
+				item.formatDate = Utils.formatDate(item.createdAt);
+				console.log(item);
+				debateTypes.push(item);
+			});
+			return debateTypes;
 		}
 		throw new Error('No result');
 	} catch (err) {
