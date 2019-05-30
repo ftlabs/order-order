@@ -16,6 +16,13 @@ body {
 	z-index: 5;
 }
 
+.btn-quick-edit {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 10;
+}
+
 .o-header-services__related-content {
 	/*TODO: temporary, remove important when breakpoints come in*/
 	li {

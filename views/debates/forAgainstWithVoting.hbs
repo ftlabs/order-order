@@ -2,8 +2,6 @@
 {{/head}}
 
 <body class="debate-forAgainstWithVoting">
-	{{> components/tools/quickEdit debateId=debateId}}
-
 	{{> user/header username=user.username }}
 
 	{{> components/heading/topper debateType=debateType title=title description=description }}
@@ -16,6 +14,7 @@
 
 	{{#ifThisOrThat commentsAgainst commentsFor}}
 	<div class="sticky hide">
+		{{> components/tools/quickEdit debateId=debateId}}
 		{{> components/heading/topper-mini title=title }}
 		<div class="o-grid-container ">
 			<div class="o-grid-row">
