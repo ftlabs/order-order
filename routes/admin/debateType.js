@@ -157,8 +157,15 @@ router.get('/list/:debateTypeName', async (req, res) => {
 		const { debateTypeName } = req.params;
 		const debatesByType = await dynamoDb.getAllDebateLists();
 
+		let debateTypeDisplayName =
+			debatesByType[debateTypeName] &&
+			debatesByType[debateTypeName].debateTypeDisplayName
+				? debatesByType[debateTypeName].debateTypeDisplayName
+				: '';
+
 		res.render('admin/listDebatesByType', {
 			username,
+			debateTypeDisplayName,
 			debatesByType: debatesByType[debateTypeName],
 			page: 'debatesByType'
 		});
