@@ -24,6 +24,8 @@ You can get to the skeleton admin page here:
 
 ## Future Features/PRs
 
+-   _Mobile friendly_
+    -   Update the admin and client views to be mobile friendly
 -   _Git hook for Prettier_
     -   To enforce Prettier styling for those on the project without the prettier plugin
 -   _Moderation_
