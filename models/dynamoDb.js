@@ -160,7 +160,7 @@ async function getAllDebateLists(type = 'nested') {
 			const debateTypes = await getAllDebateTypes();
 			let debateTypeDetails = [];
 
-			debateTypes.Items.forEach((type) => {
+			debateTypes.forEach((type) => {
 				debateTypeDetails[type.name] = type.displayName;
 			});
 
