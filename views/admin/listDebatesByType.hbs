@@ -5,11 +5,11 @@
 	<div class="o-grid-row">
 		<section class="admin-content admin-debates-list">
 			<span class="debate-type-tag">Debate type</span>
-			<h2 class="debate-type">{{ debatesByType.debateTypeName }}</h2>
+			<h2 class="debate-type">{{ debateTypeDisplayName }}</h2>
 			<table class="list-debates o-table  o-table--row-stripes" data-o-component="o-table">
 				<thead>
 					<tr>
-						<th scope="col" role="columnheader"> Name </th>
+						<th scope="col" role="columnheader"> Title </th>
 						<th scope="col" role="columnheader"> Status </th>
 						<th scope="col" role="columnheader"> Voting </th>
 						<th scope="col" role="columnheader"> Creation date </th>
@@ -39,6 +39,14 @@
 						</td>
 					</tr>
 					{{/each}}
+				</tbody>
+				{{else}}
+				<tbody>
+					<tr colspan=6>
+						<td>
+							No debates found for this type
+						</td>
+					</tr>
 				</tbody>
 				{{/if}}
 			</table>
