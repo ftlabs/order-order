@@ -1,0 +1,54 @@
+{{> head title='Debate dashboard' subtitle='Admin section' }}
+{{> admin/header }}
+<main class="o-grid-container">
+	<h1 class="admin-section">Debate Dashboard</h1>
+	{{#if debateList}}
+	{{#each debateList}}
+	<div class="o-grid-row">
+		<section class="admin-content admin-debates-list">
+			<span class="debate-type-tag">Debate type</span>
+			<h2 class="debate-type">
+				<a href="/admin/debate_type/list/{{ debateTypeName }}">{{ debateTypeDisplayName }}</a></h2>
+			<table class="list-debates o-table  o-table--row-stripes" data-o-component="o-table">
+				<thead>
+					<tr>
+						<th scope="col" role="columnheader"> Title </th>
+						<th scope="col" role="columnheader"> Status </th>
+						<th scope="col" role="columnheader"> Voting </th>
+						<th scope="col" role="columnheader"> Creation date </th>
+					</tr>
+				</thead>
+				{{#if debates}}
+				<tbody>
+					{{#each debates}}
+					<tr>
+						<td>
+							{{ this.title }}
+						</td>
+						<td>
+							{{this.debateStatus}}
+						</td>
+						<td>
+							{{this.votingStatus}}
+						</td>
+						<td>
+							{{this.formatDate.readable}}
+						</td>
+						<td>
+							<a href="/{{ this.id }}">view</a>
+						</td>
+						<td>
+							<a href="/admin/debate/edit/{{ this.id }}">edit</a>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+				{{/if}}
+			</table>
+		</section>
+	</div>
+	{{/each}}
+	{{/if}}
+</main>
+
+{{> footer type="admin"}}
