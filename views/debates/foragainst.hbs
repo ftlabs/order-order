@@ -2,6 +2,8 @@
 {{/head}}
 
 <body class="debate-forAgainst">
+	{{> components/tools/quickEdit debateId=debateId}}
+
 	{{> user/header username=user.username }}
 
 	{{> components/heading/topper debateType=debateType title=title description=description }}

@@ -76,3 +76,10 @@ h2.debate-type {
 		box-shadow: 1px 2px 5px rgba(179, 169, 160, 0.2);
 	}
 }
+
+.btn-quick-edit {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	z-index: 10;
+}
