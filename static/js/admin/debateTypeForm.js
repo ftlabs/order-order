@@ -6,13 +6,14 @@ function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
 		element.addEventListener('click', function() {
 			const userInputs = Array.from(
 				element.parentElement.parentElement.childNodes
-			).find((element) =>
-				element.classList
+			).find((element) => {
+				return element.classList
 					? Array.from(element.classList).includes(
-							'special-user-fields'
+							attributeName + '-fields'
 					  )
-					: false
-			);
+					: false;
+			});
+
 			const inputElements = Array.from(userInputs.childNodes).filter(
 				(element) => element.nodeName === 'INPUT'
 			);
@@ -26,7 +27,7 @@ function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
 	});
 }
 
-function addRemoveTextFieldsListeners() {
+function addRemoveTextFieldsListeners(attributeName) {
 	const removeTextButtons = document.querySelectorAll('.remove-text-field');
 	Array.from(removeTextButtons).forEach(function(element) {
 		element.addEventListener('click', function() {
@@ -35,7 +36,7 @@ function addRemoveTextFieldsListeners() {
 			).find((element) =>
 				element.classList
 					? Array.from(element.classList).includes(
-							'special-user-fields'
+							attributeName + '-fields'
 					  )
 					: false
 			);
@@ -64,6 +65,14 @@ function addNewUserField(attributeName, userInputs) {
 	userInputs.appendChild(newSpecialUserInputs);
 
 	createNewFieldForm('hello', newSpecialUserInputs);
+}
+
+function addNewTagField(attributeName, userInputs) {
+	const newSpecialUserInputs = document.createElement('div');
+	newSpecialUserInputs.classList.add('user-inputs');
+	userInputs.appendChild(newSpecialUserInputs);
+
+	createNewTagFormItem('hello', newSpecialUserInputs);
 }
 
 function addLabelToField(
@@ -133,9 +142,41 @@ function createNewFieldForm(attributeName, userInputs) {
 	addSingleTextBox('specialUsers[' + index + '][description]', userInputs);
 }
 
+function createNewTagFormItem(attributeName, userInputs) {
+	var index =
+		Array.from(userInputs.parentElement.childNodes).filter(
+			(element) => element.nodeName === 'DIV'
+		).length - 1;
+
+	addLabelToField(
+		userInputs,
+		'name',
+		'Field Name',
+		'This is the name as it will appear in the database. Please use camel case.'
+	);
+	addSingleTextBox('tags[' + index + '][name]', userInputs);
+	addLabelToField(
+		userInputs,
+		'displayName',
+		'Display Name',
+		'This is the name that will show up in the create debate form when this type is selected.'
+	);
+	addSingleTextBox('tags[' + index + '][displayName]', userInputs);
+	addLabelToField(
+		userInputs,
+		'fieldDescription',
+		'Field Description',
+		'Please add a description for the field that will appear when a user creates a new debate of this type'
+	);
+	addSingleTextBox('tags[' + index + '][description]', userInputs);
+}
+
 function init() {
 	addAdditionalTextFieldsListeners('specialUsers', addNewUserField);
-	addRemoveTextFieldsListeners();
+	addAdditionalTextFieldsListeners('tags', addNewTagField);
+
+	addRemoveTextFieldsListeners('tags');
+	addRemoveTextFieldsListeners('specialUsers');
 }
 
 document.addEventListener('DOMContentLoaded', init);
