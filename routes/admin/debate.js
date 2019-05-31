@@ -216,9 +216,9 @@ function formatSpecialUsers(specialUsers) {
 function getAlertMessage(alertType, action) {
 	switch (alertType) {
 		case 'success':
-			return `${action} your debate type was succesful.`;
+			return `${action} your debate was succesful.`;
 		case 'error':
-			return `Something went wrong ${action} your debate type.`;
+			return `Something went wrong ${action} your debate.`;
 		default:
 			return undefined;
 	}
