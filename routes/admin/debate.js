@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const dynamoDb = require('../../models/dynamoDb');
 const { getS3oUsername } = require('../../helpers/cookies');
+const Utils = require('../../helpers/utils');
 
 router.get('/create', async (req, res) => {
 	try {
@@ -12,7 +13,10 @@ router.get('/create', async (req, res) => {
 
 		res.render('admin/createDebate', {
 			debateTypes: debateTypes.Items,
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			page: 'create',
 			alertMessage: getAlertMessage(
 				alertType,
@@ -103,7 +107,10 @@ router.get('/edit/:debateId', async (req, res) => {
 		}
 
 		res.render('admin/editDebate', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			id,
 			debateType,
 			debateStatus,
@@ -172,9 +179,11 @@ router.get('/list', async (req, res) => {
 	const username = getS3oUsername(req.cookies);
 	try {
 		const debateList = await dynamoDb.getAllDebateLists();
-		console.log(debateList);
 		res.render('admin/listDebates', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			debateList,
 			page: 'debates'
 		});

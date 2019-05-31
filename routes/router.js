@@ -33,7 +33,8 @@ router.get('/', async (req, res, next) => {
 			pageType: 'home',
 			debateList,
 			user: {
-				username
+				username,
+				usernameNice: Utils.cleanUsername(username)
 			}
 		});
 	} catch (err) {
@@ -63,7 +64,8 @@ router.get('/type/:debateType', async (req, res, next) => {
 			pageType: 'home',
 			debateList: debateListByType,
 			user: {
-				username
+				username,
+				usernameNice: Utils.cleanUsername(username)
 			}
 		});
 	} catch (err) {
@@ -81,7 +83,8 @@ router.get('/:debateId', async (req, res, next) => {
 		const data = {
 			debate: debate,
 			user: {
-				username
+				username,
+				usernameNice: Utils.cleanUsername(username)
 			}
 		};
 
@@ -146,7 +149,8 @@ router.use(function(err, req, res, next) {
 			url: req.url,
 			error: err,
 			user: {
-				username: getS3oUsername(req.cookies)
+				username: getS3oUsername(req.cookies),
+				usernameNice: Utils.cleanUsername(username)
 			}
 		});
 		return;
