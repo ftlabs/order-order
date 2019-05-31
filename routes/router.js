@@ -82,6 +82,9 @@ router.get('/:debateId', async (req, res, next) => {
 
 		const data = {
 			debate: debate,
+			debateType: {
+				rules: 'sdfsf sfsfsf g '
+			},
 			user: {
 				username,
 				usernameNice: Utils.cleanUsername(username)
