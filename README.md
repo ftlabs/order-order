@@ -22,6 +22,16 @@ You can get to the skeleton admin page here:
 
 ![Alt text](./docs/admin_examle.png?raw=true 'Example of how the admin currently looks')
 
+### Adding a new debate type
+
+When you add a new debate type you will also need to add the corresponding logic and view so the app knows how to handle the specific debate type. Here is a quick setup guide to what you need to do.
+
+1. Firstly in the `modules` folder in the root add a javascript file with the name of your debate type all in lowercase. e.g `foragainst.js`.
+
+2. In this file all you need to add is a function called display which takes three params `req`, `res` and `data` and ends with `res.render(data.type, data);`. You can manipulate the data object however you like for your specific debate.
+
+3. Next you need to create the view. In `views/debates` add a handlebars with the name of your debate type e.g `foragainst.hbs`
+
 ## Future Features/PRs
 
 -   _Git hook for Prettier_
