@@ -79,12 +79,12 @@ router.get('/:debateId', async (req, res, next) => {
 		const result = await dynamoDb.getById(debateId);
 		const username = getS3oUsername(req.cookies);
 		const debate = result.Items[0];
+		const debateTypeData = await dynamoDb.getDebateType(debate.debateType);
+		const debateTypeDescription = debateTypeData.Items[0].description;
 
 		const data = {
-			debate: debate,
-			debateType: {
-				rules: 'sdfsf sfsfsf g '
-			},
+			debate,
+			debateTypeDescription,
 			user: {
 				username,
 				usernameNice: Utils.cleanUsername(username)

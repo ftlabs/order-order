@@ -2,7 +2,7 @@ const commentHelper = require('../helpers/comments');
 const votesHelper = require('../helpers/votes');
 
 function display(req, res, data) {
-	const { debate, user } = data;
+	const { debate, user, debateTypeDescription } = data;
 	const {
 		id,
 		title,
@@ -39,6 +39,7 @@ function display(req, res, data) {
 		voteOptions,
 		voteResults,
 		debateType,
+		debateTypeDescription,
 		commentsFor,
 		commentsAgainst,
 		debateId: id,

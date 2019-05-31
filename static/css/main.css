@@ -313,6 +313,11 @@ h2.debate-type {
       padding: 10px 0 10px 10px;
       margin-bottom: 0; }
 
+.rules-of-engagement {
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  padding: 10px; }
+
 /* ---------------------------- */
 /*    forAgainstWithVoting version + colour    */
 /* ---------------------------- */

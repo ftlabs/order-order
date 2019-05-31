@@ -48,7 +48,7 @@
 	{{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
 	{{/if}}
 	{{#if debateOpen}}
-	{{> components/comments/new debateType=debateType debateId=debateId}}
+	{{> components/comments/new debateType=debateType debateId=debateId debateTypeDescription=debateTypeDescription }}
 	{{else}}
 	{{> components/voting/results voteStyleClass="bars"}}
 	{{/if}}
