@@ -50,6 +50,7 @@ router.post('/create', async (req, res) => {
 		if (specialUsers) {
 			mergedSpecialUsers = [...mergedSpecialUsers, ...specialUsers];
 		}
+
 		const result = await dynamoDb.createDebateType({
 			specialUsers: mergedSpecialUsers,
 			tags,

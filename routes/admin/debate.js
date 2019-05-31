@@ -93,7 +93,7 @@ router.get('/edit/:debateId', async (req, res) => {
 
 		const debateTypeInformation = await dynamoDb.getDebateType(debateType);
 		let specialUsersInformation = [];
-		if (specialUsers && specialUsers.length < 0) {
+		if (specialUsers && specialUsers.length > 0) {
 			specialUsersInformation = debateTypeInformation.Items[0].specialUsers.map(
 				(userType) => {
 					const userList = specialUsers.find(
@@ -104,6 +104,21 @@ router.get('/edit/:debateId', async (req, res) => {
 				}
 			);
 		}
+		let tagsWithInformation = [];
+		console.log(tags && tags.length > 0);
+		if (tags && tags.length > 0) {
+			console.log('tags work', tags.length > 0);
+		}
+		if (tags && tags.length > 0) {
+			console.log('getting in if');
+			tagsWithInformation = debateTypeInformation.Items[0].tags.map(
+				(tagType) => {
+					const checked = tags.includes(tagType.name);
+					return { ...tagType, checked };
+				}
+			);
+		}
+		console.log(tagsWithInformation);
 
 		res.render('admin/editDebate', {
 			username,
@@ -113,9 +128,8 @@ router.get('/edit/:debateId', async (req, res) => {
 			description,
 			title,
 			votingStatus,
-			specialUsers,
 			specialUsersInformation,
-			tags,
+			tagsWithInformation,
 			createdBy,
 			page: 'edit',
 			alertMessage: getAlertMessage(
@@ -141,9 +155,9 @@ router.post('/edit/:debateId', async (req, res) => {
 			description,
 			debateStatus,
 			votingStatus,
-			specialUsers
+			specialUsers,
+			tags
 		} = req.body;
-
 		if ((!debateType, !title, !description, !debateStatus, !votingStatus)) {
 			throw new Error(
 				'One of the required fields was not filled in correctly.'
@@ -152,13 +166,13 @@ router.post('/edit/:debateId', async (req, res) => {
 		const specialUsersFormatted = specialUsers
 			? formatSpecialUsers(specialUsers)
 			: [];
-
 		const params = {
 			title,
 			description,
 			debateStatus,
 			votingStatus,
-			specialUsers: specialUsersFormatted
+			specialUsers: specialUsersFormatted,
+			tags
 		};
 		await dynamoDb.updateDebate(debateId, params);
 		res.redirect(
