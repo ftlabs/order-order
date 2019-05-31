@@ -47,6 +47,7 @@ function addRatingsEventListeners() {
 		element.addEventListener('click', function(e) {
 			rateComment(
 				element.getAttribute('data-debate-id'),
+				element.getAttribute('data-debate-type'),
 				element.getAttribute('data-index'),
 				element.getAttribute('data-rating')
 			);
@@ -54,14 +55,18 @@ function addRatingsEventListeners() {
 	});
 }
 
-function rateComment(debateId, index, rating) {
-	var formData = new FormData();
-	formData.append('index', index);
-	formData.append('rating', rating);
+function rateComment(debateId, debateType, index, rating) {
+	const data = {
+		index: index,
+		rating: rating
+	};
 
-	fetch(`rating/${debateId}?`, {
+	fetch(`rating/${debateType}/${debateId}?`, {
 		method: 'POST',
-		body: formData
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json'
+		}
 	})
 		.then(function(res) {
 			console.log(res);
@@ -73,6 +78,7 @@ function rateComment(debateId, index, rating) {
 
 function initComments() {
 	addReplyEventListeners();
+	addRatingsEventListeners();
 	showVotes();
 }
 

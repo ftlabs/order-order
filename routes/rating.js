@@ -18,6 +18,7 @@ router.post('/:debateType/:debateId', async (req, res, next) => {
 				})
 			]
 		};
+
 		await customLogic({
 			functionName: 'post',
 			username: req.cookies.s3o_username,

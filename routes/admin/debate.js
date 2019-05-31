@@ -172,7 +172,6 @@ router.get('/list', async (req, res) => {
 	const username = getS3oUsername(req.cookies);
 	try {
 		const debateList = await dynamoDb.getAllDebateLists();
-		console.log(debateList);
 		res.render('admin/listDebates', {
 			username,
 			debateList,

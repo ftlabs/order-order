@@ -34,7 +34,26 @@
 	.o-replies,
 	.comment-actions {
 		grid-column-start: 1;
-		grid-column-end: 3;
+		grid-column-end: 2;
+	}
+
+	.comment-counter-upvotes {
+		text-align: right;
+
+		span {
+			margin: 0;
+			color: gray;
+			opacity: 0.8;
+			font-family: MetricWeb, sans-serif;
+			font-size: 12px;
+			line-height: 16px;
+			margin-bottom: 16px;
+			position: relative;
+			width: 100%;
+			text-decoration: none;
+			text-rendering: optimizeLegibility;
+			-webkit-font-smoothing: antialiased;
+		}
 	}
 
 	.comment-actions {

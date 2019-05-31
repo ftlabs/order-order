@@ -283,7 +283,22 @@ h2.debate-type {
   .single-comment .o-replies,
   .single-comment .comment-actions {
     grid-column-start: 1;
-    grid-column-end: 3; }
+    grid-column-end: 2; }
+  .single-comment .comment-counter-upvotes {
+    text-align: right; }
+    .single-comment .comment-counter-upvotes span {
+      margin: 0;
+      color: gray;
+      opacity: 0.8;
+      font-family: MetricWeb, sans-serif;
+      font-size: 12px;
+      line-height: 16px;
+      margin-bottom: 16px;
+      position: relative;
+      width: 100%;
+      text-decoration: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased; }
   .single-comment .comment-actions {
     text-align: left; }
     .single-comment .comment-actions a {
