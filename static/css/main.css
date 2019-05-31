@@ -96,6 +96,11 @@ h2.debate-type {
   font-size: 20px;
   line-height: 24px;
   margin: 0 0 20px; }
+  h2.debate-type a {
+    color: #000000;
+    text-decoration: none; }
+    h2.debate-type a:hover {
+      text-decoration: underline; }
 
 .admin-content {
   width: 100%;
