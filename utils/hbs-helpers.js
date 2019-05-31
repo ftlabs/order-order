@@ -14,10 +14,15 @@ function ifNotThisOrThat(arg1, arg2, options) {
 		: options.fn(this);
 }
 
+function ifInList(item, list, options) {
+	return list.includes(item) ? options.inverse(this) : options.fn(this);
+}
+
 function registerHelpers(hbs) {
 	hbs.registerHelper('ifEquals', ifEquals);
 	hbs.registerHelper('ifThisOrThat', ifThisOrThat);
 	hbs.registerHelper('ifNotThisOrThat', ifNotThisOrThat);
+	hbs.registerHelper('ifInList', ifInList);
 }
 
 module.exports = {

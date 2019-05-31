@@ -51,6 +51,7 @@ function addRatingsEventListeners() {
 				element.getAttribute('data-index'),
 				element.getAttribute('data-rating')
 			);
+			location.reload();
 		});
 	});
 }

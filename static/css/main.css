@@ -280,15 +280,20 @@ h2.debate-type {
   .single-comment .o-teaser__text {
     margin: 8px 0; }
   .single-comment .o-teaser__text,
-  .single-comment .o-replies,
+  .single-comment .o-replies {
+    grid-column-start: 1;
+    grid-column-end: 3; }
   .single-comment .comment-actions {
     grid-column-start: 1;
     grid-column-end: 2; }
   .single-comment .comment-counter-upvotes {
+    grid-column-start: 2;
+    grid-column-end: 3; }
+  .single-comment .comment-counter-upvotes {
     text-align: right; }
     .single-comment .comment-counter-upvotes span {
       margin: 0;
-      color: gray;
+      color: #666666;
       opacity: 0.8;
       font-family: MetricWeb, sans-serif;
       font-size: 12px;
@@ -300,10 +305,19 @@ h2.debate-type {
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased; }
   .single-comment .comment-actions {
-    text-align: left; }
+    text-align: left;
+    margin: 0;
+    color: #666666;
+    opacity: 0.8;
+    font-family: MetricWeb, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    text-decoration: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased; }
     .single-comment .comment-actions a {
       margin: 0;
-      color: gray;
+      color: #666666;
       opacity: 0.8;
       font-family: MetricWeb, sans-serif;
       font-size: 12px;
@@ -315,7 +329,9 @@ h2.debate-type {
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased; }
       .single-comment .comment-actions a:hover {
-        text-decoration: underline; }
+        color: #000000;
+        text-decoration: underline;
+        opacity: 1; }
   .single-comment .o-replies {
     max-width: 100%;
     margin-top: 15px; }

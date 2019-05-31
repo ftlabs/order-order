@@ -5,8 +5,15 @@
 	<div class="comment-actions">
 		{{#if repliesOpen}}
 		<a data-comment-id="{{comment.id}}" class="reply" href="#">Reply</a>
+		|
+		{{#ifInList currentUser upVoters}}
 		<a data-debate-id="{{debateId}}" data-debate-type="{{debateType}}" data-index="{{index}}" data-rating="upvote"
 			class="rate" href="#">UpVote</a>
+		{{else}}
+		<a data-debate-id="{{debateId}}" data-debate-type="{{debateType}}" data-index="{{index}}" data-rating="upvote"
+			class="rate-remove" href="#">Remove UpVote</a>
+		{{/ifInList}}
+		|
 		{{/if}}
 		<a data-comment-id="{{comment.id}}" class="report" href="#">Report</a>
 	</div>

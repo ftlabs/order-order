@@ -31,13 +31,13 @@
 			<div class="comments-for" data-o-grid-colspan="6">
 				<h2>For</h2>
 				{{#if commentsFor}}
-				{{> components/comments/list class='comments_list' comments=commentsFor debateId=debateId debateType=debateType repliesOpen=debateOpen listStyleClass="forAgainstWithColour" }}
+				{{> components/comments/list class='comments_list' comments=commentsFor debateId=debateId debateType=debateType repliesOpen=debateOpen listStyleClass="forAgainstWithColour" currentUser=user.username }}
 				{{/if}}
 			</div>
 			<div class="comments-against" data-o-grid-colspan="6">
 				<h2>Against</h2>
 				{{#if commentsAgainst}}
-				{{> components/comments/list class='comments_list' comments=commentsAgainst debateId=debateId debateType=debateType repliesOpen=debateOpen listStyleClass="forAgainstWithColour" }}
+				{{> components/comments/list class='comments_list' comments=commentsAgainst debateId=debateId debateType=debateType repliesOpen=debateOpen listStyleClass="forAgainstWithColour" currentUser=user.username }}
 				{{/if}}
 			</div>
 		</div>

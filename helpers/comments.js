@@ -31,6 +31,7 @@ function getNestedComments(originParams) {
 
 	params.commentsDataFiltered.forEach((comment) => {
 		comment.upVotes = countUpVotes(comment);
+		comment.upVoters = getUpVoters(comment);
 
 		if (!Utils.hasOwnPropertyCall(comment, 'replyTo')) {
 			commentsOrigin.push(comment);
@@ -112,6 +113,18 @@ function countUpVotes(comment) {
 		});
 	}
 	return upVotes;
+}
+
+function getUpVoters(comment) {
+	let upVoters = [];
+	if (comment && comment.ratings) {
+		comment.ratings.forEach((rating) => {
+			if (rating.rating === 'upvote') {
+				upVoters.push(rating.user);
+			}
+		});
+	}
+	return upVoters;
 }
 
 module.exports = {
