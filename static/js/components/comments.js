@@ -51,7 +51,6 @@ function addRatingsEventListeners() {
 				element.getAttribute('data-index'),
 				element.getAttribute('data-rating')
 			);
-			location.reload();
 		});
 	});
 
@@ -64,7 +63,6 @@ function addRatingsEventListeners() {
 				element.getAttribute('data-index'),
 				element.getAttribute('data-username')
 			);
-			location.reload();
 		});
 	});
 }
@@ -81,9 +79,13 @@ function rateComment(debateId, debateType, index, rating) {
 		headers: {
 			'Content-Type': 'application/json'
 		}
-	}).catch(function(res) {
-		console.log(res);
-	});
+	})
+		.then(function(res) {
+			location.reload();
+		})
+		.catch(function(res) {
+			console.log(res);
+		});
 }
 
 function removeRatingComment(debateId, index, username) {
@@ -98,9 +100,13 @@ function removeRatingComment(debateId, index, username) {
 		headers: {
 			'Content-Type': 'application/json'
 		}
-	}).catch(function(res) {
-		console.log(res);
-	});
+	})
+		.then(function(res) {
+			location.reload();
+		})
+		.catch(function(res) {
+			console.log(res);
+		});
 }
 
 function initComments() {

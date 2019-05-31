@@ -11,7 +11,7 @@ router.get('/create', async (req, res) => {
 		const { alertType, alertAction } = req.query;
 
 		res.render('admin/createDebate', {
-			debateTypes: debateTypes.Items,
+			debateTypes: debateTypes,
 			username,
 			page: 'create',
 			alertMessage: getAlertMessage(
