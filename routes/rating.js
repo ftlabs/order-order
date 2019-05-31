@@ -4,6 +4,38 @@ const fs = require('fs');
 const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
 
+router.post('/remove/:debateId', async (req, res, next) => {
+	try {
+		const backURL = req.header('Referer') || '/';
+		const { debateId } = req.params;
+		const { username, index } = req.body;
+
+		const debate = await dynamoDb.getById(debateId);
+
+		if (debate && debate.Items && debate.Items.length > 0) {
+			const comment = debate.Items[0].comments[index];
+			const ratings = comment.ratings;
+
+			ratings.forEach((rating, index) => {
+				if (rating.user === username) {
+					ratings.splice(index, 1);
+				}
+			});
+
+			debate.Items[0].comments[index].ratings = ratings;
+		}
+
+		const newData = {
+			comments: debate.Items[0].comments
+		};
+
+		await dynamoDb.updateDebate(debateId, newData, true);
+		res.redirect(backURL);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.post('/:debateType/:debateId', async (req, res, next) => {
 	try {
 		const backURL = req.header('Referer') || '/';

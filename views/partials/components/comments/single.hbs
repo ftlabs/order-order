@@ -10,8 +10,8 @@
 		<a data-debate-id="{{debateId}}" data-debate-type="{{debateType}}" data-index="{{index}}" data-rating="upvote"
 			class="rate" href="#">UpVote</a>
 		{{else}}
-		<a data-debate-id="{{debateId}}" data-debate-type="{{debateType}}" data-index="{{index}}" data-rating="upvote"
-			class="rate-remove" href="#">Remove UpVote</a>
+		<a data-debate-id="{{debateId}}" data-index="{{index}}" data-username={{currentUser}} class="rate-remove"
+			href="#">Remove UpVote</a>
 		{{/ifInList}}
 		|
 		{{/if}}

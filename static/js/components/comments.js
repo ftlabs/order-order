@@ -54,6 +54,19 @@ function addRatingsEventListeners() {
 			location.reload();
 		});
 	});
+
+	var ratingRemoveLinks = document.querySelectorAll('.rate-remove');
+
+	Array.from(ratingRemoveLinks).forEach(function(element) {
+		element.addEventListener('click', function(e) {
+			removeRatingComment(
+				element.getAttribute('data-debate-id'),
+				element.getAttribute('data-index'),
+				element.getAttribute('data-username')
+			);
+			location.reload();
+		});
+	});
 }
 
 function rateComment(debateId, debateType, index, rating) {
@@ -68,13 +81,26 @@ function rateComment(debateId, debateType, index, rating) {
 		headers: {
 			'Content-Type': 'application/json'
 		}
-	})
-		.then(function(res) {
-			console.log(res);
-		})
-		.catch(function(res) {
-			console.log(res);
-		});
+	}).catch(function(res) {
+		console.log(res);
+	});
+}
+
+function removeRatingComment(debateId, index, username) {
+	const data = {
+		index: index,
+		username: username
+	};
+
+	fetch(`rating/remove/${debateId}?`, {
+		method: 'POST',
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).catch(function(res) {
+		console.log(res);
+	});
 }
 
 function initComments() {

@@ -234,7 +234,7 @@ async function getAllReports() {
 	return { error: queryStatement };
 }
 
-function updateExpressionConstruct(data) {
+function updateExpressionConstruct(data, replaceExisting = false) {
 	const newData = { ...data, updatedAt: new Date().getTime() };
 	let expressionAttributeValues = {};
 	let updateExpression = 'SET';
@@ -245,7 +245,11 @@ function updateExpressionConstruct(data) {
 			[`:${key}`]: newData[key]
 		};
 		if (LIST_TYPES.includes(key)) {
-			updateExpression += ` ${key}=list_append(${key}, :${key})`;
+			if (replaceExisting) {
+				updateExpression += ` ${key} = :${key}`;
+			} else {
+				updateExpression += ` ${key}=list_append(${key}, :${key})`;
+			}
 		} else if (NESTED_LIST_TYPES.includes(key)) {
 			updateExpression += ` comments[${
 				data[key][0].index
@@ -265,15 +269,16 @@ function updateExpressionConstruct(data) {
 	};
 }
 
-async function updateDebate(uuid, data) {
+async function updateDebate(uuid, data, replaceExisting = false) {
 	try {
 		const params = {
 			Key: {
 				id: uuid
 			},
 			ReturnValues: 'ALL_NEW',
-			...updateExpressionConstruct(data)
+			...updateExpressionConstruct(data, replaceExisting)
 		};
+
 		const result = await query('update', params);
 		return result.result;
 	} catch (err) {
