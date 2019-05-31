@@ -34,6 +34,7 @@ router.post('/create', async (req, res) => {
 			debateStatus,
 			votingStatus,
 			specialUsers,
+			tags,
 			createdBy
 		} = req.body;
 
@@ -53,6 +54,7 @@ router.post('/create', async (req, res) => {
 			debateStatus,
 			votingStatus,
 			specialUsers: specialUsersFormatted,
+			tags,
 			createdBy
 		};
 		const results = await dynamoDb.createDebate(params);
@@ -85,6 +87,7 @@ router.get('/edit/:debateId', async (req, res) => {
 			title,
 			votingStatus,
 			specialUsers,
+			tags,
 			createdBy
 		} = debate.Items[0];
 
@@ -112,6 +115,7 @@ router.get('/edit/:debateId', async (req, res) => {
 			votingStatus,
 			specialUsers,
 			specialUsersInformation,
+			tags,
 			createdBy,
 			page: 'edit',
 			alertMessage: getAlertMessage(
