@@ -8,7 +8,7 @@
 		|
 		{{#ifInList currentUser upVoters}}
 		<a data-debate-id="{{debateId}}" data-debate-type="{{debateType}}" data-index="{{index}}" data-rating="upvote"
-			class="rate" href="#">UpVote</a>
+			class="rate" href="#">Up Vote</a>
 		{{else}}
 		<a data-debate-id="{{debateId}}" data-index="{{index}}" data-username={{currentUser}} class="rate-remove"
 			href="#">Remove UpVote</a>
@@ -20,7 +20,11 @@
 
 	{{#if upVotes}}
 	<div class="comment-counter-upvotes">
+		{{#ifThisGreaterThanThat upVotes 1}}
+		<span>{{upVotes}} Upvote</span>
+		{{else}}
 		<span>{{upVotes}} Upvotes</span>
+		{{/ifThisGreaterThanThat}}
 	</div>
 	{{/if}}
 

@@ -18,11 +18,16 @@ function ifInList(item, list, options) {
 	return list.includes(item) ? options.inverse(this) : options.fn(this);
 }
 
+function ifThisGreaterThanThat(varThis, varThat, options) {
+	return varThis > varThat ? options.inverse(this) : options.fn(this);
+}
+
 function registerHelpers(hbs) {
 	hbs.registerHelper('ifEquals', ifEquals);
 	hbs.registerHelper('ifThisOrThat', ifThisOrThat);
 	hbs.registerHelper('ifNotThisOrThat', ifNotThisOrThat);
 	hbs.registerHelper('ifInList', ifInList);
+	hbs.registerHelper('ifThisGreaterThanThat', ifThisGreaterThanThat);
 }
 
 module.exports = {
