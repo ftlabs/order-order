@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 const dynamoDb = require('../../models/dynamoDb');
 const { getS3oUsername } = require('../../helpers/cookies');

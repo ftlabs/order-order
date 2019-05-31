@@ -76,12 +76,31 @@ function addDebateTypeSelectListener() {
 			var description = this.options[this.selectedIndex].getAttribute(
 				'data-description'
 			);
+			const name = this.options[this.selectedIndex].getAttribute(
+				'data-name'
+			);
+			const valid = this.options[this.selectedIndex].getAttribute(
+				'data-valid'
+			);
 
 			addSpecialUserElements(this, specialUsersParentDiv);
 			addTagsElements(this, tagsParentDiv);
 
 			updateDescription(description);
 		});
+	}
+}
+
+function checkDebateTypeError(valid) {
+	console.log(valid);
+	const debateError = document.querySelector('.valid-debate-type-error');
+	console.log(debateError);
+	if (!Array.from(debateError.classList).includes('hide')) {
+		debateError.classList.add('hide');
+	}
+	if (valid === 'false') {
+		console.log('gettng in if');
+		debateError.classList.remove('hide');
 	}
 }
 
