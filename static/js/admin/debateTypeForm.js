@@ -6,7 +6,7 @@ function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
 		element.addEventListener('click', function() {
 			const userInputs = Array.from(
 				element.parentElement.parentElement.childNodes
-			).find((element) => {
+			).find(function(element) {
 				return element.classList
 					? Array.from(element.classList).includes(
 							attributeName + '-fields'
@@ -15,7 +15,9 @@ function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
 			});
 
 			const inputElements = Array.from(userInputs.childNodes).filter(
-				(element) => element.nodeName === 'INPUT'
+				function(element) {
+					return element.nodeName === 'INPUT';
+				}
 			);
 			const lastChild = inputElements[inputElements.length - 1];
 			if (lastChild && !lastChild.value) {
@@ -33,15 +35,17 @@ function addRemoveTextFieldsListeners(attributeName) {
 		element.addEventListener('click', function() {
 			const userInputs = Array.from(
 				element.parentElement.parentElement.childNodes
-			).find((element) =>
-				element.classList
+			).find(function(element) {
+				return element.classList
 					? Array.from(element.classList).includes(
 							attributeName + '-fields'
 					  )
-					: false
-			);
+					: false;
+			});
 			const inputElements = Array.from(userInputs.childNodes).filter(
-				(element) => element.nodeName === 'DIV'
+				function(element) {
+					return element.nodeName === 'DIV';
+				}
 			);
 			const lastChild = inputElements[inputElements.length - 1];
 
@@ -105,9 +109,11 @@ function saveCustomTextField(textField, saveButton, editButton, userInputs) {
 	textField.disabled = true;
 	saveButton.classList.add('hide');
 	editButton.classList.remove('hide');
-	const inputElements = Array.from(userInputs.childNodes).filter(
-		(element) => element.nodeName === 'INPUT'
-	);
+	const inputElements = Array.from(userInputs.childNodes).filter(function(
+		element
+	) {
+		return element.nodeName === 'INPUT';
+	});
 	if (inputElements.length === 0) {
 		createNewFieldForm(textField.value, userInputs);
 	}
@@ -115,9 +121,11 @@ function saveCustomTextField(textField, saveButton, editButton, userInputs) {
 
 function createNewFieldForm(attributeName, userInputs) {
 	var index =
-		Array.from(userInputs.parentElement.childNodes).filter(
-			(element) => element.nodeName === 'DIV'
-		).length - 1;
+		Array.from(userInputs.parentElement.childNodes).filter(function(
+			element
+		) {
+			return element.nodeName === 'DIV';
+		}).length - 1;
 
 	addLabelToField(
 		userInputs,
@@ -144,9 +152,11 @@ function createNewFieldForm(attributeName, userInputs) {
 
 function createNewTagFormItem(attributeName, userInputs) {
 	var index =
-		Array.from(userInputs.parentElement.childNodes).filter(
-			(element) => element.nodeName === 'DIV'
-		).length - 1;
+		Array.from(userInputs.parentElement.childNodes).filter(function(
+			element
+		) {
+			element.nodeName === 'DIV';
+		}).length - 1;
 
 	addLabelToField(
 		userInputs,

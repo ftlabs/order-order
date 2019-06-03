@@ -28,14 +28,16 @@ function addEventListenerPlusAndMinus(
 	element.addEventListener('click', function() {
 		const userInputs = Array.from(
 			element.parentElement.parentElement.childNodes
-		).find((element) =>
-			element.classList
+		).find(function(element) {
+			return element.classList
 				? Array.from(element.classList).includes('user-inputs')
-				: false
-		);
-		const inputElements = Array.from(userInputs.childNodes).filter(
-			(element) => element.nodeName === 'INPUT'
-		);
+				: false;
+		});
+		const inputElements = Array.from(userInputs.childNodes).filter(function(
+			element
+		) {
+			return element.nodeName === 'INPUT';
+		});
 		const lastChild = inputElements[inputElements.length - 1];
 		actionFunction(lastChild, userInputs, appendFunction, attributeName);
 	});
