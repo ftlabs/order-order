@@ -34,6 +34,7 @@ router.post('/create', async (req, res) => {
 			debateStatus,
 			votingStatus,
 			specialUsers,
+			tags,
 			createdBy
 		} = req.body;
 
@@ -53,6 +54,7 @@ router.post('/create', async (req, res) => {
 			debateStatus,
 			votingStatus,
 			specialUsers: specialUsersFormatted,
+			tags,
 			createdBy
 		};
 		const results = await dynamoDb.createDebate(params);
@@ -85,12 +87,13 @@ router.get('/edit/:debateId', async (req, res) => {
 			title,
 			votingStatus,
 			specialUsers,
+			tags,
 			createdBy
 		} = debate.Items[0];
 
 		const debateTypeInformation = await dynamoDb.getDebateType(debateType);
 		let specialUsersInformation = [];
-		if (specialUsers && specialUsers.length < 0) {
+		if (specialUsers && specialUsers.length > 0) {
 			specialUsersInformation = debateTypeInformation.Items[0].specialUsers.map(
 				(userType) => {
 					const userList = specialUsers.find(
@@ -101,7 +104,15 @@ router.get('/edit/:debateId', async (req, res) => {
 				}
 			);
 		}
-
+		let tagsWithInformation = [];
+		if (tags && tags.length > 0) {
+			tagsWithInformation = debateTypeInformation.Items[0].tags.map(
+				(tagType) => {
+					const checked = tags.includes(tagType.name);
+					return { ...tagType, checked };
+				}
+			);
+		}
 		res.render('admin/editDebate', {
 			username,
 			id,
@@ -110,8 +121,8 @@ router.get('/edit/:debateId', async (req, res) => {
 			description,
 			title,
 			votingStatus,
-			specialUsers,
 			specialUsersInformation,
+			tagsWithInformation,
 			createdBy,
 			page: 'edit',
 			alertMessage: getAlertMessage(
@@ -137,9 +148,9 @@ router.post('/edit/:debateId', async (req, res) => {
 			description,
 			debateStatus,
 			votingStatus,
-			specialUsers
+			specialUsers,
+			tags
 		} = req.body;
-
 		if ((!debateType, !title, !description, !debateStatus, !votingStatus)) {
 			throw new Error(
 				'One of the required fields was not filled in correctly.'
@@ -148,13 +159,13 @@ router.post('/edit/:debateId', async (req, res) => {
 		const specialUsersFormatted = specialUsers
 			? formatSpecialUsers(specialUsers)
 			: [];
-
 		const params = {
 			title,
 			description,
 			debateStatus,
 			votingStatus,
-			specialUsers: specialUsersFormatted
+			specialUsers: specialUsersFormatted,
+			tags
 		};
 		await dynamoDb.updateDebate(debateId, params);
 		res.redirect(
