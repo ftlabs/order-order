@@ -105,12 +105,7 @@ router.get('/edit/:debateId', async (req, res) => {
 			);
 		}
 		let tagsWithInformation = [];
-		console.log(tags && tags.length > 0);
 		if (tags && tags.length > 0) {
-			console.log('tags work', tags.length > 0);
-		}
-		if (tags && tags.length > 0) {
-			console.log('getting in if');
 			tagsWithInformation = debateTypeInformation.Items[0].tags.map(
 				(tagType) => {
 					const checked = tags.includes(tagType.name);
@@ -118,8 +113,6 @@ router.get('/edit/:debateId', async (req, res) => {
 				}
 			);
 		}
-		console.log(tagsWithInformation);
-
 		res.render('admin/editDebate', {
 			username,
 			id,
