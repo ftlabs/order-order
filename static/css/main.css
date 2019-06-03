@@ -15,11 +15,13 @@ body {
   left: 0;
   right: 0;
   z-index: 5; }
+  .sticky .btn-quick-edit {
+    top: 15px; }
 
 .btn-quick-edit {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 40px;
   z-index: 10; }
 
 .o-header-services__related-content {

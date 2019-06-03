@@ -14,8 +14,7 @@
 
 	{{#ifThisOrThat commentsAgainst commentsFor}}
 	<div class="sticky hide">
-		{{> components/tools/quickEdit debateId=debateId}}
-		{{> components/heading/topper-mini title=title }}
+		{{> components/heading/topper-mini title=title debateId=debateId }}
 		<div class="o-grid-container ">
 			<div class="o-grid-row">
 				<div class="comments-for" data-o-grid-colspan="6">
@@ -45,7 +44,7 @@
 		</div>
 	</main>
 	{{/ifThisOrThat}}
-  
+
 	{{#if votingOpen}}
 	{{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
 	{{/if}}
