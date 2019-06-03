@@ -86,14 +86,18 @@ function addDebateTypeSelectListener() {
 function addTagsElements(element, tagsParentDiv) {
 	const tagsDescription = getDebateTypeValues(element, 'tags-description');
 	const tagsName = getDebateTypeValues(element, 'tags-name');
-	const tags = tagsName.map((name, index) => ({
-		name,
-		description: tagsDescription[index]
-	}));
+	const tags = tagsName.map(function(name, index) {
+		return {
+			name,
+			description: tagsDescription[index]
+		};
+	});
 	while (tagsParentDiv.firstChild) {
 		tagsParentDiv.removeChild(tagsParentDiv.firstChild);
 	}
-	tags.forEach((tag) => insertTags({ tagsParentDiv, ...tag }));
+	tags.forEach(function(tag) {
+		insertTags({ tagsParentDiv, ...tag });
+	});
 }
 
 function addSpecialUserElements(element, specialUsersParentDiv) {
