@@ -6,6 +6,7 @@
 	<h1 class="admin-section">Create debate</h1>
 	<div class="o-grid-row">
 		<section class="admin-content">
+
 			<form id="form_new_debate" action="/admin/debate/create" method="POST" data-o-grid-colspan="6">
 				<div class="o-forms">
 					<label for="debateType" class="o-forms__label">Debate type</label>
@@ -14,6 +15,8 @@
 						{{#each debateTypes}}
 						<option data-special-user-description="{{#each specialUsers}}{{description}},{{/each}}"
 							data-special-user-name="{{#each specialUsers}}{{name}},{{/each}}"
+							data-tags-name="{{#each tags}}{{name}},{{/each}}"
+							data-tags-description="{{#each tags}}{{description}},{{/each}}"
 							data-description="{{description}}" data-name="{{name}}" value="{{name}}">
 							{{displayName}}
 						</option>
@@ -47,7 +50,20 @@
 					</select>
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="votingStatus"></div>
 				</div>
-				<div class="special-users">
+				<div class="o-forms">
+					<label for="tags" class="o-forms__label">Special Users</label>
+					<div id="text-box-info" class="o-forms__additional-info">Add special users.
+					</div>
+					<div class="special-users">
+					</div>
+				</div>
+				<div class="o-forms">
+					<label for="tags" class="o-forms__label">Tags</label>
+					<div id="text-box-info" class="o-forms__additional-info">Select which tags you would like for your
+						debate.
+					</div>
+					<div class="tags">
+					</div>
 				</div>
 				<div class="o-forms">
 					<input type="hidden" name="createdBy" value="{{user.username}}" />

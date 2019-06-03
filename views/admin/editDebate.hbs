@@ -9,17 +9,18 @@
 			<form id="form_edit_debate" action="/admin/debate/edit/{{id}}" method="POST">
 				<div class="o-forms">
 					<label for="id" class="o-forms__label">ID</label>
-					<div>{{id}}</div>
+					<input type="text" name="id" class="o-forms__text" value="{{id}}" required disabled />
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="id"></div>
 				</div>
 				<div class="o-forms">
 					<label for="debateType" class="o-forms__label">Debate type</label>
-					<div>{{debateType}}</div>
+					<input type="text" name="debateType" class="o-forms__text" value="{{debateType}}" required
+						disabled />
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateType"></div>
 				</div>
 				<div class="o-forms">
 					<label for="createdBy" class="o-forms__label">Created By</label>
-					<div>{{createdBy}}</div>
+					<input type="text" name="createdBy" class="o-forms__text" value="{{createdBy}}" required disabled />
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="createdBy"></div>
 				</div>
 				<div class="o-forms">
@@ -71,6 +72,18 @@
 							</button>
 						</div>
 						<div id="msg_error" class="error o-forms__errortext hide" data-validation="{{userType}}"></div>
+					</div>
+					{{/each}}
+				</div>
+				<div class="tags">
+					{{#each tagsWithInformation}}
+					<div class="o-forms" data-tag-name="{{name}}">
+						<div class="user-inputs">{{displayName}}
+							<label class="o-forms__label">
+								<input type="checkbox" name="tags[]" value="tagging" {{#if checked}}checked{{/if}}>
+								<span class="o-forms-input__label" aria-hidden="true">{{description}}</span>
+							</label>
+						</div>
 					</div>
 					{{/each}}
 				</div>

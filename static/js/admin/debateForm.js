@@ -3,11 +3,11 @@ function addAdditionalTextFieldsListeners(
 	actionFunction,
 	appendFunction
 ) {
-	const addTextButtons = document.querySelectorAll(
+	var addTextButtons = document.querySelectorAll(
 		'.' + action + '-text-field'
 	);
 	Array.from(addTextButtons).forEach(function(element) {
-		const attributeName = `specialUsers[${element.parentElement.parentElement.getAttribute(
+		var attributeName = `specialUsers[${element.parentElement.parentElement.getAttribute(
 			'data-special-user-type'
 		)}]`;
 		addEventListenerPlusAndMinus(
@@ -26,17 +26,19 @@ function addEventListenerPlusAndMinus(
 	attributeName
 ) {
 	element.addEventListener('click', function() {
-		const userInputs = Array.from(
+		var userInputs = Array.from(
 			element.parentElement.parentElement.childNodes
-		).find((element) =>
-			element.classList
+		).find(function(element) {
+			return element.classList
 				? Array.from(element.classList).includes('user-inputs')
-				: false
-		);
-		const inputElements = Array.from(userInputs.childNodes).filter(
-			(element) => element.nodeName === 'INPUT'
-		);
-		const lastChild = inputElements[inputElements.length - 1];
+				: false;
+		});
+		var inputElements = Array.from(userInputs.childNodes).filter(function(
+			element
+		) {
+			return element.nodeName === 'INPUT';
+		});
+		var lastChild = inputElements[inputElements.length - 1];
 		actionFunction(lastChild, userInputs, appendFunction, attributeName);
 	});
 }
@@ -53,7 +55,7 @@ function removeNewUserField(lastChild, userInputs) {
 }
 
 function addSingleTextBox(userInputs, attributeName) {
-	const newInput = document.createElement('input');
+	var newInput = document.createElement('input');
 	newInput.classList.add('o-forms__text');
 	newInput.setAttribute('type', 'text');
 	if (attributeName) {
@@ -64,87 +66,204 @@ function addSingleTextBox(userInputs, attributeName) {
 }
 
 function addDebateTypeSelectListener() {
-	const debateTypeSelector = document.querySelector('.debate-type');
-	const specialUsersParentDiv = document.querySelector('.special-users');
+	var debateTypeSelector = document.querySelector('.debate-type');
+	var specialUsersParentDiv = document.querySelector('.special-users');
+	var tagsParentDiv = document.querySelector('.tags');
 
 	if (debateTypeSelector) {
 		debateTypeSelector.addEventListener('change', function(e) {
-			const specialUserDescription = getDebateTypeValues(
-				this,
-				'special-user-description'
-			);
-			const specialUserName = getDebateTypeValues(
-				this,
-				'special-user-name'
-			);
-			const displayName = this.value;
-			const description = this.options[this.selectedIndex].getAttribute(
+			var displayName = this.value;
+			var description = this.options[this.selectedIndex].getAttribute(
 				'data-description'
 			);
 
-			const name = this.options[this.selectedIndex].getAttribute(
-				'data-name'
-			);
-			const specialUsers = specialUserName.map((name, index) => ({
-				name,
-				description: specialUserDescription[index]
-			}));
-			while (specialUsersParentDiv.firstChild) {
-				specialUsersParentDiv.removeChild(
-					specialUsersParentDiv.firstChild
-				);
-			}
-			specialUsers.forEach((specialUser) =>
-				insertSpecialUser({ specialUsersParentDiv, ...specialUser })
-			);
+			addSpecialUserElements(this, specialUsersParentDiv);
+			addTagsElements(this, tagsParentDiv);
 
 			updateDescription(description);
 		});
 	}
 }
 
+function addTagsElements(element, tagsParentDiv) {
+	var tagsDescription = getDebateTypeValues(element, 'tags-description');
+	var tagsName = getDebateTypeValues(element, 'tags-name');
+	var tags = tagsName.map(function(name, index) {
+		return {
+			name,
+			description: tagsDescription[index]
+		};
+	});
+	while (tagsParentDiv.firstChild) {
+		tagsParentDiv.removeChild(tagsParentDiv.firstChild);
+	}
+	Array.from(tags).forEach(function(tag) {
+		insertTags({
+			tagsParentDiv,
+			name: tag.name,
+			description: tag.description
+		});
+	});
+}
+
+function addSpecialUserElements(element, specialUsersParentDiv) {
+	var specialUserDescription = getDebateTypeValues(
+		element,
+		'special-user-description'
+	);
+	var specialUserName = getDebateTypeValues(element, 'special-user-name');
+
+	var specialUsers = specialUserName.map(function(name, index) {
+		return {
+			name,
+			description: specialUserDescription[index]
+		};
+	});
+	while (specialUsersParentDiv.firstChild) {
+		specialUsersParentDiv.removeChild(specialUsersParentDiv.firstChild);
+	}
+	Array.from(specialUsers).forEach(function(specialUser) {
+		insertSpecialUser({
+			specialUsersParentDiv,
+			name: specialUser.name,
+			description: specialUser.description
+		});
+	});
+}
+
 function updateDescription(description) {
-	const debateDescriptions = document.querySelector('.debateDescription');
+	var debateDescriptions = document.querySelector('.debateDescription');
 	debateDescriptions.innerHTML = description;
 }
 
 function insertSpecialUser({ specialUsersParentDiv, name, description }) {
-	const parentDiv = document.createElement('div');
-	parentDiv.classList.add('o-forms');
-	parentDiv.setAttribute('data-special-user-type', name);
-	specialUsersParentDiv.appendChild(parentDiv);
-	const titleLabel = document.createElement('label');
-	titleLabel.classList.add('o-forms__label');
-	titleLabel.setAttribute('for', name);
-	titleLabel.innerHTML = name;
-	parentDiv.appendChild(titleLabel);
-	const descriptionDiv = document.createElement('div');
-	descriptionDiv.classList.add('o-forms__additional-info');
-	descriptionDiv.setAttribute('id', 'text-box-info');
-	descriptionDiv.innerHTML = description;
-	parentDiv.appendChild(descriptionDiv);
-	const userInputDiv = document.createElement('div');
-	userInputDiv.classList.add('user-inputs');
-	parentDiv.appendChild(userInputDiv);
-	const customElementButtons = document.createElement('div');
-	customElementButtons.classList.add('custom-element-buttons');
-	parentDiv.appendChild(customElementButtons);
+	var parentDiv = createElement({
+		htmlTag: 'div',
+		parent: specialUsersParentDiv,
+		attributes: [
+			{ name: 'class', value: 'o-forms' },
+			{ name: 'data-special-user-type', value: name }
+		]
+	});
+
+	createElement({
+		htmlTag: 'label',
+		parent: parentDiv,
+		innerHTML: name,
+		attributes: [
+			{ name: 'class', value: 'o-forms__label' },
+			{ name: 'for', value: name }
+		]
+	});
+
+	createElement({
+		htmlTag: 'div',
+		parent: parentDiv,
+		innerHTML: description,
+		attributes: [
+			{ name: 'class', value: 'o-forms__additional-info' },
+			{ name: 'id', value: 'text-box-info' }
+		]
+	});
+
+	createElement({
+		htmlTag: 'div',
+		parent: parentDiv,
+		attributes: [{ name: 'class', value: 'user-inputs' }]
+	});
+
+	var customElementButtons = createElement({
+		htmlTag: 'div',
+		parent: parentDiv,
+		attributes: [{ name: 'class', value: 'custom-element-buttons' }]
+	});
+
 	addPlusAndMinusButtons(customElementButtons, 'add', name);
 	addPlusAndMinusButtons(customElementButtons, 'remove');
 }
 
+function insertTags({ tagsParentDiv, name, description }) {
+	var parentDiv = createElement({
+		htmlTag: 'div',
+		parent: tagsParentDiv,
+		attributes: [
+			{ name: 'class', value: 'o-forms' },
+			{ name: 'data-tag-type', value: name }
+		]
+	});
+
+	var userInputDiv = createElement({
+		htmlTag: 'div',
+		parent: parentDiv,
+		attributes: [{ name: 'class', value: 'user-inputs' }]
+	});
+
+	var checkBoxParent = createElement({
+		htmlTag: 'div',
+		parent: userInputDiv,
+		attributes: [{ name: 'class', value: 'o-forms__group' }]
+	});
+
+	createElement({
+		htmlTag: 'span',
+		parent: checkBoxParent,
+		innerHTML: name,
+		attributes: [{ name: 'class', value: 'o-forms__label' }]
+	});
+
+	createElement({
+		htmlTag: 'input',
+		parent: checkBoxParent,
+		attributes: [
+			{ name: 'class', value: 'o-forms__checkbox' },
+			{ name: 'type', value: 'checkbox' },
+			{ name: 'name', value: 'tags[]' },
+			{ name: 'value', value: name },
+			{ name: 'id', value: name }
+		]
+	});
+
+	createElement({
+		htmlTag: 'label',
+		parent: checkBoxParent,
+		innerHTML: description,
+		attributes: [
+			{ name: 'class', value: 'o-forms__label' },
+			{ name: 'type', value: 'checkbox' },
+			{ name: 'aria-hidden', value: 'true' },
+			{ name: 'for', value: name }
+		]
+	});
+}
+
+function createElement({ htmlTag, parent, attributes, innerHTML }) {
+	var element = document.createElement(htmlTag);
+	if (attributes) {
+		Array.from(attributes).forEach(function(attribute) {
+			element.setAttribute(attribute.name, attribute.value);
+		});
+	}
+	if (parent) {
+		parent.appendChild(element);
+	}
+	if (innerHTML) {
+		element.innerHTML = innerHTML;
+	}
+	return element;
+}
+
 function addPlusAndMinusButtons(parentElement, type, name) {
-	const button = document.createElement('button');
+	var button = document.createElement('button');
 	button.setAttribute('class', `${type}-text-field o-buttons`);
 	button.setAttribute('type', 'button');
 	parentElement.appendChild(button);
-	const buttonSpan = document.createElement('span');
+	var buttonSpan = document.createElement('span');
 	buttonSpan.setAttribute('class', 'o-buttons-icon__label');
 	buttonSpan.innerHTML = type === 'add' ? 'Add' : 'Remove';
 	button.appendChild(buttonSpan);
 
 	if (type === 'add') {
-		const attributeName = `specialUsers[${name}]`;
+		var attributeName = `specialUsers[${name}]`;
 		addEventListenerPlusAndMinus(
 			button,
 			addNewUserField,
@@ -157,7 +276,7 @@ function addPlusAndMinusButtons(parentElement, type, name) {
 }
 
 function getDebateTypeValues(selector, attribute) {
-	const value = selector.options[selector.selectedIndex]
+	var value = selector.options[selector.selectedIndex]
 		.getAttribute('data-' + attribute)
 		.split(',');
 	value.pop();

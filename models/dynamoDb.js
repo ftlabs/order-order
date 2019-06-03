@@ -163,7 +163,7 @@ async function getAllDebateLists(type = 'nested') {
 			debateTypes.forEach((type) => {
 				debateTypeDetails[type.name] = type.displayName;
 			});
-
+      
 			queryStatement.result['Items'].map((item) => {
 				if (!debates.hasOwnProperty(item.debateType)) {
 					debates[item.debateType] = {
@@ -249,9 +249,9 @@ function updateExpressionConstruct(data) {
 		} else if (NESTED_LIST_TYPES.includes(key)) {
 			updateExpression += ` comments[${
 				data[key][0].index
-			}].${key}=list_append(comments[${
+				}].${key}=list_append(comments[${
 				data[key][0].index
-			}].${key}, :${key})`;
+				}].${key}, :${key})`;
 		} else {
 			updateExpression += ` ${key}=:${key}`;
 		}
@@ -318,6 +318,7 @@ function constructRatingObject({ rating, user, index }) {
 async function createDebateType({
 	name,
 	description,
+	tags,
 	specialUsers,
 	displayName,
 	createdBy,
@@ -335,6 +336,7 @@ async function createDebateType({
 	const params = {
 		Item: {
 			name,
+			tags,
 			description,
 			specialUsers,
 			displayName,

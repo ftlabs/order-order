@@ -11,11 +11,13 @@ router.get('/', async (req, res) => {
 	const username = getS3oUsername(req.cookies);
 
 	try {
+		const debateList = await dynamoDb.getAllDebateLists();
 		res.render('admin/index', {
 			user: {
 				username,
 				usernameNice: Utils.cleanUsername(username)
 			},
+			debateList,
 			page: 'dashboard'
 		});
 	} catch (err) {
