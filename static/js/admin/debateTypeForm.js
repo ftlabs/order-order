@@ -1,10 +1,10 @@
 function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
-	const addTextButtons = document.querySelectorAll(
+	var addTextButtons = document.querySelectorAll(
 		'.add-text-field-' + attributeName
 	);
 	Array.from(addTextButtons).forEach(function(element) {
 		element.addEventListener('click', function() {
-			const userInputs = Array.from(
+			var userInputs = Array.from(
 				element.parentElement.parentElement.childNodes
 			).find(function(element) {
 				return element.classList
@@ -14,12 +14,12 @@ function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
 					: false;
 			});
 
-			const inputElements = Array.from(userInputs.childNodes).filter(
+			var inputElements = Array.from(userInputs.childNodes).filter(
 				function(element) {
 					return element.nodeName === 'INPUT';
 				}
 			);
-			const lastChild = inputElements[inputElements.length - 1];
+			var lastChild = inputElements[inputElements.length - 1];
 			if (lastChild && !lastChild.value) {
 				// show error for blank last box
 			} else {
@@ -30,10 +30,10 @@ function addAdditionalTextFieldsListeners(attributeName, appendFunction) {
 }
 
 function addRemoveTextFieldsListeners(attributeName) {
-	const removeTextButtons = document.querySelectorAll('.remove-text-field');
+	var removeTextButtons = document.querySelectorAll('.remove-text-field');
 	Array.from(removeTextButtons).forEach(function(element) {
 		element.addEventListener('click', function() {
-			const userInputs = Array.from(
+			var userInputs = Array.from(
 				element.parentElement.parentElement.childNodes
 			).find(function(element) {
 				return element.classList
@@ -43,12 +43,12 @@ function addRemoveTextFieldsListeners(attributeName) {
 					: false;
 			});
 			if (userInputs) {
-				const inputElements = Array.from(userInputs.childNodes).filter(
+				var inputElements = Array.from(userInputs.childNodes).filter(
 					function(element) {
 						return element.nodeName === 'DIV';
 					}
 				);
-				const lastChild = inputElements[inputElements.length - 1];
+				var lastChild = inputElements[inputElements.length - 1];
 				if (lastChild) {
 					userInputs.removeChild(lastChild);
 				}
@@ -58,7 +58,7 @@ function addRemoveTextFieldsListeners(attributeName) {
 }
 
 function addSingleTextBox(attributeName, userInputs) {
-	const newInput = document.createElement('input');
+	var newInput = document.createElement('input');
 	newInput.classList.add('o-forms__text');
 	newInput.setAttribute('type', 'text');
 	newInput.setAttribute('name', attributeName);
@@ -67,7 +67,7 @@ function addSingleTextBox(attributeName, userInputs) {
 }
 
 function addNewUserField(attributeName, userInputs) {
-	const newSpecialUserInputs = document.createElement('div');
+	var newSpecialUserInputs = document.createElement('div');
 	newSpecialUserInputs.classList.add('user-inputs');
 	userInputs.appendChild(newSpecialUserInputs);
 
@@ -75,7 +75,7 @@ function addNewUserField(attributeName, userInputs) {
 }
 
 function addNewTagField(attributeName, userInputs) {
-	const newSpecialUserInputs = document.createElement('div');
+	var newSpecialUserInputs = document.createElement('div');
 	newSpecialUserInputs.classList.add('user-inputs');
 	userInputs.appendChild(newSpecialUserInputs);
 
@@ -88,13 +88,13 @@ function addLabelToField(
 	displayName,
 	displayDescription
 ) {
-	const label = document.createElement('label');
+	var label = document.createElement('label');
 	label.setAttribute('for', formName);
 	label.classList.add('o-forms__label');
 	label.innerHTML = displayName;
 	userInputs.appendChild(label);
 	if (displayDescription) {
-		const labelDiv = document.createElement('div');
+		var labelDiv = document.createElement('div');
 		labelDiv.classList.add('o-forms__additional-info');
 		labelDiv.setAttribute('id', 'text-box-info');
 		labelDiv.innerHTML = displayDescription;
@@ -112,7 +112,7 @@ function saveCustomTextField(textField, saveButton, editButton, userInputs) {
 	textField.disabled = true;
 	saveButton.classList.add('hide');
 	editButton.classList.remove('hide');
-	const inputElements = Array.from(userInputs.childNodes).filter(function(
+	var inputElements = Array.from(userInputs.childNodes).filter(function(
 		element
 	) {
 		return element.nodeName === 'INPUT';
