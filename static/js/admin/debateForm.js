@@ -6,7 +6,7 @@ function addAdditionalTextFieldsListeners(
 	const addTextButtons = document.querySelectorAll(
 		'.' + action + '-text-field'
 	);
-	Array.from(addTextButtons).forEach(function (element) {
+	Array.from(addTextButtons).forEach(function(element) {
 		const attributeName = `specialUsers[${element.parentElement.parentElement.getAttribute(
 			'data-special-user-type'
 		)}]`;
@@ -25,7 +25,7 @@ function addEventListenerPlusAndMinus(
 	appendFunction,
 	attributeName
 ) {
-	element.addEventListener('click', function () {
+	element.addEventListener('click', function() {
 		const userInputs = Array.from(
 			element.parentElement.parentElement.childNodes
 		).find((element) =>
@@ -69,14 +69,14 @@ function addDebateTypeSelectListener() {
 	const tagsParentDiv = document.querySelector('.tags');
 
 	if (debateTypeSelector) {
-		debateTypeSelector.addEventListener('change', function (e) {
+		debateTypeSelector.addEventListener('change', function(e) {
 			const displayName = this.value;
 			const description = this.options[this.selectedIndex].getAttribute(
 				'data-description'
 			);
 
-			addSpecialUserElements(this, specialUsersParentDiv)
-			addTagsElements(this, tagsParentDiv)
+			addSpecialUserElements(this, specialUsersParentDiv);
+			addTagsElements(this, tagsParentDiv);
 
 			updateDescription(description);
 		});
@@ -84,26 +84,16 @@ function addDebateTypeSelectListener() {
 }
 
 function addTagsElements(element, tagsParentDiv) {
-	const tagsDescription = getDebateTypeValues(
-		element,
-		'tags-description'
-	);
-	const tagsName = getDebateTypeValues(
-		element,
-		'tags-name'
-	);
+	const tagsDescription = getDebateTypeValues(element, 'tags-description');
+	const tagsName = getDebateTypeValues(element, 'tags-name');
 	const tags = tagsName.map((name, index) => ({
 		name,
 		description: tagsDescription[index]
 	}));
 	while (tagsParentDiv.firstChild) {
-		tagsParentDiv.removeChild(
-			tagsParentDiv.firstChild
-		);
+		tagsParentDiv.removeChild(tagsParentDiv.firstChild);
 	}
-	tags.forEach((tag) =>
-		insertTags({ tagsParentDiv, ...tag })
-	);
+	tags.forEach((tag) => insertTags({ tagsParentDiv, ...tag }));
 }
 
 function addSpecialUserElements(element, specialUsersParentDiv) {
@@ -111,19 +101,14 @@ function addSpecialUserElements(element, specialUsersParentDiv) {
 		element,
 		'special-user-description'
 	);
-	const specialUserName = getDebateTypeValues(
-		element,
-		'special-user-name'
-	);
+	const specialUserName = getDebateTypeValues(element, 'special-user-name');
 
 	const specialUsers = specialUserName.map((name, index) => ({
 		name,
 		description: specialUserDescription[index]
 	}));
 	while (specialUsersParentDiv.firstChild) {
-		specialUsersParentDiv.removeChild(
-			specialUsersParentDiv.firstChild
-		);
+		specialUsersParentDiv.removeChild(specialUsersParentDiv.firstChild);
 	}
 	specialUsers.forEach((specialUser) =>
 		insertSpecialUser({ specialUsersParentDiv, ...specialUser })
@@ -165,12 +150,6 @@ function insertTags({ tagsParentDiv, name, description }) {
 	parentDiv.classList.add('o-forms');
 	parentDiv.setAttribute('data-special-user-type', name);
 	tagsParentDiv.appendChild(parentDiv);
-
-	// const descriptionDiv = document.createElement('div');
-	// descriptionDiv.classList.add('o-forms__additional-info');
-	// descriptionDiv.setAttribute('id', 'text-box-info');
-	// descriptionDiv.innerHTML = description;
-	// parentDiv.appendChild(descriptionDiv);
 	const userInputDiv = document.createElement('div');
 	userInputDiv.classList.add('user-inputs');
 	parentDiv.appendChild(userInputDiv);
@@ -190,7 +169,7 @@ function insertTags({ tagsParentDiv, name, description }) {
 	const span = document.createElement('span');
 	span.setAttribute('class', 'o-forms-input__label');
 	span.setAttribute('aria-hidden', 'true');
-	span.innerHTML = description
+	span.innerHTML = description;
 	checkLabel.appendChild(span);
 }
 
