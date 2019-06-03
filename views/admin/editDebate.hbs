@@ -74,6 +74,18 @@
 					</div>
 					{{/each}}
 				</div>
+				<div class="tags">
+					{{#each tagsWithInformation}}
+					<div class="o-forms" data-tag-name="{{name}}">
+						<div class="user-inputs">{{displayName}}
+							<label class="o-forms__label">
+								<input type="checkbox" name="tags[]" value="tagging" {{#if checked}}checked{{/if}}>
+								<span class="o-forms-input__label" aria-hidden="true">{{description}}</span>
+							</label>
+						</div>
+					</div>
+					{{/each}}
+				</div>
 				<div class="o-forms">
 					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate">Edit
 						debate</button>

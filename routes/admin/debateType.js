@@ -29,6 +29,7 @@ router.post('/create', async (req, res) => {
 	try {
 		const {
 			specialUsers,
+			tags,
 			name,
 			description,
 			displayName,
@@ -50,8 +51,10 @@ router.post('/create', async (req, res) => {
 		if (specialUsers) {
 			mergedSpecialUsers = [...mergedSpecialUsers, ...specialUsers];
 		}
+
 		const result = await dynamoDb.createDebateType({
 			specialUsers: mergedSpecialUsers,
+			tags,
 			name,
 			description,
 			displayName,
@@ -83,7 +86,8 @@ router.get('/edit/:debateTypeName', async (req, res) => {
 		const {
 			description,
 			name,
-			specialUsers,
+			specialUsers = [],
+			tags = [],
 			displayName,
 			createdBy,
 			createdAt
@@ -99,6 +103,10 @@ router.get('/edit/:debateTypeName', async (req, res) => {
 			formatDate: Utils.formatDate(Number(createdAt)),
 			specialUsers: specialUsers.map((specialUser, index) => ({
 				...specialUser,
+				index
+			})),
+			tags: tags.map((tags, index) => ({
+				...tags,
 				index
 			})),
 			page: 'edit-type',
@@ -120,6 +128,8 @@ router.get('/edit/:debateTypeName', async (req, res) => {
 router.post('/edit/:debateTypeName', async (req, res) => {
 	try {
 		const {
+      name,
+      tags,
 			specialUsers,
 			description,
 			displayName,
@@ -130,6 +140,7 @@ router.post('/edit/:debateTypeName', async (req, res) => {
 
 		const result = await dynamoDb.createDebateType({
 			specialUsers,
+      tags,
 			name: debateTypeName,
 			description,
 			displayName,
