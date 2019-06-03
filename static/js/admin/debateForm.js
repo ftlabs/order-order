@@ -97,7 +97,7 @@ function addTagsElements(element, tagsParentDiv) {
 	while (tagsParentDiv.firstChild) {
 		tagsParentDiv.removeChild(tagsParentDiv.firstChild);
 	}
-	tags.forEach(function(tag) {
+	Array.from(tags).forEach(function(tag) {
 		insertTags({
 			tagsParentDiv,
 			name: tag.name,
@@ -122,7 +122,7 @@ function addSpecialUserElements(element, specialUsersParentDiv) {
 	while (specialUsersParentDiv.firstChild) {
 		specialUsersParentDiv.removeChild(specialUsersParentDiv.firstChild);
 	}
-	specialUsers.forEach(function(specialUser) {
+	Array.from(specialUsers).forEach(function(specialUser) {
 		insertSpecialUser({
 			specialUsersParentDiv,
 			name: specialUser.name,
@@ -239,7 +239,7 @@ function insertTags({ tagsParentDiv, name, description }) {
 function createElement({ htmlTag, parent, attributes, innerHTML }) {
 	var element = document.createElement(htmlTag);
 	if (attributes) {
-		attributes.forEach(function(attribute) {
+		Array.from(attributes).forEach(function(attribute) {
 			element.setAttribute(attribute.name, attribute.value);
 		});
 	}
