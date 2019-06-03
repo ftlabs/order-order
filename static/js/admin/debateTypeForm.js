@@ -42,14 +42,17 @@ function addRemoveTextFieldsListeners(attributeName) {
 					  )
 					: false;
 			});
-			const inputElements = Array.from(userInputs.childNodes).filter(
-				function(element) {
-					return element.nodeName === 'DIV';
+			if (userInputs) {
+				const inputElements = Array.from(userInputs.childNodes).filter(
+					function(element) {
+						return element.nodeName === 'DIV';
+					}
+				);
+				const lastChild = inputElements[inputElements.length - 1];
+				if (lastChild) {
+					userInputs.removeChild(lastChild);
 				}
-			);
-			const lastChild = inputElements[inputElements.length - 1];
-
-			userInputs.removeChild(lastChild);
+			}
 		});
 	});
 }
