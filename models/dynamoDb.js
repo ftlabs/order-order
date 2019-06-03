@@ -163,7 +163,7 @@ async function getAllDebateLists(type = 'nested') {
 			debateTypes.forEach((type) => {
 				debateTypeDetails[type.name] = type.displayName;
 			});
-
+      
 			queryStatement.result['Items'].map((item) => {
 				if (!debates.hasOwnProperty(item.debateType)) {
 					debates[item.debateType] = {

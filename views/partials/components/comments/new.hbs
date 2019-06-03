@@ -3,36 +3,46 @@
 		<div class="o-grid-container">
 			<div class="o-grid-row">
 				<form action="comment/{{debateType}}/{{debateId}}?" method="POST" encrypt="multipart/form-data"
-					class="comment-form">
-					<div data-o-grid-colspan="6">
-						<label aria-describedby="textarea-info" for="o-forms__textarea"
-							class="o-forms__label">Comment</label>
-						<textarea id="o-forms__textarea" class="o-forms__textarea" name="comment" rows=" 4"
-							cols="250"></textarea>
-					</div>
-					<div data-o-grid-colspan="6">
-						<div class="comment-reply-notification hide">
-							<div class="comment-reply-message"></div>
-							<a class="comment-reply-remove" href="#">Remove</a>
-						</div>
-						<div class="comment-types">
-							<legend aria-describedby="default-radio-info" class="o-forms__label">For/Against</legend>
-							<div class="o-forms__group">
-								<input type="radio" name="tags[]" value="against" class="o-forms__radio" id="against"
-									name="tags[]" value="against" checked="checked">
-								<label for="against" class="o-forms__label">Against</label>
-								<input type="radio" name="tags[]" value="for" class="o-forms__radio" id="for"
-									name="tags[]" value="for">
-								<label for="for" class="o-forms__label">For</label>
+					class="comment-form" data-o-grid-colspan="6">
+					<div class="o-grid-container">
+						<div class="o-grid-row">
+							<div data-o-grid-colspan="6">
+								<label aria-describedby="textarea-info" for="o-forms__textarea"
+									class="o-forms__label">Comment</label>
+								<textarea id="o-forms__textarea" class="o-forms__textarea" name="comment" rows=" 4"
+									cols="250"></textarea>
 							</div>
+							<div data-o-grid-colspan="6">
+								<div class="comment-reply-notification hide">
+									<div class="comment-reply-message"></div>
+									<a class="comment-reply-remove" href="#">Remove</a>
+								</div>
+								<div class="comment-types">
+									<legend aria-describedby="default-radio-info" class="o-forms__label">For/Against
+									</legend>
+									<div class="o-forms__group">
+										<input type="radio" name="tags[]" value="against" class="o-forms__radio"
+											id="against" name="tags[]" value="against" checked="checked">
+										<label for="against" class="o-forms__label">Against</label>
+										<input type="radio" name="tags[]" value="for" class="o-forms__radio" id="for"
+											name="tags[]" value="for">
+										<label for="for" class="o-forms__label">For</label>
+									</div>
 
-							<input class="comment-reply-to" type="hidden" name="replyTo" />
+									<input class="comment-reply-to" type="hidden" name="replyTo" />
+								</div>
+								<br />
+								<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate"
+									value="Submit">Create new comment</button>
+							</div>
 						</div>
-						<br />
-						<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate"
-							value="Submit">Create new comment</button>
 					</div>
 				</form>
+				{{#if debateTypeDescription}}
+				<div class="rules-of-engagement" data-o-grid-colspan="6">
+					{{debateTypeDescription}}
+				</div>
+				{{/if}}
 			</div>
 		</div>
 	</div>

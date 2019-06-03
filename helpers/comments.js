@@ -32,7 +32,7 @@ function getNestedComments(originParams) {
 	params.commentsDataFiltered.forEach((comment) => {
 		comment.upVotes = countUpVotes(comment);
 		comment.upVoters = getUpVoters(comment);
-
+		comment.usernameNice = Utils.cleanUsername(comment.user);
 		if (!Utils.hasOwnPropertyCall(comment, 'replyTo')) {
 			commentsOrigin.push(comment);
 		} else {

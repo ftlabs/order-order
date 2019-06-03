@@ -15,6 +15,14 @@ body {
   left: 0;
   right: 0;
   z-index: 5; }
+  .sticky .btn-quick-edit {
+    top: 15px; }
+
+.btn-quick-edit {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 10; }
 
 .o-header-services__related-content {
   /*TODO: temporary, remove important when breakpoints come in*/ }
@@ -96,6 +104,11 @@ h2.debate-type {
   font-size: 20px;
   line-height: 24px;
   margin: 0 0 20px; }
+  h2.debate-type a {
+    color: #000000;
+    text-decoration: none; }
+    h2.debate-type a:hover {
+      text-decoration: underline; }
 
 .admin-content {
   width: 100%;
@@ -230,6 +243,12 @@ h2.debate-type {
       font-size: 20px;
       line-height: 24px;
       opacity: 0.8; }
+  .debate-topper-container .debate-topper-mini .debate-title {
+    font-family: FinancierDisplayWeb, serif;
+    font-size: 20px;
+    line-height: 1px;
+    font-weight: 400;
+    margin: 12px 0 5px; }
 
 @media only screen and (max-width: 740px) {
   .debate-topper-container .debate-topper {
@@ -338,6 +357,11 @@ h2.debate-type {
     .single-comment .o-replies .single-comment {
       padding: 10px 0 10px 10px;
       margin-bottom: 0; }
+
+.rules-of-engagement {
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  padding: 10px; }
 
 /* ---------------------------- */
 /*    forAgainstWithVoting version + colour    */
