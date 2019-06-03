@@ -11,7 +11,10 @@ router.get('/create', (req, res) => {
 		const { alertType, alertAction } = req.query;
 
 		res.render('admin/createDebateType', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			page: 'create-type',
 			alertMessage: getAlertMessage(
 				alertType,
@@ -95,7 +98,10 @@ router.get('/edit/:debateTypeName', async (req, res) => {
 		} = debateType.Items[0];
 
 		res.render('admin/editDebateType', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			description,
 			name,
 			displayName,
@@ -176,7 +182,10 @@ router.get('/list/:debateTypeName', async (req, res) => {
 				: '';
 
 		res.render('admin/listDebatesByType', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			debateTypeDisplayName,
 			debatesByType: debatesByType[debateTypeName],
 			page: 'debatesByType'
@@ -192,7 +201,10 @@ router.get('/list', async (req, res) => {
 	try {
 		const debateTypeList = await dynamoDb.getAllDebateTypes();
 		res.render('admin/listDebateTypes', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			debateTypeList: debateTypeList,
 			page: 'debateTypes'
 		});

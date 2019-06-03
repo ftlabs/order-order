@@ -30,6 +30,7 @@ function getNestedComments(originParams) {
 	const commentsReplies = [];
 
 	params.commentsDataFiltered.forEach((comment) => {
+		comment.usernameNice = Utils.cleanUsername(comment.user);
 		if (!Utils.hasOwnPropertyCall(comment, 'replyTo')) {
 			commentsOrigin.push(comment);
 		} else {

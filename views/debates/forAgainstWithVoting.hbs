@@ -2,7 +2,7 @@
 {{/head}}
 
 <body class="debate-forAgainstWithVoting">
-	{{> user/header username=user.username }}
+	{{> user/header username=user.usernameNice }}
 
 	{{> components/heading/topper debateType=debateType title=title description=description }}
 
@@ -49,7 +49,7 @@
 	{{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
 	{{/if}}
 	{{#if debateOpen}}
-	{{> components/comments/new debateType=debateType debateId=debateId}}
+	{{> components/comments/new debateType=debateType debateId=debateId debateTypeDescription=debateTypeDescription }}
 	{{else}}
 	{{> components/voting/results voteStyleClass="bars"}}
 	{{/if}}
