@@ -129,69 +129,119 @@ function updateDescription(description) {
 }
 
 function insertSpecialUser({ specialUsersParentDiv, name, description }) {
-	var parentDiv = document.createElement('div');
-	parentDiv.classList.add('o-forms');
-	parentDiv.setAttribute('data-special-user-type', name);
-	specialUsersParentDiv.appendChild(parentDiv);
-	var titleLabel = document.createElement('label');
-	titleLabel.classList.add('o-forms__label');
-	titleLabel.setAttribute('for', name);
-	titleLabel.innerHTML = name;
-	parentDiv.appendChild(titleLabel);
-	var descriptionDiv = document.createElement('div');
-	descriptionDiv.classList.add('o-forms__additional-info');
-	descriptionDiv.setAttribute('id', 'text-box-info');
-	descriptionDiv.innerHTML = description;
-	parentDiv.appendChild(descriptionDiv);
-	var userInputDiv = document.createElement('div');
-	userInputDiv.classList.add('user-inputs');
-	parentDiv.appendChild(userInputDiv);
-	var customElementButtons = document.createElement('div');
-	customElementButtons.classList.add('custom-element-buttons');
-	parentDiv.appendChild(customElementButtons);
+	var parentDiv = createElement({
+		htmlTag: 'div',
+		parent: specialUsersParentDiv,
+		attributes: [
+			{ name: 'class', value: 'o-forms' },
+			{ name: 'data-special-user-type', value: name }
+		]
+	});
+
+	createElement({
+		htmlTag: 'label',
+		parent: parentDiv,
+		innerHTML: name,
+		attributes: [
+			{ name: 'class', value: 'o-forms__label' },
+			{ name: 'for', value: name }
+		]
+	});
+
+	createElement({
+		htmlTag: 'div',
+		parent: parentDiv,
+		innerHTML: description,
+		attributes: [
+			{ name: 'class', value: 'o-forms__additional-info' },
+			{ name: 'id', value: 'text-box-info' }
+		]
+	});
+
+	createElement({
+		htmlTag: 'div',
+		parent: parentDiv,
+		attributes: [{ name: 'class', value: 'user-inputs' }]
+	});
+
+	var customElementButtons = createElement({
+		htmlTag: 'div',
+		parent: parentDiv,
+		attributes: [{ name: 'class', value: 'custom-element-buttons' }]
+	});
+
 	addPlusAndMinusButtons(customElementButtons, 'add', name);
 	addPlusAndMinusButtons(customElementButtons, 'remove');
 }
 
 function insertTags({ tagsParentDiv, name, description }) {
-	var parentDiv = document.createElement('div');
-	parentDiv.classList.add('o-forms');
-	parentDiv.setAttribute('data-special-user-type', name);
-	tagsParentDiv.appendChild(parentDiv);
+	var parentDiv = createElement({
+		htmlTag: 'div',
+		parent: tagsParentDiv,
+		attributes: [
+			{ name: 'class', value: 'o-forms' },
+			{ name: 'data-tag-type', value: name }
+		]
+	});
 
-	var userInputDiv = document.createElement('div');
-	userInputDiv.classList.add('user-inputs');
-	parentDiv.appendChild(userInputDiv);
+	var userInputDiv = createElement({
+		htmlTag: 'div',
+		parent: parentDiv,
+		attributes: [{ name: 'class', value: 'user-inputs' }]
+	});
 
-	var titleLabel = document.createElement('label');
-	titleLabel.classList.add('o-forms__label');
-	titleLabel.setAttribute('for', name);
-	userInputDiv.innerHTML = name;
-	parentDiv.appendChild(titleLabel);
+	var checkBoxParent = createElement({
+		htmlTag: 'div',
+		parent: userInputDiv,
+		attributes: [{ name: 'class', value: 'o-forms__group' }]
+	});
 
-	var spanCheckbox = document.createElement('div');
-	spanCheckbox.setAttribute('class', 'o-forms__group');
-	userInputDiv.appendChild(spanCheckbox);
+	createElement({
+		htmlTag: 'span',
+		parent: checkBoxParent,
+		innerHTML: name,
+		attributes: [{ name: 'class', value: 'o-forms__label' }]
+	});
 
-	// var checkLabel = document.createElement('label');
-	// checkLabel.classList.add('o-forms__label');
-	// spanCheckbox.appendChild(checkLabel);
+	createElement({
+		htmlTag: 'input',
+		parent: checkBoxParent,
+		attributes: [
+			{ name: 'class', value: 'o-forms__checkbox' },
+			{ name: 'type', value: 'checkbox' },
+			{ name: 'name', value: 'tags[]' },
+			{ name: 'value', value: name },
+			{ name: 'id', value: name }
+		]
+	});
 
-	var input = document.createElement('input');
-	input.setAttribute('type', 'checkbox');
-	input.setAttribute('name', 'tags[]');
-	input.classList.add('o-forms__checkbox');
-	input.setAttribute('value', name);
-	input.setAttribute('id', name);
-	spanCheckbox.appendChild(input);
+	createElement({
+		htmlTag: 'label',
+		parent: checkBoxParent,
+		innerHTML: description,
+		attributes: [
+			{ name: 'class', value: 'o-forms__label' },
+			{ name: 'type', value: 'checkbox' },
+			{ name: 'aria-hidden', value: 'true' },
+			{ name: 'for', value: name }
+		]
+	});
+}
 
-	var span = document.createElement('label');
-	span.setAttribute('class', 'o-forms-input__label');
-	span.setAttribute('aria-hidden', 'true');
-	span.setAttribute('for', name);
-
-	span.innerHTML = description;
-	spanCheckbox.appendChild(span);
+function createElement({ htmlTag, parent, attributes, innerHTML }) {
+	var element = document.createElement(htmlTag);
+	if (attributes) {
+		attributes.forEach(function(attribute) {
+			element.setAttribute(attribute.name, attribute.value);
+		});
+	}
+	if (parent) {
+		parent.appendChild(element);
+	}
+	if (innerHTML) {
+		element.innerHTML = innerHTML;
+	}
+	return element;
 }
 
 function addPlusAndMinusButtons(parentElement, type, name) {
