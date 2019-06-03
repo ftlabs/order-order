@@ -179,6 +179,20 @@ router.post('/edit/:debateId', async (req, res) => {
 	}
 });
 
+router.get('/list', async (req, res) => {
+	const username = getS3oUsername(req.cookies);
+	try {
+		const debateList = await dynamoDb.getAllDebateLists();
+		res.render('admin/listDebates', {
+			username,
+			debateList,
+			page: 'debates'
+		});
+	} catch (err) {
+		res.status(404).send("Sorry can't find that!");
+	}
+});
+
 function formatSpecialUsers(specialUsers) {
 	let specialUsersFormatted = [];
 	Object.keys(specialUsers).forEach((userType) => {

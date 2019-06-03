@@ -15,6 +15,14 @@ body {
   left: 0;
   right: 0;
   z-index: 5; }
+  .sticky .btn-quick-edit {
+    top: 15px; }
+
+.btn-quick-edit {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 10; }
 
 .o-header-services__related-content {
   /*TODO: temporary, remove important when breakpoints come in*/ }
@@ -230,6 +238,12 @@ h2.debate-type {
       font-size: 20px;
       line-height: 24px;
       opacity: 0.8; }
+  .debate-topper-container .debate-topper-mini .debate-title {
+    font-family: FinancierDisplayWeb, serif;
+    font-size: 20px;
+    line-height: 1px;
+    font-weight: 400;
+    margin: 12px 0 5px; }
 
 @media only screen and (max-width: 740px) {
   .debate-topper-container .debate-topper {
