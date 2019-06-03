@@ -107,16 +107,18 @@ function addSpecialUserElements(element, specialUsersParentDiv) {
 	);
 	const specialUserName = getDebateTypeValues(element, 'special-user-name');
 
-	const specialUsers = specialUserName.map((name, index) => ({
-		name,
-		description: specialUserDescription[index]
-	}));
+	const specialUsers = specialUserName.map(function(name, index) {
+		return {
+			name,
+			description: specialUserDescription[index]
+		};
+	});
 	while (specialUsersParentDiv.firstChild) {
 		specialUsersParentDiv.removeChild(specialUsersParentDiv.firstChild);
 	}
-	specialUsers.forEach((specialUser) =>
-		insertSpecialUser({ specialUsersParentDiv, ...specialUser })
-	);
+	specialUsers.forEach(function(specialUser) {
+		insertSpecialUser({ specialUsersParentDiv, ...specialUser });
+	});
 }
 
 function updateDescription(description) {
