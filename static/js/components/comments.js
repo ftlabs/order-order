@@ -68,7 +68,7 @@ function addRatingsEventListeners() {
 }
 
 function rateComment(debateId, debateType, index, rating) {
-	const data = {
+	var data = {
 		index: index,
 		rating: rating
 	};
@@ -89,7 +89,7 @@ function rateComment(debateId, debateType, index, rating) {
 }
 
 function removeRatingComment(debateId, index, username) {
-	const data = {
+	var data = {
 		index: index,
 		username: username
 	};
