@@ -98,7 +98,11 @@ function addTagsElements(element, tagsParentDiv) {
 		tagsParentDiv.removeChild(tagsParentDiv.firstChild);
 	}
 	tags.forEach(function(tag) {
-		insertTags({ tagsParentDiv, ...tag });
+		insertTags({
+			tagsParentDiv,
+			name: tag.name,
+			description: tag.description
+		});
 	});
 }
 
@@ -119,7 +123,11 @@ function addSpecialUserElements(element, specialUsersParentDiv) {
 		specialUsersParentDiv.removeChild(specialUsersParentDiv.firstChild);
 	}
 	specialUsers.forEach(function(specialUser) {
-		insertSpecialUser({ specialUsersParentDiv, ...specialUser });
+		insertSpecialUser({
+			specialUsersParentDiv,
+			name: specialUser.name,
+			description: specialUser.description
+		});
 	});
 }
 
