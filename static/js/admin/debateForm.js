@@ -158,6 +158,7 @@ function insertTags({ tagsParentDiv, name, description }) {
 	parentDiv.classList.add('o-forms');
 	parentDiv.setAttribute('data-special-user-type', name);
 	tagsParentDiv.appendChild(parentDiv);
+
 	const userInputDiv = document.createElement('div');
 	userInputDiv.classList.add('user-inputs');
 	parentDiv.appendChild(userInputDiv);
@@ -168,18 +169,20 @@ function insertTags({ tagsParentDiv, name, description }) {
 	userInputDiv.innerHTML = name;
 	parentDiv.appendChild(titleLabel);
 
-	const spanCheckbox = document.createElement('label');
+	const spanCheckbox = document.createElement('span');
 	spanCheckbox.setAttribute('class', 'o-forms-input o-forms-input--checkbox');
 	userInputDiv.appendChild(spanCheckbox);
 
 	const checkLabel = document.createElement('label');
 	checkLabel.classList.add('o-forms__label');
 	spanCheckbox.appendChild(checkLabel);
+
 	const input = document.createElement('input');
 	input.setAttribute('type', 'checkbox');
 	input.setAttribute('name', 'tags[]');
 	input.setAttribute('value', name);
 	checkLabel.appendChild(input);
+
 	const span = document.createElement('span');
 	span.setAttribute('class', 'o-forms-input__label');
 	span.setAttribute('aria-hidden', 'true');
