@@ -82,6 +82,47 @@
 					<div id="msg_error" class="error o-forms__errortext hide" data-validation="specialUsers"></div>
 				</div>
 				<div class="o-forms">
+					<label for="tags" class="o-forms__label">Tags</label>
+					<div id="text-box-info" class="o-forms__additional-info">Add or edit any tags that your debate type
+						instances will be able to select.
+					</div>
+					<div class="custom-element-buttons">
+						<button class="add-text-field-tags o-buttons" type="button">
+							<span class="o-buttons-icon__label">Add</span>
+						</button>
+						<button class="remove-text-field o-buttons" type="button">
+							<span class="o-buttons-icon__label">Remove</span>
+						</button>
+					</div>
+					<div class="tags-fields">
+						{{#if tags}}
+						{{#each tags}}
+						<div class="user-inputs">
+							<label for="name" class="o-forms__label">Field Name</label>
+							<div class="o-forms__additional-info" id="text-box-info">This is the name as it will appear
+								in the database. Please use camel case.
+							</div>
+							<input type="text" class="o-forms__text" name="tags[{{index}}][name]" value="{{name}}"
+								required>
+							<label for="dsiplayName" class="o-forms__label">Display Name</label>
+							<div class="o-forms__additional-info" id="text-box-info">This is the name that will show up
+								in the create debate form when this type is selected.
+							</div>
+							<input type="text" class="o-forms__text" name="tags[{{index}}][displayName]"
+								value="{{displayName}}" required>
+							<label for="fieldDescription" class="o-forms__label">Field Description</label>
+							<div class="o-forms__additional-info" id="text-box-info">Please add a description for the
+								field
+								that will appear when a user creates a new debate of this type</div>
+							<input type="text" class="o-forms__text" name="tags[{{index}}][description]"
+								value="{{description}}" required>
+						</div>
+						{{/each}}
+						{{/if}}
+					</div>
+					<div id="msg_error" class="error o-forms__errortext hide" data-validation="tags"></div>
+				</div>
+				<div class="o-forms">
 					<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate">Edit
 						debate</button>
 				</div>

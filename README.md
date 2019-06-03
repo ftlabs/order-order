@@ -62,5 +62,7 @@ You can get to the skeleton admin page here:
     -   Set date/time for debate's voting to open or close
 -   _Debate/Debate type edit version history_
     -   admin changing the details of the debate/debateType - admin opening/closing the debate/voting
+-   _Tagging an special user delete specific field rather than just the last one_
+    -   When you remove or add tags it onl removes the last one which is annoying if you had lots of special users or tags and didnt want to type them all out again.
 
 ## Questions
