@@ -83,7 +83,7 @@ router.get('/edit/:debateTypeName', async (req, res) => {
 		const username = getS3oUsername(req.cookies);
 		const { debateTypeName } = req.params;
 		const debateType = await dynamoDb.getDebateType(debateTypeName);
-    
+
 		if (debateType.Items.length === 0) {
 			throw new Error('Cant find debate type');
 		}
@@ -135,8 +135,8 @@ router.get('/edit/:debateTypeName', async (req, res) => {
 router.post('/edit/:debateTypeName', async (req, res) => {
 	try {
 		const {
-      name,
-      tags,
+			name,
+			tags,
 			specialUsers,
 			description,
 			displayName,
@@ -147,7 +147,7 @@ router.post('/edit/:debateTypeName', async (req, res) => {
 
 		const result = await dynamoDb.createDebateType({
 			specialUsers,
-      tags,
+			tags,
 			name: debateTypeName,
 			description,
 			displayName,

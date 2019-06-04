@@ -53,9 +53,16 @@ function capitalize(str) {
 	});
 }
 
+function trimDescription(description, maxStrLength = 80) {
+	return description.length > maxStrLength
+		? description.substring(0, maxStrLength).trim() + '...'
+		: description;
+}
+
 module.exports = {
 	formatDate,
 	sortByDate,
 	hasOwnPropertyCall,
-	cleanUsername
+	cleanUsername,
+	trimDescription
 };
