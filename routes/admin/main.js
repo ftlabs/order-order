@@ -16,7 +16,6 @@ router.get('/', async (req, res) => {
 				username,
 				usernameNice: Utils.cleanUsername(username)
 			},
-			debateList,
 			page: 'dashboard'
 		});
 	} catch (err) {
