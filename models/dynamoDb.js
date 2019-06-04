@@ -150,6 +150,9 @@ async function getAllDebateLists(type = 'nested') {
 			debates = [];
 			queryStatement.result['Items'].forEach((item) => {
 				item.formatDate = Utils.formatDate(item.createdAt);
+				item.descriptionTruncated = Utils.trimDescription(
+					item.description
+				);
 				debates.push(item);
 			});
 
@@ -163,7 +166,7 @@ async function getAllDebateLists(type = 'nested') {
 			debateTypes.forEach((type) => {
 				debateTypeDetails[type.name] = type.displayName;
 			});
-      
+
 			queryStatement.result['Items'].map((item) => {
 				if (!debates.hasOwnProperty(item.debateType)) {
 					debates[item.debateType] = {
@@ -173,7 +176,12 @@ async function getAllDebateLists(type = 'nested') {
 						debates: []
 					};
 				}
+
 				item.formatDate = Utils.formatDate(item.createdAt);
+				item.descriptionTruncated = Utils.trimDescription(
+					item.description
+				);
+
 				debates[item.debateType].debates.push(item);
 				Utils.sortByDate(debates[item.debateType].debates, 'createdAt');
 			});
@@ -234,7 +242,7 @@ async function getAllReports() {
 	return { error: queryStatement };
 }
 
-function updateExpressionConstruct(data) {
+function updateExpressionConstruct(data, replaceExisting = false) {
 	const newData = { ...data, updatedAt: new Date().getTime() };
 	let expressionAttributeValues = {};
 	let updateExpression = 'SET';
@@ -245,13 +253,17 @@ function updateExpressionConstruct(data) {
 			[`:${key}`]: newData[key]
 		};
 		if (LIST_TYPES.includes(key)) {
-			updateExpression += ` ${key}=list_append(${key}, :${key})`;
+			if (replaceExisting) {
+				updateExpression += ` ${key} = :${key}`;
+			} else {
+				updateExpression += ` ${key}=list_append(${key}, :${key})`;
+			}
 		} else if (NESTED_LIST_TYPES.includes(key)) {
 			updateExpression += ` comments[${
 				data[key][0].index
-				}].${key}=list_append(comments[${
+			}].${key}=list_append(comments[${
 				data[key][0].index
-				}].${key}, :${key})`;
+			}].${key}, :${key})`;
 		} else {
 			updateExpression += ` ${key}=:${key}`;
 		}
@@ -265,15 +277,16 @@ function updateExpressionConstruct(data) {
 	};
 }
 
-async function updateDebate(uuid, data) {
+async function updateDebate(uuid, data, replaceExisting = false) {
 	try {
 		const params = {
 			Key: {
 				id: uuid
 			},
 			ReturnValues: 'ALL_NEW',
-			...updateExpressionConstruct(data)
+			...updateExpressionConstruct(data, replaceExisting)
 		};
+
 		const result = await query('update', params);
 		return result.result;
 	} catch (err) {
@@ -394,6 +407,10 @@ async function getAllDebateTypes() {
 			let debateTypes = [];
 			queryStatement.result['Items'].forEach((item) => {
 				item.formatDate = Utils.formatDate(item.createdAt);
+				item.descriptionTruncated = Utils.trimDescription(
+					item.description,
+					150
+				);
 				debateTypes.push(item);
 			});
 			return debateTypes;

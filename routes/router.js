@@ -142,6 +142,7 @@ router.post('/:debateId', async (req, res, next) => {
 });
 
 router.use(function(err, req, res, next) {
+	const username = getS3oUsername(req.cookies);
 	console.log(err);
 	res.status(404);
 

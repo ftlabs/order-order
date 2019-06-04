@@ -30,6 +30,10 @@ function getNestedComments(originParams) {
 	const commentsReplies = [];
 
 	params.commentsDataFiltered.forEach((comment) => {
+		const { upVotes, upVoters } = getUpVotes(comment);
+		comment.upVotes = upVotes;
+		comment.upVoters = upVoters;
+
 		comment.usernameNice = Utils.cleanUsername(comment.user);
 		if (!Utils.hasOwnPropertyCall(comment, 'replyTo')) {
 			commentsOrigin.push(comment);
@@ -99,6 +103,20 @@ function getAndNestComments(comments) {
 		commentsFor,
 		commentsAgainst
 	};
+}
+
+function getUpVotes(comment) {
+	let upVotes = 0;
+	let upVoters = [];
+	if (comment && comment.ratings) {
+		comment.ratings.forEach((rating) => {
+			if (rating.rating === 'upvote') {
+				upVotes = upVotes + 1;
+				upVoters.push(rating.user);
+			}
+		});
+	}
+	return { upVotes, upVoters };
 }
 
 module.exports = {
