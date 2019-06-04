@@ -30,9 +30,6 @@ function getNestedComments(originParams) {
 	const commentsReplies = [];
 
 	params.commentsDataFiltered.forEach((comment) => {
-		//comment.upVotes = countUpVotes(comment);
-		//comment.upVoters = getUpVoters(comment);
-
 		const { upVotes, upVoters } = getUpVotes(comment);
 		comment.upVotes = upVotes;
 		comment.upVoters = upVoters;
