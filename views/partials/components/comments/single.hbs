@@ -1,14 +1,32 @@
 <article class="single-comment">
-	<p class="o-teaser__user">{{comment.user}}</p>
+	<p class="o-teaser__user">{{comment.usernameNice}}</p>
 	<time datetime="{{this.formatDate.datetime}}" class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time>
 	<p class="o-teaser__text">{{comment.content}}</p>
 	<div class="comment-actions">
 		{{#if repliesOpen}}
 		<a data-comment-id="{{comment.id}}" class="reply" href="#">Reply</a>
-		<a data-debate-id="{{debateId}}" data-index="{{index}}" data-rating="upvote" class="rate" href="#">UpVote</a>
+		|
+		{{#ifInList currentUser upVoters}}
+		<a data-debate-id="{{debateId}}" data-debate-type="{{debateType}}" data-index="{{index}}" data-rating="upvote"
+			class="rate" href="#">Up Vote</a>
+		{{else}}
+		<a data-debate-id="{{debateId}}" data-index="{{index}}" data-username={{currentUser}} class="rate-remove"
+			href="#">Remove UpVote</a>
+		{{/ifInList}}
+		|
 		{{/if}}
 		<a data-comment-id="{{comment.id}}" class="report" href="#">Report</a>
 	</div>
+
+	{{#if upVotes}}
+	<div class="comment-counter-upvotes">
+		{{#ifThisGreaterThanThat upVotes 1}}
+		<span>{{upVotes}} Upvote</span>
+		{{else}}
+		<span>{{upVotes}} Upvotes</span>
+		{{/ifThisGreaterThanThat}}
+	</div>
+	{{/if}}
 
 	{{#if this.replies}}
 	<div class="o-replies">

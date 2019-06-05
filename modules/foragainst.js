@@ -1,7 +1,7 @@
 const commentHelper = require('../helpers/comments');
 
 function display(req, res, data) {
-	const { debate, user } = data;
+	const { debate, user, debateTypeDescription } = data;
 	const {
 		id,
 		title,
@@ -20,6 +20,7 @@ function display(req, res, data) {
 		description,
 		debateOpen,
 		debateType,
+		debateTypeDescription,
 		commentsFor,
 		commentsAgainst,
 		debateId: id,

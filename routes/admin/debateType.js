@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Utils = require('../../helpers/utils');
 const dynamoDb = require('../../models/dynamoDb');
 const { getS3oUsername } = require('../../helpers/cookies');
 
@@ -9,7 +10,10 @@ router.get('/create', (req, res) => {
 		const { alertType, alertAction } = req.query;
 
 		res.render('admin/createDebateType', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			page: 'create-type',
 			alertMessage: getAlertMessage(
 				alertType,
@@ -72,12 +76,13 @@ router.post('/create', async (req, res) => {
 	}
 });
 
-router.get('/edit/:debateName', async (req, res) => {
+router.get('/edit/:debateTypeName', async (req, res) => {
 	try {
 		const { alertType, alertAction } = req.query;
 		const username = getS3oUsername(req.cookies);
-		const { debateName } = req.params;
-		const debateType = await dynamoDb.getDebateType(debateName);
+		const { debateTypeName } = req.params;
+		const debateType = await dynamoDb.getDebateType(debateTypeName);
+
 		if (debateType.Items.length === 0) {
 			throw new Error('Cant find debate type');
 		}
@@ -87,15 +92,21 @@ router.get('/edit/:debateName', async (req, res) => {
 			specialUsers = [],
 			tags = [],
 			displayName,
-			createdBy
+			createdBy,
+			createdAt
 		} = debateType.Items[0];
 
 		res.render('admin/editDebateType', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			description,
 			name,
 			displayName,
 			createdBy,
+			createdAt,
+			formatDate: Utils.formatDate(Number(createdAt)),
 			specialUsers: specialUsers.map((specialUser, index) => ({
 				...specialUser,
 				index
@@ -120,29 +131,84 @@ router.get('/edit/:debateName', async (req, res) => {
 	}
 });
 
-router.post('/edit/:debateName', async (req, res) => {
+router.post('/edit/:debateTypeName', async (req, res) => {
 	try {
-		const { specialUsers, name, description, displayName, tags } = req.body;
-		const { debateName } = req.params;
+		const {
+			name,
+			tags,
+			specialUsers,
+			description,
+			displayName,
+			createdAt,
+			createdBy
+		} = req.body;
+		const { debateTypeName } = req.params;
 
 		const result = await dynamoDb.createDebateType({
 			specialUsers,
 			tags,
-			name: debateName,
+			name: debateTypeName,
 			description,
-			displayName
+			displayName,
+			createdAt,
+			createdBy
 		});
 		if (result.error) {
 			throw new Error(result.error);
 		}
 		res.redirect(
-			`/admin/debate_type/edit/${debateName}?alertType=success&alertAction=editing`
+			`/admin/debate_type/edit/${debateTypeName}?alertType=success&alertAction=editing`
 		);
 	} catch (err) {
 		console.error(err);
 		res.redirect(
-			`/admin/debate_type/edit/${debateName}?alertType=error&alertAction=editing`
+			`/admin/debate_type/edit/${debateTypeName}?alertType=error&alertAction=editing`
 		);
+	}
+});
+
+router.get('/list/:debateTypeName', async (req, res) => {
+	const username = getS3oUsername(req.cookies);
+
+	try {
+		const { debateTypeName } = req.params;
+		const debatesByType = await dynamoDb.getAllDebateLists();
+
+		let debateTypeDisplayName =
+			debatesByType[debateTypeName] &&
+			debatesByType[debateTypeName].debateTypeDisplayName
+				? debatesByType[debateTypeName].debateTypeDisplayName
+				: '';
+
+		res.render('admin/listDebatesByType', {
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
+			debateTypeDisplayName,
+			debatesByType: debatesByType[debateTypeName],
+			page: 'debatesByType'
+		});
+	} catch (err) {
+		res.status(404).send("Sorry can't find that!");
+	}
+});
+
+router.get('/list', async (req, res) => {
+	const username = getS3oUsername(req.cookies);
+
+	try {
+		const debateTypeList = await dynamoDb.getAllDebateTypes();
+		res.render('admin/listDebateTypes', {
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
+			debateTypeList: debateTypeList,
+			page: 'debateTypes'
+		});
+	} catch (err) {
+		res.status(404).send("Sorry can't find that!");
 	}
 });
 

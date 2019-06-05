@@ -2,7 +2,7 @@
 {{/head}}
 
 <body class="debate-forAgainst">
-	{{> user/header username=user.username }}
+	{{> user/header username=user.usernameNice }}
 
 	{{> components/heading/topper debateType=debateType title=title description=description }}
 
@@ -14,6 +14,7 @@
 
 	{{#ifThisOrThat commentsAgainst commentsFor}}
 	<div class="sticky hide">
+		{{> components/heading/topper-mini title=title }}
 		<div class="o-grid-container ">
 			<div class="o-grid-row">
 				<div class="comments-for" data-o-grid-colspan="6">
@@ -31,13 +32,13 @@
 			<div class="comments-for" data-o-grid-colspan="6">
 				<h2>For</h2>
 				{{#if commentsFor}}
-				{{> components/comments/list class='comments_list' comments=commentsFor debateId=debateId repliesOpen=false }}
+				{{> components/comments/list class='comments_list' comments=commentsFor debateId=debateId debateType=debateType repliesOpen=false currentUser=user.username }}
 				{{/if}}
 			</div>
 			<div class="comments-against" data-o-grid-colspan="6">
 				<h2>Against</h2>
 				{{#if commentsAgainst}}
-				{{>  components/comments/list class='comments_list' comments=commentsAgainst debateId=debateId  repliesOpen=false }}
+				{{>  components/comments/list class='comments_list' comments=commentsAgainst debateId=debateId debateType=debateType repliesOpen=false currentUser=user.username }}
 				{{/if}}
 			</div>
 		</div>
@@ -45,37 +46,6 @@
 	{{/ifThisOrThat}}
 
 	{{#if debateOpen}}
-	<div class="form-comment-container">
-		<div class="o-forms">
-			<div class="o-grid-container">
-				<div class="o-grid-row">
-					<form action="comment/{{debateType}}/{{debateId}}?" method="POST" encrypt="multipart/form-data"
-						class="comment-form">
-						<div data-o-grid-colspan="6">
-							<label aria-describedby="textarea-info" for="o-forms__textarea"
-								class="o-forms__label">Comment</label>
-							<textarea id="o-forms__textarea" class="o-forms__textarea" name="comment" rows=" 4"
-								cols="250"></textarea>
-						</div>
-						<div data-o-grid-colspan="6">
-							<legend aria-describedby="default-radio-info" class="o-forms__label">For/Against</legend>
-							<div class="o-forms__group">
-								<input type="radio" name="tags[]" value="for" class="o-forms__radio" id="for"
-									name="tags[]" value="for">
-								<label for="for" class="o-forms__label">For</label>
-								<input type="radio" name="tags[]" value="against" class="o-forms__radio" id="against"
-									name="tags[]" value="against" checked="checked">
-								<label for="against" class="o-forms__label">Against</label>
-							</div>
-							<input class="comment-reply-to" type="hidden" name="replyTo" />
-							<br />
-							<button type="submit" class="o-buttons o-buttons--primary" id="submit_new_debate"
-								value="Submit">Create new comment</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+	{{> components/comments/new debateType=debateType debateId=debateId debateTypeDescription=debateTypeDescription }}
 	{{/if}}
 	{{> footer type='forAgainst' comments=true }}

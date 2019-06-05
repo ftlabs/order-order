@@ -4,6 +4,7 @@ const path = require('path');
 const router = express.Router();
 const dynamoDb = require('../../models/dynamoDb');
 const { getS3oUsername } = require('../../helpers/cookies');
+const Utils = require('../../helpers/utils');
 
 router.get('/create', async (req, res) => {
 	try {
@@ -15,8 +16,11 @@ router.get('/create', async (req, res) => {
 			valid: validateDebateTypeFile(debateType.name)
 		}));
 		res.render('admin/createDebate', {
-			debateTypes,
-			username,
+			debateTypes: debateTypes.Items,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			page: 'create',
 			alertMessage: getAlertMessage(
 				alertType,
@@ -118,7 +122,10 @@ router.get('/edit/:debateId', async (req, res) => {
 			);
 		}
 		res.render('admin/editDebate', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			id,
 			debateType,
 			debateStatus,
@@ -183,21 +190,22 @@ router.post('/edit/:debateId', async (req, res) => {
 	}
 });
 
-function validateDebateTypeFile(debateTypeName) {
+router.get('/list', async (req, res) => {
+	const username = getS3oUsername(req.cookies);
 	try {
-		const filePath = path.resolve(
-			`./modules/${debateTypeName.toLowerCase()}.js`
-		);
-		if (fs.existsSync(filePath)) {
-			return true;
-		} else {
-			return false;
-		}
+		const debateList = await dynamoDb.getAllDebateLists();
+		res.render('admin/listDebates', {
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
+			debateList,
+			page: 'debates'
+		});
 	} catch (err) {
-		console.error(err);
-		return false;
+		res.status(404).send("Sorry can't find that!");
 	}
-}
+});
 
 function formatSpecialUsers(specialUsers) {
 	let specialUsersFormatted = [];
