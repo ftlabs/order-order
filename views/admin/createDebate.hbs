@@ -6,8 +6,8 @@
 	<h1 class="admin-section">Create debate</h1>
 	<div class="o-grid-row">
 		<section class="admin-content">
-
 			<form id="form_new_debate" action="/admin/debate/create" method="POST" data-o-grid-colspan="6">
+
 				<div class="o-forms">
 					<label for="debateType" class="o-forms__label">Debate type</label>
 					<select name="debateType" class="debate-type o-forms__select" required>
@@ -17,12 +17,21 @@
 							data-special-user-name="{{#each specialUsers}}{{name}},{{/each}}"
 							data-tags-name="{{#each tags}}{{name}},{{/each}}"
 							data-tags-description="{{#each tags}}{{description}},{{/each}}"
-							data-description="{{description}}" data-name="{{name}}" value="{{name}}">
+							data-description="{{description}}" data-name="{{name}}" value="{{name}}"
+							data-valid="{{valid}}">
 							{{displayName}}
 						</option>
 						{{/each}}
 					</select>
-					<div id="msg_error" class="error o-forms__errortext hide" data-validation="debateType"></div>
+					<div class="valid-debate-type-error o-message o-message--alert  o-message--error hide"
+						data-o-component="o-message">
+						<div class="o-message__container">
+							<div class="o-message__content ">
+								<p class="valid-debate-type-error-message o-message__content-main">
+								</p>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="o-forms">
 					<label for="title" class="o-forms__label">Title</label>

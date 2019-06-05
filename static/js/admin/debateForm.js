@@ -76,12 +76,34 @@ function addDebateTypeSelectListener() {
 			var description = this.options[this.selectedIndex].getAttribute(
 				'data-description'
 			);
+			var valid = this.options[this.selectedIndex].getAttribute(
+				'data-valid'
+			);
+
+			checkDebateTypeError(valid);
 
 			addSpecialUserElements(this, specialUsersParentDiv);
 			addTagsElements(this, tagsParentDiv);
 
 			updateDescription(description);
 		});
+	}
+}
+
+function checkDebateTypeError(valid) {
+	var debateTypeError = document.querySelector('.valid-debate-type-error');
+	var debateErrorMessage = document.querySelector(
+		'.valid-debate-type-error-message'
+	);
+
+	if (!Array.from(debateTypeError.classList).includes('hide')) {
+		debateTypeError.classList.add('hide');
+		debateErrorMessage.innerHTML = '';
+	}
+	if (valid === 'false') {
+		debateErrorMessage.innerHTML =
+			"The files for your selected debate type don't exist yet. Please refer to the project documentation for steps to add them.";
+		debateTypeError.classList.remove('hide');
 	}
 }
 
@@ -112,7 +134,6 @@ function addSpecialUserElements(element, specialUsersParentDiv) {
 		'special-user-description'
 	);
 	var specialUserName = getDebateTypeValues(element, 'special-user-name');
-
 	var specialUsers = specialUserName.map(function(name, index) {
 		return {
 			name,

@@ -1,5 +1,6 @@
 const express = require('express');
-
+const fs = require('fs');
+const path = require('path');
 const router = express.Router();
 const dynamoDb = require('../../models/dynamoDb');
 const { getS3oUsername } = require('../../helpers/cookies');
@@ -8,11 +9,14 @@ const Utils = require('../../helpers/utils');
 router.get('/create', async (req, res) => {
 	try {
 		const username = getS3oUsername(req.cookies);
-		const debateTypes = await dynamoDb.getAllDebateTypes();
+		let debateTypes = await dynamoDb.getAllDebateTypes();
 		const { alertType, alertAction } = req.query;
-
+		debateTypes = debateTypes.map((debateType) => ({
+			...debateType,
+			valid: validateDebateTypeFile(debateType.name)
+		}));
 		res.render('admin/createDebate', {
-			debateTypes: debateTypes.Items,
+			debateTypes,
 			user: {
 				username,
 				usernameNice: Utils.cleanUsername(username)
@@ -202,6 +206,22 @@ router.get('/list', async (req, res) => {
 		res.status(404).send("Sorry can't find that!");
 	}
 });
+
+function validateDebateTypeFile(debateTypeName) {
+	try {
+		const filePath = path.resolve(
+			`./modules/${debateTypeName.toLowerCase()}.js`
+		);
+		if (fs.existsSync(filePath)) {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (err) {
+		console.error(err);
+		return false;
+	}
+}
 
 function formatSpecialUsers(specialUsers) {
 	let specialUsersFormatted = [];
