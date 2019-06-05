@@ -38,7 +38,7 @@ async function createDebate(data) {
 			Item: {
 				...data,
 				id,
-				comments: [],
+				comments: {},
 				createdAt,
 				updatedAt
 			}
@@ -239,9 +239,9 @@ function updateExpressionConstruct(data) {
 		} else if (NESTED_LIST_TYPES.includes(key)) {
 			updateExpression += ` comments[${
 				data[key][0].index
-				}].${key}=list_append(comments[${
+			}].${key}=list_append(comments[${
 				data[key][0].index
-				}].${key}, :${key})`;
+			}].${key}, :${key})`;
 		} else {
 			updateExpression += ` ${key}=:${key}`;
 		}

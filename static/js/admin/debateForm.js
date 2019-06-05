@@ -92,15 +92,19 @@ function addDebateTypeSelectListener() {
 }
 
 function checkDebateTypeError(valid) {
-	console.log(valid);
-	const debateError = document.querySelector('.valid-debate-type-error');
-	console.log(debateError);
-	if (!Array.from(debateError.classList).includes('hide')) {
-		debateError.classList.add('hide');
+	const debateTypeError = document.querySelector('.valid-debate-type-error');
+	const debateErrorMessage = document.querySelector(
+		'.valid-debate-type-error-message'
+	);
+
+	if (!Array.from(debateTypeError.classList).includes('hide')) {
+		debateTypeError.classList.add('hide');
+		debateErrorMessage.innerHTML = '';
 	}
 	if (valid === 'false') {
-		console.log('gettng in if');
-		debateError.classList.remove('hide');
+		debateErrorMessage.innerHTML =
+			'The files for your selected debate type dont exist yet. Please refer to the project documentation for steps to do this.';
+		debateTypeError.classList.remove('hide');
 	}
 }
 
