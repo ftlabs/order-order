@@ -94,8 +94,8 @@ function addDebateTypeSelectListener() {
 }
 
 function checkDebateTypeError(valid) {
-	const debateTypeError = document.querySelector('.valid-debate-type-error');
-	const debateErrorMessage = document.querySelector(
+	var debateTypeError = document.querySelector('.valid-debate-type-error');
+	var debateErrorMessage = document.querySelector(
 		'.valid-debate-type-error-message'
 	);
 
