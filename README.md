@@ -28,9 +28,38 @@ When you add a new debate type you will also need to add the corresponding logic
 
 1. Firstly in the `modules` folder in the root add a javascript file with the name of your debate type all in lowercase. e.g `foragainst.js`.
 
-2. In this file all you need to add is a function called display which takes three params `req`, `res` and `data` and ends with `res.render(data.type, data);`. You can manipulate the data object however you like for your specific debate.
+2. In this file all you need to add is a function called display which takes three params `req`, `res` and `data` and ends with `res.render(data.type, data);`. You can manipulate the data object however you like for your specific debate. This is a basic example:
 
-3. Next you need to create the view. In `views/debates` add a handlebars with the name of your debate type e.g `foragainst.hbs`
+```
+function display(req, res, data) {
+	res.render(data.type, data);
+}
+module.exports = { display };
+```
+
+3. Next you need to create the view. In `views/debates` add a handlebars with the name of your debate type e.g `foragainst.hbs`. This is a basic example:
+
+```
+{{#> head title='Example' subtitle='Example' type='example' }}
+{{/head}}
+
+<body>
+    {{> user/header username=user.usernameNice }}
+
+    {{> components/heading/topper debateType=debateType title=title description=description }}
+
+    <main class="o-grid-container">
+        <p>
+            Do whatever you want here
+        </p>
+    </main>
+</body>
+{{> footer type='example' }}
+```
+
+4. If you want to add client side javascript. In `static/js/debates` create a folder named after your debate type. As long as you have `{{> footer type=<name of debate type> }}` in your view your javascript file will be available.
+
+5. If you want to add styling. In `sass/debates` create a file named after your debate type. Then in `sass/main.scss` add `@import 'debates/<name of debate type>'` below the other debate types. As long as you have `{{> components/heading/topper debateType=debateType }}` in your view your styling will be available.
 
 ## Future Features/PRs
 
