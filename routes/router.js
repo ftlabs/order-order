@@ -33,7 +33,8 @@ router.get('/', async (req, res, next) => {
 			pageType: 'home',
 			debateList,
 			user: {
-				username
+				username,
+				usernameNice: Utils.cleanUsername(username)
 			}
 		});
 	} catch (err) {
@@ -63,7 +64,8 @@ router.get('/type/:debateType', async (req, res, next) => {
 			pageType: 'home',
 			debateList: debateListByType,
 			user: {
-				username
+				username,
+				usernameNice: Utils.cleanUsername(username)
 			}
 		});
 	} catch (err) {
@@ -77,11 +79,15 @@ router.get('/:debateId', async (req, res, next) => {
 		const result = await dynamoDb.getById(debateId);
 		const username = getS3oUsername(req.cookies);
 		const debate = result.Items[0];
+		const debateTypeData = await dynamoDb.getDebateType(debate.debateType);
+		const debateTypeDescription = debateTypeData.Items[0].description;
 
 		const data = {
-			debate: debate,
+			debate,
+			debateTypeDescription,
 			user: {
-				username
+				username,
+				usernameNice: Utils.cleanUsername(username)
 			}
 		};
 
@@ -136,6 +142,7 @@ router.post('/:debateId', async (req, res, next) => {
 });
 
 router.use(function(err, req, res, next) {
+	const username = getS3oUsername(req.cookies);
 	console.log(err);
 	res.status(404);
 
@@ -146,7 +153,8 @@ router.use(function(err, req, res, next) {
 			url: req.url,
 			error: err,
 			user: {
-				username: getS3oUsername(req.cookies)
+				username: getS3oUsername(req.cookies),
+				usernameNice: Utils.cleanUsername(username)
 			}
 		});
 		return;

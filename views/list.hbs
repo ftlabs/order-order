@@ -4,7 +4,7 @@
 {{/head}}
 
 <body>
-	{{> user/header username=user.username }}
+	{{> user/header username=user.usernameNice }}
 	<main class="o-grid-container">
 		<div class="o-grid-row home-header">
 			<h1 class="home-heading">{{ pageTitle }}</h1>
@@ -14,26 +14,30 @@
 		</div>
 
 		<div class="o-grid-row debates-home">
-		{{#each debateList}}
+			{{#each debateList}}
 			<article class="debate-card o-teaser o-teaser--large">
 				<div class="o-teaser__content">
 					<div class="o-teaser__meta">
-						<a href="/type/{{ this.debateType }}" class="o-teaser__tag debate-type-tag">{{this.debateType}}</a>
+						<a href="/type/{{ this.debateType }}"
+							class="o-teaser__tag debate-type-tag">{{this.debateType}}</a>
 					</div>
 					<h2 class="o-teaser__heading">
 						<a href="/{{this.id}}">{{ this.title }}</a>
 					</h2>
 
-					<p class="o-teaser__standfirst">{{this.description}}</p>
-					
-					<div class="o-teaser__timestamp"><time datetime="{{this.formatDate.datetime}}" class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time></div>
-					
+					<p class="o-teaser__standfirst">{{this.descriptionTruncated}}</p>
+
+					<div class="o-teaser__timestamp"><time datetime="{{this.formatDate.datetime}}"
+							class="o-date o-teaser__timestamp">{{this.formatDate.readable}}</time></div>
+
 					<div class="debate-status">
-						<div class="debate-state">Debate: <span class="state-indicator debate-{{this.debateStatus}}">{{this.debateStatus}}</span></div>
-						<div class="debate-state">Voting: <span class="state-indicator debate-{{this.votingStatus}}">{{this.votingStatus}}</span></div>
+						<div class="debate-state">Debate: <span
+								class="state-indicator debate-{{this.debateStatus}}">{{this.debateStatus}}</span></div>
+						<div class="debate-state">Voting: <span
+								class="state-indicator debate-{{this.votingStatus}}">{{this.votingStatus}}</span></div>
 					</div>
 				</div>
 			</article>
-		{{/each}}
+			{{/each}}
 		</div>
 	</main>

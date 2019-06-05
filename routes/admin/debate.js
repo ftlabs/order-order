@@ -4,6 +4,7 @@ const path = require('path');
 const router = express.Router();
 const dynamoDb = require('../../models/dynamoDb');
 const { getS3oUsername } = require('../../helpers/cookies');
+const Utils = require('../../helpers/utils');
 
 router.get('/create', async (req, res) => {
 	try {
@@ -15,8 +16,11 @@ router.get('/create', async (req, res) => {
 			valid: validateDebateTypeFile(debateType.name)
 		}));
 		res.render('admin/createDebate', {
-			debateTypes,
-			username,
+			debateTypes: debateTypes.Items,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			page: 'create',
 			alertMessage: getAlertMessage(
 				alertType,
@@ -109,12 +113,7 @@ router.get('/edit/:debateId', async (req, res) => {
 			);
 		}
 		let tagsWithInformation = [];
-		console.log(tags && tags.length > 0);
 		if (tags && tags.length > 0) {
-			console.log('tags work', tags.length > 0);
-		}
-		if (tags && tags.length > 0) {
-			console.log('getting in if');
 			tagsWithInformation = debateTypeInformation.Items[0].tags.map(
 				(tagType) => {
 					const checked = tags.includes(tagType.name);
@@ -122,10 +121,11 @@ router.get('/edit/:debateId', async (req, res) => {
 				}
 			);
 		}
-		console.log(tagsWithInformation);
-
 		res.render('admin/editDebate', {
-			username,
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
 			id,
 			debateType,
 			debateStatus,
@@ -187,6 +187,23 @@ router.post('/edit/:debateId', async (req, res) => {
 		res.redirect(
 			`/admin/debate/edit/${debateId}?alertType=error&alertAction=editing`
 		);
+	}
+});
+
+router.get('/list', async (req, res) => {
+	const username = getS3oUsername(req.cookies);
+	try {
+		const debateList = await dynamoDb.getAllDebateLists();
+		res.render('admin/listDebates', {
+			user: {
+				username,
+				usernameNice: Utils.cleanUsername(username)
+			},
+			debateList,
+			page: 'debates'
+		});
+	} catch (err) {
+		res.status(404).send("Sorry can't find that!");
 	}
 });
 

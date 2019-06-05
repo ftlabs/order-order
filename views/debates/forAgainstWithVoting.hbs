@@ -2,7 +2,7 @@
 {{/head}}
 
 <body class="debate-forAgainstWithVoting">
-	{{> user/header username=user.username }}
+	{{> user/header username=user.usernameNice }}
 
 	{{> components/heading/topper debateType=debateType title=title description=description }}
 
@@ -14,6 +14,7 @@
 
 	{{#ifThisOrThat commentsAgainst commentsFor}}
 	<div class="sticky hide">
+		{{> components/heading/topper-mini title=title debateId=debateId }}
 		<div class="o-grid-container ">
 			<div class="o-grid-row">
 				<div class="comments-for" data-o-grid-colspan="6">
@@ -31,24 +32,24 @@
 			<div class="comments-for" data-o-grid-colspan="6">
 				<h2>For</h2>
 				{{#if commentsFor}}
-				{{> components/comments/list class='comments_list' comments=commentsFor debateId=debateId repliesOpen=debateOpen listStyleClass="forAgainstWithColour" }}
+				{{> components/comments/list class='comments_list' comments=commentsFor debateId=debateId debateType=debateType repliesOpen=debateOpen listStyleClass="forAgainstWithColour" currentUser=user.username }}
 				{{/if}}
 			</div>
 			<div class="comments-against" data-o-grid-colspan="6">
 				<h2>Against</h2>
 				{{#if commentsAgainst}}
-				{{>  components/comments/list class='comments_list' comments=commentsAgainst debateId=debateId  repliesOpen=debateOpen listStyleClass="forAgainstWithColour" }}
+				{{> components/comments/list class='comments_list' comments=commentsAgainst debateId=debateId debateType=debateType repliesOpen=debateOpen listStyleClass="forAgainstWithColour" currentUser=user.username }}
 				{{/if}}
 			</div>
 		</div>
 	</main>
 	{{/ifThisOrThat}}
-	]
+
 	{{#if votingOpen}}
 	{{> components/voting/new debateId=debateId existingVote=existingVote voteOptions=voteOptions }}
 	{{/if}}
 	{{#if debateOpen}}
-	{{> components/comments/new debateType=debateType debateId=debateId}}
+	{{> components/comments/new debateType=debateType debateId=debateId debateTypeDescription=debateTypeDescription }}
 	{{else}}
 	{{> components/voting/results voteStyleClass="bars"}}
 	{{/if}}

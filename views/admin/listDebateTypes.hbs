@@ -1,0 +1,51 @@
+{{> head title='Debate Type Dashboard' subtitle='Admin section' }}
+{{> admin/header }}
+<main class="o-grid-container">
+	<h1 class="admin-section">Debate Type Dashboard</h1>
+	<div class="o-grid-row">
+		<section class="admin-content admin-debates-list">
+			<span class="debate-type-tag">Debate type</span>
+			<h2 class="debate-type">{{ debateTypeDisplayName }}</h2>
+			<table class="list-debates o-table  o-table--row-stripes" data-o-component="o-table">
+				<thead>
+					<tr>
+						<th scope="col" role="columnheader"> Name </th>
+						<th scope="col" role="columnheader"> Description </th>
+						<th scope="col" role="columnheader" aria-sort="descending"> Creation date </th>
+						<th scope="col" role="columnheader"> Created By </th>
+					</tr>
+				</thead>
+				{{#if debateTypeList}}
+				<tbody>
+					{{#each debateTypeList}}
+					<tr>
+						<td>
+							{{ this.displayName }}
+						</td>
+						<td>
+							<p>
+								{{this.descriptionTruncated}}
+							</p>
+						</td>
+						<td>
+							{{this.formatDate.readable}}
+						</td>
+						<td>
+							{{this.createdBy}}
+						</td>
+						<td>
+							<a href="/admin/debate_type/list/{{ this.name }}">view debates</a>
+						</td>
+						<td>
+							<a href="/admin/debate_type/edit/{{ this.name }}">edit</a>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+				{{/if}}
+			</table>
+		</section>
+	</div>
+</main>
+
+{{> footer type="admin"}}

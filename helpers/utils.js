@@ -39,12 +39,30 @@ function sortByDate(arr, property) {
 	});
 }
 
+function cleanUsername(username) {
+	return capitalize(username.replace('.', ' '));
+}
+
 function hasOwnPropertyCall(object, property) {
 	return Object.prototype.hasOwnProperty.call(object, property);
+}
+
+function capitalize(str) {
+	return str.replace(/(?:^|\s)\S/g, function(a) {
+		return a.toUpperCase();
+	});
+}
+
+function trimDescription(description, maxStrLength = 80) {
+	return description.length > maxStrLength
+		? description.substring(0, maxStrLength).trim() + '...'
+		: description;
 }
 
 module.exports = {
 	formatDate,
 	sortByDate,
-	hasOwnPropertyCall
+	hasOwnPropertyCall,
+	cleanUsername,
+	trimDescription
 };
