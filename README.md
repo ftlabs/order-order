@@ -57,9 +57,9 @@ module.exports = { display };
 {{> footer type='example' }}
 ```
 
-4. If you want to add client side javascript. In `static/js/debates` create a folder named after your debate type. As long as you have `{{> footer type=<name of debate type> }}` in your view your javascript file will be available.
+4. If you want to add client side javascript in `static/js/debates` create a folder named after your debate type. As long as you have `{{> footer type=<name of debate type> }}` in your view your javascript file will be available.
 
-5. If you want to add styling. In `sass/debates` create a file named after your debate type. Then in `sass/main.scss` add `@import 'debates/<name of debate type>'` below the other debate types.
+5. If you want to add styling in `sass/debates` create a file named after your debate type. Then in `sass/main.scss` add `@import 'debates/<name of debate type>'` below the other debate types.
 
 ## Future Features/PRs
 
