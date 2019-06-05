@@ -38,7 +38,7 @@ async function createDebate(data) {
 			Item: {
 				...data,
 				id,
-				comments: {},
+				comments: [],
 				createdAt,
 				updatedAt
 			}
