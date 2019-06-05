@@ -103,7 +103,7 @@ function checkDebateTypeError(valid) {
 	}
 	if (valid === 'false') {
 		debateErrorMessage.innerHTML =
-			'The files for your selected debate type dont exist yet. Please refer to the project documentation for steps to do this.';
+			'The files for your selected debate type dont exist yet. Please refer to the project documentation for steps to add them.';
 		debateTypeError.classList.remove('hide');
 	}
 }
