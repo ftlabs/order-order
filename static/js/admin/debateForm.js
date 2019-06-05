@@ -76,10 +76,7 @@ function addDebateTypeSelectListener() {
 			var description = this.options[this.selectedIndex].getAttribute(
 				'data-description'
 			);
-			const name = this.options[this.selectedIndex].getAttribute(
-				'data-name'
-			);
-			const valid = this.options[this.selectedIndex].getAttribute(
+			var valid = this.options[this.selectedIndex].getAttribute(
 				'data-valid'
 			);
 
@@ -105,7 +102,7 @@ function checkDebateTypeError(valid) {
 	}
 	if (valid === 'false') {
 		debateErrorMessage.innerHTML =
-			'The files for your selected debate type dont exist yet. Please refer to the project documentation for steps to add them.';
+			"The files for your selected debate type don't exist yet. Please refer to the project documentation for steps to add them.";
 		debateTypeError.classList.remove('hide');
 	}
 }
