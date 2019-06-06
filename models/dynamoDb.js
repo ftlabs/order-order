@@ -38,7 +38,7 @@ async function createDebate(data) {
 			Item: {
 				...data,
 				id,
-				comments: [],
+				comments: {},
 				createdAt,
 				updatedAt
 			}
@@ -97,10 +97,20 @@ async function getById(debateId) {
 
 	const queryStatement = await query('query', params);
 	if (queryStatement.result) {
-		return queryStatement.result;
+		return normaliseData(queryStatement.result);
 	}
 
 	return { error: queryStatement.result };
+}
+
+function normaliseData(data) {
+	if (data.Items[0].comments) {
+		const commentsAsArray = Object.keys(data.Items[0].comments).map(
+			(key) => data.Items[0].comments[key]
+		);
+		data.Items[0].comments = commentsAsArray;
+	}
+	return data;
 }
 
 async function getBy(attribute, value) {
@@ -114,7 +124,7 @@ async function getBy(attribute, value) {
 	const queryStatement = await query('scan', params);
 
 	if (queryStatement.result) {
-		return queryStatement.result;
+		return normaliseData(queryStatement.result);
 	}
 
 	return { error: queryStatement };
@@ -244,6 +254,7 @@ async function getAllReports() {
 
 function updateExpressionConstruct(data, replaceExisting = false) {
 	const newData = { ...data, updatedAt: new Date().getTime() };
+	let fullExpression = {};
 	let expressionAttributeValues = {};
 	let updateExpression = 'SET';
 	const fields = Object.keys(newData);
@@ -256,13 +267,18 @@ function updateExpressionConstruct(data, replaceExisting = false) {
 			if (replaceExisting) {
 				updateExpression += ` ${key} = :${key}`;
 			} else {
-				updateExpression += ` ${key}=list_append(${key}, :${key})`;
+				fullExpression = {
+					...fullExpression,
+					ExpressionAttributeNames: { '#id': data[key].id },
+					ConditionExpression: `attribute_not_exists(${key}.#id)`
+				};
+				updateExpression += ` ${key}.#id=:${key}`;
 			}
 		} else if (NESTED_LIST_TYPES.includes(key)) {
 			updateExpression += ` comments[${
-				data[key][0].index
+				data[key].index
 			}].${key}=list_append(comments[${
-				data[key][0].index
+				data[key].index
 			}].${key}, :${key})`;
 		} else {
 			updateExpression += ` ${key}=:${key}`;
@@ -271,7 +287,9 @@ function updateExpressionConstruct(data, replaceExisting = false) {
 			updateExpression += ',';
 		}
 	});
+
 	return {
+		...fullExpression,
 		ExpressionAttributeValues: expressionAttributeValues,
 		UpdateExpression: updateExpression
 	};
@@ -288,6 +306,9 @@ async function updateDebate(uuid, data, replaceExisting = false) {
 		};
 
 		const result = await query('update', params);
+		if (typeof result === 'string') {
+			throw new Error(result);
+		}
 		return result.result;
 	} catch (err) {
 		throw err;

@@ -9,16 +9,15 @@ router.post('/:debateType/:debateId', async (req, res, next) => {
 		const backURL = req.header('Referer') || '/';
 		const { debateId, debateType } = req.params;
 		const { comment, tags, displayStatus, replyTo } = req.body;
+		console.log('req.body', req.body);
 		const data = {
-			comments: [
-				dynamoDb.constructCommentObject({
-					content: comment,
-					user: req.cookies.s3o_username,
-					tags,
-					replyTo,
-					displayStatus
-				})
-			]
+			comments: dynamoDb.constructCommentObject({
+				content: comment,
+				user: req.cookies.s3o_username,
+				tags,
+				replyTo,
+				displayStatus
+			})
 		};
 		await customLogic({ functionName: 'post', debateType });
 		await dynamoDb.updateDebate(debateId, data);
