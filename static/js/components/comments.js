@@ -41,7 +41,6 @@ function addReplyEventListeners() {
 }
 
 function addRatingsEventListeners() {
-	console;
 	var ratingLinks = document.querySelectorAll('.rate');
 
 	Array.from(ratingLinks).forEach(function(element) {
