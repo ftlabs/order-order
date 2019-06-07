@@ -297,26 +297,17 @@ function updateExpressionConstruct(data, removeData) {
 	});
 
 	if (removeData) {
-		updateExpression += ' REMOVE';
-		const removeFields = Object.keys(removeData);
+		const {
+			removeDataUpdateExpression,
+			removeDataFullExpression
+		} = removeExpressionConstruct(removeData);
 
-		removeFields.forEach((key, index) => {
-			if (NESTED_LIST_TYPES.includes(key)) {
-				fullExpression = {
-					...fullExpression,
-					ExpressionAttributeNames: {
-						'#commentId': removeData[key].commentId,
-						'#id': removeData[key].id
-					}
-				};
-				updateExpression += ` comments.#commentId.${key}.#id`;
-			} else {
-				updateExpression += ` ${key}`;
-			}
-			if (fields.length !== index + 1) {
-				updateExpression += ',';
-			}
-		});
+		updateExpression += removeDataUpdateExpression;
+		const removeFields = Object.keys(removeData);
+		fullExpression = {
+			...fullExpression,
+			...removeDataFullExpression
+		};
 	}
 
 	return {
@@ -324,6 +315,32 @@ function updateExpressionConstruct(data, removeData) {
 		ExpressionAttributeValues: expressionAttributeValues,
 		UpdateExpression: updateExpression
 	};
+}
+
+function removeExpressionConstruct(removeData) {
+	removeDataUpdateExpression = '';
+	removeDataFullExpression = {};
+
+	removeDataUpdateExpression += ' REMOVE';
+	const removeFields = Object.keys(removeData);
+
+	removeFields.forEach((key, index) => {
+		if (NESTED_LIST_TYPES.includes(key)) {
+			removeDataFullExpression = {
+				ExpressionAttributeNames: {
+					'#commentId': removeData[key].commentId,
+					'#id': removeData[key].id
+				}
+			};
+			removeDataUpdateExpression += ` comments.#commentId.${key}.#id`;
+		} else {
+			removeDataUpdateExpression += ` ${key}`;
+		}
+		if (removeFields.length !== index + 1) {
+			removeDataUpdateExpression += ',';
+		}
+	});
+	return { removeDataUpdateExpression, removeDataFullExpression };
 }
 
 async function updateDebate(uuid, data) {
@@ -335,9 +352,6 @@ async function updateDebate(uuid, data) {
 			ReturnValues: 'ALL_NEW',
 			...updateExpressionConstruct(data)
 		};
-
-		console.log(params);
-
 		const result = await query('update', params);
 		if (typeof result === 'string') {
 			throw new Error(result);
@@ -357,8 +371,6 @@ async function removeDebateAttribute(uuid, data) {
 			ReturnValues: 'ALL_NEW',
 			...updateExpressionConstruct({}, data)
 		};
-
-		console.log(params);
 
 		const result = await query('update', params);
 		if (typeof result === 'string') {
