@@ -1,5 +1,5 @@
 {{#each comments}}
 <div class="comments-{{../listStyleClass}}">
-	{{> components/comments/single class=this.tags comment=this debateId=../debateId debateType=../debateType repliesOpen=../repliesOpen listStyleClass=../listStyleClass currentUser=../currentUser }}
+	{{> components/comments/single class=this.tags comment=this debateId=../debateId debateType=../debateType repliesOpen=../repliesOpen listStyleClass=../listStyleClass currentUser=../currentUser  userRatingId=userRatingId }}
 </div>
 {{/each}}

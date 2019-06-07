@@ -15,8 +15,10 @@ function display(req, res, data) {
 	} = debate;
 
 	const { commentsFor, commentsAgainst } = commentHelper.getAndNestComments(
-		comments
+		comments,
+		user.username
 	);
+
 	const debateOpen = debateStatus === 'open' ? true : false;
 	const votingOpen = votingStatus === 'open' ? true : false;
 	const voteOptions = ['for', 'against'];
@@ -25,6 +27,7 @@ function display(req, res, data) {
 		voteOptions
 	);
 	const existingVote = votesHelper.hasVoted(voteFromRatings, user.username);
+
 	const voteResults = votesHelper.calculateResults(
 		voteFromRatings,
 		voteOptions

@@ -15,7 +15,7 @@ function getCommentReplies(originComment, commentsReplies) {
 	return replies;
 }
 
-function getNestedComments(originParams) {
+function getNestedComments(originParams, username) {
 	const defaultParams = {
 		commentsDataRaw: [],
 		commentsDataFiltered: [],
@@ -30,9 +30,13 @@ function getNestedComments(originParams) {
 	const commentsReplies = [];
 
 	params.commentsDataFiltered.forEach((comment) => {
-		const { upVotes, upVoters } = getUpVotes(comment);
+		const { upVotes, upVoters, userRatingId } = getUpVotes(
+			comment,
+			username
+		);
 		comment.upVotes = upVotes;
 		comment.upVoters = upVoters;
+		comment.userRatingId = userRatingId;
 
 		comment.usernameNice = Utils.cleanUsername(comment.user);
 		if (!Utils.hasOwnPropertyCall(comment, 'replyTo')) {
@@ -67,7 +71,7 @@ function getNestedComments(originParams) {
 	return commentsNested;
 }
 
-function getAndNestComments(comments) {
+function getAndNestComments(comments, username) {
 	let commentsFor = [];
 	let commentsAgainst = [];
 
@@ -88,15 +92,21 @@ function getAndNestComments(comments) {
 		});
 
 		// adds nesting structure
-		commentsFor = getNestedComments({
-			commentsDataRaw: commentsWithIndex,
-			commentsDataFiltered: commentsFor
-		});
+		commentsFor = getNestedComments(
+			{
+				commentsDataRaw: commentsWithIndex,
+				commentsDataFiltered: commentsFor
+			},
+			username
+		);
 
-		commentsAgainst = getNestedComments({
-			commentsDataRaw: commentsWithIndex,
-			commentsDataFiltered: commentsAgainst
-		});
+		commentsAgainst = getNestedComments(
+			{
+				commentsDataRaw: commentsWithIndex,
+				commentsDataFiltered: commentsAgainst
+			},
+			username
+		);
 	}
 
 	return {
@@ -105,18 +115,27 @@ function getAndNestComments(comments) {
 	};
 }
 
-function getUpVotes(comment) {
+function getUpVotes(comment, username) {
 	let upVotes = 0;
 	let upVoters = [];
+	let userRatingId;
 	if (comment && comment.ratings) {
 		comment.ratings.forEach((rating) => {
 			if (rating.rating === 'upvote') {
 				upVotes = upVotes + 1;
 				upVoters.push(rating.user);
+				if (rating.user === username) {
+					userRatingId = rating.id;
+				}
 			}
 		});
 	}
-	return { upVotes, upVoters };
+
+	let result = { upVotes, upVoters };
+	if (userRatingId) {
+		result = { ...result, userRatingId };
+	}
+	return result;
 }
 
 module.exports = {

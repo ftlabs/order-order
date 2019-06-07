@@ -176,7 +176,7 @@ router.post('/edit/:debateId', async (req, res) => {
 			debateStatus,
 			votingStatus,
 			specialUsers: specialUsersFormatted,
-			tags
+			tags: tags ? tags : []
 		};
 		await dynamoDb.updateDebate(debateId, params);
 		res.redirect(

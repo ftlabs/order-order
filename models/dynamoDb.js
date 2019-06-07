@@ -108,7 +108,15 @@ function normaliseData(data) {
 		const commentsAsArray = Object.keys(data.Items[0].comments).map(
 			(key) => data.Items[0].comments[key]
 		);
-		data.Items[0].comments = commentsAsArray;
+		const commentsAndRatingsAsArrays = commentsAsArray.map((comment) => {
+			if (comment.ratings) {
+				comment.ratings = Object.keys(comment.ratings).map(
+					(ratingId) => comment.ratings[ratingId]
+				);
+			}
+			return comment;
+		});
+		data.Items[0].comments = commentsAndRatingsAsArrays;
 	}
 	return data;
 }
@@ -252,7 +260,7 @@ async function getAllReports() {
 	return { error: queryStatement };
 }
 
-function updateExpressionConstruct(data, replaceExisting = false) {
+function updateExpressionConstruct(data, removeData) {
 	const newData = { ...data, updatedAt: new Date().getTime() };
 	let fullExpression = {};
 	let expressionAttributeValues = {};
@@ -264,22 +272,22 @@ function updateExpressionConstruct(data, replaceExisting = false) {
 			[`:${key}`]: newData[key]
 		};
 		if (LIST_TYPES.includes(key)) {
-			if (replaceExisting) {
-				updateExpression += ` ${key} = :${key}`;
-			} else {
-				fullExpression = {
-					...fullExpression,
-					ExpressionAttributeNames: { '#id': data[key].id },
-					ConditionExpression: `attribute_not_exists(${key}.#id)`
-				};
-				updateExpression += ` ${key}.#id=:${key}`;
-			}
+			fullExpression = {
+				...fullExpression,
+				ExpressionAttributeNames: { '#id': data[key].id },
+				ConditionExpression: `attribute_not_exists(${key}.#id)`
+			};
+			updateExpression += ` ${key}.#id=:${key}`;
 		} else if (NESTED_LIST_TYPES.includes(key)) {
-			updateExpression += ` comments[${
-				data[key].index
-			}].${key}=list_append(comments[${
-				data[key].index
-			}].${key}, :${key})`;
+			fullExpression = {
+				...fullExpression,
+				ExpressionAttributeNames: {
+					'#commentId': data[key].commentId,
+					'#id': data[key].id
+				},
+				ConditionExpression: `attribute_not_exists(${key}.#commentId.ratings.#id)`
+			};
+			updateExpression += ` comments.#commentId.${key}.#id=:${key}`;
 		} else {
 			updateExpression += ` ${key}=:${key}`;
 		}
@@ -288,6 +296,29 @@ function updateExpressionConstruct(data, replaceExisting = false) {
 		}
 	});
 
+	if (removeData) {
+		updateExpression += ' REMOVE';
+		const removeFields = Object.keys(removeData);
+
+		removeFields.forEach((key, index) => {
+			if (NESTED_LIST_TYPES.includes(key)) {
+				fullExpression = {
+					...fullExpression,
+					ExpressionAttributeNames: {
+						'#commentId': removeData[key].commentId,
+						'#id': removeData[key].id
+					}
+				};
+				updateExpression += ` comments.#commentId.${key}.#id`;
+			} else {
+				updateExpression += ` ${key}`;
+			}
+			if (fields.length !== index + 1) {
+				updateExpression += ',';
+			}
+		});
+	}
+
 	return {
 		...fullExpression,
 		ExpressionAttributeValues: expressionAttributeValues,
@@ -295,15 +326,39 @@ function updateExpressionConstruct(data, replaceExisting = false) {
 	};
 }
 
-async function updateDebate(uuid, data, replaceExisting = false) {
+async function updateDebate(uuid, data) {
 	try {
 		const params = {
 			Key: {
 				id: uuid
 			},
 			ReturnValues: 'ALL_NEW',
-			...updateExpressionConstruct(data, replaceExisting)
+			...updateExpressionConstruct(data)
 		};
+
+		console.log(params);
+
+		const result = await query('update', params);
+		if (typeof result === 'string') {
+			throw new Error(result);
+		}
+		return result.result;
+	} catch (err) {
+		throw err;
+	}
+}
+
+async function removeDebateAttribute(uuid, data) {
+	try {
+		const params = {
+			Key: {
+				id: uuid
+			},
+			ReturnValues: 'ALL_NEW',
+			...updateExpressionConstruct({}, data)
+		};
+
+		console.log(params);
 
 		const result = await query('update', params);
 		if (typeof result === 'string') {
@@ -328,24 +383,24 @@ function constructCommentObject({
 		id: uuidv1(),
 		user,
 		content,
-		ratings: [],
+		ratings: {},
 		tags,
 		replyTo,
 		displayStatus,
-		reports: [],
+		reports: {},
 		updatedAt: date,
 		createdAt: date
 	};
 }
 
-function constructRatingObject({ rating, user, index }) {
+function constructRatingObject({ rating, user, commentId }) {
 	const createdAt = new Date().getTime();
 	return {
 		id: uuidv1(),
 		user,
 		rating,
 		createdAt,
-		index
+		commentId
 	};
 }
 
@@ -456,5 +511,6 @@ module.exports = {
 	constructRatingObject,
 	createDebateType,
 	getDebateType,
-	getAllDebateTypes
+	getAllDebateTypes,
+	removeDebateAttribute
 };
