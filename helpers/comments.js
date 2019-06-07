@@ -25,7 +25,7 @@ function getNestedComments(originParams, username) {
 		filterTag: null
 	};
 	const params = Object.assign(defaultParams, originParams);
-	const commentsNested = [];
+	let commentsNested = [];
 	const commentsOrigin = [];
 	const commentsReplies = [];
 
@@ -53,8 +53,13 @@ function getNestedComments(originParams, username) {
 			newComment,
 			params.commentsDataRaw
 		);
+
+		newComment.replies = Utils.sortByDate(newComment.replies, 'createdAt');
+
 		commentsNested.push(newComment);
 	});
+
+	commentsNested = Utils.sortByDate(commentsNested, 'createdAt');
 
 	if (
 		params.paginationStart !== null ||
