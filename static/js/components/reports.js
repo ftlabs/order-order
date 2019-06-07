@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-function addRatingsEventListeners() {
+function addReportEventListeners() {
 	var ratingLinks = document.querySelectorAll('.report');
 
 	Array.from(ratingLinks).forEach(function(element) {
@@ -10,7 +10,7 @@ function addRatingsEventListeners() {
 	});
 }
 
-function initComments() {
+function initReports() {
 	addReportEventListeners();
 }
 
