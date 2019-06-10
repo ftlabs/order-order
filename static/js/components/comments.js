@@ -48,7 +48,7 @@ function addRatingsEventListeners() {
 			rateComment(
 				element.getAttribute('data-debate-id'),
 				element.getAttribute('data-debate-type'),
-				element.getAttribute('data-index'),
+				element.getAttribute('data-comment-id'),
 				element.getAttribute('data-rating')
 			);
 		});
@@ -60,19 +60,19 @@ function addRatingsEventListeners() {
 		element.addEventListener('click', function(e) {
 			removeRatingComment(
 				element.getAttribute('data-debate-id'),
-				element.getAttribute('data-index'),
-				element.getAttribute('data-username')
+				element.getAttribute('data-comment-id'),
+				element.getAttribute('data-username'),
+				element.getAttribute('data-rating-id')
 			);
 		});
 	});
 }
 
-function rateComment(debateId, debateType, index, rating) {
+function rateComment(debateId, debateType, commentId, rating) {
 	var data = {
-		index: index,
+		commentId: commentId,
 		rating: rating
 	};
-
 	fetch(`rating/${debateType}/${debateId}?`, {
 		method: 'POST',
 		body: JSON.stringify(data),
@@ -88,10 +88,11 @@ function rateComment(debateId, debateType, index, rating) {
 		});
 }
 
-function removeRatingComment(debateId, index, username) {
+function removeRatingComment(debateId, commentId, username, ratingId) {
 	var data = {
-		index: index,
-		username: username
+		commentId: commentId,
+		username: username,
+		ratingId: ratingId
 	};
 
 	fetch(`rating/remove/${debateId}?`, {

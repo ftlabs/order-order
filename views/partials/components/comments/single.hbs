@@ -6,13 +6,14 @@
 		{{#if repliesOpen}}
 		<a data-comment-id="{{comment.id}}" class="reply" href="#">Reply</a>
 		|
-		{{#ifInList currentUser upVoters}}
-		<a data-debate-id="{{debateId}}" data-debate-type="{{debateType}}" data-index="{{index}}" data-rating="upvote"
-			class="rate" href="#">Up Vote</a>
+		{{#if userRatingId }}
+		<a data-debate-id="{{debateId}}" data-index="{{index}}" data-username={{currentUser}}
+			data-comment-id="{{comment.id}}" data-rating-id="{{userRatingId}}" class="rate-remove" href="#">Remove
+			UpVote</a>
 		{{else}}
-		<a data-debate-id="{{debateId}}" data-index="{{index}}" data-username={{currentUser}} class="rate-remove"
-			href="#">Remove UpVote</a>
-		{{/ifInList}}
+		<a data-debate-id="{{debateId}}" data-debate-type="{{debateType}}" data-comment-id="{{comment.id}}"
+			data-rating="upvote" class="rate" href="#">Up Vote</a>
+		{{/if}}
 		|
 		{{/if}}
 		<a data-comment-id="{{comment.id}}" class="report" href="#">Report</a>

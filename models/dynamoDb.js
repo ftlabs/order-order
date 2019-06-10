@@ -38,7 +38,7 @@ async function createDebate(data) {
 			Item: {
 				...data,
 				id,
-				comments: [],
+				comments: {},
 				createdAt,
 				updatedAt
 			}
@@ -97,10 +97,28 @@ async function getById(debateId) {
 
 	const queryStatement = await query('query', params);
 	if (queryStatement.result) {
-		return queryStatement.result;
+		return normaliseData(queryStatement.result);
 	}
 
 	return { error: queryStatement.result };
+}
+
+function normaliseData(data) {
+	if (data.Items[0].comments) {
+		const commentsAsArray = Object.keys(data.Items[0].comments).map(
+			(key) => data.Items[0].comments[key]
+		);
+		const commentsAndRatingsAsArrays = commentsAsArray.map((comment) => {
+			if (comment.ratings) {
+				comment.ratings = Object.keys(comment.ratings).map(
+					(ratingId) => comment.ratings[ratingId]
+				);
+			}
+			return comment;
+		});
+		data.Items[0].comments = commentsAndRatingsAsArrays;
+	}
+	return data;
 }
 
 async function getBy(attribute, value) {
@@ -114,7 +132,7 @@ async function getBy(attribute, value) {
 	const queryStatement = await query('scan', params);
 
 	if (queryStatement.result) {
-		return queryStatement.result;
+		return normaliseData(queryStatement.result);
 	}
 
 	return { error: queryStatement };
@@ -242,8 +260,9 @@ async function getAllReports() {
 	return { error: queryStatement };
 }
 
-function updateExpressionConstruct(data, replaceExisting = false) {
+function updateExpressionConstruct(data, removeData) {
 	const newData = { ...data, updatedAt: new Date().getTime() };
+	let fullExpression = {};
 	let expressionAttributeValues = {};
 	let updateExpression = 'SET';
 	const fields = Object.keys(newData);
@@ -253,17 +272,22 @@ function updateExpressionConstruct(data, replaceExisting = false) {
 			[`:${key}`]: newData[key]
 		};
 		if (LIST_TYPES.includes(key)) {
-			if (replaceExisting) {
-				updateExpression += ` ${key} = :${key}`;
-			} else {
-				updateExpression += ` ${key}=list_append(${key}, :${key})`;
-			}
+			fullExpression = {
+				...fullExpression,
+				ExpressionAttributeNames: { '#id': data[key].id },
+				ConditionExpression: `attribute_not_exists(${key}.#id)`
+			};
+			updateExpression += ` ${key}.#id=:${key}`;
 		} else if (NESTED_LIST_TYPES.includes(key)) {
-			updateExpression += ` comments[${
-				data[key][0].index
-			}].${key}=list_append(comments[${
-				data[key][0].index
-			}].${key}, :${key})`;
+			fullExpression = {
+				...fullExpression,
+				ExpressionAttributeNames: {
+					'#commentId': data[key].commentId,
+					'#id': data[key].id
+				},
+				ConditionExpression: `attribute_not_exists(${key}.#commentId.ratings.#id)`
+			};
+			updateExpression += ` comments.#commentId.${key}.#id=:${key}`;
 		} else {
 			updateExpression += ` ${key}=:${key}`;
 		}
@@ -271,23 +295,87 @@ function updateExpressionConstruct(data, replaceExisting = false) {
 			updateExpression += ',';
 		}
 	});
+
+	if (removeData) {
+		const {
+			removeDataUpdateExpression,
+			removeDataFullExpression
+		} = removeExpressionConstruct(removeData);
+
+		updateExpression += removeDataUpdateExpression;
+		const removeFields = Object.keys(removeData);
+		fullExpression = {
+			...fullExpression,
+			...removeDataFullExpression
+		};
+	}
+
 	return {
+		...fullExpression,
 		ExpressionAttributeValues: expressionAttributeValues,
 		UpdateExpression: updateExpression
 	};
 }
 
-async function updateDebate(uuid, data, replaceExisting = false) {
+function removeExpressionConstruct(removeData) {
+	removeDataUpdateExpression = '';
+	removeDataFullExpression = {};
+
+	removeDataUpdateExpression += ' REMOVE';
+	const removeFields = Object.keys(removeData);
+
+	removeFields.forEach((key, index) => {
+		if (NESTED_LIST_TYPES.includes(key)) {
+			removeDataFullExpression = {
+				ExpressionAttributeNames: {
+					'#commentId': removeData[key].commentId,
+					'#id': removeData[key].id
+				}
+			};
+			removeDataUpdateExpression += ` comments.#commentId.${key}.#id`;
+		} else {
+			removeDataUpdateExpression += ` ${key}`;
+		}
+		if (removeFields.length !== index + 1) {
+			removeDataUpdateExpression += ',';
+		}
+	});
+	return { removeDataUpdateExpression, removeDataFullExpression };
+}
+
+async function updateDebate(uuid, data) {
 	try {
 		const params = {
 			Key: {
 				id: uuid
 			},
 			ReturnValues: 'ALL_NEW',
-			...updateExpressionConstruct(data, replaceExisting)
+			...updateExpressionConstruct(data)
+		};
+		const result = await query('update', params);
+		if (typeof result === 'string') {
+			throw new Error(result);
+		}
+		return result.result;
+	} catch (err) {
+		throw err;
+	}
+}
+
+async function removeDebateAttribute(uuid, data) {
+	try {
+		const params = {
+			Key: {
+				id: uuid
+			},
+			ReturnValues: 'ALL_NEW',
+			...updateExpressionConstruct({}, data)
 		};
 
 		const result = await query('update', params);
+		if (typeof result === 'string') {
+			throw new Error(result);
+		}
 		return result.result;
 	} catch (err) {
 		throw err;
@@ -307,24 +395,24 @@ function constructCommentObject({
 		id: uuidv1(),
 		user,
 		content,
-		ratings: [],
+		ratings: {},
 		tags,
 		replyTo,
 		displayStatus,
-		reports: [],
+		reports: {},
 		updatedAt: date,
 		createdAt: date
 	};
 }
 
-function constructRatingObject({ rating, user, index }) {
+function constructRatingObject({ rating, user, commentId }) {
 	const createdAt = new Date().getTime();
 	return {
 		id: uuidv1(),
 		user,
 		rating,
 		createdAt,
-		index
+		commentId
 	};
 }
 
@@ -435,5 +523,6 @@ module.exports = {
 	constructRatingObject,
 	createDebateType,
 	getDebateType,
-	getAllDebateTypes
+	getAllDebateTypes,
+	removeDebateAttribute
 };

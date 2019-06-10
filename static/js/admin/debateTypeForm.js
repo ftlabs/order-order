@@ -124,11 +124,11 @@ function saveCustomTextField(textField, saveButton, editButton, userInputs) {
 
 function createNewFieldForm(attributeName, userInputs) {
 	var index =
-		Array.from(userInputs.parentElement.childNodes).filter(function(
-			element
-		) {
-			return element.nodeName === 'DIV';
-		}).length - 1;
+		Array.from(userInputs.parentElement.parentElement.childNodes).filter(
+			function(element) {
+				return element.nodeName === 'DIV';
+			}
+		).length - 1;
 
 	addLabelToField(
 		userInputs,
@@ -158,7 +158,7 @@ function createNewTagFormItem(attributeName, userInputs) {
 		Array.from(userInputs.parentElement.childNodes).filter(function(
 			element
 		) {
-			element.nodeName === 'DIV';
+			return element.nodeName === 'DIV';
 		}).length - 1;
 
 	addLabelToField(
