@@ -27,7 +27,7 @@
   "homepage": "https://github.com/ftlabs/order-order#readme",
   "dependencies": {
     "@financial-times/s3o-middleware": "^3.0.1",
-    "aws-sdk": "^2.538.0",
+    "aws-sdk": "^2.543.0",
     "body-parser": "^1.19.0",
     "debug": "^2.3.3",
     "dotenv": "^7.0.0",
@@ -35,7 +35,7 @@
     "express-enforces-ssl": "^1.1.0",
     "express-hbs": "^2.1.2",
     "helmet": "^3.21.1",
-    "snyk": "^1.116.4",
+    "snyk": "^1.231.1",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
