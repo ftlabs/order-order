@@ -12,6 +12,11 @@ function getS3oUsername(cookie) {
 	return getProperty(cookie, 's3o_username');
 }
 
+function getOktaUsername(userinfo) {
+	return `${userinfo.first_name}.${userinfo.last_name}`;
+}
+
 module.exports = {
-	getS3oUsername
+	getS3oUsername,
+	getOktaUsername
 };

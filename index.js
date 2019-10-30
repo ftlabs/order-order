@@ -15,6 +15,7 @@ const express_enforces_ssl = require('express-enforces-ssl');
 const bodyParser = require('body-parser');
 const core_routes = require('./routes/router');
 const hbs_helpers = require('./utils/hbs-helpers');
+const session = require('cookie-session');
 
 if (!PORT) {
 	throw new Error('ERROR: PORT not specified in env');
@@ -29,6 +30,12 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+	secret: process.env.SESSION_TOKEN,
+	maxAge: 24 * 3600 * 1000, //24h
+	httpOnly: true
+}));
 
 app.engine(
 	'hbs',
