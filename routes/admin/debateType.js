@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Utils = require('../../helpers/utils');
 const dynamoDb = require('../../models/dynamoDb');
-const { getS3oUsername } = require('../../helpers/cookies');
+const { getOktaUsername } = require('../../helpers/cookies');
 
 router.get('/create', (req, res) => {
 	try {
-		const username = getS3oUsername(req.cookies);
+		const username = getOktaUsername(req.userContext.userinfo);
 		const { alertType, alertAction } = req.query;
 
 		res.render('admin/createDebateType', {
@@ -79,7 +79,7 @@ router.post('/create', async (req, res) => {
 router.get('/edit/:debateTypeName', async (req, res) => {
 	try {
 		const { alertType, alertAction } = req.query;
-		const username = getS3oUsername(req.cookies);
+		const username = getOktaUsername(req.userContext.userinfo);
 		const { debateTypeName } = req.params;
 		const debateType = await dynamoDb.getDebateType(debateTypeName);
 
@@ -168,7 +168,7 @@ router.post('/edit/:debateTypeName', async (req, res) => {
 });
 
 router.get('/list/:debateTypeName', async (req, res) => {
-	const username = getS3oUsername(req.cookies);
+	const username = getOktaUsername(req.userContext.userinfo);
 
 	try {
 		const { debateTypeName } = req.params;
@@ -195,7 +195,7 @@ router.get('/list/:debateTypeName', async (req, res) => {
 });
 
 router.get('/list', async (req, res) => {
-	const username = getS3oUsername(req.cookies);
+	const username = getOktaUsername(req.userContext.userinfo);
 
 	try {
 		const debateTypeList = await dynamoDb.getAllDebateTypes();

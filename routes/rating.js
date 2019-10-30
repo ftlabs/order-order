@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
+const { getOktaUsername } = require('../helpers/cookies');
 
 router.post('/remove/:debateId', async (req, res, next) => {
 	try {
@@ -28,13 +29,13 @@ router.post('/:debateType/:debateId', async (req, res, next) => {
 			ratings: dynamoDb.constructRatingObject({
 				rating,
 				commentId,
-				user: req.cookies.s3o_username
+				user: getOktaUsername(req.userContext.userinfo)
 			})
 		};
 
 		await customLogic({
 			functionName: 'post',
-			username: req.cookies.s3o_username,
+			username: getOktaUsername(req.userContext.userinfo),
 			debateId,
 			commentId,
 			debateType

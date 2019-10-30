@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const dynamoDb = require('../models/dynamoDb');
+const { getOktaUsername } = require('../helpers/cookies');
 
 router.post('/:debateType/:debateId', async (req, res, next) => {
 	try {
@@ -12,7 +13,7 @@ router.post('/:debateType/:debateId', async (req, res, next) => {
 		const data = {
 			comments: dynamoDb.constructCommentObject({
 				content: comment,
-				user: req.cookies.s3o_username,
+				user: getOktaUsername(req.userContext.userinfo),
 				tags,
 				replyTo,
 				displayStatus

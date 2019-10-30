@@ -3,12 +3,12 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 const dynamoDb = require('../../models/dynamoDb');
-const { getS3oUsername } = require('../../helpers/cookies');
+const { getOktaUsername } = require('../../helpers/cookies');
 const Utils = require('../../helpers/utils');
 
 router.get('/create', async (req, res) => {
 	try {
-		const username = getS3oUsername(req.cookies);
+		const username = getOktaUsername(req.userContext.userinfo);
 		let debateTypes = await dynamoDb.getAllDebateTypes();
 		const { alertType, alertAction } = req.query;
 		debateTypes = debateTypes.map((debateType) => ({
@@ -76,7 +76,7 @@ router.post('/create', async (req, res) => {
 });
 
 router.get('/edit/:debateId', async (req, res) => {
-	const username = getS3oUsername(req.cookies);
+	const username = getOktaUsername(req.userContext.userinfo);
 	try {
 		const { debateId } = req.params;
 		const { alertType, alertAction } = req.query;
@@ -191,7 +191,7 @@ router.post('/edit/:debateId', async (req, res) => {
 });
 
 router.get('/list', async (req, res) => {
-	const username = getS3oUsername(req.cookies);
+	const username = getOktaUsername(req.userContext.userinfo);
 	try {
 		const debateList = await dynamoDb.getAllDebateLists();
 		res.render('admin/listDebates', {

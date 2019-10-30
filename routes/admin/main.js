@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const dynamoDb = require('../../models/dynamoDb');
-const { getS3oUsername } = require('../../helpers/cookies');
+const { getOktaUsername } = require('../../helpers/cookies');
 const Utils = require('../../helpers/utils');
 
 const debateRoutes = require('./debate');
 const debateTypeRoutes = require('./debateType');
 
 router.get('/', async (req, res) => {
-	const username = getS3oUsername(req.cookies);
+	const username = getOktaUsername(req.userContext.userinfo);
 
 	try {
 		res.render('admin/index', {
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/moderation', async (req, res) => {
-	const username = getS3oUsername(req.cookies);
+	const username = getOktaUsername(req.userContext.userinfo);
 
 	try {
 		const reports = await dynamoDb.getAllReports();

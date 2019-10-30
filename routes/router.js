@@ -3,7 +3,7 @@
 const express = require('express');
 
 const router = express.Router();
-const s3o = require('@financial-times/s3o-middleware');
+const OktaMiddleware = require('@financial-times/okta-express-middleware');
 const path = require('path');
 const adminRoutes = require('./admin/main');
 const commentRoutes = require('../routes/comment');
@@ -12,16 +12,28 @@ const ratingRoutes = require('./rating');
 const listing = require('../helpers/listings');
 const Utils = require('../helpers/utils');
 const dynamoDb = require('../models/dynamoDb');
-const { getS3oUsername } = require('../helpers/cookies');
+const { getOktaUsername } = require('../helpers/cookies');
 
-router.use(s3o);
+const okta = new OktaMiddleware({
+	client_id: process.env.OKTA_CLIENT,
+	client_secret: process.env.OKTA_SECRET,
+	issuer: process.env.OKTA_ISSUER,
+	appBaseUrl: process.env.BASE_URL,
+	scope: 'openid offline_access name'
+});
+
+router.use(okta.router);
+router.use(okta.ensureAuthenticated());
+router.use(okta.verifyJwts());
+
 router.use('/comment', commentRoutes);
 router.use('/vote', voteRoutes);
 router.use('/rating', ratingRoutes);
 router.use('/admin', adminRoutes);
 
 router.get('/', async (req, res, next) => {
-	const username = getS3oUsername(req.cookies);
+	const username = getOktaUsername(req.userContext.userinfo);
+
 
 	try {
 		const debateList = await dynamoDb.getAllDebateLists('flat');
@@ -43,7 +55,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/type/:debateType', async (req, res, next) => {
-	const username = getS3oUsername(req.cookies);
+	const username = getOktaUsername(req.userContext.userinfo);
 
 	try {
 		const { debateType } = req.params;
@@ -77,7 +89,7 @@ router.get('/:debateId', async (req, res, next) => {
 	try {
 		const { debateId } = req.params;
 		const result = await dynamoDb.getById(debateId);
-		const username = getS3oUsername(req.cookies);
+		const username = getOktaUsername(req.userContext.userinfo)
 		const debate = result.Items[0];
 		const debateTypeData = await dynamoDb.getDebateType(debate.debateType);
 		const debateTypeDescription = debateTypeData.Items[0].description;
@@ -118,13 +130,15 @@ router.post('/:debateId', async (req, res, next) => {
 		const { debateId } = req.params;
 		const formData = req.body;
 		let data = {};
+
+		const username = getOktaUsername(req.userContext.userinfo);
 		if (formData.comment) {
 			const { comment, tags, displayStatus, replyTo } = formData;
 			data = {
 				comments: [
 					dynamoDb.constructCommentObject({
 						content: comment,
-						user: req.cookies.s3o_username,
+						user: username,
 						tags,
 						replyTo,
 						displayStatus
@@ -142,7 +156,8 @@ router.post('/:debateId', async (req, res, next) => {
 });
 
 router.use(function(err, req, res, next) {
-	const username = getS3oUsername(req.cookies);
+
+	const username = getOktaUsername(req.userContext.userinfo);
 	console.log(err);
 	res.status(404);
 
@@ -153,7 +168,7 @@ router.use(function(err, req, res, next) {
 			url: req.url,
 			error: err,
 			user: {
-				username: getS3oUsername(req.cookies),
+				username: username,
 				usernameNice: Utils.cleanUsername(username)
 			}
 		});
