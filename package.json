@@ -36,7 +36,7 @@
     "express-enforces-ssl": "^1.1.0",
     "express-hbs": "^2.3.0",
     "helmet": "^3.21.2",
-    "snyk": "^1.251.0",
+    "snyk": "^1.259.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
