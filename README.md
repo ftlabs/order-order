@@ -9,16 +9,33 @@ cp .env_example .env
 npm install
 ```
 
+### .env 
+
+- Run `touch .env` to create the required **.env** file
+- Open your new **.env** file and add the following variables:
+
+PORT=3007
+BASE_URL=http://localhost:3007
+OKTA_CLIENT=
+OKTA_ISSUER=
+OKTA_SECRET=
+SESSION_TOKEN=
+
+#### Where to find OKTA .env vars
+
+- Get `SESSION_TOKEN` from LastPass
+- Get details for finding `OKTA_ISSUER`, `OKTA_CLIENT` & `OKTA_SECRET` in LastPass
+
 ## Running
 
 `npm start`, and in a separat tab `npm run watch-css`, to automatically compile changes to Sass files to CSS.
 
-Go to [http://localhost:PORT](http://localhost:PORT)
+Go to [http://localhost:3007](http://localhost:3007)
 
 ### Admin
 
 You can get to the skeleton admin page here:
-[http://localhost:PORT/admin](http://localhost:PORT/admin)
+[http://localhost:3007/admin](http://localhost:3007/admin)
 
 ![Alt text](./docs/admin_examle.png?raw=true 'Example of how the admin currently looks')
 
